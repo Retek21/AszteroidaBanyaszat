@@ -4,6 +4,7 @@ import java.util.ArrayList;
 //Created by:Bendegúz Dengyel 2021.03.17
 //Asteroid class
 public class Asteroid implements Whereabout{
+
     //ATTRIBUTES:
     private int layers;//number of layers covering the asteroid
     private boolean sunnearness;//true or false depending the closure of the sun
@@ -39,9 +40,12 @@ public class Asteroid implements Whereabout{
         System.out.println("\tAsteroid: getSunnearness() return"+sunnearness);
         return sunnearness;
     }
+
+    //sets the "sunnearness" and calls the CheckInteraction() method
     public void SetSunnearness(boolean sunnearness) {
         System.out.println("\tAsteroid: setSunnearness("+sunnearness+")");
         this.sunnearness = sunnearness;
+        if(sunnearness)CheckInteraction();
     }
     public boolean GetEmpty() {
         System.out.println("\tAsteroid: getEmpty()");
@@ -84,6 +88,8 @@ public class Asteroid implements Whereabout{
             this.material=material;
             empty=false;
             System.out.println("\tAsteroid: AddMaterial(material) return:true");
+            //checks if the sunnearness is true before return
+            CheckInteraction();
             return true;
         }
         //else it fails
@@ -120,7 +126,7 @@ public class Asteroid implements Whereabout{
     //lowers the layer by 1 if the layers>0
     public void ThinLayer(){
         System.out.println("\tAsteroid: ThinLayer()");
-        if(layer>0)layer-=1;
+        if(layers>0)layers-=1;
         //if the layers=0, calls the CheckInteraction() method
         if(layers==0)CheckInteraction();
     }
@@ -144,7 +150,7 @@ public class Asteroid implements Whereabout{
         //if the core is not empty and the layers>0 kills all entities
         if(!empty && layers>0){
             for(int i=0;i< entities.size();i++)
-                entities[i].Die();
+                entities.get(i).Die();
         }
     }
 
@@ -167,7 +173,7 @@ public class Asteroid implements Whereabout{
     public void Explode(){
         System.out.println("\tAsteroid: Explode()");
         //kills all entities
-        for(int i=0;i<entities.size();i++)entities[i].BlowUp();
+        for(int i=0;i<entities.size();i++)entities.get(i).BlowUp();
         //notifies all neighbours
         for(int i=0;i<neighbours.size();i++)NearbyExplosion(this);
         //notifies the asteroid field
@@ -177,8 +183,8 @@ public class Asteroid implements Whereabout{
     //return the neighbour from the "neighbours" with the given index
     public Whereabout GetNeighbour(int i){
         System.out.println("\tAsteroid: GetNeighbour(i)");
-        System.out.println("\tAsteroid: GetNeighbour(i) return:neigbours[i]");
-        return neighbours[i];
+        System.out.println("\tAsteroid: GetNeighbour(i) return:neighbours[i]");
+        return neighbours.get(i);
     }
 
     public int GetNumberOfNeighbours(){
