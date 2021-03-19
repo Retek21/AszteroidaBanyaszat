@@ -1,7 +1,7 @@
 package game.logic;
 
 //Ez az interfész a mozgás, robbanás egységesítéséért szolgál.
-public class WhereAbout {
+public interface Whereabout {
 
     //Ez kezeli azt az esetet amikor a whereabout-ra egy entitás kerül.
     public boolean AddEntity(Entity e);
