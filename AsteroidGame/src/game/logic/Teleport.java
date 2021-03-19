@@ -2,7 +2,7 @@ package game.logic;
 
 //A játékban a teleportkapu, ami 2 aszteroidát köt össze a párja segítségével.
 //A Whereabout, és Placeable interfészeket valósítja meg.
-public class Teleport implements WhereAbout, Placeable{
+public class Teleport implements Whereabout, Placeable{
 
     //Az aszteroida amihez kapcsolódik.
     private Asteroid asteroid;
