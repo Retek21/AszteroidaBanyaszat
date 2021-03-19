@@ -3,6 +3,14 @@ package game.logic;
 //class for testing basic business logic of the game
 public class Skeleton {
 
+    public static int tab = 0;
+
+    public static void WriteName(String s) {
+        for (int i = 0; i < tab; i++)
+            System.out.print("\t");
+        System.out.print(s + "\n");
+    }
+
     //Attributes for testing may be added here:
     Asteroidfield asteroidfield;
     Asteroid asteroid1;

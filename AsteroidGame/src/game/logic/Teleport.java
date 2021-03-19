@@ -77,6 +77,7 @@ public class Teleport implements Whereabout, Placeable{
         //Jelzi a párjának, hogy letelepítették.
         if(pair != null)
             pair.SetPairReady(true);
+
         //nem lesz többet az inventoryban
         inventory = null;
     }

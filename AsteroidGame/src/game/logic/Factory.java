@@ -69,9 +69,8 @@ public class Factory {
                 i.RemoveMaterial(m);
                 m.Disintegrate();
             }
-            Robot r = new Robot();
 
-            return r;
+            return new Robot();
         }
         else { return null; }
     }

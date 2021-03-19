@@ -15,16 +15,30 @@ public class Asteroid implements Whereabout{
     private Asteroidfield asteroidfield;//the asteroid field the current asteroid belongs to
 
     //CONSTRUCTOR:
-    public Asteroid(int _layers,boolean _sunearness, Material _material, Asteroidfield _asteroidfield){
+    public Asteroid() {
+        Skeleton.WriteName("Asteroid: Asteroid()");
+        Skeleton.tab++;
+
         neighbours = new ArrayList<Whereabout>();
         entities = new ArrayList<Entity>();
-        System.out.println("\tAsteroid: Asteroid()");
+
+        Skeleton.tab--;
+    }
+
+    public Asteroid(int _layers,boolean _sunearness, Material _material, Asteroidfield _asteroidfield){
+        Skeleton.WriteName("Asteroid: Asteroid()");
+        Skeleton.tab++;
+
+        neighbours = new ArrayList<Whereabout>();
+        entities = new ArrayList<Entity>();
         layers=_layers;
         sunnearness=_sunearness;
         material=_material;
         if(material==null) empty=true;
         else empty=false;
         asteroidfield=_asteroidfield;
+
+        Skeleton.tab--;
     }
 
     //GETTERES, SETTERS:
@@ -47,7 +61,7 @@ public class Asteroid implements Whereabout{
     public void SetSunnearness(boolean sunnearness) {
         System.out.println("\tAsteroid: setSunnearness("+sunnearness+")");
         this.sunnearness = sunnearness;
-        if(sunnearness)CheckInteraction();
+        if(sunnearness) CheckInteraction();
     }
     public boolean GetEmpty() {
         System.out.println("\tAsteroid: getEmpty()");
@@ -115,6 +129,7 @@ public class Asteroid implements Whereabout{
     public boolean AddEntity(Entity entity){
         System.out.println("\tAsteroid: AddEntity(entity)");
         entities.add(entity);
+        entity.SetAsteroid(this);
         System.out.println("\tAsteroid: AddEntity(entity) return:true");
         return true;
     }
@@ -179,7 +194,9 @@ public class Asteroid implements Whereabout{
         //notifies all neighbours
         for(int i=0;i<neighbours.size();i++)NearbyExplosion(this);
         //notifies the asteroid field
-        asteroidfield.RemoveAsteroid(this);
+        try {
+            asteroidfield.RemoveAsteroid(this);
+        } catch (NullPointerException e) { }
     }
 
     //return the neighbour from the "neighbours" with the given index

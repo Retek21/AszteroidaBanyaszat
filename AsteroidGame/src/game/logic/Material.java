@@ -38,7 +38,7 @@ public abstract class Material implements Placeable{
         return false;
     }
     /*
-    Jelez a conditionmanagernek hogy kikerult a jatekbol
+    Jelez a controllernek, hogy kikerult a jatekbol
      */
     public void Disintegrate(){
         System.out.println("\t" + name + ": Disintegrate");

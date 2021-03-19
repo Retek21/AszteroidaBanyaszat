@@ -28,12 +28,12 @@ public class Settler extends Entity{
     }
 
     public void SetInventory(Inventory i){
-             System.out.printf("\tSettler: SetInventory(inventory i)");
+        System.out.printf("\tSettler: SetInventory(inventory i)");
         inventory = i;
     }
 
     public Settler(Factory f ){
-            System.out.println("\tSettler: Settler(Factory f)");
+        System.out.println("\tSettler: Settler(Factory f)");
         factory = f;
     }
 
@@ -44,12 +44,14 @@ public class Settler extends Entity{
         //if there is enough storage in inventory, it crafts teleports
         System.out.println("\tSettler: CraftTeleport()");
         if(inventory.IsTeleportSlotEmpty() == true){
-            ArrayList<Teleport> teleports = new ArrayList<>();
+            ArrayList<Teleport> teleports;
             try {
                 teleports = factory.CreateTeleport(inventory);
+                teleports.get(0).SetInventory(inventory);
+                teleports.get(1).SetInventory(inventory);
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
-            } catch (Exception e) { /*buzi vagy szacsikam bloo blooo bent fognak maradni blooo*/}
+            } catch (Exception e) { }
         }
     }
 
@@ -58,8 +60,10 @@ public class Settler extends Entity{
         System.out.printf("\tSettler: CraftRobot()");
         Robot robot;
         robot = factory.CreateRobot(inventory);
-        //place robot after it is crafted
-        PlaceRobot(robot);
+        if (robot != null) {
+            //place robot after it is crafted
+            PlaceRobot(robot);
+        }
     }
 
     //Mine the current asteroid
@@ -68,7 +72,8 @@ public class Settler extends Entity{
         System.out.printf("\tSettler: Mine()");
         if(!inventory.IsMaterialSlotFull()){
             Material m = asteroid.RemoveMaterial();
-            inventory.AddMaterial(m);
+            if (m != null)
+                inventory.AddMaterial(m);
         }
     }
 
@@ -82,7 +87,7 @@ public class Settler extends Entity{
     //places material into asteroid
     public void PlaceMaterial(Material m){
         System.out.printf("\tSettler: PlaceMaterial(Material m");
-            m.Deploy(asteroid);
+            m.Deploy(asteroid);             //Deploy visszatérés még kérdéses
             inventory.RemoveMaterial(m);
     }
 

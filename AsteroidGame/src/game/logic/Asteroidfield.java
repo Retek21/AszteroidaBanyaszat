@@ -14,7 +14,9 @@ public class Asteroidfield{
         System.out.println("\tAsteroidfield: Asteroidfield()");
         asteroids=_asteroids;
     }
-    public Asteroidfield(){}
+    public Asteroidfield(){
+        asteroids = new ArrayList<Asteroid>();
+    }
 
     //METHODS, FUNCTIONS:
 
