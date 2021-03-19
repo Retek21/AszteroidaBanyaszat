@@ -15,8 +15,8 @@ public abstract class Material implements Placeable{
     @Override
     public void Deploy(Asteroid a){
         System.out.println("\t" + name + ": Deploy(a)");
-        if(a.AddMaterial(this)){
-            i.RemoveMaterial(this);
+        if(a.AddMaterial(this)) {
+                ///coming soon
         }
     }
     /*
