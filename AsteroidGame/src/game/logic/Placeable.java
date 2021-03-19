@@ -1,7 +1,8 @@
 package game.logic;
 
-
-//interfész a settler által lehelyezhető objektumoknak
+//created by: Turiák Anita 2021.03.19.
+//PLaceable class for objects that can be placed
 public interface Placeable {
-    public void Deploy(Asteroid a);     //lehelyezés a megadott aszteroidára
+    //Deploy the object into the asteroid
+    public void Deploy(Asteroid a);
 }

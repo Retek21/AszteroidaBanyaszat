@@ -1,22 +1,41 @@
 package game.logic;
 
-//absztrakt osztály a bányászoknak, azaz a robot és a settler őse
+//created by: Turiák Anita 2021.03.19.
+//abstract Entity class
 public abstract class Entity {
-    protected Asteroid asteroid;        //nyilvántartjuk, hogy melyik aszteroidán áll
+    //ATTRIBUTES
+    //on which asteroid the entity stands
+    protected Asteroid asteroid;
 
-    public abstract void Die();
-
-    public abstract void BlowUp();      //Az aszteroida robbanásakor hívódik meg
-
+    //GETTERS, SETTERS
     public Asteroid GetAsteroid() {
+        System.out.printf("\tEntity: GetAsteroid() return: asteroid");
         return asteroid;
     }
 
-    public void Drill() {           //Az aszteroida külső rétegét csökkenti
+    public void SetAsteroid(Asteroid a){
+        System.out.printf("\tEntity: SetAsteroid(Asteroid a)");
+        asteroid = a;
+    }
+
+    //METHODS
+    //entity dies
+    public void Die(){
+        asteroid.RemoveEntity(this);
+    }
+
+    //the asteroid blows up
+    public abstract void BlowUp();
+
+    //entity drills the current asteroid (lowers the layers by one)
+    public void Drill() {
+        System.out.printf("\tEntity: Drill()");
         asteroid.ThinLayers();
     }
 
-    public void Move(int i) {       //A megadott számú szomszédra lép (lehet aszteroida vagy teleport)
+    //entity moves to whereabout
+    public void Move(int i) {
+        System.out.printf("\tEntity: Move(int i)");
         WhereAbout w;
         w = asteroid.GetNeighbour(i);
         w.AddEntity(this);
@@ -24,5 +43,6 @@ public abstract class Entity {
             asteroid.RemoveEntity(this);
     }
 
-    public abstract void DoPhase();     //Egy fázisban lévő cselekvés
+    //entity does phase
+    public abstract void DoPhase();
 }
