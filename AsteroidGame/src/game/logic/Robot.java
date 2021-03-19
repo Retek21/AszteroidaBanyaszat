@@ -15,8 +15,8 @@ public class Robot extends Entity implements Placeable{
     @Override
     public void DoPhase(){
         System.out.printf("\tRobot: DoPhase()");
-        if(asteroid.GetLayers == 0){
-            int n = asteroid.GetNumberOfNeigbours();
+        if(asteroid.GetLayer() == 0){
+            int n = asteroid.GetNumberOfNeighbours();
             int Random = (int)(Math.random()*n);
             Move(Random);
         }
@@ -36,7 +36,7 @@ public class Robot extends Entity implements Placeable{
     @Override
     public void BlowUp(){
         System.out.printf("\tRobot: BlowUp()");
-        if(asteroid.GetNumberOfNeighbours == 0)
+        if(asteroid.GetNumberOfNeighbours() == 0)
             Die();
         else{
             int n = asteroid.GetNumberOfNeighbours();

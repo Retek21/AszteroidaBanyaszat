@@ -10,6 +10,6 @@ public class Ice extends Material{
     public void Interact(Asteroid a) {
         super.Interact(a);
         Disintegrate();
-        a.RemoveMaterial(this);
+        a.RemoveMaterial();
     }
 }

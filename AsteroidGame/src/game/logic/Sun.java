@@ -1,5 +1,7 @@
 package game.logic;
 
+import java.util.ArrayList;
+
 //Ez az osztály reprezentálja a napot amik körül az aszteroidák keringenek.
 public class Sun{
 
@@ -10,10 +12,10 @@ public class Sun{
     public void Sunstorm()
     {
         System.out.println("\nSun: Sunstorm()");
-        Asteroid[] asteroids = asteroidfield.GetAsteroids();
-        for(int i=0; i<asteroids.length; i++)
+        ArrayList<Asteroid> asteroids = asteroidfield.GetAsteroids();
+        for(int i=0; i<asteroids.size(); i++)
         {
-            asteroids[i].OnFire();
+            asteroids.get(i).OnFire();
         }
     }
 }

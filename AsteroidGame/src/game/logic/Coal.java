@@ -4,8 +4,7 @@ package game.logic;
  Coal nyersanyag osztaly
  */
 public class Coal extends Material{
-    /*
-    Interact az aszteroidaval
+    /*Interact az aszteroidaval
     kesobb bovitheto
      */
     @Override

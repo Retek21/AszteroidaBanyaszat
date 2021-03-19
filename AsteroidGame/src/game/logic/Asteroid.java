@@ -16,6 +16,8 @@ public class Asteroid implements Whereabout{
 
     //CONSTRUCTOR:
     public Asteroid(int _layers,boolean _sunearness, Material _material, Asteroidfield _asteroidfield){
+        neighbours = new ArrayList<Whereabout>();
+        entities = new ArrayList<Entity>();
         System.out.println("\tAsteroid: Asteroid()");
         layers=_layers;
         sunnearness=_sunearness;
@@ -162,9 +164,9 @@ public class Asteroid implements Whereabout{
     }
 
     //calls the RemoveNeighbour() method
-    public void NearbyExplosion(Whereabout explodedWhereabout){
-        System.out.println("\tAsteroid: NearbyExplosion(explodedWhereabout)");
-        RemoveNeighbour(explodedWhereabout);
+    public void NearbyExplosion(Asteroid explodedAsteroid){
+        System.out.println("\tAsteroid: NearbyExplosion(explodedAsteroid)");
+        RemoveNeighbour(explodedAsteroid);
         //if there are no more neighbours the asteroid destroys itself
         if(neighbours.size()==0)Explode();
     }

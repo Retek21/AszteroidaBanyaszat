@@ -34,7 +34,7 @@ public abstract class Material implements Placeable{
             System.out.println("\t" + name + ": Comparematerial(" + m.name +") return: true");
             return true;
         }
-        System.out.println("\t" + name + ": Comparematerial(" + m.name +") return: false");c
+        System.out.println("\t" + name + ": Comparematerial(" + m.name +") return: false");
         return false;
     }
     /*

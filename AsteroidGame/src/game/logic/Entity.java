@@ -30,13 +30,13 @@ public abstract class Entity {
     //entity drills the current asteroid (lowers the layers by one)
     public void Drill() {
         System.out.printf("\tEntity: Drill()");
-        asteroid.ThinLayers();
+        asteroid.ThinLayer();
     }
 
     //entity moves to whereabout
     public void Move(int i) {
         System.out.printf("\tEntity: Move(int i)");
-        WhereAbout w;
+        Whereabout w;
         w = asteroid.GetNeighbour(i);
         w.AddEntity(this);
         if(w.AddEntity(this)==true)

@@ -9,8 +9,8 @@ public class Inventory {
     public Inventory() {
         System.out.println("Inventory()\n");
 
-        materials = new ArrayList<Material>;
-        teleports = new ArrayList<Teleport>;
+        materials = new ArrayList<Material>();
+        teleports = new ArrayList<Teleport>();
     }
 
     public void AddMaterial(Material m) {

@@ -16,6 +16,9 @@ public class Teleport implements Whereabout, Placeable{
     //Logikai érték, ami azt jelzi, hogy a párját lehelyezték-e már (igaz-lehelyezték/hamis-még nem).
     private boolean pairready;
 
+    //Teleport konstruktora
+    public Teleport() {}
+
     //Amikor egy entitás ide lép ez hívódik meg.
     //Átrakja az aszteroidára amihez a párja tartozott.
     //Visszatér a művelet sikerességével.

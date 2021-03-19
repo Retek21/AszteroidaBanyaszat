@@ -1,5 +1,7 @@
 package game.logic;
 
+import java.util.ArrayList;
+
 //created by: Turiák Anita 2021.03.19.
 //Settler class, parent: Entity
 public class Settler extends Entity{
@@ -10,13 +12,13 @@ public class Settler extends Entity{
 
     //default constructor
     public Settler(){
-        System.out.printf("\tSettler()");
+        System.out.print("\tSettler()\n \t");
     }
 
 
     //GETTERS, SETTERS
     public Inventory GetInventory(){
-          System.out.printf("\tSettler: GetInventory()");
+          System.out.println("\tSettler: GetInventory()");
         return inventory;
     }
 
@@ -42,10 +44,12 @@ public class Settler extends Entity{
         //if there is enough storage in inventory, it crafts teleports
         System.out.println("\tSettler: CraftTeleport()");
         if(inventory.IsTeleportSlotEmpty() == true){
-            Teleport[] teleports = new Teleport[1];
-            teleports = factory.CreateTeleport(inventory);
-            inventory.AddTeleport(teleports[0]);
-            inventory.AddTeleport(teleports[1]);
+            ArrayList<Teleport> teleports = new ArrayList<>();
+            try {
+                teleports = factory.CreateTeleport(inventory);
+                inventory.AddTeleport(teleports.get(0));
+                inventory.AddTeleport(teleports.get(1));
+            } catch (Exception e) { /*buzi vagy szacsikam bloo blooo bent fognak maradni blooo*/}
         }
     }
 
@@ -62,8 +66,8 @@ public class Settler extends Entity{
     public void Mine(){
         //if there is enough storage in the inventory, the settler mines
         System.out.printf("\tSettler: Mine()");
-        if(inventory.IsMaterialSlotFull() == false){
-            Material m = asteroid.removeMaterial();
+        if(!inventory.IsMaterialSlotFull()){
+            Material m = asteroid.RemoveMaterial();
             inventory.AddMaterial(m);
         }
     }
@@ -78,7 +82,7 @@ public class Settler extends Entity{
     //places material into asteroid
     public void PlaceMaterial(Material m){
         System.out.printf("\tSettler: PlaceMaterial(Material m");
-            m.Deploy();
+            m.Deploy(asteroid);
             inventory.RemoveMaterial(m);
     }
 
