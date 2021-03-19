@@ -11,7 +11,7 @@ public class Factory {
         ArrayList<Material> materials = i.GetMaterials();
 
         boolean got_all = false;
-        ArrayList<Material> used = new ArrayList<Material>;
+        ArrayList<Material> used = new ArrayList<Material>();
 
         for(int j = 0; j < materials.size() && !got_all; j++) {
             for(int k = 0; k < mold.size(); k++) {
@@ -34,7 +34,7 @@ public class Factory {
             Teleport t2 = new Teleport();
             t1.SetPair(t2);
             t2.SetPair(t1);
-            ArrayList<Teleport> teleports = new ArrayList<Teleport>;
+            ArrayList<Teleport> teleports = new ArrayList<Teleport>();
             teleports.add(t1);
             teleports.add(t2);
 
@@ -50,7 +50,7 @@ public class Factory {
         ArrayList<Material> materials = i.GetMaterials();
 
         boolean got_all = false;
-        ArrayList<Material> used = new ArrayList<Material>;
+        ArrayList<Material> used = new ArrayList<Material>();
 
         for(int j = 0; j < materials.size() && !got_all; j++) {
             for(int k = 0; k < mold.size(); k++) {

@@ -4,7 +4,7 @@ import java.util.Random;
 
 //Created by:Bendegúz Dengyel 2021.03.17
 //Asteroidfield class
-public class Asteroidfield implements Environment{
+public class Asteroidfield{
 
     //ATTRIBUTES
     private ArrayList<Asteroid> asteroids;
