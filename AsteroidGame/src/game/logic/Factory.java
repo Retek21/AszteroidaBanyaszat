@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Factory {
 
+    public Factory() {
+        Skeleton.WriteName("Factory: Factory()");
+    }
+
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
         Skeleton.WriteName("Factory: CreateTeleport(inventory)");
         Skeleton.tab++;
