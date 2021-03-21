@@ -52,8 +52,8 @@ public class Inventory {
         Skeleton.WriteName("Inventory: GetMaterials()");
         Skeleton.tab++;
 
-        Skeleton.WriteName("Inventory: GetMaterials() return: materials");
         Skeleton.tab--;
+        Skeleton.WriteName("Inventory: GetMaterials() return: materials");
 
         return materials;
     }
@@ -63,8 +63,8 @@ public class Inventory {
 
         boolean rt = materials.size() == 10;
 
-        Skeleton.WriteName("Inventory: IsMaterialSlotFull() return: " + rt);
         Skeleton.tab--;
+        Skeleton.WriteName("Inventory: IsMaterialSlotFull() return: " + rt);
 
         return rt;
     }
@@ -74,8 +74,8 @@ public class Inventory {
 
         boolean rt = teleports.size() == 0;
 
-        Skeleton.WriteName("Inventory: IsTeleportSlotEmpty() return: " + rt);
         Skeleton.tab--;
+        Skeleton.WriteName("Inventory: IsTeleportSlotEmpty() return: " + rt);
 
         return  rt;
     }

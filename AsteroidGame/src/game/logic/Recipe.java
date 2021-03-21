@@ -18,8 +18,8 @@ public class Recipe {
         mold.add(ice);
         mold.add(uran);
 
-        Skeleton.WriteName("Recipe: GetTeleportRecipe() return: mold");
         Skeleton.tab--;
+        Skeleton.WriteName("Recipe: GetTeleportRecipe() return: mold");
         return mold;
     }
 
@@ -36,8 +36,8 @@ public class Recipe {
         mold.add(coal);
         mold.add(uran);
 
-        Skeleton.WriteName("Recipe: GetRobotRecipe() return: mold");
         Skeleton.tab--;
+        Skeleton.WriteName("Recipe: GetRobotRecipe() return: mold");
 
         return mold;
     }
