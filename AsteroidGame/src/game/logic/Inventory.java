@@ -7,52 +7,85 @@ public class Inventory {
     private ArrayList<Teleport> teleports;
 
     public Inventory() {
-        System.out.println("Inventory()\n");
+        Skeleton.WriteName("Inventory: Inventory()");
+        Skeleton.tab++;
 
         materials = new ArrayList<Material>();
         teleports = new ArrayList<Teleport>();
+
+        Skeleton.tab--;
     }
 
     public void AddMaterial(Material m) {
-        System.out.println("Inventory: AddMaterial(material)\n");
+        Skeleton.WriteName("Inventory: AddMaterial(material)");
+        Skeleton.tab++;
 
         materials.add(m);
+
+        Skeleton.tab--;
     }
     public void RemoveMaterial(Material m) {
-        System.out.println("Inventory: RemoveMaterial(material)\n");
+        Skeleton.WriteName("Inventory: RemoveMaterial(material)");
+        Skeleton.tab++;
 
         materials.remove(m);
+
+        Skeleton.tab--;
     }
     public void AddTeleport(Teleport t) {
-        System.out.println("Inventory: AddTeleport(teleport)\n");
-
+        Skeleton.WriteName("Inventory: AddTeleport(teleport)");
+        Skeleton.tab++;
+        t.SetInventory(this);
         teleports.add(t);
+
+        Skeleton.tab--;
     }
     public void RemoveTeleport(Teleport t) {
-        System.out.println("Inventory: RemoveTeleport(teleport)\n");
+        Skeleton.WriteName("Inventory: RemoveTeleport(teleport)");
+        Skeleton.tab++;
 
         teleports.remove(t);
+
+        Skeleton.tab--;
     }
     public ArrayList<Material> GetMaterials() {
-        System.out.println("Inventory: GetMaterials()\n");
+        Skeleton.WriteName("Inventory: GetMaterials()");
+        Skeleton.tab++;
+
+        Skeleton.WriteName("Inventory: GetMaterials() return: materials");
+        Skeleton.tab--;
 
         return materials;
     }
     public boolean IsMaterialSlotFull() {
-        System.out.println("Inventory: IsMaterialSlotFull()\n");
+        Skeleton.WriteName("Inventory: IsMaterialSlotFull()");
+        Skeleton.tab++;
 
-        return materials.size() == 10;
+        boolean rt = materials.size() == 10;
+
+        Skeleton.WriteName("Inventory: IsMaterialSlotFull() return: " + rt);
+        Skeleton.tab--;
+
+        return rt;
     }
     public boolean IsTeleportSlotEmpty() {
-        System.out.println("Inventory: IsTeleportSlotEmpty()\n");
+        Skeleton.WriteName("Inventory: IsTeleportSlotEmpty()");
+        Skeleton.tab++;
 
-        return teleports.size() == 0;
+        boolean rt = teleports.size() == 0;
+
+        Skeleton.WriteName("Inventory: IsTeleportSlotEmpty() return: " + rt);
+        Skeleton.tab--;
+
+        return  rt;
     }
     public void Clear() {
-        System.out.println("Inventory: Clear()\n");
+        Skeleton.WriteName("Inventory: Clear()");
+        Skeleton.tab++;
 
         for(Material m : materials)
             m.Disintegrate();
         if((teleports.size() != 0)) teleports.get(0).ExplodeWithPair();
+        Skeleton.tab--;
     }
 }

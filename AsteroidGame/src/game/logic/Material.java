@@ -18,9 +18,10 @@ public abstract class Material implements Placeable{
         Skeleton.WriteName("\t" + name + ": Deploy(a)");
         Skeleton.tab++;
         if(a.AddMaterial(this)) {
-                ///coming soon
+            return true;
         }
         Skeleton.tab--;
+        return false;
     }
     /*
     absztrakt interact, mindegyik osztaly overriderolja
