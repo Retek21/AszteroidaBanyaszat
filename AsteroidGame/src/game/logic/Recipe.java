@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Recipe {
     public static ArrayList<Material> GetTeleportRecipe() {
-        System.out.println("Recipe: GetTeleportRecipe()\n");
+        Skeleton.WriteName("Recipe: GetTeleportRecipe()");
+        Skeleton.tab++;
 
         Iron iron1 = new Iron();
         Iron iron2 = new Iron();
@@ -16,11 +17,15 @@ public class Recipe {
         mold.add(iron2);
         mold.add(ice);
         mold.add(uran);
+
+        Skeleton.WriteName("Recipe: GetTeleportRecipe() return: mold");
+        Skeleton.tab--;
         return mold;
     }
 
     public static ArrayList<Material> GetRobotRecipe() {
-        System.out.println("Recipe: GetRobotRecipe()\n");
+        Skeleton.WriteName("Recipe: GetRobotRecipe()");
+        Skeleton.tab++;
 
         Iron iron = new Iron();
         Coal coal = new Coal();
@@ -30,6 +35,10 @@ public class Recipe {
         mold.add(iron);
         mold.add(coal);
         mold.add(uran);
+
+        Skeleton.WriteName("Recipe: GetRobotRecipe() return: mold");
+        Skeleton.tab--;
+
         return mold;
     }
 }
