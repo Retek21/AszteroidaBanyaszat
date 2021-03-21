@@ -12,7 +12,7 @@ public class Skeleton {
     }
 
     //Attributes for testing may be added here:
-    Asteroidfield asteroidfield;
+    /*Asteroidfield asteroidfield;
     Asteroid asteroid1;
     Asteroid asteroid2;
     Teleport teleport1;
@@ -22,7 +22,7 @@ public class Skeleton {
     Coal coal;
     Iron iron;
     Uranium uranium;
-    Ice ice;
+    Ice ice;*/
 
 
     //the methods of the test class should follow the given format:
@@ -32,59 +32,74 @@ public class Skeleton {
     }*/
     //should always be public void
     public void DeleteLaterTestExample(){
-        asteroidfield=new Asteroidfield();
-        asteroid1=new Asteroid(3,false,new Coal(),asteroidfield);
+        Asteroidfield asteroidfield =new Asteroidfield();
+        Asteroid asteroid1=new Asteroid(3,false,new Coal(),asteroidfield);
         asteroidfield.AddAsteroid(asteroid1);
         System.out.println("This is an example.");
     }
 
+    //Tests Settler places teleport
     public void SettlerPlacesTeleport(){
-        settler = new Settler();
-        inventory = new Inventory();
+
+        //INITIALIZATIONS
+        Settler settler = new Settler();
+        Inventory inventory = new Inventory();
         settler.SetInventory(inventory);
-        teleport1 = new Teleport();
+        Teleport teleport1 = new Teleport();
         inventory.AddTeleport(teleport1);
-        asteroid1 = new Asteroid();
+        Asteroid asteroid1 = new Asteroid();
         asteroid1.AddEntity(settler);
 
+        //Call function
         settler.PlaceTeleport(teleport1);
     }
 
+    //Tests Settler tries to place material into full asteroid
     public void SettlerTriesToPlaceMaterialIntoFullAsteroid(){
-        settler = new Settler();
-        inventory = new Inventory();
-        asteroid1 = new Asteroid();
-        coal = new Coal();
-        iron = new Iron();
+
+        //INITIALIZATIONS
+        Settler settler = new Settler();
+        Inventory inventory = new Inventory();
+        Asteroid asteroid1 = new Asteroid();
+        Coal coal = new Coal();
+        Iron iron = new Iron();
         settler.SetInventory(inventory);
         inventory.AddMaterial(coal);
         asteroid1.AddEntity(settler);
         asteroid1.AddMaterial(iron);
 
+        //Call function
         settler.PlaceMaterial(coal);
     }
 
+    //Tests Settler places coal
     public void SettlerPlacesCoal(){
-        settler = new Settler();
-        inventory = new Inventory();
-        coal = new Coal();
-        asteroid1 = new Asteroid();
+
+        //INITIALIZATIONS
+        Settler settler = new Settler();
+        Inventory inventory = new Inventory();
+        Coal coal = new Coal();
+        Asteroid asteroid1 = new Asteroid();
         settler.SetInventory(inventory);
         inventory.AddMaterial(coal);
         asteroid1.AddEntity(settler);
 
+        //Call function
         settler.PlaceMaterial(coal);
     }
 
+    //Tests Settler places uranium
     public void SettlerPlacesUranium(){
-        settler = new Settler();
-        inventory = new Inventory();
-        uranium = new Uranium();
-        asteroid1 = new Asteroid();
-        teleport1 = new Teleport();
-        teleport2 = new Teleport();
-        asteroid2 = new Asteroid();
-        asteroidfield = new Asteroidfield();
+
+        //INITIALIZATIONS
+        Settler settler = new Settler();
+        Inventory inventory = new Inventory();
+        Uranium uranium = new Uranium();
+        Asteroid asteroid1 = new Asteroid();
+        Teleport teleport1 = new Teleport();
+        Teleport teleport2 = new Teleport();
+        Asteroid asteroid2 = new Asteroid();
+        Asteroidfield asteroidfield = new Asteroidfield();
 
         asteroid1.AddEntity(settler);
         settler.SetInventory(inventory);
@@ -98,19 +113,24 @@ public class Skeleton {
         asteroid1.AddNeighbour(asteroid2);
         asteroid1.SetSunnearness(true);
 
+        //Call function
         settler.PlaceMaterial(uranium);
     }
 
+    //Tests Settler places ice
     public void SettlerPlacesIce(){
-        settler = new Settler();
-        inventory = new Inventory();
-        ice = new Ice();
-        asteroid1 = new Asteroid();
+
+        //INITIALIZATIONS
+        Settler settler = new Settler();
+        Inventory inventory = new Inventory();
+        Ice ice = new Ice();
+        Asteroid asteroid1 = new Asteroid();
 
         settler.SetInventory(inventory);
         inventory.AddMaterial(ice);
         asteroid1.AddEntity(settler);
 
+        //Call function
         settler.PlaceMaterial(ice);
     }
 }
