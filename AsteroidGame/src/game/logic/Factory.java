@@ -59,7 +59,7 @@ public class Factory {
         Skeleton.WriteName("Factory: CreateRobot(inventory)");
         Skeleton.tab++;
 
-        ArrayList<Material> mold = Recipe.GetTeleportRecipe();
+        ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
         boolean got_all = false;
@@ -83,10 +83,12 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+            Robot robot = new Robot();
 
-            return new Robot();
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: robot");
+
+            return robot;
         }
         else {
             Skeleton.tab--;

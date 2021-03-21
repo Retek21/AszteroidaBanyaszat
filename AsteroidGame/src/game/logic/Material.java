@@ -14,8 +14,8 @@ public abstract class Material implements Placeable{
    Deploy ezen meg kellene gondolkodni
     */
     @Override
-    public void Deploy(Asteroid a){
-        Skeleton.WriteName("\t" + name + ": Deploy(a)");
+    public boolean Deploy(Asteroid a){
+        Skeleton.WriteName(name + ": Deploy(a)");
         Skeleton.tab++;
         if(a.AddMaterial(this)) {
             return true;
@@ -27,7 +27,7 @@ public abstract class Material implements Placeable{
     absztrakt interact, mindegyik osztaly overriderolja
      */
     public void Interact(Asteroid a){
-        Skeleton.WriteName("\t" + name + ": Interact(a)");
+        Skeleton.WriteName(name + ": Interact(a)");
     }
     /*
     Egy masik anyaggal hasonlitja ossze magat
@@ -35,16 +35,16 @@ public abstract class Material implements Placeable{
      */
     public Boolean CompareMaterial(Material m){
         if(m.name.compareTo(name) == 0) {
-            Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: true");
+            Skeleton.WriteName(name + ": Comparematerial(" + m.name +") return: true");
             return true;
         }
-        Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: false");
+        Skeleton.WriteName(name + ": Comparematerial(" + m.name +") return: false");
         return false;
     }
     /*
     Jelez a controllernek, hogy kikerult a jatekbol
      */
     public void Disintegrate(){
-        Skeleton.WriteName("\t" + name + ": Disintegrate");
+        Skeleton.WriteName(name + ": Disintegrate()");
     }
 }

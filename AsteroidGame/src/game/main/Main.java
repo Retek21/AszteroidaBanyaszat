@@ -27,6 +27,7 @@ public class Main {
             Skeleton.WriteName("[5] RobotDrillsAsteroidWithIce()");
             Skeleton.WriteName("[6] RobotDrillsAsteroidWithCoal()");
 
+
             Skeleton.tab--;
             Skeleton.WriteName("[MENU] CHOOSE A TEST NUMBER:");
             Skeleton.tab++;
@@ -38,9 +39,18 @@ public class Main {
                 case 1:s.SettlerDrillsAsteroidWithUranium(); break;
                 case 2:s.SettlerDrillsAsteroidWithIce(); break;
                 case 3:s.SettlerDrillsAsteroidWithCoal(); break;
-                case 4: s.RobotDrillsAsteroidWithUranium(); break;
+                case 4:s.RobotDrillsAsteroidWithUranium(); break;
                 case 5:s.RobotDrillsAsteroidWithIce(); break;
                 case 6:s.RobotDrillsAsteroidWithCoal(); break;
+
+                case 7:s.SettlerTriesToCraftRobot(); break;
+                case 8:s.SettlerCraftsRobot(); break;
+                case 9:s.SettlerTriesToCraftTeleports(); break;
+                case 10:s.SettlerTriesToCraftTeleportWithoutFreeSlot(); break;
+                case 11:s.SettlerCraftsTeleports(); break;
+                case 12:s.SettlerTriesToMineEmptyAsteroid(); break;
+                case 13:s.SettlerTriesToMineWithInventoryFull(); break;
+                case 14:s.SettlerMines(); break;
             }
             Skeleton.tab--;
         }

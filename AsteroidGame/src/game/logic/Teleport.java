@@ -19,7 +19,7 @@ public class Teleport implements Whereabout, Placeable{
     //Teleport konstruktora
     public Teleport()
     {
-        Skeleton.WriteName("Teleport()");
+        Skeleton.WriteName("Teleport: Teleport()");
     }
 
     //Amikor egy entitás ide lép ez hívódik meg.
@@ -27,7 +27,7 @@ public class Teleport implements Whereabout, Placeable{
     //Visszatér a művelet sikerességével.
     public boolean AddEntity(Entity e)
     {
-        Skeleton.WriteName("\nTeleport: AddEntity(Entity e)");
+        Skeleton.WriteName("Teleport: AddEntity(Entity e)");
         Skeleton.tab++;
         //ha a pár még nincs lerakva false-val tér vissza
         if (pairready)
@@ -48,7 +48,7 @@ public class Teleport implements Whereabout, Placeable{
     //Ilyenkor a párjával együtt felrobbanást végző függvényt meghívja a teleport.
     public void NearbyExplosion(Asteroid a)
     {
-        Skeleton.WriteName("\nTeleport: NearbyExplosion(Asteroid a)");
+        Skeleton.WriteName("Teleport: NearbyExplosion(Asteroid a)");
         Skeleton.tab++;
         ExplodeWithPair();
         Skeleton.tab--;
@@ -57,7 +57,7 @@ public class Teleport implements Whereabout, Placeable{
     //A párjával együtt felrobban a teleport.
     //Miután meghívta a párjára a felrobbanást végző metódust, magával is ezt teszi.
     public void ExplodeWithPair(){
-        Skeleton.WriteName("\nTeleport: ExplodeWithPair()");
+        Skeleton.WriteName("Teleport: ExplodeWithPair()");
         Skeleton.tab++;
         if(pair != null)
             pair.Explode();
@@ -70,7 +70,7 @@ public class Teleport implements Whereabout, Placeable{
     //Ha aszteroida szomszédságában volt, akkor kiveszi magát az aszteroida szomszédjai közül.
     public void Explode()
     {
-        Skeleton.WriteName("\nTeleport: Explode()");
+        Skeleton.WriteName("Teleport: Explode()");
         Skeleton.tab++;
         if(asteroid != null)
             asteroid.RemoveNeighbour(this);
@@ -82,7 +82,7 @@ public class Teleport implements Whereabout, Placeable{
     //Beállítja a megadott Inventory-t a sajátjának.
     public void SetInventory(Inventory i)
     {
-        Skeleton.WriteName("\nTeleport: SetInventory(Inventory i)");
+        Skeleton.WriteName("Teleport: SetInventory(Inventory i)");
         Skeleton.tab++;
         inventory = i;
         Skeleton.tab--;
@@ -91,7 +91,7 @@ public class Teleport implements Whereabout, Placeable{
     //Egy aszteroida szomszédságába települ a teleport.
     public boolean Deploy(Asteroid a)
     {
-        Skeleton.WriteName("\nTeleport: Deploy(Asteroid a)");
+        Skeleton.WriteName("Teleport: Deploy(Asteroid a)");
         Skeleton.tab++;
         a.AddNeighbour(this);
         asteroid = a;
@@ -108,7 +108,7 @@ public class Teleport implements Whereabout, Placeable{
     //Beállítja a megadott teleportot a párjának
     public void SetPair(Teleport t)
     {
-        Skeleton.WriteName("\nTeleport: SetPair(Teleport t)");
+        Skeleton.WriteName("Teleport: SetPair(Teleport t)");
         Skeleton.tab++;
         pair = t;
         //Mivel ez elkészítéskor hívódik meg még nincs lerakva a párja
@@ -119,7 +119,7 @@ public class Teleport implements Whereabout, Placeable{
     //Beállítja, hogy a pár le van-e telepítve
     public void SetPairReady(boolean b)
     {
-        Skeleton.WriteName("\nTeleport: SetPairReady(boolean b)");
+        Skeleton.WriteName("Teleport: SetPairReady(boolean b)");
         Skeleton.tab++;
         pairready = b;
         Skeleton.tab--;

@@ -628,7 +628,7 @@ public class Skeleton {
 
         s.CraftRobot();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerCraftsRobot() {
@@ -654,7 +654,7 @@ public class Skeleton {
 
         s.CraftRobot();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerTriesToCraftTeleports() {
@@ -678,7 +678,7 @@ public class Skeleton {
 
         s.CraftTeleport();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerTriesToCraftTeleportWithoutFreeSlot() {
@@ -697,7 +697,7 @@ public class Skeleton {
 
         s.CraftTeleport();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerCraftsTeleports() {
@@ -723,7 +723,7 @@ public class Skeleton {
 
         s.CraftTeleport();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerTriesToMineEmptyAsteroid() {
@@ -742,7 +742,7 @@ public class Skeleton {
 
         s.Mine();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerTriesToMineWithInventoryFull() {
@@ -761,7 +761,7 @@ public class Skeleton {
 
         s.Mine();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerMines() {
@@ -787,7 +787,7 @@ public class Skeleton {
 
         s.Mine();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     //Tests Settler places ice
