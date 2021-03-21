@@ -35,7 +35,7 @@ public class Inventory {
     public void AddTeleport(Teleport t) {
         Skeleton.WriteName("Inventory: AddTeleport(teleport)");
         Skeleton.tab++;
-
+        t.SetInventory(this);
         teleports.add(t);
 
         Skeleton.tab--;

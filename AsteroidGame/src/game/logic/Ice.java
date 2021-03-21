@@ -6,6 +6,10 @@ public class Ice extends Material{
     /*
     Interact az aszteroidaval eltunik rola
      */
+    public Ice(){
+        Skeleton.WriteName("Ice: Ice()");
+        name = "Ice";
+    }
     @Override
     public void Interact(Asteroid a) {
         super.Interact(a);

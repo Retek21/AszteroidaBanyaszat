@@ -9,38 +9,42 @@ public abstract class Material implements Placeable{
      */
    protected String name;
 
+
    /*
    Deploy ezen meg kellene gondolkodni
     */
     @Override
     public void Deploy(Asteroid a){
-        System.out.println("\t" + name + ": Deploy(a)");
+        Skeleton.WriteName("\t" + name + ": Deploy(a)");
+        Skeleton.tab++;
         if(a.AddMaterial(this)) {
-                ///coming soon
+            return true;
         }
+        Skeleton.tab--;
+        return false;
     }
     /*
     absztrakt interact, mindegyik osztaly overriderolja
      */
     public void Interact(Asteroid a){
-        System.out.println("\t" + name + ": Interact(a)");
+        Skeleton.WriteName("\t" + name + ": Interact(a)");
     }
     /*
     Egy masik anyaggal hasonlitja ossze magat
-    @return Boolea - osszehasonlitas eredmenye
+    @return Boolean - osszehasonlitas eredmenye
      */
     public Boolean CompareMaterial(Material m){
         if(m.name.compareTo(name) == 0) {
-            System.out.println("\t" + name + ": Comparematerial(" + m.name +") return: true");
+            Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: true");
             return true;
         }
-        System.out.println("\t" + name + ": Comparematerial(" + m.name +") return: false");
+        Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: false");
         return false;
     }
     /*
     Jelez a controllernek, hogy kikerult a jatekbol
      */
     public void Disintegrate(){
-        System.out.println("\t" + name + ": Disintegrate");
+        Skeleton.WriteName("\t" + name + ": Disintegrate");
     }
 }
