@@ -4,5 +4,5 @@ package game.logic;
 //PLaceable class for objects that can be placed
 public interface Placeable {
     //Deploy the object into the asteroid
-    public void Deploy(Asteroid a);
+    public boolean Deploy(Asteroid a);
 }

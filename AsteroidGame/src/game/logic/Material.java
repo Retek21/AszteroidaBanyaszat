@@ -13,11 +13,12 @@ public abstract class Material implements Placeable{
    Deploy ezen meg kellene gondolkodni
     */
     @Override
-    public void Deploy(Asteroid a){
+    public boolean Deploy(Asteroid a){
         System.out.println("\t" + name + ": Deploy(a)");
         if(a.AddMaterial(this)) {
-                ///coming soon
+            return true;
         }
+        return false;
     }
     /*
     absztrakt interact, mindegyik osztaly overriderolja
