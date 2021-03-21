@@ -47,8 +47,6 @@ public class Settler extends Entity{
             ArrayList<Teleport> teleports;
             try {
                 teleports = factory.CreateTeleport(inventory);
-                teleports.get(0).SetInventory(inventory);
-                teleports.get(1).SetInventory(inventory);
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
             } catch (Exception e) { }

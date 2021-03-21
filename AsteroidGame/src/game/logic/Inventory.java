@@ -25,7 +25,7 @@ public class Inventory {
     }
     public void AddTeleport(Teleport t) {
         System.out.println("Inventory: AddTeleport(teleport)\n");
-
+        t.SetInventory(this);
         teleports.add(t);
     }
     public void RemoveTeleport(Teleport t) {
