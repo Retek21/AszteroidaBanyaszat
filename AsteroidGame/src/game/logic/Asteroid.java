@@ -104,7 +104,7 @@ public class Asteroid implements Whereabout{
     public boolean AddMaterial(Material material){
         Skeleton.WriteName("Asteroid: AddMaterial(material)");
         //if the core is empty the method succeeds, and sets the "empty" flag to false
-        if(empty){
+        if(empty&&layers==0){
             this.material=material;
             empty=false;
             Skeleton.tab++;
@@ -124,11 +124,18 @@ public class Asteroid implements Whereabout{
     //removes the material from the core, and sets the "empty" flag to false
     public Material RemoveMaterial(){
         Skeleton.WriteName("Asteroid: RemoveMaterial()");
-        Skeleton.WriteName("Asteroid: RemoveMaterial() return:material");
-        if(layers>0)return null;
+
+        if(layers>0 || material == null) {
+            Skeleton.WriteName("Asteroid: RemoveMaterial() return: null");
+            return null;
+        }
+
         Material tmp=material;
         material=null;
         empty=true;
+
+        Skeleton.WriteName("Asteroid: RemoveMaterial() return: material");
+
         return tmp;
     }
 

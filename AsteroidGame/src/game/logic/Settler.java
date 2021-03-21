@@ -49,13 +49,13 @@ public class Settler extends Entity{
         if(inventory.IsTeleportSlotEmpty() == true){
             ArrayList<Teleport> teleports;
             try {
-                Skeleton.tab++;
+
 
                 teleports = factory.CreateTeleport(inventory);
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
 
-                Skeleton.tab--;
+
             } catch (Exception e) { }
         }
         Skeleton.tab--;
@@ -69,12 +69,10 @@ public class Settler extends Entity{
         Robot robot;
         robot = factory.CreateRobot(inventory);
 
-        Skeleton.tab++;
         if (robot != null) {
             //place robot after it is crafted
-            PlaceRobot(robot);
+            robot.Deploy(asteroid);
         }
-        Skeleton.tab--;
         Skeleton.tab--;
     }
 
@@ -82,8 +80,8 @@ public class Settler extends Entity{
     public void Mine(){
         //if there is enough storage in the inventory, the settler mines
         Skeleton.WriteName("Settler: Mine()");
+        Skeleton.tab++;
         if(!inventory.IsMaterialSlotFull()){
-            Skeleton.tab++;
             Material m = asteroid.RemoveMaterial();
             if (m != null)
                 inventory.AddMaterial(m);
@@ -104,24 +102,20 @@ public class Settler extends Entity{
     public void PlaceMaterial(Material m){
         Skeleton.WriteName("Settler: PlaceMaterial(Material m)");
         Skeleton.tab++;
-            m.Deploy(asteroid);             //Deploy visszatérés még kérdéses
+           boolean success =  m.Deploy(asteroid);
+        if(success)
             inventory.RemoveMaterial(m);
-            Skeleton.tab--;
+        Skeleton.tab--;
     }
 
-    //places robot on asteroid
-    public void PlaceRobot(Robot r){
-        Skeleton.WriteName("Settler: PlaceRobot(Robot r)");
-        r.Deploy(asteroid);
-    }
 
     //Settler dies
     @Override
     public void Die(){
         Skeleton.WriteName("Settler: Die()");
         Skeleton.tab++;
-        super.Die();
         inventory.Clear();
+        super.Die();
         Skeleton.tab--;
     }
 
