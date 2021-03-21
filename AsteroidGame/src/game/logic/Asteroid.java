@@ -105,6 +105,7 @@ public class Asteroid implements Whereabout{
         Skeleton.WriteName("Asteroid: AddMaterial(material)");
         //if the core is empty the method succeeds, and sets the "empty" flag to false
         if(empty && layers == 0){
+
             this.material=material;
             empty=false;
             Skeleton.tab++;

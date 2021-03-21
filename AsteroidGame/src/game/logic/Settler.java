@@ -50,9 +50,11 @@ public class Settler extends Entity{
             ArrayList<Teleport> teleports;
             try {
 
+
                 teleports = factory.CreateTeleport(inventory);
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
+
 
             } catch (Exception e) { }
         }
@@ -69,7 +71,8 @@ public class Settler extends Entity{
 
         if (robot != null) {
             //place robot after it is crafted
-            robot.Deploy(this.asteroid);
+
+            robot.Deploy(asteroid);
         }
 
         Skeleton.tab--;
@@ -101,24 +104,20 @@ public class Settler extends Entity{
     public void PlaceMaterial(Material m){
         Skeleton.WriteName("Settler: PlaceMaterial(Material m)");
         Skeleton.tab++;
-            m.Deploy(asteroid);             //Deploy visszatérés még kérdéses
+           boolean success =  m.Deploy(asteroid);
+        if(success)
             inventory.RemoveMaterial(m);
-            Skeleton.tab--;
+        Skeleton.tab--;
     }
 
-    //places robot on asteroid
-    public void PlaceRobot(Robot r){
-        Skeleton.WriteName("Settler: PlaceRobot(Robot r)");
-        r.Deploy(asteroid);
-    }
 
     //Settler dies
     @Override
     public void Die(){
         Skeleton.WriteName("Settler: Die()");
         Skeleton.tab++;
-        super.Die();
         inventory.Clear();
+        super.Die();
         Skeleton.tab--;
     }
 
