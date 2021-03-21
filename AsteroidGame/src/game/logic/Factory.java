@@ -4,8 +4,13 @@ import java.util.ArrayList;
 
 public class Factory {
 
+    public Factory() {
+        Skeleton.WriteName("Factory: Factory()");
+    }
+
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
-        System.out.println("Factory: CreateTeleport(inventory)\n");
+        Skeleton.WriteName("Factory: CreateTeleport(inventory)");
+        Skeleton.tab++;
 
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
@@ -38,15 +43,23 @@ public class Factory {
             teleports.add(t1);
             teleports.add(t2);
 
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
             return teleports;
         }
-        else { return null; }
+        else {
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+
+            return null;
+        }
     }
 
     public Robot CreateRobot(Inventory i) {
-        System.out.println("Factory: CreateRobot(inventory)\n");
+        Skeleton.WriteName("Factory: CreateRobot(inventory)");
+        Skeleton.tab++;
 
-        ArrayList<Material> mold = Recipe.GetTeleportRecipe();
+        ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
         boolean got_all = false;
@@ -70,8 +83,18 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            return new Robot();
+            Robot robot = new Robot();
+
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: robot");
+
+            return robot;
         }
-        else { return null; }
+        else {
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+
+            return null;
+        }
     }
 }
