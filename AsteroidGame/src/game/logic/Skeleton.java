@@ -11,39 +11,13 @@ public class Skeleton {
         System.out.print(s + "\n");
     }
 
-    //Attributes for testing may be added here:
-    Asteroidfield asteroidfield;
-    Asteroid asteroid1;
-    Asteroid asteroid2;
-    Teleport teleport;
-    Teleport pair;
-    Settler settler;
-    Inventory inventory;
-    Coal coal;
-    Iron iron;
-    Uranium uranium;
-    Ice ice;
-    Robot robot;
-
-    //the methods of the test class should follow the given format:
-    /*
-    public void NameOfTheUseCase(){
-        CODE HERE
-    }*/
-    //should always be public void
-    public void DeleteLaterTestExample(){
-        asteroidfield=new Asteroidfield();
-        asteroid1=new Asteroid(3,false,new Coal(),asteroidfield);
-        asteroidfield.AddAsteroid(asteroid1);
-        System.out.println("This is an example.");
-    }
     public void RobotMovesThroughTeleport(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        teleport = new Teleport();
-        pair = new Teleport();
-        robot = new Robot();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Teleport teleport = new Teleport();
+        Teleport pair = new Teleport();
+        Robot robot = new Robot();
 
         asteroid1.AddEntity(robot);
         teleport.SetPair(pair);
@@ -56,10 +30,10 @@ public class Skeleton {
     }
 
     public void RobotMovesToAsteroid(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        robot = new Robot();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Robot robot = new Robot();
 
         asteroid1.AddNeighbour(asteroid2);
         robot.Deploy(asteroid1);
@@ -69,12 +43,12 @@ public class Skeleton {
     }
 
     public void RobotTriesToMoveTroughTeleport(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        teleport = new Teleport();
-        pair = new Teleport();
-        robot = new Robot();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Teleport teleport = new Teleport();
+        Teleport pair = new Teleport();
+        Robot robot = new Robot();
 
         robot.Deploy(asteroid1);
         teleport.SetPair(pair);
@@ -85,12 +59,12 @@ public class Skeleton {
     }
 
     public void SettlerMovesThroughTeleport(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        teleport = new Teleport();
-        pair = new Teleport();
-        settler = new Settler();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Teleport teleport = new Teleport();
+        Teleport pair = new Teleport();
+        Settler settler = new Settler();
 
         asteroid1.AddEntity(settler);
         teleport.SetPair(pair);
@@ -103,13 +77,13 @@ public class Skeleton {
     }
 
     public void SettlerMovesToAsteroid(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        settler = new Settler();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Settler settler = new Settler();
 
         asteroid1.AddNeighbour(asteroid2);
-        asteroid1.AddEntity(robot);
+        asteroid1.AddEntity(settler);
         asteroid2.AddNeighbour(asteroid1);
         settler.SetAsteroid(asteroid1);
 
@@ -117,18 +91,18 @@ public class Skeleton {
     }
 
     public void SettlerTriesToMoveTroughTeleport(){
-        asteroidfield = new Asteroidfield();
-        asteroid1 = new Asteroid();
-        asteroid2 = new Asteroid();
-        teleport = new Teleport();
-        pair = new Teleport();
-        settler = new Settler();
+        Asteroidfield asteroidfield = new Asteroidfield();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        Teleport teleport = new Teleport();
+        Teleport pair = new Teleport();
+        Settler settler = new Settler();
 
         settler.SetAsteroid(asteroid1);
         teleport.SetPair(pair);
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
-        robot.Move(0);
+        settler.Move(0);
     }
 }
