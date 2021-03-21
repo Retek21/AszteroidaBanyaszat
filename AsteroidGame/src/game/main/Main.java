@@ -42,15 +42,6 @@ public class Main {
                 case 4:s.RobotDrillsAsteroidWithUranium(); break;
                 case 5:s.RobotDrillsAsteroidWithIce(); break;
                 case 6:s.RobotDrillsAsteroidWithCoal(); break;
-
-                case 7:s.SettlerTriesToCraftRobot(); break;
-                case 8:s.SettlerCraftsRobot(); break;
-                case 9:s.SettlerTriesToCraftTeleports(); break;
-                case 10:s.SettlerTriesToCraftTeleportWithoutFreeSlot(); break;
-                case 11:s.SettlerCraftsTeleports(); break;
-                case 12:s.SettlerTriesToMineEmptyAsteroid(); break;
-                case 13:s.SettlerTriesToMineWithInventoryFull(); break;
-                case 14:s.SettlerMines(); break;
             }
             Skeleton.tab--;
         }
