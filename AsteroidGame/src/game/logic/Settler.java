@@ -71,8 +71,10 @@ public class Settler extends Entity{
 
         if (robot != null) {
             //place robot after it is crafted
+
             robot.Deploy(asteroid);
         }
+
         Skeleton.tab--;
     }
 

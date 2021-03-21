@@ -27,6 +27,7 @@ public class Main {
             Skeleton.WriteName("[5] RobotDrillsAsteroidWithIce()");
             Skeleton.WriteName("[6] RobotDrillsAsteroidWithCoal()");
 
+
             Skeleton.tab--;
             Skeleton.WriteName("[MENU] CHOOSE A TEST NUMBER:");
             Skeleton.tab++;
@@ -38,7 +39,7 @@ public class Main {
                 case 1:s.SettlerDrillsAsteroidWithUranium(); break;
                 case 2:s.SettlerDrillsAsteroidWithIce(); break;
                 case 3:s.SettlerDrillsAsteroidWithCoal(); break;
-                case 4: s.RobotDrillsAsteroidWithUranium(); break;
+                case 4:s.RobotDrillsAsteroidWithUranium(); break;
                 case 5:s.RobotDrillsAsteroidWithIce(); break;
                 case 6:s.RobotDrillsAsteroidWithCoal(); break;
 

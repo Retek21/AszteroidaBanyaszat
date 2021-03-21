@@ -43,13 +43,13 @@ public class Factory {
             teleports.add(t1);
             teleports.add(t2);
 
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
             Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
             return teleports;
         }
         else {
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
             Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
 
             return null;
         }
@@ -59,7 +59,7 @@ public class Factory {
         Skeleton.WriteName("Factory: CreateRobot(inventory)");
         Skeleton.tab++;
 
-        ArrayList<Material> mold = Recipe.GetTeleportRecipe();
+        ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
         boolean got_all = false;
@@ -83,14 +83,16 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
-            Skeleton.tab--;
+            Robot robot = new Robot();
 
-            return new Robot();
+            Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: robot");
+
+            return robot;
         }
         else {
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
             Skeleton.tab--;
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
 
             return null;
         }

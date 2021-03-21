@@ -816,7 +816,7 @@ public class Skeleton {
 
         s.Mine();
 
-        System.out.printf("[END]");
+        System.out.printf("[END]\n");
     }
 
     public void SettlerMines() {
@@ -840,6 +840,10 @@ public class Skeleton {
         int layers = in.nextInt();
         a.SetLayer(layers);
 
+
+
+        System.out.printf("[END]\n");
+    
 
 
         s.Mine();

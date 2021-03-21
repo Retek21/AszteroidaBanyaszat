@@ -35,10 +35,10 @@ public abstract class Material implements Placeable{
      */
     public Boolean CompareMaterial(Material m){
         if(m.name.compareTo(name) == 0) {
-            Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: true");
+            Skeleton.WriteName(name + ": Comparematerial(" + m.name +") return: true");
             return true;
         }
-        Skeleton.WriteName("\t" + name + ": Comparematerial(" + m.name +") return: false");
+        Skeleton.WriteName(name + ": Comparematerial(" + m.name +") return: false");
         return false;
     }
     /*
