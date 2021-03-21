@@ -4,8 +4,13 @@ import java.util.ArrayList;
 
 public class Factory {
 
+    public Factory() {
+        Skeleton.WriteName("Factory: Factory()");
+    }
+
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
-        System.out.println("Factory: CreateTeleport(inventory)\n");
+        Skeleton.WriteName("Factory: CreateTeleport(inventory)");
+        Skeleton.tab++;
 
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
@@ -38,13 +43,21 @@ public class Factory {
             teleports.add(t1);
             teleports.add(t2);
 
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
+            Skeleton.tab--;
             return teleports;
         }
-        else { return null; }
+        else {
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+            Skeleton.tab--;
+
+            return null;
+        }
     }
 
     public Robot CreateRobot(Inventory i) {
-        System.out.println("Factory: CreateRobot(inventory)\n");
+        Skeleton.WriteName("Factory: CreateRobot(inventory)");
+        Skeleton.tab++;
 
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
@@ -70,8 +83,16 @@ public class Factory {
                 m.Disintegrate();
             }
 
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+            Skeleton.tab--;
+
             return new Robot();
         }
-        else { return null; }
+        else {
+            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
+            Skeleton.tab--;
+
+            return null;
+        }
     }
 }
