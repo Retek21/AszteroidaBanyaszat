@@ -18,8 +18,11 @@ public class Robot extends Entity implements Placeable{
         if(asteroid.GetLayer() == 0){
             Skeleton.tab++;
             int n = asteroid.GetNumberOfNeighbours();
-            int Random = (int)(Math.random()*n);
-            Move(Random);
+            if(n>0)
+            {
+                int Random = (int) (Math.random() * n);
+                Move(Random);
+            }
             Skeleton.tab--;
         }
         else {

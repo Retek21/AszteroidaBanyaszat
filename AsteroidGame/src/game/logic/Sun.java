@@ -16,7 +16,7 @@ public class Sun{
     //Ez a függvény hívja meg a nap aszteroidamezejéhez tartozó aszeroidákon a napvihar végbemenését.
     public void Sunstorm()
     {
-        Skeleton.WriteName("\nSun: Sunstorm()");
+        Skeleton.WriteName("Sun: Sunstorm()");
         Skeleton.tab++;
         ArrayList<Asteroid> asteroids = asteroidfield.GetAsteroids();
         for(int i=0; i<asteroids.size(); i++)

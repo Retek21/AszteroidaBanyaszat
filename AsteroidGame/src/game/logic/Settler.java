@@ -69,12 +69,10 @@ public class Settler extends Entity{
         Robot robot;
         robot = factory.CreateRobot(inventory);
 
-        Skeleton.tab++;
         if (robot != null) {
             //place robot after it is crafted
             PlaceRobot(robot);
         }
-        Skeleton.tab--;
         Skeleton.tab--;
     }
 
@@ -82,8 +80,8 @@ public class Settler extends Entity{
     public void Mine(){
         //if there is enough storage in the inventory, the settler mines
         Skeleton.WriteName("Settler: Mine()");
+        Skeleton.tab++;
         if(!inventory.IsMaterialSlotFull()){
-            Skeleton.tab++;
             Material m = asteroid.RemoveMaterial();
             if (m != null)
                 inventory.AddMaterial(m);
@@ -120,8 +118,8 @@ public class Settler extends Entity{
     public void Die(){
         Skeleton.WriteName("Settler: Die()");
         Skeleton.tab++;
-        super.Die();
         inventory.Clear();
+        super.Die();
         Skeleton.tab--;
     }
 

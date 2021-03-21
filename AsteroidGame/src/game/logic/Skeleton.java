@@ -316,8 +316,7 @@ public class Skeleton {
 
     public void AsteroidfieldMoves()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] ASTEROIDFIELD MOVES");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -337,17 +336,20 @@ public class Skeleton {
         a1.AddMaterial(iron);
         a2.AddMaterial(ice);
         a3.AddMaterial(u);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
+        Scanner sc=new Scanner(System.in);
+        WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
+        int layers=sc.nextInt();//reading the input (layers)
+        a1.SetLayer(layers);
+        a2.SetLayer(layers);
+        a3.SetLayer(layers);
         af.Rearrange();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     public void SunstormHitsAsteroidfield()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] SUNSTORM HITS ASTEROIDFIELD");
         Sun sun = new Sun();
         Asteroidfield af = new Asteroidfield();
         sun.AddAsteroidfield(af);
@@ -369,17 +371,19 @@ public class Skeleton {
         r2.Deploy(a2);
         Iron iron = new Iron();
         a1.AddMaterial(iron);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
+        Scanner sc=new Scanner(System.in);
+        WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
+        int layers=sc.nextInt();//reading the input (layers)
+        a1.SetLayer(layers);
+        a2.SetLayer(layers);
         sun.Sunstorm();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
-    public void LonelyAsteroidRxplodesWithRobotAndSettler()
+    public void LonelyAsteroidExplodesWithRobotAndSettler()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] LONELY ASTEROID EXPLODES WITH ROBOT AND SETTLER");
         Asteroidfield af = new Asteroidfield();
         Asteroid a = new Asteroid();
         af.AddAsteroid(a);
@@ -389,17 +393,14 @@ public class Skeleton {
         s.SetInventory(i);
         a.AddEntity(s);
         r.Deploy(a);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         a.Explode();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
-    public void AsteroidRxplodesWithRobotAndSettler()
+    public void AsteroidExplodesWithRobotAndSettler()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] ASTEROID EXPLODES WITH ROBOT AND SETTLER");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -419,32 +420,26 @@ public class Skeleton {
         Robot r = new Robot();
         a1.AddEntity(s);
         r.Deploy(a1);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     public void ControlRobot()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] CONTROL ROBOT");
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
         Robot r = new Robot();
         r.Deploy(a1);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         r.DoPhase();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     public void AsteroidExplodesWithTeleportTheOtherPairIsNearbyAnAsteroid()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS NEARBY AN ASTEROID");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -464,17 +459,14 @@ public class Skeleton {
         t2.SetPair(t1);
         t1.Deploy(a1);
         t2.Deploy(a2);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     public void AsteroidExplodesWithTeleportTheOtherPairIsInAnInventory()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS IN AN INVENTORY");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -495,17 +487,14 @@ public class Skeleton {
         t2.SetPair(t1);
         i.AddTeleport(t2);
         t1.Deploy(a1);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     public void SettlerDiesWithTeleportInInventory()
     {
-        WriteName("INITIALIZATION:");
-        tab++;
+        System.out.println("[START] SETTLER DIES WITH TELEPORT IN INVENTORY");
         Asteroid a = new Asteroid();
         Asteroid a2 = new Asteroid();
         a.AddNeighbour(a2);
@@ -520,11 +509,9 @@ public class Skeleton {
         i.AddTeleport(t);
         pair.Deploy(a);
         a2.AddEntity(s);
-        tab--;
-        WriteName("TESTCASE:");
-        tab++;
+        System.out.println("[LAUNCHING] Launching the test:");
         s.Die();
-        tab--;
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
 
