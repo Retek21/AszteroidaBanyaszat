@@ -104,7 +104,7 @@ public class Asteroid implements Whereabout{
     public boolean AddMaterial(Material material){
         Skeleton.WriteName("Asteroid: AddMaterial(material)");
         //if the core is empty the method succeeds, and sets the "empty" flag to false
-        if(empty && layers == 0){
+        if(empty && layers==0){
             this.material=material;
             empty=false;
             Skeleton.tab++;
@@ -183,7 +183,7 @@ public class Asteroid implements Whereabout{
         Skeleton.WriteName("Asteroid: OnFire()");
         Skeleton.tab++;
         //if the core is not empty and the layers>0 kills all entities
-        if(!empty && layers>0){
+        if(!empty || layers>0){
             for(int i=0;i< entities.size();i++)
                 entities.get(i).Die();
         }
