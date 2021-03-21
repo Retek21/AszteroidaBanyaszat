@@ -31,6 +31,8 @@ public class Skeleton {
 
     public void AsteroidfieldMoves()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -50,11 +52,17 @@ public class Skeleton {
         a1.AddMaterial(iron);
         a2.AddMaterial(ice);
         a3.AddMaterial(u);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         af.Rearrange();
+        tab--;
     }
 
     public void SunstormHitsAsteroidfield()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Sun sun = new Sun();
         Asteroidfield af = new Asteroidfield();
         sun.AddAsteroidfield(af);
@@ -76,11 +84,17 @@ public class Skeleton {
         r2.Deploy(a2);
         Iron iron = new Iron();
         a1.AddMaterial(iron);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         sun.Sunstorm();
+        tab--;
     }
 
     public void LonelyAsteroidRxplodesWithRobotAndSettler()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroidfield af = new Asteroidfield();
         Asteroid a = new Asteroid();
         af.AddAsteroid(a);
@@ -90,11 +104,17 @@ public class Skeleton {
         s.SetInventory(i);
         a.AddEntity(s);
         r.Deploy(a);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         a.Explode();
+        tab--;
     }
 
     public void AsteroidRxplodesWithRobotAndSettler()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -114,20 +134,32 @@ public class Skeleton {
         Robot r = new Robot();
         a1.AddEntity(s);
         r.Deploy(a1);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         a1.Explode();
+        tab--;
     }
 
     public void ControlRobot()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
         Robot r = new Robot();
         r.Deploy(a1);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         r.DoPhase();
+        tab--;
     }
 
     public void AsteroidExplodesWithTeleportTheOtherPairIsNearbyAnAsteroid()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -147,11 +179,17 @@ public class Skeleton {
         t2.SetPair(t1);
         t1.Deploy(a1);
         t2.Deploy(a2);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         a1.Explode();
+        tab--;
     }
 
     public void AsteroidExplodesWithTeleportTheOtherPairIsInAnInventory()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -172,11 +210,17 @@ public class Skeleton {
         t2.SetPair(t1);
         i.AddTeleport(t2);
         t1.Deploy(a1);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         a1.Explode();
+        tab--;
     }
 
     public void SettlerDiesWithTeleportInInventory()
     {
+        WriteName("INITIALIZATION:");
+        tab++;
         Asteroid a = new Asteroid();
         Asteroid a2 = new Asteroid();
         a.AddNeighbour(a2);
@@ -191,7 +235,11 @@ public class Skeleton {
         i.AddTeleport(t);
         pair.Deploy(a);
         a2.AddEntity(s);
+        tab--;
+        WriteName("TESTCASE:");
+        tab++;
         s.Die();
+        tab--;
     }
 
 
