@@ -41,6 +41,7 @@ public class Main {
                 case 4: s.RobotDrillsAsteroidWithUranium(); break;
                 case 5:s.RobotDrillsAsteroidWithIce(); break;
                 case 6:s.RobotDrillsAsteroidWithCoal(); break;
+
             }
             Skeleton.tab--;
         }
