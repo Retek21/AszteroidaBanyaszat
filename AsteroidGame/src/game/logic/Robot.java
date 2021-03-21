@@ -6,7 +6,7 @@ public class Robot extends Entity implements Placeable{
 
     //default constructor
     public Robot(){
-        System.out.printf("\tRobot()");
+       Skeleton.WriteName("Robot()");
     }
 
     //METHODS
@@ -16,18 +16,23 @@ public class Robot extends Entity implements Placeable{
     public void DoPhase(){
         System.out.printf("\tRobot: DoPhase()");
         if(asteroid.GetLayer() == 0){
+            Skeleton.tab++;
             int n = asteroid.GetNumberOfNeighbours();
             int Random = (int)(Math.random()*n);
             Move(Random);
+            Skeleton.tab--;
         }
-        else
+        else {
+            Skeleton.tab++;
             Drill();
+            Skeleton.tab--;
+        }
     }
 
     //Deploy robot on asteroid
     @Override
     public void Deploy(Asteroid a) {
-        System.out.printf("\tRobot: Deploy(Asteroid: a)");
+        Skeleton.WriteName("Robot: Deploy(Asteroid: a)");
         asteroid.AddEntity(this);
     }
 
@@ -35,7 +40,8 @@ public class Robot extends Entity implements Placeable{
     //robot blows up because of an explosion
     @Override
     public void BlowUp(){
-        System.out.printf("\tRobot: BlowUp()");
+        Skeleton.WriteName("Robot: BlowUp()");
+        Skeleton.tab++;
         if(asteroid.GetNumberOfNeighbours() == 0)
             Die();
         else{
@@ -43,5 +49,6 @@ public class Robot extends Entity implements Placeable{
             int Random = (int)(Math.random()*n);
             Move(Random);
         }
+        Skeleton.tab--;
     }
 }

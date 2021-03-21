@@ -12,28 +12,29 @@ public class Settler extends Entity{
 
     //default constructor
     public Settler(){
-        System.out.print("\tSettler()\n \t");
+
+        Skeleton.WriteName("Settler: Settler()");
     }
 
 
     //GETTERS, SETTERS
     public Inventory GetInventory(){
-          System.out.println("\tSettler: GetInventory()");
+          Skeleton.WriteName("Settler: GetInventory()");
         return inventory;
     }
 
     public Factory GetFactory(){
-        System.out.printf("\tSettler: GetFactory()");
+        Skeleton.WriteName("Settler: GetFactory()");
         return factory;
     }
 
     public void SetInventory(Inventory i){
-        System.out.printf("\tSettler: SetInventory(inventory i)");
+        Skeleton.WriteName("Settler: SetInventory(inventory i)");
         inventory = i;
     }
 
     public Settler(Factory f ){
-        System.out.println("\tSettler: Settler(Factory f)");
+        Skeleton.WriteName("Settler: Settler(Factory f)");
         factory = f;
     }
 
@@ -42,80 +43,101 @@ public class Settler extends Entity{
     //Crafting functions
     public void CraftTeleport(){                    //teleport crafting
         //if there is enough storage in inventory, it crafts teleports
-        System.out.println("\tSettler: CraftTeleport()");
+        Skeleton.WriteName("Settler: CraftTeleport()");
+        Skeleton.tab++;
+
         if(inventory.IsTeleportSlotEmpty() == true){
             ArrayList<Teleport> teleports;
             try {
+                Skeleton.tab++;
+
                 teleports = factory.CreateTeleport(inventory);
                 teleports.get(0).SetInventory(inventory);
                 teleports.get(1).SetInventory(inventory);
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
+
+                Skeleton.tab--;
             } catch (Exception e) { }
         }
+        Skeleton.tab--;
     }
 
     //robot crafting
     public void CraftRobot() {
-        System.out.printf("\tSettler: CraftRobot()");
+        Skeleton.WriteName("Settler: CraftRobot()");
+
+        Skeleton.tab++;
         Robot robot;
         robot = factory.CreateRobot(inventory);
+
+        Skeleton.tab++;
         if (robot != null) {
             //place robot after it is crafted
             PlaceRobot(robot);
         }
+        Skeleton.tab--;
+        Skeleton.tab--;
     }
 
     //Mine the current asteroid
     public void Mine(){
         //if there is enough storage in the inventory, the settler mines
-        System.out.printf("\tSettler: Mine()");
+        Skeleton.WriteName("Settler: Mine()");
         if(!inventory.IsMaterialSlotFull()){
+            Skeleton.tab++;
             Material m = asteroid.RemoveMaterial();
             if (m != null)
                 inventory.AddMaterial(m);
         }
+        Skeleton.tab--;
     }
 
     //Places teleport nearby asteroid
     public void PlaceTeleport(Teleport t){
-        System.out.printf("\tSettler: PlaceTeleport(Teleport t");
+        Skeleton.WriteName("Settler: PlaceTeleport(Teleport t)");
+        Skeleton.tab++;
             t.Deploy(asteroid);
             inventory.RemoveTeleport(t);
+            Skeleton.tab--;
     }
 
     //places material into asteroid
     public void PlaceMaterial(Material m){
-        System.out.printf("\tSettler: PlaceMaterial(Material m");
+        Skeleton.WriteName("Settler: PlaceMaterial(Material m)");
+        Skeleton.tab++;
             m.Deploy(asteroid);             //Deploy visszatérés még kérdéses
             inventory.RemoveMaterial(m);
+            Skeleton.tab--;
     }
 
     //places robot on asteroid
     public void PlaceRobot(Robot r){
-        System.out.printf("\tSettler: PlaceRobot(Robot r)");
+        Skeleton.WriteName("Settler: PlaceRobot(Robot r)");
         r.Deploy(asteroid);
     }
 
     //Settler dies
     @Override
     public void Die(){
-        System.out.println("\tSettler: Die()");
+        Skeleton.WriteName("Settler: Die()");
+        Skeleton.tab++;
         super.Die();
         inventory.Clear();
+        Skeleton.tab--;
     }
 
     //Settler blows up after asteroid explodes
     @Override
     public void BlowUp(){
-        System.out.printf("\tSettler: BlowUp()");
+        Skeleton.WriteName("Settler: BlowUp()");
         Die();
     }
 
     //Settler does phase, meaning drill, mine, craft or move
     @Override
     public void DoPhase(){
-        System.out.println("\tSettler: DoPhase()");
+        Skeleton.WriteName("Settler: DoPhase()");
     }
 
 }
