@@ -15,21 +15,19 @@ public class Robot extends Entity implements Placeable{
     @Override
     public void DoPhase(){
         Skeleton.WriteName("Robot: DoPhase()");
-        if(asteroid.GetLayer() == 0){
-            Skeleton.tab++;
+        Skeleton.tab++;
+        if(asteroid.GetLayer() == 0) {
+
             int n = asteroid.GetNumberOfNeighbours();
-            if(n>0)
-            {
+            if (n > 0) {
                 int Random = (int) (Math.random() * n);
                 Move(Random);
             }
-            Skeleton.tab--;
         }
-        else {
-            Skeleton.tab++;
+        else{
             Drill();
-            Skeleton.tab--;
-        }
+         }
+        Skeleton.tab--;
     }
 
     //Deploy robot on asteroid
