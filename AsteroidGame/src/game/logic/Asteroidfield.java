@@ -37,6 +37,10 @@ public class Asteroidfield{
             int tmp=random.nextInt(10)+1;
             if(i==1)asteroids.get(i).SetSunnearness(true);
         }*/
+        for(int i=0;i<asteroids.size();i++)
+        {
+
+        }
     }
 
     public ArrayList<Asteroid> GetAsteroids(){

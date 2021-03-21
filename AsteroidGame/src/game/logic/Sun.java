@@ -8,6 +8,11 @@ public class Sun{
     // A naphoz tartozó aszteroidamező.
     private Asteroidfield asteroidfield;
 
+    public Sun()
+    {
+        Skeleton.WriteName("Sun()");
+    }
+
     //Ez a függvény hívja meg a nap aszteroidamezejéhez tartozó aszeroidákon a napvihar végbemenését.
     public void Sunstorm()
     {

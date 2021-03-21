@@ -17,7 +17,10 @@ public class Teleport implements Whereabout, Placeable{
     private boolean pairready;
 
     //Teleport konstruktora
-    public Teleport() {}
+    public Teleport()
+    {
+        Skeleton.WriteName("Teleport()");
+    }
 
     //Amikor egy entitás ide lép ez hívódik meg.
     //Átrakja az aszteroidára amihez a párja tartozott.
