@@ -20,4 +20,10 @@ public class Sun{
         }
         Skeleton.tab--;
     }
+
+    //beállítja a kapott aszeroidát a nap aszteroidamezejének
+    public void AddAsteroidfield(Asteroidfield af)
+    {
+        asteroidfield = af;
+    }
 }
