@@ -40,6 +40,10 @@ public class Asteroidfield{
             int tmp=random.nextInt(10)+1;
             if(i==1)asteroids.get(i).SetSunnearness(true);
         }*/
+
+        //temporary function, will be erased later:
+        for(int i=0;i<asteroids.size();i++)
+            asteroids.get(i).SetSunnearness(true);
     }
 
     public ArrayList<Asteroid> GetAsteroids(){

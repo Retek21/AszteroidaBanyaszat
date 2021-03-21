@@ -47,6 +47,7 @@ public class Main {
 
         //dzsászt kidding lol :D
         Skeleton.WriteName("So you have chosen...EXIT!");
+        Skeleton.WriteName("Launch warheads...");
         Skeleton.WriteName("Cleaning up...");
         Skeleton.WriteName("Formatting drive: C:\\... ");
     }

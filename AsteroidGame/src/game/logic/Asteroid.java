@@ -125,6 +125,7 @@ public class Asteroid implements Whereabout{
     public Material RemoveMaterial(){
         Skeleton.WriteName("Asteroid: RemoveMaterial()");
         Skeleton.WriteName("Asteroid: RemoveMaterial() return:material");
+        if(layers>0)return null;
         Material tmp=material;
         material=null;
         empty=true;
