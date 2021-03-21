@@ -26,9 +26,10 @@ public class Robot extends Entity implements Placeable{
 
     //Deploy robot on asteroid
     @Override
-    public void Deploy(Asteroid a) {
+    public boolean Deploy(Asteroid a) {
         System.out.printf("\tRobot: Deploy(Asteroid: a)");
-        asteroid.AddEntity(this);
+        if(a.AddEntity(this))return true;
+        return false;
     }
 
 

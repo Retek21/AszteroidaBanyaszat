@@ -86,7 +86,7 @@ public class Teleport implements Whereabout, Placeable{
     }
 
     //Egy aszteroida szomszédságába települ a teleport.
-    public void Deploy(Asteroid a)
+    public boolean Deploy(Asteroid a)
     {
         Skeleton.WriteName("\nTeleport: Deploy(Asteroid a)");
         Skeleton.tab++;
@@ -99,6 +99,7 @@ public class Teleport implements Whereabout, Placeable{
         //nem lesz többet az inventoryban
         inventory = null;
         Skeleton.tab--;
+        return true;
     }
 
     //Beállítja a megadott teleportot a párjának

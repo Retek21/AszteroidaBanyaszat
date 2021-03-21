@@ -11,10 +11,11 @@ public class Asteroidfield{
 
     //CONSTRUCTOR:
     public Asteroidfield(ArrayList<Asteroid> _asteroids){
-        System.out.println("\tAsteroidfield: Asteroidfield()");
+        Skeleton.WriteName("Asteroidfield: Asteroidfield()");
         asteroids=_asteroids;
     }
     public Asteroidfield(){
+        Skeleton.WriteName("Asteroidfield: Asteroidfield()");
         asteroids = new ArrayList<Asteroid>();
     }
 
@@ -22,13 +23,15 @@ public class Asteroidfield{
 
     //calls the Rearrange() method
     public void Event(){
-        System.out.println("\tAsteroidfield: Event()");
+        Skeleton.WriteName("Asteroidfield: Event()");
+        Skeleton.tab++;
         Rearrange();
+        Skeleton.tab--;
     }
 
     //sets the sunnerarness of the of each asteroid separately randomly
     public void Rearrange(){
-        System.out.println("\tAsteroidfield: Rearrange()");
+        Skeleton.WriteName("Asteroidfield: Rearrange()");
 
         //only an idea, not final
         /*for(int i=0;i<asteroids.size();i++){
@@ -37,29 +40,40 @@ public class Asteroidfield{
             int tmp=random.nextInt(10)+1;
             if(i==1)asteroids.get(i).SetSunnearness(true);
         }*/
+
+        //temporary function, will be erased later:
+        for(int i=0;i<asteroids.size();i++)
+            asteroids.get(i).SetSunnearness(true);
     }
 
     public ArrayList<Asteroid> GetAsteroids(){
-        System.out.println("\tAsteroidfield: GetAsteroids()");
-        System.out.println("\tAsteroidfield: GetAsteroids() return:asteroids");
+        Skeleton.WriteName("Asteroidfield: GetAsteroids()");
+        Skeleton.WriteName("Asteroidfield: GetAsteroids() return:asteroids");
         return asteroids;
     }
 
     //removes an asteroid from the asteroids
     public void RemoveAsteroid(Asteroid asteroid){
-        System.out.println("\tAsteroidfield: RemoveAsteroid(asteroid)");
+        Skeleton.WriteName("Asteroidfield: RemoveAsteroid(asteroid)");
         asteroids.remove(asteroid);
     }
 
-    //adds an asteroid to asteroids
+    //adds an asteroid to asteroids and sets it's asteroidfield
     public void AddAsteroid(Asteroid asteroid){
-        System.out.println("\tAsteroidfield: AddAsteroid(asteroid)");
+        Skeleton.WriteName("Asteroidfield: AddAsteroid(asteroid)");
+        Skeleton.tab++;
+        asteroid.SetAsteroidfield(this);
+        Skeleton.tab--;
         asteroids.add(asteroid);
     }
 
-    //append asteroids with another set of collection of asteroids
-    public void AddAsteroids(ArrayList<Asteroid> asteroids){
-        System.out.println("\tAsteroidfield: AddAsteroids(asteroids)");
-        asteroids.addAll(asteroids);
+    //append asteroids with another set of collection of asteroids and sets their asteroidfield
+    public void AddAsteroids(ArrayList<Asteroid> _asteroids){
+        Skeleton.WriteName("Asteroidfield: AddAsteroids(asteroids)");
+        Skeleton.tab++;
+        for(int i=0;i<_asteroids.size();i++)
+            _asteroids.get(i).SetAsteroidfield(this);
+        Skeleton.tab--;
+        asteroids.addAll(_asteroids);
     }
 }
