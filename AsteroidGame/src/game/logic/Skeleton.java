@@ -21,6 +21,8 @@ public class Skeleton {
         System.out.print(s + "\n");
     }
 
+    //TEST CASES:
+
     public void RobotMovesThroughTeleport(){
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
@@ -115,9 +117,6 @@ public class Skeleton {
 
         settler.Move(0);
     }
-
-
-    //TEST CASES:
 
     //test case for settler drills asteroid with uranium
     public void SettlerDrillsAsteroidWithUranium(){
