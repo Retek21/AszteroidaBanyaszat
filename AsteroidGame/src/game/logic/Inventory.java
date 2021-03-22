@@ -16,6 +16,9 @@ public class Inventory {
         Skeleton.tab--;
     }
 
+    /*
+    Material felvétele az inventory-ba.
+     */
     public void AddMaterial(Material m) {
         Skeleton.WriteName("Inventory: AddMaterial(material)");
         Skeleton.tab++;
@@ -24,6 +27,10 @@ public class Inventory {
 
         Skeleton.tab--;
     }
+
+    /*
+    Material eltávolítása az inventory-ba.
+     */
     public void RemoveMaterial(Material m) {
         Skeleton.WriteName("Inventory: RemoveMaterial(material)");
         Skeleton.tab++;
@@ -32,6 +39,10 @@ public class Inventory {
 
         Skeleton.tab--;
     }
+
+    /*
+    Teleport felvétele az inventory-ba.
+     */
     public void AddTeleport(Teleport t) {
         Skeleton.WriteName("Inventory: AddTeleport(teleport)");
         Skeleton.tab++;
@@ -40,6 +51,10 @@ public class Inventory {
 
         Skeleton.tab--;
     }
+
+    /*
+    Teleport eltávolítása az inventory-ból.
+     */
     public void RemoveTeleport(Teleport t) {
         Skeleton.WriteName("Inventory: RemoveTeleport(teleport)");
         Skeleton.tab++;
@@ -48,6 +63,10 @@ public class Inventory {
 
         Skeleton.tab--;
     }
+
+    /*
+    Visszaadja az inventory-ban tárolt Material-ok tömbjét.
+     */
     public ArrayList<Material> GetMaterials() {
         Skeleton.WriteName("Inventory: GetMaterials()");
         Skeleton.tab++;
@@ -57,6 +76,10 @@ public class Inventory {
 
         return materials;
     }
+
+    /*
+    Visszaadja, hogy tele van-e az inventory-ban a nyersanyagoknak szánt hely.
+     */
     public boolean IsMaterialSlotFull() {
         Skeleton.WriteName("Inventory: IsMaterialSlotFull()");
         Skeleton.tab++;
@@ -68,6 +91,10 @@ public class Inventory {
 
         return rt;
     }
+
+    /*
+    Visszaadja, hogy van-e hely még teleportnak az inventory-ban.
+     */
     public boolean IsTeleportSlotEmpty() {
         Skeleton.WriteName("Inventory: IsTeleportSlotEmpty()");
         Skeleton.tab++;
@@ -79,6 +106,10 @@ public class Inventory {
 
         return  rt;
     }
+
+    /*
+    Törlődik az inventory tartalma.
+     */
     public void Clear() {
         Skeleton.WriteName("Inventory: Clear()");
         Skeleton.tab++;
