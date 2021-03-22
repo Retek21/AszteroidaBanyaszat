@@ -23,9 +23,11 @@ public class Skeleton {
 
     //TEST CASES:
 
+
     /*
     * Robot move-ol a teleport felé és a párja már le van lehelyezve
     * */
+
     public void RobotMovesThroughTeleport(){
         System.out.println("[START] ROBOT MOVES THROUGH TELEPORT");
 
