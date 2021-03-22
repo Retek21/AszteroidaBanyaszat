@@ -51,10 +51,10 @@ public class Robot extends Entity implements Placeable{
     public void BlowUp(){
         Skeleton.WriteName("Robot: BlowUp()");
         Skeleton.tab++;
-        if(asteroid.GetNumberOfNeighbours() == 0)
+        int n = asteroid.GetNumberOfNeighbours();
+        if(n == 0)
             Die();
         else{
-            int n = asteroid.GetNumberOfNeighbours();
             int Random = (int)(Math.random()*n);
             Move(Random);
         }

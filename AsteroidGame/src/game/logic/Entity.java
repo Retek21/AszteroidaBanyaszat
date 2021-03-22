@@ -22,7 +22,9 @@ public abstract class Entity {
     //entity dies
     public void Die(){
         Skeleton.WriteName("Entity: Die()");
+        Skeleton.tab++;
         asteroid.RemoveEntity(this);
+        Skeleton.tab--;
     }
 
     //the asteroid blows up
@@ -40,7 +42,6 @@ public abstract class Entity {
         Skeleton.tab++;
         Whereabout w;
         w = asteroid.GetNeighbour(i);
-        w.AddEntity(this);
         if(w.AddEntity(this)==true)
             asteroid.RemoveEntity(this);
         Skeleton.tab--;

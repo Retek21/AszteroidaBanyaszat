@@ -1,5 +1,6 @@
 package game.logic;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 //Created by:Bendegúz Dengyel 2021.03.17
 //Asteroid class
@@ -218,9 +219,16 @@ public class Asteroid implements Whereabout{
         Skeleton.WriteName("Asteroid: Explode()");
         Skeleton.tab++;
         //kills all entities
-        for(int i=0;i<entities.size();i++)entities.get(i).BlowUp();
+        //mivel mindig kikerul a tömbből valtozik a tomb merete, mindig betolodnak 0ra
+        Entity[] tempentities = new Entity[entities.size()];
+        for(int i=0;i<entities.size();i++) tempentities[i] = entities.get(i);
+        for(int i=0; i< tempentities.length; i++) entities.get(0).BlowUp();
         //notifies all neighbours
-        for(int i=0;i<neighbours.size();i++)NearbyExplosion(this);
+        //át kell alakítani, mert mindig kivesz
+        Whereabout[] tempwhereabout = new Whereabout[neighbours.size()];
+        for(int i=0;i<neighbours.size();i++) tempwhereabout[i] = neighbours.get(i);
+        for(int i=0;i<tempwhereabout.length;i++) tempwhereabout[i].NearbyExplosion(this);
+
         //notifies the asteroid field
         try {
             asteroidfield.RemoveAsteroid(this);
