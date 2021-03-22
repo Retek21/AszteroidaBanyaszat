@@ -7,7 +7,7 @@ public abstract class Material implements Placeable{
     @String name - Material neve
      //coming soon//@ConditionManager cm - referencia a ConditionManager osztalyra
     */
-    private String name;
+    protected String name;
 
 
    /*
