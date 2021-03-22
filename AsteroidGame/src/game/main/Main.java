@@ -27,7 +27,6 @@ public class Main {
             Skeleton.WriteName("[5] RobotDrillsAsteroidWithIce()");
             Skeleton.WriteName("[6] RobotDrillsAsteroidWithCoal()");
 
-
             Skeleton.tab--;
             Skeleton.WriteName("[MENU] CHOOSE A TEST NUMBER:");
             Skeleton.tab++;
@@ -42,7 +41,12 @@ public class Main {
                 case 4:s.RobotDrillsAsteroidWithUranium(); break;
                 case 5:s.RobotDrillsAsteroidWithIce(); break;
                 case 6:s.RobotDrillsAsteroidWithCoal(); break;
-
+                case 7:s.RobotMovesThroughTeleport(); break;
+                case 8:s.RobotTriesToMoveTroughTeleport();break;
+                case 9:s.RobotMovesToAsteroid();break;
+                case 10:s.SettlerMovesThroughTeleport();break;
+                case 11:s.SettlerTriesToMoveTroughTeleport();break;
+                case 12:s.SettlerMovesToAsteroid();break;
             }
             Skeleton.tab--;
         }

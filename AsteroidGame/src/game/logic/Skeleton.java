@@ -21,7 +21,15 @@ public class Skeleton {
         System.out.print(s + "\n");
     }
 
+    //TEST CASES:
+
+    /*
+    * Robot move-ol a teleport felé és a párja már le van lehelyezve
+    * */
     public void RobotMovesThroughTeleport(){
+        System.out.println("[START] ROBOT MOVES THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -36,10 +44,16 @@ public class Skeleton {
         pair.Deploy(asteroid2);
         robot.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    *Robot move-ol az aszteroida felé
+    **/
     public void RobotMovesToAsteroid(){
+        System.out.println("[START] ROBOT MOVES TO ASTEROID");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -49,10 +63,16 @@ public class Skeleton {
         robot.Deploy(asteroid1);
         asteroid2.AddNeighbour(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    * Robot move-ol a teleport felé de a párja még nincs lehelyezve
+    * */
     public void RobotTriesToMoveTroughTeleport(){
+        System.out.println("[START] ROBOT TRIES TO MOVE THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -65,10 +85,16 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    * Settle move-ol a teleport felé és a párja le van helyezve
+    * */
     public void SettlerMovesThroughTeleport(){
+        System.out.println("[START] SETTLER MOVES THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -83,10 +109,17 @@ public class Skeleton {
         teleport.Deploy(asteroid1);
         pair.Deploy(asteroid2);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
 
+    /*
+    * Settler move-ol az aszteroida felé.
+    * */
     public void SettlerMovesToAsteroid(){
+        System.out.println("[START] SETTLER MOVES TO ASTEROID");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -97,10 +130,17 @@ public class Skeleton {
         asteroid2.AddNeighbour(asteroid1);
         settler.SetAsteroid(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
 
+    /*
+    * Settler move-ol a teleport felé de a párja még nincs lehelyezve.
+    * */
     public void SettlerTriesToMoveTroughTeleport(){
+        System.out.println("[START] SETTLER TRIES TO MOVE THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -113,11 +153,9 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
-
-
-    //TEST CASES:
 
     //test case for settler drills asteroid with uranium
     public void SettlerDrillsAsteroidWithUranium(){
