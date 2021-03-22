@@ -1,17 +1,15 @@
 package game.logic;
 
-/*
- Coal nyersanyag osztaly
- */
 public class Coal extends Material{
-    /*
-    Interact az aszteroidával
-    később bővíthető
-    */
+
     public Coal(){
         Skeleton.WriteName("Coal: Coal()");
         name = "Coal";
     }
+
+    /*
+    A metódus nem definiálja felül az ős metódusát.
+     */
     @Override
     public void Interact(Asteroid a) {
         super.Interact(a);

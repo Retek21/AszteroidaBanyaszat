@@ -10,43 +10,60 @@ public abstract class Entity {
     //GETTERS, SETTERS
     public Asteroid GetAsteroid() {
         Skeleton.WriteName("Entity: GetAsteroid() return: "+asteroid);
+
         return asteroid;
     }
 
     public void SetAsteroid(Asteroid a){
         Skeleton.WriteName("Entity: SetAsteroid(Asteroid a)");
+
         asteroid = a;
     }
 
     //METHODS
-    //entity dies
+    /*
+    Az entitás meghal, így lekerül az aszteroidáról.
+     */
     public void Die(){
         Skeleton.WriteName("Entity: Die()");
         Skeleton.tab++;
+
         asteroid.RemoveEntity(this);
+
         Skeleton.tab--;
     }
 
-    //the asteroid blows up
+    /*
+    Az entitás felrobban. A leszármazottak valósítják meg a metódust.
+     */
     public abstract void BlowUp();
 
-    //entity drills the current asteroid (lowers the layers by one)
+    /*
+    Az entitás lefúr egy réteget azon az aszteroidán, amelyen tartózkodik.
+     */
     public void Drill() {
         Skeleton.WriteName("Entity: Drill()");
+
         asteroid.ThinLayer();
     }
 
-    //entity moves to whereabout
+    /*
+    Az entitás átlép az azsteroidájáról egy szomszédosra.
+     */
     public void Move(int i) {
         Skeleton.WriteName("Entity: Move(int i)");
         Skeleton.tab++;
+
         Whereabout w;
         w = asteroid.GetNeighbour(i);
-        if(w.AddEntity(this)==true)
+        if(w.AddEntity(this)==true)     //Ha sikertelen a továbblépés, marad a helyén.
             asteroid.RemoveEntity(this);
+
         Skeleton.tab--;
     }
 
-    //entity does phase
+    /*
+    Megvalósítja mit csinál az entitás egy fázisban. A leszármazottak valósítják meg.
+     */
     public abstract void DoPhase();
 }
