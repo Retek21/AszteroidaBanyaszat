@@ -102,6 +102,7 @@ public class Teleport implements Whereabout, Placeable{
         //nem lesz többet az inventoryban
         inventory = null;
         Skeleton.tab--;
+        Skeleton.WriteName("Teleport: Deploy(Asteroid a) return: true");
         return true;
     }
 
@@ -119,7 +120,7 @@ public class Teleport implements Whereabout, Placeable{
     //Beállítja, hogy a pár le van-e telepítve
     public void SetPairReady(boolean b)
     {
-        Skeleton.WriteName("Teleport: SetPairReady(boolean b)");
+        Skeleton.WriteName("Teleport: SetPairReady("+b+")");
         Skeleton.tab++;
         pairready = b;
         Skeleton.tab--;

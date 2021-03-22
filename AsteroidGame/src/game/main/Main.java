@@ -99,6 +99,7 @@ public class Main {
             Skeleton.tab--;
         }
 
+
         //dzsászt kidding lol :D
         Skeleton.WriteName("So you have chosen...EXIT!");
         Skeleton.WriteName("Launch warheads...");

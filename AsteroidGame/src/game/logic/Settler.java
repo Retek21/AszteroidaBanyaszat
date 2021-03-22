@@ -125,7 +125,9 @@ public class Settler extends Entity{
     @Override
     public void BlowUp(){
         Skeleton.WriteName("Settler: BlowUp()");
+        Skeleton.tab++;
         Die();
+        Skeleton.tab--;
     }
 
     //Settler does phase, meaning drill, mine, craft or move
