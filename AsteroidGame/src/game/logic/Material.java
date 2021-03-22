@@ -6,8 +6,8 @@ public abstract class Material implements Placeable{
     /*
     @String name - Material neve
      //coming soon//@ConditionManager cm - referencia a ConditionManager osztalyra
-     */
-   protected String name;
+    */
+    protected String name;
 
 
    /*
@@ -29,6 +29,7 @@ public abstract class Material implements Placeable{
     public void Interact(Asteroid a){
         Skeleton.WriteName( name + ": Interact(a)");
     }
+
     /*
     Egy masik anyaggal hasonlitja ossze magat
     @return Boolean - osszehasonlitas eredmenye
@@ -47,4 +48,6 @@ public abstract class Material implements Placeable{
     public void Disintegrate(){
         Skeleton.WriteName( name + ": Disintegrate()");
     }
+
+
 }

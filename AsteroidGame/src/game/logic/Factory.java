@@ -8,6 +8,13 @@ public class Factory {
         Skeleton.WriteName("Factory: Factory()");
     }
 
+    /*
+    A metódus elkészíti a teleportkapupárokat.
+    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
+    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
+    eltávolítja azokat az inventory-ból, létrehozza a teleportokat, és visszatér a tömbjükkel.
+    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+     */
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
         Skeleton.WriteName("Factory: CreateTeleport(inventory)");
         Skeleton.tab++;
@@ -55,6 +62,13 @@ public class Factory {
         }
     }
 
+    /*
+    A metódus elkészíti a robotokat.
+    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
+    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
+    eltávolítja azokat az inventory-ból, létrehozza a robotot, és visszatér a tömbjükkel.
+    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+     */
     public Robot CreateRobot(Inventory i) {
         Skeleton.WriteName("Factory: CreateRobot(inventory)");
         Skeleton.tab++;

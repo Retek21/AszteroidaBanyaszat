@@ -689,6 +689,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy robotot létrehozni, de nincsenek nála a szükséges
+    nyersanyagok, ezért a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftRobot() {
         System.out.println("[START] SETTLER TRIES TO CRAFT ROBOT");
         System.out.print("\n");
@@ -713,6 +717,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes létrehoz egy robotot a szükséges nyersanyagok felhasználásával.
+    A robot lekerül arra az aszteroidára, amelyen a telepes tartózkodik.
+     */
     public void SettlerCraftsRobot() {
         System.out.println("[START] SETTLER CRAFTS ROBOT");
         System.out.print("\n");
@@ -739,6 +747,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy teleportkapu-párt létrehozni, de nincsenek nála a szükséges
+    nyersanyagok, ezért a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftTeleports() {
         System.out.println("[START] SETTLER TRIES TO CRAFT TELEPORTS");
         System.out.print("\n");
@@ -763,6 +775,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy teleportkapu-párt létrehozni, de mivel az inventory-jában
+    nincs elég hely, a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftTeleportWithoutFreeSlot() {
         System.out.println("[START] SETTLER TRIES TO CRAFT TELEPORT WITHOUT FREE SLOT");
         System.out.print("\n");
@@ -782,6 +798,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes létrehoz egy teleportkapu-párt a szükséges nyersanyagok felhasználásával.
+    A teleportkapuk bekerülnek a telepes inventory-jába.
+     */
     public void SettlerCraftsTeleports() {
         System.out.println("[START] SETTLER CRAFTS TELEPORTS");
         System.out.print("\n");
@@ -808,6 +828,9 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál bányászni egy üres aszteroidán, a cselekvés sikertelen.
+     */
     public void SettlerTriesToMineEmptyAsteroid() {
         System.out.println("[START] SETTLER TRIES TO MINE EMPTY ASTEROID");
         System.out.print("\n");
@@ -827,6 +850,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál bányászni, de mivel nincs több hely az inventory-jában,
+    a cselekvés nem történik meg.
+     */
     public void SettlerTriesToMineWithInventoryFull() {
         System.out.println("[START] SETTLER TRIES TO MINE WITH INVENTORY FULL");
         System.out.print("\n");
@@ -846,6 +873,12 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes kibányássza az aszteroidában található nyersanyagot.
+    A teszteset bekéri a felhasználótól mennyi réteg van az aszteroidán.
+    Ha ez több mint 0, a bányászás sikertelen. Ha 0 a bányászás megtörténik,
+    a nyersanyag kikerül az aszteroidából és bekerül az inventory-ba.
+     */
     public void SettlerMines() {
         System.out.println("[START] SETTLER MINES");
         System.out.print("\n");
@@ -866,12 +899,6 @@ public class Skeleton {
         Scanner in = new Scanner(System.in);
         int layers = in.nextInt();
         a.SetLayer(layers);
-
-
-
-        System.out.printf("[END]\n");
-
-
 
         s.Mine();
 
