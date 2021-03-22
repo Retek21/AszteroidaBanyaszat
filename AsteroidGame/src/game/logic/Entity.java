@@ -22,7 +22,9 @@ public abstract class Entity {
     //entity dies
     public void Die(){
         Skeleton.WriteName("Entity: Die()");
+        Skeleton.tab++;
         asteroid.RemoveEntity(this);
+        Skeleton.tab--;
     }
 
     //the asteroid blows up

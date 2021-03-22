@@ -21,7 +21,17 @@ public class Skeleton {
         System.out.print(s + "\n");
     }
 
+    //TEST CASES:
+
+
+    /*
+    * Robot move-ol a teleport felé és a párja már le van lehelyezve
+    * */
+
     public void RobotMovesThroughTeleport(){
+        System.out.println("[START] ROBOT MOVES THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -36,10 +46,16 @@ public class Skeleton {
         pair.Deploy(asteroid2);
         robot.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    *Robot move-ol az aszteroida felé
+    **/
     public void RobotMovesToAsteroid(){
+        System.out.println("[START] ROBOT MOVES TO ASTEROID");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -49,10 +65,16 @@ public class Skeleton {
         robot.Deploy(asteroid1);
         asteroid2.AddNeighbour(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    * Robot move-ol a teleport felé de a párja még nincs lehelyezve
+    * */
     public void RobotTriesToMoveTroughTeleport(){
+        System.out.println("[START] ROBOT TRIES TO MOVE THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -65,10 +87,16 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         robot.Move(0);
     }
-
+    /*
+    * Settle move-ol a teleport felé és a párja le van helyezve
+    * */
     public void SettlerMovesThroughTeleport(){
+        System.out.println("[START] SETTLER MOVES THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -83,10 +111,17 @@ public class Skeleton {
         teleport.Deploy(asteroid1);
         pair.Deploy(asteroid2);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
 
+    /*
+    * Settler move-ol az aszteroida felé.
+    * */
     public void SettlerMovesToAsteroid(){
+        System.out.println("[START] SETTLER MOVES TO ASTEROID");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -97,10 +132,17 @@ public class Skeleton {
         asteroid2.AddNeighbour(asteroid1);
         settler.SetAsteroid(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
 
+    /*
+    * Settler move-ol a teleport felé de a párja még nincs lehelyezve.
+    * */
     public void SettlerTriesToMoveTroughTeleport(){
+        System.out.println("[START] SETTLER TRIES TO MOVE THROUGH TELEPORT");
+
+        WriteName("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -113,11 +155,9 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        WriteName("[LAUNCHING] Launching the test:");
         settler.Move(0);
     }
-
-
-    //TEST CASES:
 
     //test case for settler drills asteroid with uranium
     public void SettlerDrillsAsteroidWithUranium(){
@@ -314,8 +354,12 @@ public class Skeleton {
         WriteName("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Az aszteridamező mozog, a tesztelés kedvéért minden aszteroida nepközelbe kerül
+     */
     public void AsteroidfieldMoves()
     {
+        //Teszteset inicializálása
         System.out.println("[START] ASTEROIDFIELD MOVES");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
@@ -336,6 +380,7 @@ public class Skeleton {
         a1.AddMaterial(iron);
         a2.AddMaterial(ice);
         a3.AddMaterial(u);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
         WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
@@ -347,8 +392,12 @@ public class Skeleton {
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    A nap az aszteroidamező aszteroidáin napvihart hajt végre
+     */
     public void SunstormHitsAsteroidfield()
     {
+        //Teszteset inicializálása
         System.out.println("[START] SUNSTORM HITS ASTEROIDFIELD");
         Sun sun = new Sun();
         Asteroidfield af = new Asteroidfield();
@@ -371,6 +420,7 @@ public class Skeleton {
         r2.Deploy(a2);
         Iron iron = new Iron();
         a1.AddMaterial(iron);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
         WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
@@ -381,8 +431,12 @@ public class Skeleton {
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Egy magányos aszteroida felrobban, rajta entitásokkal
+     */
     public void LonelyAsteroidExplodesWithRobotAndSettler()
     {
+        //Teszteset inicializálása
         System.out.println("[START] LONELY ASTEROID EXPLODES WITH ROBOT AND SETTLER");
         Asteroidfield af = new Asteroidfield();
         Asteroid a = new Asteroid();
@@ -393,13 +447,18 @@ public class Skeleton {
         s.SetInventory(i);
         a.AddEntity(s);
         r.Deploy(a);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         a.Explode();
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Egy szomszéddal rendelkező aszteroida felrobban, rajta entitásokkal
+     */
     public void AsteroidExplodesWithRobotAndSettler()
     {
+        //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH ROBOT AND SETTLER");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
@@ -420,25 +479,41 @@ public class Skeleton {
         Robot r = new Robot();
         a1.AddEntity(s);
         r.Deploy(a1);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    A robotnak a fázisa lezajlik
+     */
     public void ControlRobot()
     {
+        //Teszteset inicializálása
         System.out.println("[START] CONTROL ROBOT");
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
+        a1.AddNeighbour(a2);
+        a2.AddNeighbour(a1);
         Robot r = new Robot();
         r.Deploy(a1);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
+        Scanner sc=new Scanner(System.in);
+        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        int layers=sc.nextInt();//reading the input (layers)
+        a1.SetLayer(layers);
         r.DoPhase();
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Felrobban egy aszteroida, aminek a szomszédságában van egy teleport, a teleport másik párja egy másik aszteroida szomszédságában van.
+     */
     public void AsteroidExplodesWithTeleportTheOtherPairIsNearbyAnAsteroid()
     {
+        //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS NEARBY AN ASTEROID");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
@@ -459,13 +534,18 @@ public class Skeleton {
         t2.SetPair(t1);
         t1.Deploy(a1);
         t2.Deploy(a2);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Felrobban egy aszteroida, aminek a szomszédságában van egy teleport, a teleport másik párja egy inventoryban van.
+     */
     public void AsteroidExplodesWithTeleportTheOtherPairIsInAnInventory()
     {
+        //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS IN AN INVENTORY");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
@@ -487,13 +567,18 @@ public class Skeleton {
         t2.SetPair(t1);
         i.AddTeleport(t2);
         t1.Deploy(a1);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         a1.Explode();
         System.out.println("[END]");//end of the test, returning to the menu
     }
 
+    /*
+    Meghal a telepes, úgy hogy egy teleport van a tárhelyében, a másik párja le van telepítve.
+     */
     public void SettlerDiesWithTeleportInInventory()
     {
+        //Teszteset inicializálása
         System.out.println("[START] SETTLER DIES WITH TELEPORT IN INVENTORY");
         Asteroid a = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -509,6 +594,7 @@ public class Skeleton {
         i.AddTeleport(t);
         pair.Deploy(a);
         a2.AddEntity(s);
+        //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         s.Die();
         System.out.println("[END]");//end of the test, returning to the menu
