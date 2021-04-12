@@ -9,14 +9,10 @@ public abstract class Entity {
 
     //GETTERS, SETTERS
     public Asteroid GetAsteroid() {
-        Skeleton.WriteName("Entity: GetAsteroid() return: "+asteroid);
-
         return asteroid;
     }
 
     public void SetAsteroid(Asteroid a){
-        Skeleton.WriteName("Entity: SetAsteroid(Asteroid a)");
-
         asteroid = a;
     }
 
@@ -25,12 +21,8 @@ public abstract class Entity {
     Az entitás meghal, így lekerül az aszteroidáról.
      */
     public void Die(){
-        Skeleton.WriteName("Entity: Die()");
-        Skeleton.tab++;
 
         asteroid.RemoveEntity(this);
-
-        Skeleton.tab--;
     }
 
     /*
@@ -42,8 +34,6 @@ public abstract class Entity {
     Az entitás lefúr egy réteget azon az aszteroidán, amelyen tartózkodik.
      */
     public void Drill() {
-        Skeleton.WriteName("Entity: Drill()");
-
         asteroid.ThinLayer();
     }
 
@@ -51,15 +41,12 @@ public abstract class Entity {
     Az entitás átlép az azsteroidájáról egy szomszédosra.
      */
     public void Move(int i) {
-        Skeleton.WriteName("Entity: Move(int i)");
-        Skeleton.tab++;
 
         Whereabout w;
         w = asteroid.GetNeighbour(i);
         if(w.AddEntity(this)==true)     //Ha sikertelen a továbblépés, marad a helyén.
             asteroid.RemoveEntity(this);
 
-        Skeleton.tab--;
     }
 
     /*

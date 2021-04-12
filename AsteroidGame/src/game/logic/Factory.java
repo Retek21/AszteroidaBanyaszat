@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Factory {
 
     public Factory() {
-        Skeleton.WriteName("Factory: Factory()");
+
     }
 
     /*
@@ -16,9 +16,6 @@ public class Factory {
     Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
      */
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
-        Skeleton.WriteName("Factory: CreateTeleport(inventory)");
-        Skeleton.tab++;
-
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
@@ -50,14 +47,9 @@ public class Factory {
             teleports.add(t1);
             teleports.add(t2);
 
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
             return teleports;
         }
         else {
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
-
             return null;
         }
     }
@@ -70,9 +62,6 @@ public class Factory {
     Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
      */
     public Robot CreateRobot(Inventory i) {
-        Skeleton.WriteName("Factory: CreateRobot(inventory)");
-        Skeleton.tab++;
-
         ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
@@ -99,15 +88,9 @@ public class Factory {
 
             Robot robot = new Robot();
 
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: robot");
-
             return robot;
         }
         else {
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
-
             return null;
         }
     }
