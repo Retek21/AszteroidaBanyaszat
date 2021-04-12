@@ -3,6 +3,10 @@ package game.logic;
 import java.util.ArrayList;
 
 public class Recipe {
+
+    /*
+    Visszaadja azon nyersanyagok tömbjét, amelyek szükségesek egy teleportpár elkészítéséhez.
+     */
     public static ArrayList<Material> GetTeleportRecipe() {
         Skeleton.WriteName("Recipe: GetTeleportRecipe()");
         Skeleton.tab++;
@@ -23,6 +27,9 @@ public class Recipe {
         return mold;
     }
 
+    /*
+    Visszaadja azon nyersanyagok tömbjét, amelyek szükségesek egy robot elkészítéséhez.
+     */
     public static ArrayList<Material> GetRobotRecipe() {
         Skeleton.WriteName("Recipe: GetRobotRecipe()");
         Skeleton.tab++;

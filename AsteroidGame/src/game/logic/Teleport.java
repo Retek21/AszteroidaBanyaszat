@@ -7,7 +7,7 @@ public class Teleport implements Whereabout, Placeable{
     //Az aszteroida amihez kapcsolódik.
     private Asteroid asteroid;
 
-    //Az Inventory amiben van.
+    //Az Inventory, amiben van.
     private Inventory inventory;
 
     //A teleportnak a párja.
@@ -22,35 +22,44 @@ public class Teleport implements Whereabout, Placeable{
         Skeleton.WriteName("Teleport: Teleport()");
     }
 
-    //Amikor egy entitás ide lép ez hívódik meg.
-    //Átrakja az aszteroidára amihez a párja tartozott.
-    //Visszatér a művelet sikerességével.
+    /*
+    Amikor egy entitás a teleportra lép ez hívódik meg.
+    Átrakja az entitást arra az aszteroidára, amihez a párja tartozik.
+    Ha ez sikeresen megtörtént, true-val tér vissza a metódus.
+    Ha nem (nincs még lehelyezve a párja) false-szal tér vissza.
+     */
     public boolean AddEntity(Entity e)
     {
         Skeleton.WriteName("Teleport: AddEntity(Entity e)");
         Skeleton.tab++;
+
         //ha a pár még nincs lerakva false-val tér vissza
         if (pairready)
         {
             //Azért kell ez külön, mert az indentáló számlálót csökkenteni a fvhívás után kell
             boolean successful = pair.GetAsteroid().AddEntity(e);
+
             Skeleton.tab--;
+
             return successful;
         }
         else
         {
             Skeleton.tab--;
+
             return false;
         }
     }
 
     //A felrobbanó aszteroida hívja meg ezt a függvényt a szomszédjain.
-    //Ilyenkor a párjával együtt felrobbanást végző függvényt meghívja a teleport.
+    //Ilyenkor a teleport a párjával együtt felrobban.
     public void NearbyExplosion(Asteroid a)
     {
         Skeleton.WriteName("Teleport: NearbyExplosion(Asteroid a)");
         Skeleton.tab++;
+
         ExplodeWithPair();
+
         Skeleton.tab--;
     }
 
@@ -66,25 +75,29 @@ public class Teleport implements Whereabout, Placeable{
     }
 
     //A teleport felrobban
-    //Ha Inventoryban volt, akkor kiszedi magát onnan
+    //Ha Inventoryban volt, akkor kiszedi magát onnan.
     //Ha aszteroida szomszédságában volt, akkor kiveszi magát az aszteroida szomszédjai közül.
     public void Explode()
     {
         Skeleton.WriteName("Teleport: Explode()");
         Skeleton.tab++;
+
         if(asteroid != null)
             asteroid.RemoveNeighbour(this);
         else if(inventory != null)
             inventory.RemoveTeleport(this);
+
         Skeleton.tab--;
     }
 
-    //Beállítja a megadott Inventory-t a sajátjának.
+    //Beállítja a megadott Inventory-t a tartózkodási helyének.
     public void SetInventory(Inventory i)
     {
         Skeleton.WriteName("Teleport: SetInventory(Inventory i)");
         Skeleton.tab++;
+
         inventory = i;
+
         Skeleton.tab--;
     }
 
@@ -93,16 +106,20 @@ public class Teleport implements Whereabout, Placeable{
     {
         Skeleton.WriteName("Teleport: Deploy(Asteroid a)");
         Skeleton.tab++;
+
         a.AddNeighbour(this);
         asteroid = a;
+
         //Jelzi a párjának, hogy letelepítették.
         if(pair != null)
             pair.SetPairReady(true);
 
         //nem lesz többet az inventoryban
         inventory = null;
+
         Skeleton.tab--;
         Skeleton.WriteName("Teleport: Deploy(Asteroid a) return: true");
+
         return true;
     }
 
@@ -111,9 +128,11 @@ public class Teleport implements Whereabout, Placeable{
     {
         Skeleton.WriteName("Teleport: SetPair(Teleport t)");
         Skeleton.tab++;
+
         pair = t;
         //Mivel ez elkészítéskor hívódik meg még nincs lerakva a párja
         pairready = false;
+
         Skeleton.tab--;
     }
 
@@ -122,12 +141,13 @@ public class Teleport implements Whereabout, Placeable{
     {
         Skeleton.WriteName("Teleport: SetPairReady("+b+")");
         Skeleton.tab++;
+
         pairready = b;
+
         Skeleton.tab--;
     }
 
-    //Visszaadja az aszteroidát, aminek a teleport a szomszédságában van
-    //Erre akkor van szükség ha a lerakott párra rálép egy entitás
+    //Visszaadja az aszteroidát, aminek a teleport a szomszédságában van.
     public Asteroid GetAsteroid()
     {
         Skeleton.WriteName("Teleport: GetAsteroid()");

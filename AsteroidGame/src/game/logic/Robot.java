@@ -11,13 +11,16 @@ public class Robot extends Entity implements Placeable{
 
     //METHODS
 
-    //robot does phase - drills or moves
+    /*
+    A robot a fázisában vagy mozog vagy fúr. Ha van még réteg az aszteroidáján fúr,
+    egyébként átlép egy másik aszteroidára.
+     */
     @Override
     public void DoPhase(){
         Skeleton.WriteName("Robot: DoPhase()");
         Skeleton.tab++;
-        if(asteroid.GetLayer() == 0) {
 
+        if(asteroid.GetLayer() == 0) {
             int n = asteroid.GetNumberOfNeighbours();
             if (n > 0) {
                 int Random = (int) (Math.random() * n);
@@ -26,27 +29,37 @@ public class Robot extends Entity implements Placeable{
         }
         else{
             Drill();
-         }
+        }
+
         Skeleton.tab--;
     }
 
-    //Deploy robot on asteroid
+    /*
+    A robot lekerül az aszteroidára. A művelet sikerességétől függően true-val vagy false-szal tér vissza.
+     */
     @Override
     public boolean Deploy(Asteroid a) {
         Skeleton.WriteName("Robot: Deploy(Asteroid: a)");
         Skeleton.tab++;
+
         if(a.AddEntity(this)) {
+
             Skeleton.tab--;
             Skeleton.WriteName("Robot: Deploy(Asteroid: a) return: true");
+
             return true;
         }
         Skeleton.tab--;
         Skeleton.WriteName("Robot: Deploy(Asteroid: a) return: false");
+
         return false;
     }
 
 
-    //robot blows up because of an explosion
+    /*
+    A robot felrobban az aszteroidája robbanása következtében. Ha a felrobban aszteroidának
+    voltak szomszédjai, átlép valamelyikre, egyéb esetben meghal.
+     */
     @Override
     public void BlowUp(){
         Skeleton.WriteName("Robot: BlowUp()");

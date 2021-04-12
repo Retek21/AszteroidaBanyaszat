@@ -12,7 +12,7 @@ public class Skeleton {
 
     //method for the indented console output:
     public static void WriteName(String s) {
-        //whenever the method is called, itt writes
+        //whenever the method is called, it writes
         //the number of tabulators before the text it receives
         //in the header of the method:
         for (int i = 0; i < tab; i++)
@@ -21,7 +21,17 @@ public class Skeleton {
         System.out.print(s + "\n");
     }
 
+    //TEST CASES:
+
+
+    /*
+    * Robot move-ol a teleport felé és a párja már le van lehelyezve
+    */
+
     public void RobotMovesThroughTeleport(){
+        System.out.println("[START] ROBOT MOVES THROUGH TELEPORT");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -36,10 +46,17 @@ public class Skeleton {
         pair.Deploy(asteroid2);
         robot.Deploy(asteroid1);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         robot.Move(0);
+        System.out.printf("[END]\n");
     }
-
+    /*
+    *Robot move-ol az aszteroida felé
+    */
     public void RobotMovesToAsteroid(){
+        System.out.println("[START] ROBOT MOVES TO ASTEROID");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -49,10 +66,17 @@ public class Skeleton {
         robot.Deploy(asteroid1);
         asteroid2.AddNeighbour(asteroid1);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         robot.Move(0);
+        System.out.printf("[END]\n");
     }
-
+    /*
+    * Robot move-ol a teleport felé de a párja még nincs lehelyezve
+    */
     public void RobotTriesToMoveTroughTeleport(){
+        System.out.println("[START] ROBOT TRIES TO MOVE THROUGH TELEPORT");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -65,10 +89,17 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         robot.Move(0);
+        System.out.printf("[END]\n");
     }
-
+    /*
+    * Settle move-ol a teleport felé és a párja le van helyezve
+    */
     public void SettlerMovesThroughTeleport(){
+        System.out.println("[START] SETTLER MOVES THROUGH TELEPORT");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -83,10 +114,18 @@ public class Skeleton {
         teleport.Deploy(asteroid1);
         pair.Deploy(asteroid2);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         settler.Move(0);
+        System.out.printf("[END]\n");
     }
 
+    /*
+    * Settler move-ol az aszteroida felé.
+    * */
     public void SettlerMovesToAsteroid(){
+        System.out.println("[START] SETTLER MOVES TO ASTEROID");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -97,10 +136,18 @@ public class Skeleton {
         asteroid2.AddNeighbour(asteroid1);
         settler.SetAsteroid(asteroid1);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         settler.Move(0);
+        System.out.printf("[END]\n");
     }
 
+    /*
+    * Settler move-ol a teleport felé de a párja még nincs lehelyezve.
+    * */
     public void SettlerTriesToMoveTroughTeleport(){
+        System.out.println("[START] SETTLER TRIES TO MOVE THROUGH TELEPORT");
+
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield asteroidfield = new Asteroidfield();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
@@ -113,15 +160,14 @@ public class Skeleton {
         pair.SetPair(teleport);
         teleport.Deploy(asteroid1);
 
+        System.out.println("[LAUNCHING] Launching the test:");
         settler.Move(0);
+        System.out.printf("[END]\n");
     }
-
-
-    //TEST CASES:
 
     //test case for settler drills asteroid with uranium
     public void SettlerDrillsAsteroidWithUranium(){
-        WriteName("[START] SETTLERS DRILLS ASTEROID WITH URANIUM");
+        System.out.println("[START] SETTLERS DRILLS ASTEROID WITH URANIUM");
 
         //initialization of the required objects:
         WriteName("[INITIALIZATION] Initialization of the required objects:");
@@ -136,14 +182,14 @@ public class Skeleton {
         a.AddEntity(s);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -151,15 +197,15 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         s.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.printf("[END]");//end of the test, returning to the menu
     }
 
     //test case for settler drills asteroid with ice
     public void SettlerDrillsAsteroidWithIce(){
-        WriteName("[START] SETTLERS DRILLS ASTEROID WITH ICE");
+        System.out.println("[START] SETTLERS DRILLS ASTEROID WITH ICE");
 
         //initialization of the required objects:
-        WriteName("[INITIALIZATION] Initialization of the required objects:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Ice i=new Ice();
         Asteroid a=new Asteroid();
         a.AddMaterial(i);
@@ -167,14 +213,14 @@ public class Skeleton {
         a.AddEntity(s);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -182,16 +228,16 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         s.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.println("[END]");//end of the test, returning to the menu
 
     }
 
     //test case for settler drills asteroid with coal
     public void SettlerDrillsAsteroidWithCoal(){
-        WriteName("[START] SETTLERS DRILLS ASTEROID WITH COAL");
+        System.out.println("[START] SETTLERS DRILLS ASTEROID WITH COAL");
 
         //initialization of the required objects:
-        WriteName("[INITIALIZATION] Initialization of the required objects:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Coal c=new Coal();
         Asteroid a=new Asteroid();
         a.AddMaterial(c);
@@ -199,14 +245,14 @@ public class Skeleton {
         a.AddEntity(s);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -214,17 +260,17 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         s.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.println("[END]");//end of the test, returning to the menu
 
 
     }
 
     //test case for robot drills asteroid with uranium
     public void RobotDrillsAsteroidWithUranium(){
-        WriteName("[START] ROBOT DRILLS ASTEROID WITH URANIUM");
+        System.out.println("[START] ROBOT DRILLS ASTEROID WITH URANIUM");
 
         //initialization of the required objects:
-        WriteName("[INITIALIZATION] Initialization of the required objects:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Uranium u=new Uranium();
         Asteroid a=new Asteroid();
         a.AddMaterial(u);
@@ -234,14 +280,14 @@ public class Skeleton {
         r.Deploy(a);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -249,15 +295,15 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         r.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     //test case for robot drills asteroid with ice
     public void RobotDrillsAsteroidWithIce(){
-        WriteName("[START] ROBOT DRILLS ASTEROID WITH ICE");
+        System.out.println("[START] ROBOT DRILLS ASTEROID WITH ICE");
 
         //initialization of the required objects:
-        WriteName("[INITIALIZATION] Initialization of the required objects:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Ice i=new Ice();
         Asteroid a=new Asteroid();
         a.AddMaterial(i);
@@ -265,14 +311,14 @@ public class Skeleton {
         r.Deploy(a);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT]How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT]How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -280,15 +326,15 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         r.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     //test case for robot drills asteroid with coal
     public void RobotDrillsAsteroidWithCoal(){
-        WriteName("[START] ROBOT DRILLS ASTEROID WITH COAL");
+        System.out.println("[START] ROBOT DRILLS ASTEROID WITH COAL");
 
         //initialization of the required objects:
-        WriteName("[INITIALIZATION] Initialization of the required objects:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Coal c=new Coal();
         Asteroid a=new Asteroid();
         a.AddMaterial(c);
@@ -296,14 +342,14 @@ public class Skeleton {
         r.Deploy(a);
 
         //launching the test:
-        WriteName("[LAUNCHING] Launching the test:");
+        System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
 
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a.SetLayer(layers);
 
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         a.SetSunnearness(sunnear);
 
@@ -311,16 +357,17 @@ public class Skeleton {
         //the point where the use-case diagram starts:
         r.Drill();
         tab--;
-        WriteName("[END]");//end of the test, returning to the menu
+        System.out.println("[END]");//end of the test, returning to the menu
     }
 
     /*
-    Az aszteridamező mozog, a tesztelés kedvéért minden aszteroida nepközelbe kerül
+    Az aszteridamező mozog, a tesztelés kedvéért minden aszteroida napközelbe kerül
      */
     public void AsteroidfieldMoves()
     {
         //Teszteset inicializálása
         System.out.println("[START] ASTEROIDFIELD MOVES");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -343,7 +390,7 @@ public class Skeleton {
         //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
-        WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a1.SetLayer(layers);
         a2.SetLayer(layers);
@@ -359,6 +406,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] SUNSTORM HITS ASTEROIDFIELD");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Sun sun = new Sun();
         Asteroidfield af = new Asteroidfield();
         sun.AddAsteroidfield(af);
@@ -383,7 +431,7 @@ public class Skeleton {
         //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
-        WriteName("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers are on the asteroids? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a1.SetLayer(layers);
         a2.SetLayer(layers);
@@ -398,6 +446,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] LONELY ASTEROID EXPLODES WITH ROBOT AND SETTLER");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield af = new Asteroidfield();
         Asteroid a = new Asteroid();
         af.AddAsteroid(a);
@@ -420,6 +469,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH ROBOT AND SETTLER");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -452,6 +502,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] CONTROL ROBOT");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
         a1.AddNeighbour(a2);
@@ -461,7 +512,7 @@ public class Skeleton {
         //Teszt indítása
         System.out.println("[LAUNCHING] Launching the test:");
         Scanner sc=new Scanner(System.in);
-        WriteName("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
+        System.out.println("[INPUT] How many layers does the asteroid have? (integer, greater than or equal to 1)?");
         int layers=sc.nextInt();//reading the input (layers)
         a1.SetLayer(layers);
         r.DoPhase();
@@ -475,6 +526,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS NEARBY AN ASTEROID");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -507,6 +559,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] ASTEROID EXPLODES WITH TELEPORT, THE OTHER PAIR IS IN AN INVENTORY");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroidfield af = new Asteroidfield();
         Asteroid a1 = new Asteroid();
         Asteroid a2 = new Asteroid();
@@ -540,6 +593,7 @@ public class Skeleton {
     {
         //Teszteset inicializálása
         System.out.println("[START] SETTLER DIES WITH TELEPORT IN INVENTORY");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Asteroid a = new Asteroid();
         Asteroid a2 = new Asteroid();
         a.AddNeighbour(a2);
@@ -565,7 +619,7 @@ public class Skeleton {
     public void SettlerPlacesTeleport(){
         System.out.println("[START] SETTLERS PLACES TELEPORT");
         //INITIALIZATIONS
-        System.out.println("[INITIALIZATION]");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Settler settler = new Settler();
         Inventory inventory = new Inventory();
         settler.SetInventory(inventory);
@@ -577,6 +631,7 @@ public class Skeleton {
         System.out.println("[LAUNCHING] Launching the test:");
         //Call function
         settler.PlaceTeleport(teleport1);
+        System.out.printf("[END]\n");
     }
 
     //Teszteli, hogy a settler le tud-e helyezni egy nyersanyagot egy teli aszteroidára
@@ -584,7 +639,7 @@ public class Skeleton {
     public void SettlerTriesToPlaceMaterialIntoFullAsteroid(){
         System.out.println("[START] SETTLERS TRIES TO PLACE MATERIAL INTO FULL ASTEROID");
         //INITIALIZATIONS
-        System.out.println("INITIALIZATION:");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Settler settler = new Settler();
         Inventory inventory = new Inventory();
         Asteroid asteroid1 = new Asteroid();
@@ -598,13 +653,14 @@ public class Skeleton {
         System.out.println("[LAUNCHING] Launching the test:");
         //Call function
         settler.PlaceMaterial(coal);
+        System.out.printf("[END]\n");
     }
 
     //Teszteset arra, hogy a settler hogyan helyezi le a nyersanyagot
     public void SettlerPlacesCoal(){
         System.out.println("[START] SETTLERS PLACES COAL");
         //INITIALIZATIONS
-        System.out.println("[INITIALIZATION]");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Settler settler = new Settler();
         Inventory inventory = new Inventory();
         Coal coal = new Coal();
@@ -625,7 +681,7 @@ public class Skeleton {
     public void SettlerPlacesUranium(){
         System.out.println("[START] SETTLERS PLACES URANIUM");
         //INITIALIZATIONS
-        System.out.println("[INITIALIZATION]");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Settler settler = new Settler();
         Inventory inventory = new Inventory();
         Uranium uranium = new Uranium();
@@ -655,7 +711,7 @@ public class Skeleton {
         asteroid1.SetLayer(layers);
 
         Scanner sc=new Scanner(System.in);
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         asteroid1.SetSunnearness(sunnear);
 
@@ -668,7 +724,7 @@ public class Skeleton {
 
         System.out.println("[START] SETTLER PLACES ICE");
         //INITIALIZATIONS
-        System.out.println("[INITIALIZATION]");
+        System.out.println("[INITIALIZATION] Initialization of the required objects:");
         Settler settler = new Settler();
         Inventory inventory = new Inventory();
         Ice ice = new Ice();
@@ -687,7 +743,7 @@ public class Skeleton {
         asteroid1.SetLayer(layers);
 
         Scanner sc=new Scanner(System.in);
-        WriteName("[INPUT] Is the asteroid near to the sun (true/false)?");
+        System.out.println("[INPUT] Is the asteroid near to the sun (true/false)?");
         boolean sunnear=sc.nextBoolean();//reading the input (sunneraness)
         asteroid1.SetSunnearness(sunnear);
 
@@ -695,6 +751,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy robotot létrehozni, de nincsenek nála a szükséges
+    nyersanyagok, ezért a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftRobot() {
         System.out.println("[START] SETTLER TRIES TO CRAFT ROBOT");
         System.out.print("\n");
@@ -719,6 +779,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes létrehoz egy robotot a szükséges nyersanyagok felhasználásával.
+    A robot lekerül arra az aszteroidára, amelyen a telepes tartózkodik.
+     */
     public void SettlerCraftsRobot() {
         System.out.println("[START] SETTLER CRAFTS ROBOT");
         System.out.print("\n");
@@ -745,6 +809,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy teleportkapu-párt létrehozni, de nincsenek nála a szükséges
+    nyersanyagok, ezért a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftTeleports() {
         System.out.println("[START] SETTLER TRIES TO CRAFT TELEPORTS");
         System.out.print("\n");
@@ -769,6 +837,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál egy teleportkapu-párt létrehozni, de mivel az inventory-jában
+    nincs elég hely, a cselekvés sikertelen.
+     */
     public void SettlerTriesToCraftTeleportWithoutFreeSlot() {
         System.out.println("[START] SETTLER TRIES TO CRAFT TELEPORT WITHOUT FREE SLOT");
         System.out.print("\n");
@@ -788,6 +860,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes létrehoz egy teleportkapu-párt a szükséges nyersanyagok felhasználásával.
+    A teleportkapuk bekerülnek a telepes inventory-jába.
+     */
     public void SettlerCraftsTeleports() {
         System.out.println("[START] SETTLER CRAFTS TELEPORTS");
         System.out.print("\n");
@@ -814,6 +890,9 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál bányászni egy üres aszteroidán, a cselekvés sikertelen.
+     */
     public void SettlerTriesToMineEmptyAsteroid() {
         System.out.println("[START] SETTLER TRIES TO MINE EMPTY ASTEROID");
         System.out.print("\n");
@@ -833,6 +912,10 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes megpróbál bányászni, de mivel nincs több hely az inventory-jában,
+    a cselekvés nem történik meg.
+     */
     public void SettlerTriesToMineWithInventoryFull() {
         System.out.println("[START] SETTLER TRIES TO MINE WITH INVENTORY FULL");
         System.out.print("\n");
@@ -852,6 +935,12 @@ public class Skeleton {
         System.out.printf("[END]\n");
     }
 
+    /*
+    A telepes kibányássza az aszteroidában található nyersanyagot.
+    A teszteset bekéri a felhasználótól mennyi réteg van az aszteroidán.
+    Ha ez több mint 0, a bányászás sikertelen. Ha 0 a bányászás megtörténik,
+    a nyersanyag kikerül az aszteroidából és bekerül az inventory-ba.
+     */
     public void SettlerMines() {
         System.out.println("[START] SETTLER MINES");
         System.out.print("\n");
@@ -872,12 +961,6 @@ public class Skeleton {
         Scanner in = new Scanner(System.in);
         int layers = in.nextInt();
         a.SetLayer(layers);
-
-
-
-        System.out.printf("[END]\n");
-
-
 
         s.Mine();
 

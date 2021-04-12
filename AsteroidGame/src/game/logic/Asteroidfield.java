@@ -12,10 +12,12 @@ public class Asteroidfield{
     //CONSTRUCTOR:
     public Asteroidfield(ArrayList<Asteroid> _asteroids){
         Skeleton.WriteName("Asteroidfield: Asteroidfield()");
+
         asteroids=_asteroids;
     }
     public Asteroidfield(){
         Skeleton.WriteName("Asteroidfield: Asteroidfield()");
+
         asteroids = new ArrayList<Asteroid>();
     }
 
@@ -25,7 +27,9 @@ public class Asteroidfield{
     public void Event(){
         Skeleton.WriteName("Asteroidfield: Event()");
         Skeleton.tab++;
+
         Rearrange();
+
         Skeleton.tab--;
     }
 
@@ -41,7 +45,7 @@ public class Asteroidfield{
             if(i==1)asteroids.get(i).SetSunnearness(true);
         }*/
 
-        //temporary function, will be erased later:
+        //temporary function for tests, will be changed later:
         for(int i=0;i<asteroids.size();i++)
             asteroids.get(i).SetSunnearness(true);
     }
@@ -49,12 +53,14 @@ public class Asteroidfield{
     public ArrayList<Asteroid> GetAsteroids(){
         Skeleton.WriteName("Asteroidfield: GetAsteroids()");
         Skeleton.WriteName("Asteroidfield: GetAsteroids() return:asteroids");
+
         return asteroids;
     }
 
     //removes an asteroid from the asteroids
     public void RemoveAsteroid(Asteroid asteroid){
         Skeleton.WriteName("Asteroidfield: RemoveAsteroid(asteroid)");
+
         asteroids.remove(asteroid);
     }
 
@@ -62,8 +68,11 @@ public class Asteroidfield{
     public void AddAsteroid(Asteroid asteroid){
         Skeleton.WriteName("Asteroidfield: AddAsteroid(asteroid)");
         Skeleton.tab++;
+
         asteroid.SetAsteroidfield(this);
+
         Skeleton.tab--;
+
         asteroids.add(asteroid);
     }
 
@@ -71,9 +80,12 @@ public class Asteroidfield{
     public void AddAsteroids(ArrayList<Asteroid> _asteroids){
         Skeleton.WriteName("Asteroidfield: AddAsteroids(asteroids)");
         Skeleton.tab++;
+
         for(int i=0;i<_asteroids.size();i++)
             _asteroids.get(i).SetAsteroidfield(this);
+
         Skeleton.tab--;
+
         asteroids.addAll(_asteroids);
     }
 }
