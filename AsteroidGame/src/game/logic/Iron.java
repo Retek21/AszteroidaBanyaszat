@@ -3,7 +3,6 @@ package game.logic;
 public class Iron extends Material{
 
     public Iron(){
-        Skeleton.WriteName("Iron: Iron()");
         name = "Iron";
     }
 

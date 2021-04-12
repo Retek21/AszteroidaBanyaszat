@@ -12,28 +12,28 @@ public class Settler extends Entity{
 
     //default constructor
     public Settler(){
-        Skeleton.WriteName("Settler: Settler()");
+
     }
 
 
     //GETTERS, SETTERS
     public Inventory GetInventory(){
-        Skeleton.WriteName("Settler: GetInventory()");
+
         return inventory;
     }
 
     public Factory GetFactory(){
-        Skeleton.WriteName("Settler: GetFactory()");
+
         return factory;
     }
 
     public void SetInventory(Inventory i){
-        Skeleton.WriteName("Settler: SetInventory(inventory i)");
+
         inventory = i;
     }
 
     public Settler(Factory f ){
-        Skeleton.WriteName("Settler: Settler(Factory f)");
+
         factory = f;
     }
 
@@ -47,10 +47,7 @@ public class Settler extends Entity{
     Ha nincs hely az inventory-ban több teleportnak, vagy a CreateTeleport null-lal tér vissza
     (sikeretelen craftolás) nem történik semmi.
      */
-    public void CraftTeleport(){                    //teleport crafting
-        //if there is enough storage in inventory, it crafts teleports
-        Skeleton.WriteName("Settler: CraftTeleport()");
-        Skeleton.tab++;
+    public void CraftTeleport(){
 
         if(inventory.IsTeleportSlotEmpty() == true){
             ArrayList<Teleport> teleports;
@@ -64,7 +61,6 @@ public class Settler extends Entity{
 
             } catch (Exception e) { }
         }
-        Skeleton.tab--;
     }
 
     /*
@@ -76,17 +72,12 @@ public class Settler extends Entity{
     (sikeretelen craftolás) nem történik semmi.
      */
     public void CraftRobot() {
-        Skeleton.WriteName("Settler: CraftRobot()");
-        Skeleton.tab++;
-
         Robot robot;
         robot = factory.CreateRobot(inventory);
 
         if (robot != null) {
             robot.Deploy(asteroid);
         }
-
-        Skeleton.tab--;
     }
 
     /*
@@ -95,15 +86,11 @@ public class Settler extends Entity{
     kikerül az aszteroidából és addolódik az inventory-ba.
      */
     public void Mine(){
-        //if there is enough storage in the inventory, the settler mines
-        Skeleton.WriteName("Settler: Mine()");
-        Skeleton.tab++;
         if(!inventory.IsMaterialSlotFull()){
             Material m = asteroid.RemoveMaterial();
             if (m != null)
                 inventory.AddMaterial(m);
         }
-        Skeleton.tab--;
     }
 
     /*
@@ -111,13 +98,8 @@ public class Settler extends Entity{
     Meghívódik a teleport Deploy() metódusa.
      */
     public void PlaceTeleport(Teleport t){
-        Skeleton.WriteName("Settler: PlaceTeleport(Teleport t)");
-        Skeleton.tab++;
-
         t.Deploy(asteroid);
         inventory.RemoveTeleport(t);
-
-        Skeleton.tab--;
     }
 
     /*
@@ -125,14 +107,9 @@ public class Settler extends Entity{
     Meghívódik a nyersanyag Deploy() metódusa.
      */
     public void PlaceMaterial(Material m){
-        Skeleton.WriteName("Settler: PlaceMaterial(Material m)");
-        Skeleton.tab++;
-
         boolean success =  m.Deploy(asteroid);
         if(success)
             inventory.RemoveMaterial(m);
-
-        Skeleton.tab--;
     }
 
 
@@ -141,11 +118,8 @@ public class Settler extends Entity{
      */
     @Override
     public void Die(){
-        Skeleton.WriteName("Settler: Die()");
-        Skeleton.tab++;
         inventory.Clear();
         super.Die();
-        Skeleton.tab--;
     }
 
     /*
@@ -153,12 +127,7 @@ public class Settler extends Entity{
      */
     @Override
     public void BlowUp(){
-        Skeleton.WriteName("Settler: BlowUp()");
-        Skeleton.tab++;
-
         Die();
-
-        Skeleton.tab--;
     }
 
     /*
@@ -167,7 +136,7 @@ public class Settler extends Entity{
      */
     @Override
     public void DoPhase(){
-        Skeleton.WriteName("Settler: DoPhase()");
+
     }
 
 }

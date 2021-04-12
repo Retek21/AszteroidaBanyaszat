@@ -10,21 +10,17 @@ public class Sun{
 
     public Sun()
     {
-        Skeleton.WriteName("Sun()");
+
     }
 
     //A függvény meghívja a nap aszteroidamezejéhez tartozó aszeroidákon az OnFire() metódust.
     public void Sunstorm()
     {
-        Skeleton.WriteName("Sun: Sunstorm()");
-        Skeleton.tab++;
-
         ArrayList<Asteroid> asteroids = asteroidfield.GetAsteroids();
         for(int i=0; i<asteroids.size(); i++)
         {
             asteroids.get(i).OnFire();
         }
-        Skeleton.tab--;
     }
 
     //Beállítja a kapott aszeroidát a nap aszteroidamezejének
