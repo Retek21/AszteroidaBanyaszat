@@ -1,142 +1,173 @@
 package game.logic;
-
 import java.util.ArrayList;
-
-//created by: Turiák Anita 2021.03.19.
-//Settler class, parent: Entity
+/**
+ * Settler osztaly, az Entity leszarmazotta,
+ * feladata az aszteroidak kozti mozgas, azok megfurasa, banyaszata
+ * kulonbozo objektumok keszitese, azok elhelyezese.
+ * @author Turiak Anita 2021.03.19.
+ * @author Dengyel Bendeguz 2021.04.13.
+ */
 public class Settler extends Entity{
 
-    //ATTRIBUTES
-    private Inventory inventory;            //inventory of the settler
-    private Factory factory;                //factory, which helps the settler craft
-
-    //default constructor
-    public Settler(){
-
-    }
-
-
-    //GETTERS, SETTERS
-    public Inventory GetInventory(){
-
-        return inventory;
-    }
-
-    public Factory GetFactory(){
-
-        return factory;
-    }
-
-    public void SetInventory(Inventory i){
-
-        inventory = i;
-    }
-
-    public Settler(Factory f ){
-
-        factory = f;
-    }
-
-
-    //METHODS
-    /*
-    A telepes elkészít egy teleportkapu-párt.
-    Ha van hely az inventory-jában meghívódik a Factory CreateTeleport metódusa, ami
-    visszaad egy teleportpárt, ha sikeres a craftolás. Ebben az esetben a teleportok
-    bekerülnek az inventory-ba.
-    Ha nincs hely az inventory-ban több teleportnak, vagy a CreateTeleport null-lal tér vissza
-    (sikeretelen craftolás) nem történik semmi.
+    /**
+     * A Factory segiti a telepest az elkesztiheto dolgok elkesziteseben.
      */
-    public void CraftTeleport(){
-
-        if(inventory.IsTeleportSlotEmpty() == true){
-            ArrayList<Teleport> teleports;
-            try {
-
-
-                teleports = factory.CreateTeleport(inventory);
-                inventory.AddTeleport(teleports.get(0));
-                inventory.AddTeleport(teleports.get(1));
-
-
-            } catch (Exception e) { }
-        }
-    }
-
-    /*
-    A telepes elkészít egy robotot.
-    Meghívódik a Factory CreateRobot metódusa, ami
-    visszaad egy robotot, ha sikeres a craftolás. Ebben az esetben a robot
-    lekerül arra az aszteroidára, amelyen a telepes is tartózkodik.
-    Ha a CreateRobot null-lal tér vissza
-    (sikeretelen craftolás) nem történik semmi.
+    private Factory factory;
+    /**
+     * Az inventoryban tarolja az egyes kibanyaszott
+     * nyersanyagokat, teleportokat.
      */
-    public void CraftRobot() {
-        Robot robot;
-        robot = factory.CreateRobot(inventory);
+    private Inventory inventory;
 
-        if (robot != null) {
-            robot.Deploy(asteroid);
-        }
-    }
-
-    /*
-    A telepes bányászik asz aszteroidán. Ha az inventory-ja tele van, vagy üres aszteroidát
-    próbál bányászni, a cselekvés siekrtelen, nem történik semmi. Egyéb esetben a nyersanyag
-    kikerül az aszteroidából és addolódik az inventory-ba.
+    /**
+     * Visszater a telepes inventoryjaval.
+     * @return az inventory referenciaja
      */
-    public void Mine(){
+    public Inventory GetInventory(){return inventory;}
+
+    /**
+     * Visszater a telepes factoryjaval.
+     * @return a factory referenciaja
+     */
+    public Factory GetFactory(){return factory;}
+
+    /**
+     * A parameterul kapott inventoryt beallitja a telepes inventoryjanak.
+     * @param i a beallitani kivant inventory
+     */
+    public void SetInventory(Inventory i){inventory = i;}
+
+    /**
+     * A telepes banyaszik az aszteroidan. Ha az inventory-ja tele van, vagy ures aszteroidat
+     * probal banyaszni, a cselekves siekrtelen, nem tortenik semmi. Egyeb esetben a nyersanyag
+     * kikerul az aszteroidabol és addolodik az inventory-ba. Ekkor visszateresi erteke igaz,
+     * egyebkent hamis.
+     * @return a metodus sikeressege
+     */
+    public boolean Mine(){
         if(!inventory.IsMaterialSlotFull()){
             Material m = asteroid.RemoveMaterial();
-            if (m != null)
+            if (m != null){
                 inventory.AddMaterial(m);
+                return true;
+            }else
+                return false;
+
+        }else
+            return false;
+    }
+
+    /**
+     * A telepes megfur egy aszteroidat.
+     * Visszateresi erteke a furas sikeressegenek erteke.
+     * @return a metodus sikeressege
+     */
+    public boolean Drill(){
+        return asteroid.ThinLayer();
+    }
+
+    /**
+     * A telepes lehelyezi a parameterul kapott t teleportot az aszteroidaja szomszedsagaba.
+     * Meghivodik a teleport Deploy() metódusa, ha az megtalalhato a az inventory
+     * teleportjai kozott, majd eltavolitja a teleportot az invventorybol.
+     * Sikeres lehelyezes eseten igazzal ter vissza, egyebkent hamissal.
+     * @param t a lehelyezni kivant teleport
+     * @return a lehelyezes sikeressege
+     */
+    public boolean PlaceTeleport(Teleport t){
+        if(!inventory.GetTeleports().contains(t))
+            return false;
+        else{
+            if(t.Deploy(asteroid)){
+                inventory.RemoveTeleport(t);
+                return true;
+            }else
+                return false;
         }
     }
 
-    /*
-    A telepes lehelyez egy teleportot az aszteroidája szomszédságába.
-    Meghívódik a teleport Deploy() metódusa.
+    /**
+     * A telepes lehelyez egy nyersanyagot az aszteroida magjaba, ha a
+     * parameterul atadott m nyersanyag megtalalhato az inventoryban.
+     * Ha az asteroid Asteroid::AddMaterial(Material m) meetodusa
+     * sikeresen az asteroidhoz adja a nyersanyagot, akkor a nyersanyag
+     * kikerul a telepes inventoryjabol az Inventory::RemoveMaterial(Material m)
+     * metodussal. Ekkor a visszateres igaz, egyebkent hamis.
+     * @param m a lehelyezni kivant nyersanyag
+     * @return a lehelyezes sikeressege
      */
-    public void PlaceTeleport(Teleport t){
-        t.Deploy(asteroid);
-        inventory.RemoveTeleport(t);
+    public boolean PlaceMaterial(Material m){
+        if(!inventory.GetMaterials().contains(m))
+            return false;
+        else{
+            if(asteroid.AddMaterial(m)){
+                inventory.RemoveMaterial(m);
+                return true;
+            }else
+                return false;
+        }
     }
 
-    /*
-    A telepes lehelyez egy nyersanyagot az aszteroida magjába.
-    Meghívódik a nyersanyag Deploy() metódusa.
-     */
-    public void PlaceMaterial(Material m){
-        boolean success =  m.Deploy(asteroid);
-        if(success)
-            inventory.RemoveMaterial(m);
-    }
-
-
-    /*
-    A telepes meghal. Törlődik az inventory-ja és meghívódik az ősosztály Die() metódusa.
+    /**
+     * A telepes meghal. Torlodik az inventory-ja és meghivodik az
+     * ososztaly Die() metodusa, majd az inventory tartalma is megsemmisul az
+     * Inventory::Clear() metodussal. Vegul a controller
+     * Controller::SettlerDie(Settler s) metodussal a fazisokbol is kikerul.
      */
     @Override
     public void Die(){
-        inventory.Clear();
         super.Die();
+        inventory.Clear();
+        c.SettlerDie(this);
     }
 
-    /*
-    A telepes felrobban aszteroida robbanás következtében, ennek következtében meghal.
+    /**
+     * A telepes felrobban aszteroida robbanas kovetkezteben, ennek kovetkezteben
+     * meghal, meghivja a Die() metodusat.
      */
     @Override
     public void BlowUp(){
         Die();
     }
 
-    /*
-    A metódus azt valósítja meg, hogy a telepes mit csinál a fázisában.
-    Mivel erős kapcsolatban van a controllerrel, a tesztesetekben nem használjuk.
+    /**
+     * A telepes elkeszit egy teleportkapu-part.
+     * Ha van hely az inventoryjaban meghivodik a Factory::CreateTeleport(Inventory i)
+     * metodusa, ami visszaad egy teleportpart, ha sikeres a craftolas. Ebben az esetben a teleportok
+     * bekerulnek az inventoryba. A metodus igazzal ter vissza.
+     * Ha nincs hely az inventoryban tobb teleportnak, vagy a CreateTeleport null-lal ter vissza
+     * (sikeretelen craftoles) nem tertenik semmi. Ekkor a metodus hamissal ter vissza.
+      * @return a craftolas sikeressege
      */
-    @Override
-    public void DoPhase(){
-
+    public boolean CraftTeleport(){
+        if(inventory.IsTeleportSlotEmpty()){
+            ArrayList<Teleport> teleports = factory.CreateTeleport(inventory);
+            if(teleports!=null){
+                inventory.AddTeleport(teleports.get(0));
+                inventory.AddTeleport(teleports.get(1));
+                return true;
+            }else
+                return false;
+        }else
+            return false;
     }
 
+    /**
+     * A telepes elkeszit egy robotot.
+     * Meghivodik a Factory::CreateRobot(Inventory i) metodusa, ami
+     * visszaad egy robotot, ha sikeres a craftolas. Ebben az esetben a robot
+     * lekerul arra az aszteroidara, amelyen a telepes is tartazkodik. Ekkor
+     * a metodus igazzal ter vissza.
+     * Ha a CreateRobot null-lal ter vissza (sikeretelen craftolás) nem
+     * történik semmi. Ekkor  a metodus hamissal ter vissza.
+     * @return a craftolas sikeressege
+     */
+    public boolean CraftRobot() {
+        Robot robot = factory.CreateRobot(inventory);
+        if (robot != null) {
+            asteroid.AddEntity(robot);//ez nem bool?
+            return true;
+        }else
+            return false;
+    }
 }
