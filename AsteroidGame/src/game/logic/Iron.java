@@ -1,16 +1,25 @@
 package game.logic;
 
+/**
+ * Iron nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.\
+ * @author torok
+ */
 public class Iron extends Material{
 
-    public Iron(){
+    /**
+     * Az Iron konstruktora ami beallitja a nevet
+     */
+    public Iron(Controller _c){
+        c = _c;
         name = "Iron";
     }
 
-    /*
-    A metódus nem definiálja felül az ős metódusát.
+    /**
+     * Meghívja a kontroller IronDisintegrate metódusát
      */
     @Override
-    public void Interact(Asteroid a) {
-        super.Interact(a);
+    public void Disintegrate() {
+        super.Disintegrate();
+        c.IronDisintegrate();
     }
 }
