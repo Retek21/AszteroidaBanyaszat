@@ -9,6 +9,14 @@ import java.util.ArrayList;
  */
 public abstract class Entity {
     /**
+     * Az entity konstruktora beallitja  a parmeterul kapott controllert.
+     */
+
+    public Entity(Controller _c){
+        c=_c;
+    }
+
+    /**
      * A jatekot iranyito controller.
      */
     protected Controller c;
@@ -60,7 +68,7 @@ public abstract class Entity {
         if(asteroid.GetNeighbours().contains(w)){
             if(w.AddEntity(this)){
                 asteroid.RemoveEntity(this);
-                asteroid=(Asteroid) w;//ezt biztos így?
+                //asteroid=(Asteroid) w;//ezt biztos így?
                 return true;
             }else
                 return false;

@@ -7,6 +7,13 @@ package game.logic;
  */
 public class Ufo extends Entity {
     /**
+     * Az ufo konstruktora beallitja  a parmeterul kapott controllert.
+     */
+    public Ufo(Controller c){
+        super(c);
+    }
+
+    /**
      *Metodus, meghivja az Ufo::Die() metodusat.
      * Az os metodusanak felulirasa.
      */

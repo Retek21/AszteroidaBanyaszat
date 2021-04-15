@@ -8,6 +8,15 @@ import java.util.ArrayList;
  * @author Dengyel Bendeguz 2021.04.13.
  */
 public class Settler extends Entity{
+    /**
+     *A settler konstruktora beallitja a parameterul kapott controllert
+     * az osnek, es letrehozza a factoryt, valamint az inventoryt.
+     */
+    public Settler(Controller c){
+        super(c);
+        factory=new Factory(c);
+        inventory=new Inventory();
+    }
 
     /**
      * A Factory segiti a telepest az elkesztiheto dolgok elkesziteseben.
@@ -165,7 +174,7 @@ public class Settler extends Entity{
     public boolean CraftRobot() {
         Robot robot = factory.CreateRobot(inventory);
         if (robot != null) {
-            asteroid.AddEntity(robot);//ez nem bool?
+            asteroid.AddEntity(robot);
             return true;
         }else
             return false;

@@ -9,6 +9,13 @@ import java.util.Random;
  */
 public class Robot extends Entity {
     /**
+     * Az robot konstruktora beallitja  a parmeterul kapott controllert.
+     */
+    public Robot(Controller c){
+        super(c);
+    }
+
+    /**
      * A robot felrobban az aszteroidaja robbanasa kovetkezteben.
      * Ha a felrobbant aszteroidanak voltak szomszedjai, atlep valamelyikre,
      * egyebkent meghal.
