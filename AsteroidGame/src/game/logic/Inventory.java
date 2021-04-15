@@ -6,72 +6,89 @@ public class Inventory {
     private ArrayList<Material> materials;
     private ArrayList<Teleport> teleports;
 
+    /**
+     * Letrehoz egy Inventory objektumot.
+     */
     public Inventory() {
         materials = new ArrayList<Material>();
         teleports = new ArrayList<Teleport>();
     }
 
-    /*
-    Material felvétele az inventory-ba.
+    /**
+     * Felveszi a megadott nyersanyagot a materials kollekcioba.
+     * @param m - Az inventory-ba felvevendo nyersanyag
      */
     public void AddMaterial(Material m) {
         materials.add(m);
     }
 
-    /*
-    Material eltávolítása az inventory-ba.
+    /**
+     * Eltavolitja a megadott nyersanyagot a materials kollekciobol.
+     * @param m
      */
     public void RemoveMaterial(Material m) {
         materials.remove(m);
     }
 
-    /*
-    Teleport felvétele az inventory-ba.
+    /**
+     * Felveszi a megadott teleportot a teleports kollekcioba.
+     * @param t - Az inventory-ba felvevendo teleport
      */
     public void AddTeleport(Teleport t) {
         t.SetInventory(this);
         teleports.add(t);
     }
 
-    /*
-    Teleport eltávolítása az inventory-ból.
+    /**
+     * Eltavolitja a megadott teleportot a teleports kollekciobol.
+     * @param t - Az eltavolitando teleport.
      */
     public void RemoveTeleport(Teleport t) {
         teleports.remove(t);
     }
 
-    /*
-    Visszaadja az inventory-ban tárolt Material-ok tömbjét.
+    /**
+     * Visszaadja Visszater a materials kollekcioval.
+     * @return - Az inventory-ban tarolt nyersanyagok tombje
      */
     public ArrayList<Material> GetMaterials() {
         return materials;
     }
 
-    /*
-    Visszaadja, hogy tele van-e az inventory-ban a nyersanyagoknak szánt hely.
+    /**
+     * Visszaadja Visszater a teleports kollekcioval.
+     * @return - Az inventory-ban tarolt teleportok tombje
+     */
+    public ArrayList<Teleport> GetTeleports() {
+        return teleports;
+    }
+
+    /**
+     * Visszateresi ertekeben megadja, hogy “tele” van-e az inventoryban a nyersanyagoknak szant hely.
+     * Ha a materials kollekcio 10 vagy annal tobb elemet tartalmaz, akkor igazzal, ha kevesebb, mint 10-et, akkor hamissal ter vissza.
+     * @return - Az inventory-ban nyersanyagoknak szant hely tele van-e
      */
     public boolean IsMaterialSlotFull() {
-        boolean rt = materials.size() == 10;
-
-        return rt;
+        return materials.size() >= 10;
     }
 
-    /*
-    Visszaadja, hogy van-e hely még teleportnak az inventory-ban.
+    /**
+     * Visszateresi ertekeben megadja van-e szabad hely meg egy teleportparnak az inventory-ban.
+     * Ha teleports kollekcio 1 vagy annal kevesebb elemet tartalmaz, akkor igazzal, egyeb esetben hamissal ter vissza.
+     * @return - Van-e szabad hely meg teleportparnak az inventory-ban.
      */
     public boolean IsTeleportSlotEmpty() {
-
-        boolean rt = teleports.size() == 0;
-
-        return  rt;
+        return teleports.size() <= 1;
     }
 
-    /*
-    Törlődik az inventory tartalma.
+    /**
+     * Az inventory ervenyteleniti a tartalmat.
+     * A materials tomb elemeinek meghivódik a Disintegrate() metodusa, a teleports tomb elemeinek pedig az ExplodeWithPair() metodusa.
      */
     public void Clear() {
         for(Material m : materials)
             m.Disintegrate();
-        if((teleports.size() != 0)) teleports.get(0).ExplodeWithPair();
+        for(Teleport t : teleports)
+            t.ExplodeWithPair();
     }
 }

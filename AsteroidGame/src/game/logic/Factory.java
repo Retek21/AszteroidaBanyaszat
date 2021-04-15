@@ -4,16 +4,25 @@ import java.util.ArrayList;
 
 public class Factory {
 
-    public Factory() {
+    private Controller c;
 
+    /**
+     * Letrehozza a Factory objektumot a megadott kontrollerrel inicializalva.
+     * @param _c - Controller objektum, amellyel inicializaljuk az objektumot.
+     */
+    public Factory(Controller _c) {
+        c = _c;
     }
 
-    /*
-    A metódus elkészíti a teleportkapupárokat.
-    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
-    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
-    eltávolítja azokat az inventory-ból, létrehozza a teleportokat, és visszatér a tömbjükkel.
-    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+    /**
+     * A metodus elkesziti a teleportkapuparokat.
+     * Elkeri a Recipe osztalytol a szukseges Material-ok listajat, az Inventory-tol pedig
+     * a rendelkezésre allo Material-okat. Osszeveti a ket listat, ha megvan az osszes nyersanyag,
+     * eltavolítja azokat az inventory-bol, letrehozza a teleportokat, és visszater a tombjukkel.
+     * Ha nincsenek meg a szukseges nyersanyagok, a metodus null-lal visszater.
+     * @param i - Az Inventory objektum, ahonnan a rendelkezesre allo nyersanyagok tomje elerheto.
+     * @return  - Ha meg vannak a szukseges nyersanyagok, a letrehozott teleportokat tartalmazo tomb,
+     *            egyeb esetben null.
      */
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
@@ -54,12 +63,16 @@ public class Factory {
         }
     }
 
-    /*
-    A metódus elkészíti a robotokat.
-    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
-    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
-    eltávolítja azokat az inventory-ból, létrehozza a robotot, és visszatér a tömbjükkel.
-    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+
+    /**
+     * A metodus elkesziti a robotot.
+     * Elkeri a Recipe osztalytol a szukseges Material-ok listajat, az Inventory-tol pedig
+     * a rendelkezésre allo Material-okat. Osszeveti a ket listat, ha megvan az osszes nyersanyag,
+     * eltavolítja azokat az inventory-bol, letrehozza a robotot, és visszater vele.
+     * Ha nincsenek meg a szukseges nyersanyagok, a metodus null-lal visszater.
+     * @param i - Az Inventory objektum, ahonnan a rendelkezesre allo nyersanyagok tombje elerheto.
+     * @return  - Ha meg vannak a szukseges nyersanyagok, a letrehoztt Robot objektum,
+     *            egyeb esetben null.
      */
     public Robot CreateRobot(Inventory i) {
         ArrayList<Material> mold = Recipe.GetRobotRecipe();
