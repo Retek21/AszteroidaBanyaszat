@@ -222,7 +222,6 @@ public class Asteroid implements Whereabout{
      * @param entity: az eltavolitando entitas
      */
     public void RemoveEntity(Entity entity){
-        Skeleton.WriteName("Asteroid: RemoveEntity(entity)");
         entities.remove(entity);
     }
 
@@ -232,7 +231,7 @@ public class Asteroid implements Whereabout{
      */
     public boolean ThinLayer(){
 
-        if(layers>0)
+        if(layers>1)
             return false;
         else{
             layers--;
