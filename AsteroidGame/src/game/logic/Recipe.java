@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class Recipe {
 
-    /*
-    Visszaadja azon nyersanyagok tömbjét, amelyek szükségesek egy teleportpár elkészítéséhez.
+    /**
+     * Visszater egy teleportpar craftolasahoz szukseges nyersanyagok tombjevel.
+     * Letrehozza a szukséges Material objektumokat (1 vas, 1 szen, 1 uran), belerakja oket egy tombbe, és visszater vele.
+     * @return - Egy teleportpar craftolasahoz szukseges nyersanyagokat tartalmazo tomb.
      */
     public static ArrayList<Material> GetTeleportRecipe() {
         Iron iron1 = new Iron();
@@ -22,8 +24,10 @@ public class Recipe {
         return mold;
     }
 
-    /*
-    Visszaadja azon nyersanyagok tömbjét, amelyek szükségesek egy robot elkészítéséhez.
+    /**
+     * Visszater egy robot craftolasahoz szukseges nyersanyagok tombjevel.
+     * Letrehozza a szukséges Material objektumokat (2 vas, 1 jeg, 1 uran), belerakja oket egy tombbe, és visszater vele.
+     * @return - Egy robot craftolasahoz szukseges nyersanyagokat tartalmazo tomb.
      */
     public static ArrayList<Material> GetRobotRecipe() {
 
@@ -35,6 +39,25 @@ public class Recipe {
         mold.add(iron);
         mold.add(coal);
         mold.add(uran);
+
+        return mold;
+    }
+
+    /**
+     * Visszater a gyozelemhez osszegyujteni szukséges Material-ok tombjével.
+     * Letrehozza a szukséges Material objektumokat (3 vas, 3 szen, 3 jeg, 3 uran), belerakja oket egy tombbe, es visszater vele.
+     * @return - A bazis megepitesehez (gyozelemhez) szukseges nyersanyagokat tartalmazo tomb.
+     */
+    public static ArrayList<Material> GetWinRecipe() {
+        ArrayList<Material> mold = new ArrayList<Material>();
+        for(int i = 0; i < 3; i++)
+            mold.add(new Iron());
+        for(int i = 0; i < 3; i++)
+            mold.add(new Coal());
+        for(int i = 0; i < 3; i++)
+            mold.add(new Ice());
+        for(int i = 0; i < 3; i++)
+            mold.add(new Uranium());
 
         return mold;
     }
