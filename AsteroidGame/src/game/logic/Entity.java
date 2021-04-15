@@ -1,56 +1,78 @@
 package game.logic;
+import java.util.ArrayList;
 
-//created by: Turiák Anita 2021.03.19.
-//abstract Entity class
+/**
+ * Entity absztrakt ososztaly. A szteroidaovben tartozkodi entitasok
+ * egyes lepeseit valositja meg, es az azokhoz tartozo belso mukodest.
+ * @author Turiák Anita 2021.03.19.
+ * @author Dengyel Bendeguz 2021.04.13.
+ */
 public abstract class Entity {
-    //ATTRIBUTES
-    //on which asteroid the entity stands
+    /**
+     * Az entity konstruktora beallitja  a parmeterul kapott controllert.
+     */
+
+    public Entity(Controller _c){
+        c=_c;
+    }
+
+    /**
+     * A jatekot iranyito controller.
+     */
+    protected Controller c;
+    /**
+     * Az aszteroida, melyen a telepes tartozkodik.
+     */
     protected Asteroid asteroid;
 
-    //GETTERS, SETTERS
+    /**
+     * Visszaadja a telepes gazdaaszteroidajat.
+     * @return az aszteroida referenciaja
+     */
     public Asteroid GetAsteroid() {
         return asteroid;
     }
 
+    /**
+     * Beallitja a telepes aszteroidajat az parameterul kapottra.
+     * @param a a telepes uj aszteroidaja
+     */
     public void SetAsteroid(Asteroid a){
         asteroid = a;
     }
 
-    //METHODS
-    /*
-    Az entitás meghal, így lekerül az aszteroidáról.
+    /**
+     * Az entitas meghal, így lekerul az aszteroidarol.
+     * Az Asteroid::RemoveEntity(Entity e) metodus eltavolitja
+     * az atadott entittast magarol.
      */
     public void Die(){
-
         asteroid.RemoveEntity(this);
     }
 
-    /*
-    Az entitás felrobban. A leszármazottak valósítják meg a metódust.
+    /**
+     * Az entitas felrobban. A leszarmazottak valositjak meg a metodust.
      */
     public abstract void BlowUp();
 
-    /*
-    Az entitás lefúr egy réteget azon az aszteroidán, amelyen tartózkodik.
+    /**
+     * Az entitás atlep az azsteroidajarol egy szomszedosra.
+     * Ha az aszteroida szomszedai kozott megtalalhato a parameterul
+     * atadott szomszed, jelen aszteroida eltavolitja magarol az entitast,
+     * majd az uj aszteroida lesz az entitas asteroidja. Ekkor igazzal ter vissza.
+     * Egyebkent hamissal.
+     * @param w a szomszed, melyre at lep az entitas
+     * @return a mozgas sikeressege
      */
-    public void Drill() {
-        asteroid.ThinLayer();
+    public boolean Move(Whereabout w) {
+        if(asteroid.GetNeighbours().contains(w)){
+            if(w.AddEntity(this)){
+                asteroid.RemoveEntity(this);
+                //asteroid=(Asteroid) w;//ezt biztos így?
+                return true;
+            }else
+                return false;
+        }else
+            return false;
     }
-
-    /*
-    Az entitás átlép az azsteroidájáról egy szomszédosra.
-     */
-    public void Move(int i) {
-
-        Whereabout w;
-        w = asteroid.GetNeighbour(i);
-        if(w.AddEntity(this)==true)     //Ha sikertelen a továbblépés, marad a helyén.
-            asteroid.RemoveEntity(this);
-
-    }
-
-    /*
-    Megvalósítja mit csinál az entitás egy fázisban. A leszármazottak valósítják meg.
-     */
-    public abstract void DoPhase();
 }
