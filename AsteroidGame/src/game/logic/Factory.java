@@ -5,13 +5,17 @@ import java.util.ArrayList;
 public class Factory {
 
     public Factory() {
-        Skeleton.WriteName("Factory: Factory()");
+
     }
 
+    /*
+    A metódus elkészíti a teleportkapupárokat.
+    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
+    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
+    eltávolítja azokat az inventory-ból, létrehozza a teleportokat, és visszatér a tömbjükkel.
+    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+     */
     public ArrayList<Teleport> CreateTeleport(Inventory i) {
-        Skeleton.WriteName("Factory: CreateTeleport(inventory)");
-        Skeleton.tab++;
-
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
@@ -43,22 +47,21 @@ public class Factory {
             teleports.add(t1);
             teleports.add(t2);
 
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: teleports");
             return teleports;
         }
         else {
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
-
             return null;
         }
     }
 
+    /*
+    A metódus elkészíti a robotokat.
+    Elkéri a Recipe osztálytól a szükséges Material-ok listáját, az Inventory-tól pedig
+    a rendelkezésre álló Material-okat. Összeveti őket, ha megvan az összes nyersanyag,
+    eltávolítja azokat az inventory-ból, létrehozza a robotot, és visszatér a tömbjükkel.
+    Ha nincsenek meg a szükséges nyersanyagok, a metódus null-lal visszatér.
+     */
     public Robot CreateRobot(Inventory i) {
-        Skeleton.WriteName("Factory: CreateRobot(inventory)");
-        Skeleton.tab++;
-
         ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
@@ -85,15 +88,9 @@ public class Factory {
 
             Robot robot = new Robot();
 
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: robot");
-
             return robot;
         }
         else {
-            Skeleton.tab--;
-            Skeleton.WriteName("Factory: CreateTeleport(inventory) return: null");
-
             return null;
         }
     }

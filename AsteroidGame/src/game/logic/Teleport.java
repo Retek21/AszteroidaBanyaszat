@@ -1,5 +1,6 @@
 package game.logic;
 
+
 /**
  * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
  * Felelossége, hogy ket nem szomszedos aszteroida között
@@ -55,6 +56,7 @@ public class Teleport implements Whereabout{
         {
             pair.GetAsteroid().AddEntity(e);
             return true;
+
         }
         return false;
     }

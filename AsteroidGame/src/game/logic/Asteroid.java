@@ -1,5 +1,6 @@
 package game.logic;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Aszteroid osztaly, megvalositja a Whereabout interfeszt.
@@ -309,6 +310,7 @@ public class Asteroid implements Whereabout{
             asteroidfield.RemoveAsteroid(this);
         } catch (NullPointerException e) { }
         c.AsteroidExplode(this);
+
     }
 
     /**
