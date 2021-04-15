@@ -1,32 +1,44 @@
 package game.logic;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-//Ez az osztály reprezentálja a napot amik körül az aszteroidák keringenek.
+/**
+ * Singleton osztaly, ami a napvihar inditasaert felelos.
+ */
 public class Sun{
 
-    // A naphoz tartozó aszteroidamező.
+    /**
+     * A jatekban szereplo aszteroidakat egyesito
+     * asteroidfield objektum. Ezek kozul valogat, amikor
+     * meghivja a Sunstorm() fuggvenyt.
+     */
     private Asteroidfield asteroidfield;
 
-    public Sun()
-    {
-        Skeleton.WriteName("Sun()");
-    }
-
-    //Ez a függvény hívja meg a nap aszteroidamezejéhez tartozó aszeroidákon a napvihar végbemenését.
+    /**
+     * A metodus kivalaszt veletlenszeruen egy aszteroidat az
+     * aszteroidamezotol lekert tombbol,
+     * lekeri az aszteroidatol annak szomszedjait tartalmazo tombot ,
+     * majd meghivja a Whereabout::OnFire() metodust az aszteroidara és annak osszes szomszedjara.
+     */
     public void Sunstorm()
     {
-        Skeleton.WriteName("\nSun: Sunstorm()");
-        Skeleton.tab++;
         ArrayList<Asteroid> asteroids = asteroidfield.GetAsteroids();
-        for(int i=0; i<asteroids.size(); i++)
+        int rand = new Random().nextInt(asteroids.size());
+        Asteroid asteroid = asteroids.get(rand);
+        ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
+        for(int i=0; i<neighbours.size(); i++)
         {
-            asteroids.get(i).OnFire();
+            neighbours.get(i).OnFire();
         }
-        Skeleton.tab--;
+        asteroid.OnFire();
     }
 
-    //beállítja a kapott aszeroidát a nap aszteroidamezejének
+    /**
+     *  Felveszi a kapott aszteroidamezot a nyilvantartasba.
+     * @param af: a beallitando aszteroidamezo.
+     */
+
     public void AddAsteroidfield(Asteroidfield af)
     {
         asteroidfield = af;

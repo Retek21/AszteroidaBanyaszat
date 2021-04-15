@@ -1,33 +1,75 @@
 package game.logic;
 import java.util.ArrayList;
 
-//Created by:Bendegúz Dengyel 2021.03.17
-//Asteroid class
+/**
+ * Aszteroid osztaly, megvalositja a Whereabout interfeszt.
+ * Feladata a rajta torteno interakciok karbantartasa.
+ * A jatekosok az aszteroidakon jatszak a jatekot.
+ */
 public class Asteroid implements Whereabout{
 
-    //ATTRIBUTES:
-    private int layers;//number of layers covering the asteroid
-    private boolean sunnearness;//true or false depending the closure of the sun
-    private boolean empty;//shows whether the core of the asteroid contains a material or not
-    private ArrayList<Whereabout> neighbours;//the neighbours of the asteroid an entity can travel
-    private ArrayList<Entity> entities;//the entities  currently staying on the asteroid
-    private Material material;//the material containd in the core
-    private Asteroidfield asteroidfield;//the asteroid field the current asteroid belongs to
+    /**
+     * az aszteroidan talalhato retegek szama, amit
+     * furassal lehet csokkenteni
+     */
+    private int layers;
 
-    //CONSTRUCTOR:
+    /**
+     * jelzi, hogy az aszteroida eppen napkozelben van-e
+     */
+    private boolean sunnearness;
+
+    /**
+     * jelzi, hogy az aszteroida ureges-e
+     */
+    private boolean empty;
+
+    /**
+     * az aszteroida szomszedai, ahova az entitasok lepni tudnak az aszteroidarol
+     */
+    private ArrayList<Whereabout> neighbours;
+
+    /**
+     * az aszteroidan allo entitasok tombje
+     */
+    private ArrayList<Entity> entities;
+
+    /**
+     * az aszteroida belsejeben talalhato nyersanyag
+     */
+    private Material material;
+
+    /**
+     * az aszteroidamezo, amiben az aszteroida benne van
+     */
+    private Asteroidfield asteroidfield;
+
+    /**
+     * Referencia a jatekot vezerlo kontrollerre.
+     * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
+     */
+    Controller c;
+
+    /**
+     * az aszteroida default konstruktora
+     * beallitja az alapertelmezett attributumokat
+     */
     public Asteroid() {
-        Skeleton.WriteName("Asteroid: Asteroid()");
-        Skeleton.tab++;
-        sunnearness=false;//in case adding uranium or ice
+        sunnearness=false;
         empty=true;
         neighbours = new ArrayList<Whereabout>();
         entities = new ArrayList<Entity>();
-        Skeleton.tab--;
     }
 
+    /**
+     * az aszteroida konstruktora
+     * beallitja a parameterkent kapott adatokat
+     * @param _layers: a retegek szama
+     * @param _sunearness: a napkozelseg
+     * @param _material: az aszteroida belsejeben talalhato nyersanyag
+     * @param _asteroidfield: az aszteroidamezo, ahova az aszteroida tartozik
+     */
     public Asteroid(int _layers,boolean _sunearness, Material _material, Asteroidfield _asteroidfield){
-        Skeleton.WriteName("Asteroid: Asteroid()");
-        Skeleton.tab++;
         neighbours = new ArrayList<Whereabout>();
         entities = new ArrayList<Entity>();
         layers=_layers;
@@ -36,209 +78,253 @@ public class Asteroid implements Whereabout{
         if(material==null) empty=true;
         else empty=false;
         asteroidfield=_asteroidfield;
-        Skeleton.tab--;
     }
 
-    //GETTERES, SETTERS:
+    /**
+     * visszaadja az aszteroida retegeinek a szamat
+     * @return: retegek szama
+     */
     public int GetLayer() {
-        Skeleton.WriteName("Asteroid: getLayers()");
-        Skeleton.WriteName("Asteroid: getLayers() return:"+layers);
         return layers;
     }
+
+    /**
+     * beallitja az aszteroida reteginek szamat a kapott parameterre
+     * @param layers: retegek szama
+     */
     public void SetLayer(int layers) {
-        Skeleton.WriteName("Asteroid: setLayers("+layers+")");
         this.layers = layers;
     }
+
+    /**
+     * visszaadja az aszteroida napkozelseget
+     * @return: napkozelseg
+     */
     public boolean GetSunnearness() {
-        Skeleton.WriteName("Asteroid: getSunnearness()");
-        Skeleton.WriteName("Asteroid: getSunnearness() return"+sunnearness);
         return sunnearness;
     }
 
-    //sets the "sunnearness" and calls the CheckInteraction() method
+    /**
+     * beallitja az aszteroida napkozelseget a kapott parameterre,
+     * majd megnezi, leellenorzi. hogy tortenik e interakcio
+     * @param sunnearness: napkozelseg
+     */
     public void SetSunnearness(boolean sunnearness) {
-        Skeleton.WriteName("Asteroid: setSunnearness("+sunnearness+")");
-        Skeleton.tab++;
         this.sunnearness = sunnearness;
         if(sunnearness) CheckInteraction();
-        Skeleton.tab--;
     }
+
+    /**
+     * visszaadja, hogy az aszteroida ures-e
+     * @return: uresseg
+     */
     public boolean GetEmpty() {
-        Skeleton.WriteName("Asteroid: getEmpty()");
-        Skeleton.WriteName("Asteroid: getEmpty() return:"+empty);
         return empty;
     }
+
+    /**
+     * beallitja az aszteroida uresseget
+     * @param empty: uresseg
+     */
     public void SetEmpty(boolean empty) {
-        Skeleton.WriteName("Asteroid: setEmpty("+empty+")");
         this.empty = empty;
     }
+
+    /**
+     * visszaadja az aszteroida szomszedainak listajat
+     * @return: szomszedok
+     */
     public ArrayList<Whereabout> GetNeighbours() {
-        Skeleton.WriteName("Asteroid: getNeighbours()");
-        Skeleton.WriteName("Asteroid: getNeighbours() return:neigbours");
         return neighbours;
     }
+
+    /**
+     * visszaadja az aszteroidan tartozkodo entitasok listajat
+     * @return entitasok
+     */
     public ArrayList<Entity> GetEntities() {
-        Skeleton.WriteName("Asteroid: getEntities()");
-        Skeleton.WriteName("Asteroid: getEntities() return:entities");
         return entities;
     }
+
+    /**
+     * visszaadja az aszteroidaban talalhato nyersanyagot
+     * @return nyersanyag
+     */
     public Material GetMaterial() {
-        Skeleton.WriteName("Asteroid: getMaterial()");
-        Skeleton.WriteName("Asteroid: getMaterial() return:material");
         if(!empty)return material;
         else return null;
     }
+
+    /**
+     * visszaadja az aszteroida aszteroidamezojet
+     * @return aszteroidamezo
+     */
     public Asteroidfield GetAsteroidfield() {
-        Skeleton.WriteName("Asteroid: getAsteroidfield()");
-        Skeleton.WriteName("Asteroid: getAsteroidfield() return:asteroidfield");
         return asteroidfield;
     }
+
+    /**
+     * beallitja az aszteroida aszteroidamezojet
+     * @param _asteroidfield aszteroidamezo
+     */
     public void SetAsteroidfield(Asteroidfield _asteroidfield){
-        Skeleton.WriteName("Asteroid: SetAsteroidfield(asteroidfield)");
         asteroidfield=_asteroidfield;
     }
 
-    //METHODS, FUNCTIONS:
-
-    //adds a material to an asteroid
+    /**
+     * a parameterkent kapott nyersanyagot hozzaadja az aszteroida magjahoz,
+     * amennyiben az ures volt
+     * @param material: a hozzaadando nyersanyag
+     * @return: a hozzaadas sikeressege
+     */
     public boolean AddMaterial(Material material){
-        Skeleton.WriteName("Asteroid: AddMaterial(material)");
-        //if the core is empty the method succeeds, and sets the "empty" flag to false
         if(empty && layers == 0){
 
             this.material=material;
             empty=false;
-            Skeleton.tab++;
-            //checks if the sunnearness is true before return
             CheckInteraction();
-            Skeleton.tab--;
-            Skeleton.WriteName("Asteroid: AddMaterial(material) return:true");
             return true;
         }
-        //else it fails
-        else {
-            Skeleton.WriteName("Asteroid: AddMaterial(material) return:false");
-            return false;
-        }
+        else return false;
     }
 
-    //removes the material from the core, and sets the "empty" flag to false
+    /**
+     * Banyaszaskor a nyersanyag kikerul az aszteroida magjabol.
+     * Ha ures az aszteroida, akkor nullal ter vissza,
+     * kulonben visszaadja a kibanyaszott nyersanyagot
+     * @return: kibanyaszott nyersanyag
+     */
     public Material RemoveMaterial(){
-        Skeleton.WriteName("Asteroid: RemoveMaterial()");
-
-        if(layers>0 || material == null) {
-            Skeleton.WriteName("Asteroid: RemoveMaterial() return: null");
+        if(layers>0 || material == null)
             return null;
-        }
 
         Material tmp=material;
         material=null;
         empty=true;
 
-        Skeleton.WriteName("Asteroid: RemoveMaterial() return: material");
-
         return tmp;
     }
 
-    //adds an entity to the "entities"
+    /**
+     *hozzaadja az aszteroidan tartozkodo entitasok tombjehez a parameterul
+     * kapott entitast
+     * @param entity:az ujonnan erkezo entitas
+     * @return: a hozzaadas sikeressege
+     */
     public boolean AddEntity(Entity entity){
-        Skeleton.WriteName("Asteroid: AddEntity(entity)");
-        Skeleton.tab++;
-        entities.add(entity);
+        boolean added = entities.add(entity);
         entity.SetAsteroid(this);
-        Skeleton.tab--;
-        Skeleton.WriteName("Asteroid: AddEntity(entity) return:true");
-        return true;
+        return added;
     }
 
-    //removes the given entity from "entities"
+    /**
+     * A parameterul kapott entitast eltavolitja az entities tombjebol.
+     * @param entity: az eltavolitando entitas
+     */
     public void RemoveEntity(Entity entity){
         Skeleton.WriteName("Asteroid: RemoveEntity(entity)");
         entities.remove(entity);
     }
 
-    //lowers the layer by 1 if the layers>0
-    public void ThinLayer(){
-        Skeleton.WriteName("Asteroid: ThinLayer()");
-        Skeleton.tab++;
-        if(layers>0)layers-=1;
-        //if the layers=0, calls the CheckInteraction() method
-        if(layers==0)CheckInteraction();
-        Skeleton.tab--;
+    /**
+     * furas soran az entitas eggyel csokkenti az aszteroida retegeinek a szamat
+     * @return: a furas sikeressege
+     */
+    public boolean ThinLayer(){
+
+        if(layers>0)
+            return false;
+        else{
+            layers--;
+            if(layers==0)
+                CheckInteraction();
+            return true;
+        }
+
     }
 
-    //adds a Whereabout to the neighbours
-    public void AddNeighbour(Whereabout neighbour){
-        Skeleton.WriteName("Asteroid: AddNeighbour(neighbour)");
-        neighbours.add(neighbour);
+    /**
+     * uj szomszed felvetele a nyilvantartsba.
+     * @param neighbour: az uj szomszed
+     * @return: a felvetel sikeressege
+     */
+    public boolean AddNeighbour(Whereabout neighbour){
+        boolean added = neighbours.add(neighbour);
+        return added;
     }
 
-    // //removes the neighbour given in the header from the "neighbours"
+    /**
+     * A parameterul kapott whereabout-ot eltavolitja a szomszedai kozul.
+     * @param neighbour
+     */
     public void RemoveNeighbour(Whereabout neighbour){
-        Skeleton.WriteName("Asteroid: RemoveNeighbour(neighbour)");
         neighbours.remove(neighbour);
     }
 
-    //sets the "sunnearness" flag to true
+    /**
+     * az aszteroidat napvihar eri, aminek a hatasara kigyullad,
+     * es meghivja a rajta tartozkodo entitaskora a die() metodust
+     */
     public void OnFire(){
-        Skeleton.WriteName("Asteroid: OnFire()");
-        Skeleton.tab++;
-        //if the core is not empty and the layers>0 kills all entities
-        if(!empty && layers>0){
+        if(!empty && layers>1){
             for(int i=0;i< entities.size();i++)
                 entities.get(i).Die();
         }
-        Skeleton.tab--;
     }
 
-    //calls the material's Interact() method if the asteroid
-    //is close to the sun and the layers=0
+    /**
+     * Ha a feltetel teljesul, meghivja az aszteroida nyersanyaganak az Interact metodusat,
+     * az aszteroidat adva parameterul.
+     */
     public void CheckInteraction(){
-        Skeleton.WriteName("Asteroid: CheckInteraction()");
-        Skeleton.tab++;
         if(sunnearness&&layers==0){
             try{
                 material.Interact(this);
             } catch(NullPointerException e){}
         }
-        Skeleton.tab--;
     }
 
-    //calls the RemoveNeighbour() method
+    /**
+     * Az aszteroida a parameterul kapott whereabout-ot eltavolitja a szomszedai kozul.
+     * Ha az eltavolitas utan a tomb ures, akkor felrobbantja magar.
+     * @param explodedAsteroid: a felrobbano aszteroida
+     */
     public void NearbyExplosion(Asteroid explodedAsteroid){
-        Skeleton.WriteName("Asteroid: NearbyExplosion(explodedAsteroid)");
-        Skeleton.tab++;
         RemoveNeighbour(explodedAsteroid);
-        //if there are no more neighbours the asteroid destroys itself
-        if(neighbours.size()==0)Explode();
-        Skeleton.tab--;
+        if(neighbours.size()==0)
+            Explode();
     }
 
-    //the asteroid destroy itself
+    /**
+     * Az aszteroida felrobbanasakor hivodik.
+     * Hatasara az osszes rajta tartozkodo entitasra meghivja a BlowUp() metodust,
+     * majd eltavolitja magat a szomszedainak a nyilvantartasabol,
+     * es kiveszi magat az aszteroidamezobol.
+     */
     public void Explode(){
-        Skeleton.WriteName("Asteroid: Explode()");
-        Skeleton.tab++;
-        //kills all entities
         for(int i=0;i<entities.size();i++)entities.get(i).BlowUp();
-        //notifies all neighbours
         for(int i=0;i<neighbours.size();i++)NearbyExplosion(this);
-        //notifies the asteroid field
         try {
             asteroidfield.RemoveAsteroid(this);
         } catch (NullPointerException e) { }
-        Skeleton.tab--;
+        c.AsteroidExplode(this);
     }
 
-    //return the neighbour from the "neighbours" with the given index
+    /**
+     * visszaadja a parameterul kapott szamu aszteroidat
+     * @param i: a kert whereabout szama
+     * @return: a whereabout
+     */
     public Whereabout GetNeighbour(int i){
-        Skeleton.WriteName("Asteroid: GetNeighbour(i)");
-        Skeleton.WriteName("Asteroid: GetNeighbour(i) return:neighbours[i]");
         return neighbours.get(i);
     }
 
+    /**
+     * visszaadja a szomszedainak a szamat
+     * @return
+     */
     public int GetNumberOfNeighbours(){
-        Skeleton.WriteName("Asteroid: GetNumberOfNeighbours()");
-        Skeleton.WriteName("Asteroid: GetNumberOfNeighbours() return:"+neighbours.size());
         return neighbours.size();
     }
+
 }

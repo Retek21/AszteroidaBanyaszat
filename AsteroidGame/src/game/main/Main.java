@@ -1,7 +1,5 @@
 package game.main;
 
-import game.logic.Skeleton;
-
 import java.util.Scanner;
 
 public class Main {
