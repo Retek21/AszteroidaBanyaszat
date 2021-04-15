@@ -1,16 +1,25 @@
 package game.logic;
 
+/**
+ * Coal nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.
+ * @author torok
+ */
 public class Coal extends Material{
 
-    public Coal(){
+    /**
+     * A nyersanyag konstruktora ami beallitja a nevet.
+     */
+    public Coal(Controller _c){
+        c = _c;
         name = "Coal";
     }
 
-    /*
-    A metódus nem definiálja felül az ős metódusát.
+    /**
+     *Meghívja a kontroller CoalDisintegrate metódusát.
      */
     @Override
-    public void Interact(Asteroid a) {
-        super.Interact(a);
+    public void Disintegrate() {
+        super.Disintegrate();
+        c.CoalDisintegrate();
     }
 }
