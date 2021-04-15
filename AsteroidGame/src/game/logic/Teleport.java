@@ -1,110 +1,205 @@
 package game.logic;
 
-//A játékban a teleportkapu, ami 2 aszteroidát köt össze a párja segítségével.
-//A Whereabout, és Placeable interfészeket valósítja meg.
-public class Teleport implements Whereabout {
 
-    //Az aszteroida amihez kapcsolódik.
+/**
+ * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
+ * Felelossége, hogy ket nem szomszedos aszteroida között
+ * biztositson lepesi lehetoseget.
+ */
+public class Teleport implements Whereabout{
+
+    /**
+     * a teleport gazdaaszteroidaja
+     */
     private Asteroid asteroid;
 
-    //Az Inventory, amiben van.
+    /**
+     * az inventory, amibe bekerül, miutan egy telepes lecraftolta.
+     */
     private Inventory inventory;
 
-    //A teleportnak a párja.
+    /**
+     * a teleportkapu parja
+     */
     private Teleport pair;
 
-    //Logikai érték, ami azt jelzi, hogy a párját lehelyezték-e már (igaz-lehelyezték/hamis-még nem).
+    /**
+     * logikai ertek, ami azt jelzi, hogy a kapu aktív-e,
+     * azaz a parjat mar lehelyeztek-e
+     */
     private boolean pairready;
 
-    //Teleport konstruktora
-    public Teleport()
-    {
+    /**
+     * logikai ertek, ami  azt jelzi, hogy a teleport megkergult-e
+     * akkor igaz, ha a teleportot napszel erte
+     */
+    private boolean gonecrazy = false;
 
-    }
+    /**
+     * Referencia a jatekot vezerlo kontrollerre.
+     * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
+     */
+    private Controller c;
 
-    /*
-    Amikor egy entitás a teleportra lép ez hívódik meg.
-    Átrakja az entitást arra az aszteroidára, amihez a párja tartozik.
-    Ha ez sikeresen megtörtént, true-val tér vissza a metódus.
-    Ha nem (nincs még lehelyezve a párja) false-szal tér vissza.
+
+    /**
+     * Ha a teleport parja le van helyezve (pairready),
+     * elkeri a parjatol annak gazdaaszteroidajat es
+     * ralepteteti a parameterkent kapott entitást.
+     * @param e : entitas, ami az objektumra lepett
+     * @return a leptetes sikeressege. Igaz, ha a teleport parja le van helyezve,
+     * azaz a pairready = true.
      */
     public boolean AddEntity(Entity e)
     {
-        //ha a pár még nincs lerakva false-val tér vissza
         if (pairready)
         {
-            //Azért kell ez külön, mert az indentáló számlálót csökkenteni a fvhívás után kell
-            boolean successful = pair.GetAsteroid().AddEntity(e);;
-            return successful;
+            pair.GetAsteroid().AddEntity(e);
+            return true;
+
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
-    //A felrobbanó aszteroida hívja meg ezt a függvényt a szomszédjain.
-    //Ilyenkor a teleport a párjával együtt felrobban.
+    /**
+     * A felrobbano aszteroida hivja meg ezt a szomszedjain.
+     * Ilyenkor a parjaval egyutt felrobbanast vegzo fuggvényt meghivja a teleport.
+     * @param a: a felrobbant aszteroida
+     */
     public void NearbyExplosion(Asteroid a)
     {
         ExplodeWithPair();
     }
 
-    //A párjával együtt felrobban a teleport.
-    //Miután meghívta a párjára a felrobbanást végző metódust, magával is ezt teszi.
+    /**
+     * A parjaval egyutt felrobban a teleport.
+     * Miutan meghivta a parjara a felrobbanast vegzo metodust, magaval is ezt teszi.
+     */
     public void ExplodeWithPair(){
         if(pair != null)
             pair.Explode();
         Explode();
     }
 
-    //A teleport felrobban
-    //Ha Inventoryban volt, akkor kiszedi magát onnan.
-    //Ha aszteroida szomszédságában volt, akkor kiveszi magát az aszteroida szomszédjai közül.
+    /**
+     * A teleport felrobban.
+     * Ha Inventoryban volt, akkor eltavolitja magat onnan.
+     * Ha aszteroida szomszedsagaban volt, akkor eltavolitja magat
+     * az aszteroida szomszedai kozul.
+     * A controller-nek is szol, hogy felrobbant.
+     */
     public void Explode()
     {
         if(asteroid != null)
             asteroid.RemoveNeighbour(this);
         else if(inventory != null)
             inventory.RemoveTeleport(this);
+        c.TeleportExplode(this);
     }
 
-    //Beállítja a megadott Inventory-t a tartózkodási helyének.
+    /**
+     * inventory beallitasa
+     * @param i: a beallitando inventory
+     */
     public void SetInventory(Inventory i)
     {
         inventory = i;
     }
 
-    //Egy aszteroida szomszédságába települ a teleport.
-    public boolean Deploy(Asteroid a)
-    {
-        a.AddNeighbour(this);
-        asteroid = a;
-
-        if(pair != null)
-            pair.SetPairReady(true);
-
-        inventory = null;
-
-        return true;
-    }
-
-    //Beállítja a megadott teleportot a párjának
+    /**
+     * a teleport parjanak a beallitasa
+     * @param t: a teleport parja, amivel kapcsolatba lep a lehelyezes utan
+     */
     public void SetPair(Teleport t)
     {
         pair = t;
         pairready = false;
     }
 
-    //Beállítja, hogy a pár le van-e telepítve
-    public void SetPairReady(boolean b)
-    {
-        pairready = b;
-    }
 
-    //Visszaadja az aszteroidát, aminek a teleport a szomszédságában van.
+    /**
+     * Visszaadja az aszteroidat, aminek a teleport a szomszedsagaban van.
+     * Erre akkor van szukseg ha a lerakott parra ralep egy entitas.
+     * @return: gazdaaszteroida
+     */
     public Asteroid GetAsteroid()
     {
         return asteroid;
+    }
+
+    /**
+     * A teleportot napszel eri.
+     * Hatasara megkergul, es true-ra allitja a gonecrazy flag-et
+     */
+    public void OnFire(){
+        gonecrazy = true;
+    }
+
+    /**
+     *Ha a teleport parja le van helyezve, elkeri a parjatol annak gazdaaszteroidajat,
+     * es ennek a szomszedaihoz adja hozza a parameterkent kapott Whereabout-ot
+     * @param w: az uj szomszed,amit felvesz a nyilvantartasba.a
+     * @return: a hozzaadas sikeressege
+     */
+    public boolean AddNeighbour(Whereabout w){
+        if(pairready){
+            Asteroid target = pair.GetAsteroid();
+            target.AddNeighbour(w);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * A teleport miutan megkergult, mozogni kezd az aszteroidak kozott
+     * A kapott parameteru objektumot allitja be uj szomszedjakent.
+     * @param w: A whereabout, amire ralep a teleport
+     * @return: a mozgas sikeressege
+     */
+    public boolean Move(Whereabout w){
+        for(int i= 0; i<asteroid.GetNumberOfNeighbours();i++){
+            if(w.equals(asteroid.GetNeighbours().get(i))){
+                boolean add = w.AddNeighbour(this);
+                if(add){
+                    asteroid.RemoveNeighbour(this);
+                }
+                else return false;
+            }
+           else return false;
+        }
+        return true;
+    }
+
+    /**
+     * A teleport lehelyezese a parameterkent kapott aszteroidara.
+     * Akkor hivodik meg, amikor a telepes lehelyezi arra az aszteroidara, ahol eppen all.
+     * @param a: az aktualis aszteroida, amire lehelyezodik a teleport
+     * @return: a lehelyezes sikeressege
+     */
+    public boolean Deploy(Asteroid a){
+       boolean added=  a.AddNeighbour(this);
+       if(added){
+           asteroid = a;
+           inventory = null;
+           pair.SetPairReadyness(true);
+           return true;
+       }
+       return false;
+    }
+
+    /**
+     * beallitja a pairready booleant a kapott parameterre.
+     * @param ready: a kapott logikai ertek
+     */
+    public void SetPairReadyness(boolean ready){
+        pairready = ready;
+    }
+
+    /**
+     * visszaadja a gonecrazy boolean erteket
+     * @return: gonecrazy logikai erteke
+     */
+    public boolean getCraziness(){
+        return gonecrazy;
     }
 }
