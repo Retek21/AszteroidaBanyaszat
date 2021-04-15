@@ -45,7 +45,7 @@ public class Teleport implements Whereabout{
      * Ha a teleport parja le van helyezve (pairready),
      * elkeri a parjatol annak gazdaaszteroidajat es
      * ralepteteti a parameterkent kapott entitást.
-     * @param e: entitas, ami az objektumra lepett
+     * @param e : entitas, ami az objektumra lepett
      * @return a leptetes sikeressege. Igaz, ha a teleport parja le van helyezve,
      * azaz a pairready = true.
      */
@@ -53,9 +53,10 @@ public class Teleport implements Whereabout{
     {
         if (pairready)
         {
-            boolean successful = pair.GetAsteroid().AddEntity(e);
-            return successful;
+            pair.GetAsteroid().AddEntity(e);
+            return true;
         }
+        return false;
     }
 
     /**

@@ -9,9 +9,10 @@ public interface Whereabout {
     /**
      * Az interfeszt megvalosito objektum magara lepteti
      * a parameterkent kapott entitast.
-     * @param e: entitas, ami az objektumra lepett
+     * @param e : entitas, ami az objektumra lepett
+     * @return: hozzaadas sikeressege
      */
-    public void AddEntity(Entity e);
+    public boolean AddEntity(Entity e);
 
     /**
      *Az interfeszt megvalosito objektum ertesitese arrol,hogy

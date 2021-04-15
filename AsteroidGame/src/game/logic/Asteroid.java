@@ -208,13 +208,13 @@ public class Asteroid implements Whereabout{
     /**
      *hozzaadja az aszteroidan tartozkodo entitasok tombjehez a parameterul
      * kapott entitast
-     * @param entity:az ujonnan erkezo entitas
+     * @param entity :az ujonnan erkezo entitas
      * @return: a hozzaadas sikeressege
      */
     public boolean AddEntity(Entity entity){
-        boolean added = entities.add(entity);
+        entities.add(entity);
         entity.SetAsteroid(this);
-        return added;
+        return true;
     }
 
     /**
@@ -302,8 +302,10 @@ public class Asteroid implements Whereabout{
      * es kiveszi magat az aszteroidamezobol.
      */
     public void Explode(){
-        for(int i=0;i<entities.size();i++)entities.get(i).BlowUp();
-        for(int i=0;i<neighbours.size();i++)NearbyExplosion(this);
+        for(int i=0;i<entities.size();i++)
+            entities.get(i).BlowUp();
+        for(int i=0;i<neighbours.size();i++)
+            NearbyExplosion(this);
         try {
             asteroidfield.RemoveAsteroid(this);
         } catch (NullPointerException e) { }
