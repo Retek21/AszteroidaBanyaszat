@@ -452,7 +452,7 @@ public class Controller {
                 if(checkconditions)
                 {
                     CheckMaterials();
-                    CheckVictory((String)pair.getKey());
+                    CheckVictory((Settler)pair.getValue());
                 }
             }
 
@@ -641,7 +641,7 @@ public class Controller {
         {
             Ufo u = ufos.get(id);
             Asteroid a = u.GetAsteroid();
-            if((a.GetLayer() > 0 || a.GetEmpty()) && a.GetNumberOfNeighbours() > 0)
+            if((a.GetLayer() > 0 || a.IsEmpty()) && a.GetNumberOfNeighbours() > 0)
             {
                 Random rand = new Random();
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
@@ -873,13 +873,22 @@ public class Controller {
     public void Move(String id, String where)
     {
         Whereabout w;
-        if(asteroids.containsKey(where)) w = asteroids.get(where);
-        else if(teleports.containsKey(where)) w = teleports.get(where);
-
-        if(settlers.containsKey(id)) settlers.get(id).Move(w);
-        else if(robots.containsKey(id)) robots.get(id).Move(w);
-        else if(teleports.containsKey(id)) teleports.get(id).Move(w);
-        else if(ufos.containsKey(id)) ufos.get(id).Move(w);
+        if(asteroids.containsKey(where))
+        {
+            w = asteroids.get(where);
+            if(settlers.containsKey(id)) settlers.get(id).Move(w);
+            else if(robots.containsKey(id)) robots.get(id).Move(w);
+            else if(teleports.containsKey(id)) teleports.get(id).Move(w);
+            else if(ufos.containsKey(id)) ufos.get(id).Move(w);
+        }
+        else if(teleports.containsKey(where))
+        {
+            w = teleports.get(where);
+            if(settlers.containsKey(id)) settlers.get(id).Move(w);
+            else if(robots.containsKey(id)) robots.get(id).Move(w);
+            else if(teleports.containsKey(id)) teleports.get(id).Move(w);
+            else if(ufos.containsKey(id)) ufos.get(id).Move(w);
+        }
     }
 
     /**
@@ -926,7 +935,7 @@ public class Controller {
         victory = v;
     }
 
-
+     /**
      * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
      * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
      * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
