@@ -8,12 +8,6 @@ import game.controller.Controller;
  * @author Dengyel Bendeguz 2021.04.13.
  */
 public class Ufo extends Entity {
-    /**
-     * Az ufo konstruktora beallitja  a parmeterul kapott controllert.
-     */
-    public Ufo(Controller c){
-        super(c);
-    }
 
     /**
      *Metodus, meghivja az Ufo::Die() metodusat.
@@ -52,6 +46,6 @@ public class Ufo extends Entity {
     @Override
     public void Die(){
         super.Die();
-        c.UfoDie(this);
+        Controller.GetInstanceOf().UfoDie(this);
     }
 }

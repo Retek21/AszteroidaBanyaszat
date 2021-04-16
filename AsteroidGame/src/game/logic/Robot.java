@@ -10,12 +10,6 @@ import java.util.Random;
  * @author Dengyel Bendeguz 2021.04.13.
  */
 public class Robot extends Entity {
-    /**
-     * Az robot konstruktora beallitja  a parmeterul kapott controllert.
-     */
-    public Robot(Controller c){
-        super(c);
-    }
 
     /**
      * A robot felrobban az aszteroidaja robbanasa kovetkezteben.
@@ -52,6 +46,6 @@ public class Robot extends Entity {
     @Override
     public void Die() {
         super.Die();
-        c.RobotDie(this);
+        Controller.GetInstanceOf().RobotDie(this);
     }
 }

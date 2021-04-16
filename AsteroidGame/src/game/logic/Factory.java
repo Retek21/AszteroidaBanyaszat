@@ -56,7 +56,7 @@ public class Factory {
      * @return  - Ha meg vannak a szukseges nyersanyagok, a letrehozott teleportokat tartalmazo tomb,
      *            egyeb esetben null.
      */
-    public ArrayList<Teleport> CreateTeleport(Inventory i) {
+    public static ArrayList<Teleport> CreateTeleport(Inventory i) {
         ArrayList<Material> mold = Recipe.GetTeleportRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 
@@ -106,7 +106,7 @@ public class Factory {
      * @return  - Ha meg vannak a szukseges nyersanyagok, a letrehoztt Robot objektum,
      *            egyeb esetben null.
      */
-    public Robot CreateRobot(Inventory i) {
+    public static Robot CreateRobot(Inventory i) {
         ArrayList<Material> mold = Recipe.GetRobotRecipe();
         ArrayList<Material> materials = i.GetMaterials();
 

@@ -37,14 +37,6 @@ public class Teleport implements Whereabout{
     private boolean gonecrazy = false;
 
     /**
-     * Referencia a jatekot vezerlo kontrollerre.
-     * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
-     */
-    private Controller c;
-
-
-
-    /**
      * Ha a teleport parja le van helyezve (pairready),
      * elkeri a parjatol annak gazdaaszteroidajat es
      * ralepteteti a parameterkent kapott entitást.
@@ -96,7 +88,7 @@ public class Teleport implements Whereabout{
             asteroid.RemoveNeighbour(this);
         else if(inventory != null)
             inventory.RemoveTeleport(this);
-        c.TeleportExplode(this);
+        Controller.GetInstanceOf().TeleportExplode(this);
     }
 
     /**

@@ -9,15 +9,9 @@ import game.controller.Controller;
 public class Ice extends Material{
 
     /**
-     * Default konstruktor
-     */
-    public Ice() {}
-
-    /**
      * Az Ice konstruktora ami beallitja a nevet.
      */
-    public Ice(Controller _c){
-        c = _c;
+    public Ice(){
         name = "Ice";
     }
 
@@ -37,6 +31,6 @@ public class Ice extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.IceDisintegrate(this);
+        Controller.GetInstanceOf().IceDisintegrate(this);
     }
 }

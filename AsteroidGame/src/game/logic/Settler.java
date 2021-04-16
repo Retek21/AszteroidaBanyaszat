@@ -15,16 +15,9 @@ public class Settler extends Entity{
      *A settler konstruktora beallitja a parameterul kapott controllert
      * az osnek, es letrehozza a factoryt, valamint az inventoryt.
      */
-    public Settler(Controller c){
-        super(c);
-        factory=new Factory(c);
+    public Settler(){
         inventory=new Inventory();
     }
-
-    /**
-     * A Factory segiti a telepest az elkesztiheto dolgok elkesziteseben.
-     */
-    private Factory factory;
 
     /**
      * Az inventoryban tarolja az egyes kibanyaszott
@@ -38,12 +31,6 @@ public class Settler extends Entity{
      */
     @Override
     public Inventory GetInventory(){return inventory;}
-
-    /**
-     * Visszater a telepes factoryjaval.
-     * @return a factory referenciaja
-     */
-    public Factory GetFactory(){return factory;}
 
     /**
      * A parameterul kapott inventoryt beallitja a telepes inventoryjanak.
@@ -129,7 +116,7 @@ public class Settler extends Entity{
     public void Die(){
         super.Die();
         inventory.Clear();
-        c.SettlerDie(this);
+        Controller.GetInstanceOf().SettlerDie(this);
     }
 
     /**
@@ -152,7 +139,7 @@ public class Settler extends Entity{
      */
     public boolean CraftTeleport(){
         if(inventory.IsTeleportSlotEmpty()){
-            ArrayList<Teleport> teleports = factory.CreateTeleport(inventory);
+            ArrayList<Teleport> teleports = Factory.CreateTeleport(inventory);
             if(teleports!=null){
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
@@ -173,7 +160,7 @@ public class Settler extends Entity{
      * @return a craftolas sikeressege
      */
     public boolean CraftRobot() {
-        Robot robot = factory.CreateRobot(inventory);
+        Robot robot = Factory.CreateRobot(inventory);
         if (robot != null) {
             asteroid.AddEntity(robot);
             return true;
