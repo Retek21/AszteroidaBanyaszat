@@ -16,6 +16,7 @@ public class Game {
      */
     public void StartProgram()
     {
+        controller = Controller.GetInstanceOf();
         Scanner scanner = new Scanner(System.in);
         System.out.println("[ASTEROIDGAME - abgkp EDITION]");
         String input = scanner.next();
