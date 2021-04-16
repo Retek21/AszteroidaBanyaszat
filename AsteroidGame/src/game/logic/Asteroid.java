@@ -62,6 +62,14 @@ public class Asteroid implements Whereabout{
         entities = new ArrayList<Entity>();
     }
 
+    public Asteroid(Controller _c) {
+        sunnearness=false;
+        empty=true;
+        neighbours = new ArrayList<Whereabout>();
+        entities = new ArrayList<Entity>();
+        c = _c;
+    }
+
     /**
      * az aszteroida konstruktora
      * beallitja a parameterkent kapott adatokat
@@ -119,7 +127,7 @@ public class Asteroid implements Whereabout{
      * visszaadja, hogy az aszteroida ures-e
      * @return: uresseg
      */
-    public boolean GetEmpty() {
+    public boolean IsEmpty() {
         return empty;
     }
 
@@ -207,7 +215,7 @@ public class Asteroid implements Whereabout{
     }
 
     /**
-     *hozzaadja az aszteroidan tartozkodo entitasok tombjehez a parameterul
+     * hozzaadja az aszteroidan tartozkodo entitasok tombjehez a parameterul
      * kapott entitast
      * @param entity :az ujonnan erkezo entitas
      * @return: a hozzaadas sikeressege
@@ -232,7 +240,7 @@ public class Asteroid implements Whereabout{
      */
     public boolean ThinLayer(){
 
-        if(layers>1)
+        if(layers < 1)
             return false;
         else{
             layers--;
@@ -240,7 +248,6 @@ public class Asteroid implements Whereabout{
                 CheckInteraction();
             return true;
         }
-
     }
 
     /**
@@ -266,7 +273,7 @@ public class Asteroid implements Whereabout{
      * es meghivja a rajta tartozkodo entitaskora a die() metodust
      */
     public void OnFire(){
-        if(!empty && layers>1){
+        if(!empty && layers>0){
             for(int i=0;i< entities.size();i++)
                 entities.get(i).Die();
         }
@@ -278,9 +285,8 @@ public class Asteroid implements Whereabout{
      */
     public void CheckInteraction(){
         if(sunnearness&&layers==0){
-            try{
+            if (material != null)
                 material.Interact(this);
-            } catch(NullPointerException e){}
         }
     }
 
@@ -306,9 +312,7 @@ public class Asteroid implements Whereabout{
             entities.get(i).BlowUp();
         for(int i=0;i<neighbours.size();i++)
             NearbyExplosion(this);
-        try {
-            asteroidfield.RemoveAsteroid(this);
-        } catch (NullPointerException e) { }
+        asteroidfield.RemoveAsteroid(this);
         c.AsteroidExplode(this);
 
     }
@@ -329,5 +333,4 @@ public class Asteroid implements Whereabout{
     public int GetNumberOfNeighbours(){
         return neighbours.size();
     }
-
 }

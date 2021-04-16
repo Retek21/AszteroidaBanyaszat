@@ -2,6 +2,10 @@ package game.logic;
 
 import java.util.ArrayList;
 
+/**
+ * Az osztálytól a craftolható objektumok receptjei (Material-okat tartalmazo listak)
+ * kerhetok le statikus metodusokon keresztul.
+ */
 public class Recipe {
 
     /**

@@ -1,7 +1,7 @@
 package game.logic;
 
 /**
- * Iron nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.\
+ * Iron nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.\
  * @author torok
  */
 public class Iron extends Material{
@@ -15,11 +15,10 @@ public class Iron extends Material{
     }
 
     /**
-     * Meghívja a kontroller IronDisintegrate metódusát
+     * Meghivja a kontroller IronDisintegrate metodusat
      */
     @Override
     public void Disintegrate() {
-        super.Disintegrate();
         c.IronDisintegrate();
     }
 }

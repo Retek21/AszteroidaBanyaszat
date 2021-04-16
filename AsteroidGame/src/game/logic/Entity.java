@@ -2,19 +2,12 @@ package game.logic;
 import java.util.ArrayList;
 
 /**
- * Entity absztrakt ososztaly. A szteroidaovben tartozkodi entitasok
+ * Entity absztrakt ososztaly. Az aszteroidaovben tartozkodi entitasok
  * egyes lepeseit valositja meg, es az azokhoz tartozo belso mukodest.
  * @author Turiák Anita 2021.03.19.
  * @author Dengyel Bendeguz 2021.04.13.
  */
 public abstract class Entity {
-    /**
-     * Az entity konstruktora beallitja  a parmeterul kapott controllert.
-     */
-
-    public Entity(Controller _c){
-        c=_c;
-    }
 
     /**
      * A jatekot iranyito controller.
@@ -24,6 +17,13 @@ public abstract class Entity {
      * Az aszteroida, melyen a telepes tartozkodik.
      */
     protected Asteroid asteroid;
+
+    /**
+     * Az entity konstruktora beallitja  a parmeterul kapott controllert.
+     */
+    public Entity(Controller _c){
+        c=_c;
+    }
 
     /**
      * Visszaadja a telepes gazdaaszteroidajat.
@@ -65,14 +65,13 @@ public abstract class Entity {
      * @return a mozgas sikeressege
      */
     public boolean Move(Whereabout w) {
-        if(asteroid.GetNeighbours().contains(w)){
-            if(w.AddEntity(this)){
-                asteroid.RemoveEntity(this);
-                //asteroid=(Asteroid) w;//ezt biztos így?
+        Asteroid current = asteroid;
+        if (asteroid.GetNeighbours().contains(w)) {
+            if (w.AddEntity(this)) {
+                current.RemoveEntity(this);
                 return true;
-            }else
-                return false;
-        }else
-            return false;
+            }
+        }
+        return false;
     }
 }

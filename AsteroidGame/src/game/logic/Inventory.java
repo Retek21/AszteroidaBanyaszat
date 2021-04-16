@@ -2,8 +2,19 @@ package game.logic;
 
 import java.util.ArrayList;
 
+/**
+ * Minden Settler objektum rendelkezik egy inventory-val. Az osztaly felelossége,
+ * hogy az adott telepesnel levo objektumokat tarolja, rendszerezze.
+ */
 public class Inventory {
+    /**
+     * A tarolt nyersanyagok
+     */
     private ArrayList<Material> materials;
+
+    /**
+     * A tarolt teleportok
+     */
     private ArrayList<Teleport> teleports;
 
     /**

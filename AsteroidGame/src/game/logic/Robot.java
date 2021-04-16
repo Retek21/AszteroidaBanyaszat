@@ -24,12 +24,13 @@ public class Robot extends Entity {
     @Override
     public void BlowUp(){
         ArrayList<Whereabout> neighbours=asteroid.GetNeighbours();
-        if(neighbours!=null){
-            Random random=new Random();
-            int destinationIndex=random.nextInt(neighbours.size());
+        if(neighbours.size() == 0){
+            Die();
+        }else {
+            Random random = new Random();
+            int destinationIndex = random.nextInt(neighbours.size());
             Move(neighbours.get(destinationIndex));
-        }else
-            this.Die();
+        }
     }
 
     /**

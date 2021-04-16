@@ -1,7 +1,7 @@
 package game.logic;
 
 /**
- * Coal nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.
+ * Coal nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Coal extends Material{
@@ -19,7 +19,6 @@ public class Coal extends Material{
      */
     @Override
     public void Disintegrate() {
-        super.Disintegrate();
         c.CoalDisintegrate();
     }
 }

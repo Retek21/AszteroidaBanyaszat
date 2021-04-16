@@ -10,7 +10,7 @@ import java.util.Random;
 public class Asteroidfield{
 
     /**
-     * Aszteroidák listája
+     * Aszteroidák listaja
      */
     ArrayList<Asteroid> asteroids;
 
@@ -30,7 +30,8 @@ public class Asteroidfield{
     }
 
     /**
-     *Megváltoztatja, melyik aszteroida van napközelben és melyik nem. Mindegyik aszteroida sunnear változója véletlenszerűen kap egy true vagy false értéket az Asteroid::SetSunnearness(bool) metódussal.
+     * Megvaltoztatja, melyik aszteroida van napkozelben és melyik nem.
+     * Mindegyik aszteroida sunnear valtozoja veletlenszeruen kap egy true vagy false erteket.
      */
     public void Rearrange(){
         Random random = new Random();
@@ -41,7 +42,7 @@ public class Asteroidfield{
     }
 
     /**
-     *visszatér a játékban lévő aszteroidák listájával.
+     * visszatér a jatekban levo aszteroidak listajaval.
      * @return ArrayList<Asteroid> asteroids - aszteroidak listaja
      */
     public ArrayList<Asteroid> GetAsteroids(){
@@ -53,22 +54,20 @@ public class Asteroidfield{
      * @param asteroid - megadott aszteroida
      */
     public void RemoveAsteroid(Asteroid asteroid){
-
         asteroids.remove(asteroid);
     }
 
     /**
-     *Uj aszteroidat ad az aszteroidamezohoz
+     * Uj aszteroidat ad az aszteroidamezohoz
      * @param asteroid
      */
     public void AddAsteroid(Asteroid asteroid){
         asteroid.SetAsteroidfield(this);
-
         asteroids.add(asteroid);
     }
 
     /**
-     *Az aszteroidak listjajat fuzi hozza a meglevo aszteroidahoz.
+     * Az aszteroidak listjajat fuzi hozza a meglevo aszteroidahoz.
      * @param _asteroids - az uj aszteroidak listaja
      */
     public void AddAsteroids(ArrayList<Asteroid> _asteroids){

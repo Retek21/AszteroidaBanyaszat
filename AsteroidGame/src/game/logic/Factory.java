@@ -2,8 +2,15 @@ package game.logic;
 
 import java.util.ArrayList;
 
+/**
+ * Az osztaly kezeli a telepesek altal, nyersanyagokbol letrehozni  kivant objektumok
+ * letrehozasat a Recipe osztalytol lekerheto receptek, és a telepestol kapott Inventory alapjan.
+ */
 public class Factory {
 
+    /**
+     * Referencia a jatékot kezelo kontroller objektumra
+     */
     private Controller c;
 
     /**

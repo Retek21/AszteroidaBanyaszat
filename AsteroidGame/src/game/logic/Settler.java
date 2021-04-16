@@ -22,6 +22,7 @@ public class Settler extends Entity{
      * A Factory segiti a telepest az elkesztiheto dolgok elkesziteseben.
      */
     private Factory factory;
+
     /**
      * Az inventoryban tarolja az egyes kibanyaszott
      * nyersanyagokat, teleportokat.
@@ -59,17 +60,15 @@ public class Settler extends Entity{
             if (m != null){
                 inventory.AddMaterial(m);
                 return true;
-            }else
-                return false;
-
-        }else
-            return false;
+            }
+        }
+        return false;
     }
 
     /**
      * A telepes megfur egy aszteroidat.
      * Visszateresi erteke a furas sikeressegenek erteke.
-     * @return a metodus sikeressege
+     * @return a furas sikeressege
      */
     public boolean Drill(){
         return asteroid.ThinLayer();
@@ -86,13 +85,12 @@ public class Settler extends Entity{
     public boolean PlaceTeleport(Teleport t){
         if(!inventory.GetTeleports().contains(t))
             return false;
-        else{
-            if(t.Deploy(asteroid)){
-                inventory.RemoveTeleport(t);
-                return true;
-            }else
-                return false;
-        }
+        boolean success = t.Deploy(asteroid);
+        if(success){
+            inventory.RemoveTeleport(t);
+            return true;
+        }else
+            return false;
     }
 
     /**
@@ -108,13 +106,13 @@ public class Settler extends Entity{
     public boolean PlaceMaterial(Material m){
         if(!inventory.GetMaterials().contains(m))
             return false;
-        else{
-            if(asteroid.AddMaterial(m)){
-                inventory.RemoveMaterial(m);
-                return true;
-            }else
-                return false;
-        }
+        boolean success = asteroid.AddMaterial(m);
+        if(success){
+            inventory.RemoveMaterial(m);
+            return true;
+        }else
+            return false;
+
     }
 
     /**
@@ -155,10 +153,9 @@ public class Settler extends Entity{
                 inventory.AddTeleport(teleports.get(0));
                 inventory.AddTeleport(teleports.get(1));
                 return true;
-            }else
-                return false;
-        }else
-            return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -176,7 +173,7 @@ public class Settler extends Entity{
         if (robot != null) {
             asteroid.AddEntity(robot);
             return true;
-        }else
-            return false;
+        }
+        return false;
     }
 }
