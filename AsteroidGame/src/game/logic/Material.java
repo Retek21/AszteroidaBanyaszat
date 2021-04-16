@@ -18,11 +18,6 @@ public abstract class Material {
     protected int interactCount;
 
     /**
-     * Referencia a jatekot vezerlo kontrollerre. Jatekbol vala kikeruleskor ertesíteni kell a kontrollert.
-     */
-    protected  Controller c;
-
-    /**
      * A metodus valositja meg, hogy mi torténik a nyersanyaggal, ha nap eri.
      * @param a az aszteroida ahol nap eri
      */

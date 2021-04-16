@@ -11,20 +11,10 @@ import game.controller.Controller;
 public abstract class Entity {
 
     /**
-     * A jatekot iranyito controller.
-     */
-    protected Controller c;
-    /**
      * Az aszteroida, melyen a telepes tartozkodik.
      */
     protected Asteroid asteroid;
 
-    /**
-     * Az entity konstruktora beallitja  a parmeterul kapott controllert.
-     */
-    public Entity(Controller _c){
-        c=_c;
-    }
 
     /**
      * Visszaadja a telepes gazdaaszteroidajat.

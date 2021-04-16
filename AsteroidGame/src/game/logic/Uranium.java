@@ -10,15 +10,9 @@ import game.controller.Controller;
 public class Uranium extends Material{
 
     /**
-     * Default konstruktor
-     */
-    public Uranium() {}
-
-    /**
      * Konstruktor ami beallitja az uranium nevet.
      */
-    public Uranium(Controller _c){
-        c = _c;
+    public Uranium(){
         name = "Uranium";
     }
 

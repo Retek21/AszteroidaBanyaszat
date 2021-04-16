@@ -47,12 +47,6 @@ public class Asteroid implements Whereabout{
     private Asteroidfield asteroidfield;
 
     /**
-     * Referencia a jatekot vezerlo kontrollerre.
-     * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
-     */
-    Controller c;
-
-    /**
      * az aszteroida default konstruktora
      * beallitja az alapertelmezett attributumokat
      */
@@ -61,14 +55,6 @@ public class Asteroid implements Whereabout{
         empty=true;
         neighbours = new ArrayList<Whereabout>();
         entities = new ArrayList<Entity>();
-    }
-
-    public Asteroid(Controller _c) {
-        sunnearness=false;
-        empty=true;
-        neighbours = new ArrayList<Whereabout>();
-        entities = new ArrayList<Entity>();
-        c = _c;
     }
 
     /**
@@ -314,7 +300,7 @@ public class Asteroid implements Whereabout{
         for(int i=0;i<neighbours.size();i++)
             NearbyExplosion(this);
         asteroidfield.RemoveAsteroid(this);
-        c.AsteroidExplode(this);
+        Controller.GetInstanceOf().AsteroidExplode(this);
 
     }
 

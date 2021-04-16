@@ -9,15 +9,9 @@ import game.controller.Controller;
 public class Coal extends Material{
 
     /**
-     * Default konstruktor
-     */
-    public Coal() {}
-
-    /**
      * A nyersanyag konstruktora ami beallitja a nevet.
      */
-    public Coal(Controller _c){
-        c = _c;
+    public Coal(){
         name = "Coal";
     }
 
@@ -26,6 +20,6 @@ public class Coal extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.CoalDisintegrate(this);
+        Controller.GetInstanceOf().CoalDisintegrate(this);
     }
 }

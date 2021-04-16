@@ -9,15 +9,9 @@ import game.controller.Controller;
 public class Iron extends Material{
 
     /**
-     * Default konstruktor
-     */
-    public Iron() {}
-
-    /**
      * Az Iron konstruktora ami beallitja a nevet
      */
-    public Iron(Controller _c){
-        c = _c;
+    public Iron(){
         name = "Iron";
     }
 
@@ -26,6 +20,6 @@ public class Iron extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.IronDisintegrate(this);
+        Controller.GetInstanceOf().IronDisintegrate(this);
     }
 }
