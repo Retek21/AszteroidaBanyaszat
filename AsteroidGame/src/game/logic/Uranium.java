@@ -34,6 +34,6 @@ public class Uranium extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.UraniumDisintegrate(this);
+        Controller.GetInstanceOf().UraniumDisintegrate(this);
     }
 }

@@ -34,7 +34,29 @@ public class Teleport implements Whereabout{
      * logikai ertek, ami  azt jelzi, hogy a teleport megkergult-e
      * akkor igaz, ha a teleportot napszel erte
      */
-    private boolean gonecrazy = false;
+    private boolean gonecrazy;
+
+    /**
+     * Default konstruktor
+     */
+    public Teleport() {
+        asteroid = null;
+        inventory = null;
+        pair = null;
+        gonecrazy = false;
+    }
+
+    /**
+     * Teleport konstruktor, a parameterkent kapott inventory-t allitja be tagvaltozonak.
+     * @param i
+     */
+    public Teleport(Inventory i) {
+        asteroid = null;
+        pair = null;
+        gonecrazy = false;
+
+        inventory = i;
+    }
 
     /**
      * Ha a teleport parja le van helyezve (pairready),

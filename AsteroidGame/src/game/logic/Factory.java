@@ -10,19 +10,6 @@ import java.util.ArrayList;
 public class Factory {
 
     /**
-     * Referencia a jatékot kezelo kontroller objektumra
-     */
-    private Controller c;
-
-    /**
-     * Letrehozza a Factory objektumot a megadott kontrollerrel inicializalva.
-     * @param _c - Controller objektum, amellyel inicializaljuk az objektumot.
-     */
-    public Factory(Controller _c) {
-        c = _c;
-    }
-
-    /**
      * Eldonti, hogy a parameterkent kapott materials tomb tartalmaza-e
      * a parameterkent kapott mold tombben talalhato, megfelelo tipusu nyersanyagokbol megfelelo mennyiseget.
      * @param materials - Nyersanygyujtemeny, amelyrol ki akarjuk deriteni, hogy tartalmaz-e bizonyos tipusu nyersanyagokbol megfelelo mennyiseget.
@@ -80,13 +67,15 @@ public class Factory {
                 i.RemoveMaterial(m);
                 m.Disintegrate();
             }
-            Teleport t1 = new Teleport(c);
-            Teleport t2 = new Teleport(c);
+            Teleport t1 = new Teleport(i);
+            Teleport t2 = new Teleport(i);
             t1.SetPair(t2);
             t2.SetPair(t1);
             ArrayList<Teleport> teleports = new ArrayList<Teleport>();
             teleports.add(t1);
             teleports.add(t2);
+
+            Controller.GetInstanceOf().AddTeleport(t1, t2);
 
             return teleports;
         }
@@ -131,8 +120,8 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            Robot robot = new Robot(c);
-
+            Robot robot = new Robot();
+            Controller.GetInstanceOf().AddRobot(robot);
             return robot;
         }
         else {
