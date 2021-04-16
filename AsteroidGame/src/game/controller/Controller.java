@@ -717,7 +717,7 @@ public class Controller {
 
     /**
      * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
-     * a jatek megnyeresehez.
+     * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
      * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
      */
     public void CheckVictory(Settler s){
@@ -738,10 +738,19 @@ public class Controller {
     }
 
     /**
-     *
+     * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
+     * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
     public void CheckMaterials(){
+        int countCoal = coal.size();
+        int countIce = ice.size();
+        int countIron = iron.size();
+        int countUranium = uran.size();
 
+        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3)
+            return;
+        else
+            Endgame(false);
     }
 
     /**
