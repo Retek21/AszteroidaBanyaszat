@@ -93,6 +93,27 @@ public class Controller {
     /**
      *
      */
+    private static Controller instance;
+
+    /**
+     *
+     * @return
+     */
+    public static Controller GetInstanceOf()
+    {
+        if(instance == null)
+            instance = new Controller();
+        return instance;
+    }
+
+    /**
+     *
+     */
+    private Controller() {}
+
+    /**
+     *
+     */
     public void StartInitPhase()
     {
         initializing = true;
@@ -233,39 +254,39 @@ public class Controller {
             switch(param[1])
             {
                 case "settler":
-                    Settler s = new Settler(this);
+                    Settler s = new Settler();
                     settlers.put(param[2], s);
                     break;
                 case "robot":
-                    Robot r = new Robot(this);
+                    Robot r = new Robot();
                     robots.put(param[2], r);
                     break;
                 case "ufo":
-                    Ufo u = new Ufo(this);
+                    Ufo u = new Ufo();
                     ufos.put(param[2], u);
                     break;
                 case "asteroid":
-                    Asteroid a = new Asteroid(this);
+                    Asteroid a = new Asteroid();
                     asteroids.put(param[2], a);
                     break;
                 case "teleport":
-                    Teleport t= new Teleport(this);
+                    Teleport t= new Teleport();
                     teleports.put(param[2], t);
                     break;
                 case "coal":
-                    Coal c = new Coal(this);
+                    Coal c = new Coal();
                     coal.put(param[2], c);
                     break;
                 case "ice":
-                    Ice i = new Ice(this);
+                    Ice i = new Ice();
                     ice.put(param[2], i);
                     break;
                 case "iron":
-                    Iron ir = new Iron(this);
+                    Iron ir = new Iron();
                     iron.put(param[2], ir);
                     break;
                 case "uranium":
-                    Uranium ur = new Uranium(this);
+                    Uranium ur = new Uranium();
                     uran.put(param[2], ur);
                     break;
                 case "default":
