@@ -23,10 +23,11 @@ public class Factory {
     }
 
     /**
-     *
-     * @param materials
-     * @param mold
-     * @return
+     * Eldonti, hogy a parameterkent kapott materials tomb tartalmaza-e
+     * a parameterkent kapott mold tombben talalhato, megfelelo tipusu nyersanyagokbol megfelelo mennyiseget.
+     * @param materials - Nyersanygyujtemeny, amelyrol ki akarjuk deriteni, hogy tartalmaz-e bizonyos tipusu nyersanyagokbol megfelelo mennyiseget.
+     * @param mold  - Nyersanyaggyujtemeny, amely mintakent szolgal a tartalmazaskerdes megvalaszolasahoz.
+     * @return - materials tomb tartalmazza-e a megfelelo nyersanyagokat.
      */
     public static boolean HasEnoughMaterial(ArrayList<Material> materials, ArrayList<Material> mold) {
         boolean got_all = false;
