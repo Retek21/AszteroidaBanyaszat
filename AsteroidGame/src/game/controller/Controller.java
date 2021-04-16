@@ -716,36 +716,64 @@ public class Controller {
     public void Endgame(boolean v){}
 
     /**
-     *
+     * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
+     * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
+     * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
      */
-    public void CheckVictory(){}
+    public void CheckVictory(Settler s){
+        ArrayList<Material> materials = new ArrayList<Material>();
+
+        Asteroid a = s.GetAsteroid();
+        ArrayList<Entity> entities = a.GetEntities();
+        for (Entity e : entities) {
+            Inventory i = e.GetInventory();
+            if (i != null)
+                materials.addAll(i.GetMaterials());
+        }
+
+        ArrayList<Material> mold = Recipe.GetWinRecipe();
+        boolean win = Factory.HasEnoughMaterial(materials, mold);
+        if(win)
+            Endgame(true);
+    }
 
     /**
-     *
+     * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
+     * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
-    public void CheckMaterials(){}
+    public void CheckMaterials(){
+        int countCoal = coal.size();
+        int countIce = ice.size();
+        int countIron = iron.size();
+        int countUranium = uran.size();
+
+        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3)
+            return;
+        else
+            Endgame(false);
+    }
 
     /**
      *
      * @param c
      */
-    public void CoalDisinegrate(Coal c){}
+    public void CoalDisintegrate(Coal c){}
 
     /**
      *
      * @param i
      */
-    public void IceDisinegrate(Ice i){}
+    public void IceDisintegrate(Ice i){}
 
     /**
      *
      * @param i
      */
-    public void IronDisinegrate(Iron i){}
+    public void IronDisintegrate(Iron i){}
 
     /**
      *
      * @param u
      */
-    public void UraniumDisinegrate(Uranium u){}
+    public void UraniumDisintegrate(Uranium u){}
 }

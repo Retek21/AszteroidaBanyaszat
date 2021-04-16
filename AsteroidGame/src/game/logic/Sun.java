@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Singleton osztaly, ami a napvihar inditasaert felelos.
+ * A napvihar elinditasaert felelos osztaly.
  */
 public class Sun{
 
@@ -27,11 +27,27 @@ public class Sun{
         int rand = new Random().nextInt(asteroids.size());
         Asteroid asteroid = asteroids.get(rand);
         ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
+        asteroid.OnFire();
         for(int i=0; i<neighbours.size(); i++)
         {
             neighbours.get(i).OnFire();
         }
+    }
+
+    /**
+     * A parameterkent kapott aszteroidatol lekeri annak szomszedait,
+     * majd az aszteroidara es annak szomszedaira meghivja az OnFire()
+     * metodusukat, ezzel elinditva a napvihart.
+     * @param asteroid - Az aszteroida, aminek a szomszedsagaban be fog
+     *                   kovetkezni a napvihar.
+     */
+    public void Sunstorm(Asteroid asteroid) {
+        ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
         asteroid.OnFire();
+        for(int i=0; i<neighbours.size(); i++)
+        {
+            neighbours.get(i).OnFire();
+        }
     }
 
     /**
