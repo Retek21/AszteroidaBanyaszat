@@ -1,10 +1,17 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
- * Iron nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.\
+ * Iron nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.\
  * @author torok
  */
 public class Iron extends Material{
+
+    /**
+     * Default konstruktor
+     */
+    public Iron() {}
 
     /**
      * Az Iron konstruktora ami beallitja a nevet
@@ -15,11 +22,10 @@ public class Iron extends Material{
     }
 
     /**
-     * Meghívja a kontroller IronDisintegrate metódusát
+     * Meghivja a kontroller IronDisintegrate metodusat
      */
     @Override
     public void Disintegrate() {
-        super.Disintegrate();
-        c.IronDisintegrate();
+        c.IronDisintegrate(this);
     }
 }

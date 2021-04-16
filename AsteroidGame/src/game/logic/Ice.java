@@ -1,10 +1,18 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
- * Ice nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges.
+ * Ice nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Ice extends Material{
+
+    /**
+     * Default konstruktor
+     */
+    public Ice() {}
+
     /**
      * Az Ice konstruktora ami beallitja a nevet.
      */
@@ -14,7 +22,7 @@ public class Ice extends Material{
     }
 
     /**
-     * Meghívja a jég Ice::Disintegrate() metódusát. Ezután meghívja a paraméterként kapott aszteroida RemoveMaterial metódusát, a jeget adva paraméterül.
+     * A jeg elolvad. Lekerul az aszteroidarol es kikerul a jatekbol.
      * @param a - az aszteroida amivel interaktal
      */
     @Override
@@ -25,11 +33,10 @@ public class Ice extends Material{
     }
 
     /**
-     * Meghívja a kontroller IceDisintegrate metódusát.
+     * Meghivja a kontroller IceDisintegrate metodusat.
      */
     @Override
     public void Disintegrate() {
-        super.Disintegrate();
-        c.IceDisintegrate();
+        c.IceDisintegrate(this);
     }
 }

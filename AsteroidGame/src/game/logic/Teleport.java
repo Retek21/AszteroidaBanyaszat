@@ -1,5 +1,6 @@
 package game.logic;
 
+import game.controller.Controller;
 
 /**
  * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
@@ -9,12 +10,12 @@ package game.logic;
 public class Teleport implements Whereabout{
 
     /**
-     * a teleport gazdaaszteroidaja
+     * az aszteroida, aminek a szomszedsagaban a teleport aktualisan megtalahato
      */
     private Asteroid asteroid;
 
     /**
-     * az inventory, amibe bekerül, miutan egy telepes lecraftolta.
+     * az inventory, amiben a teleport aktualisan tarolva van
      */
     private Inventory inventory;
 
@@ -40,6 +41,7 @@ public class Teleport implements Whereabout{
      * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
      */
     private Controller c;
+
 
 
     /**
@@ -107,13 +109,17 @@ public class Teleport implements Whereabout{
     }
 
     /**
-     * a teleport parjanak a beallitasa
+     * A teleport parjanak a beallitasa. Ha a par mar le van helyezve,
+     * pairready flag aktiv.
      * @param t: a teleport parja, amivel kapcsolatba lep a lehelyezes utan
      */
     public void SetPair(Teleport t)
     {
         pair = t;
-        pairready = false;
+        if (pair.GetAsteroid() != null)
+            pairready = true;
+        else
+            pairready = false;
     }
 
 
@@ -136,16 +142,15 @@ public class Teleport implements Whereabout{
     }
 
     /**
-     *Ha a teleport parja le van helyezve, elkeri a parjatol annak gazdaaszteroidajat,
-     * es ennek a szomszedaihoz adja hozza a parameterkent kapott Whereabout-ot
+     * Ha a teleport parja le van helyezve, elkeri a parjatol annak gazdaaszteroidajat,
+     * es erre hivja meg a Deploy metodust.
      * @param w: az uj szomszed,amit felvesz a nyilvantartasba.a
      * @return: a hozzaadas sikeressege
      */
     public boolean AddNeighbour(Whereabout w){
         if(pairready){
             Asteroid target = pair.GetAsteroid();
-            target.AddNeighbour(w);
-            return true;
+            return Deploy(target);
         }
         return false;
     }
@@ -162,12 +167,11 @@ public class Teleport implements Whereabout{
                 boolean add = w.AddNeighbour(this);
                 if(add){
                     asteroid.RemoveNeighbour(this);
+                    return true;
                 }
-                else return false;
             }
-           else return false;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -177,7 +181,7 @@ public class Teleport implements Whereabout{
      * @return: a lehelyezes sikeressege
      */
     public boolean Deploy(Asteroid a){
-       boolean added=  a.AddNeighbour(this);
+       boolean added =  a.AddNeighbour(this);
        if(added){
            asteroid = a;
            inventory = null;
@@ -199,7 +203,7 @@ public class Teleport implements Whereabout{
      * visszaadja a gonecrazy boolean erteket
      * @return: gonecrazy logikai erteke
      */
-    public boolean getCraziness(){
+    public boolean GetCraziness(){
         return gonecrazy;
     }
 }

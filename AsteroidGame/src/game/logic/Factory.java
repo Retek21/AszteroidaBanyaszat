@@ -1,9 +1,17 @@
 package game.logic;
 
+import game.controller.Controller;
 import java.util.ArrayList;
 
+/**
+ * Az osztaly kezeli a telepesek altal, nyersanyagokbol letrehozni  kivant objektumok
+ * letrehozasat a Recipe osztalytol lekerheto receptek, és a telepestol kapott Inventory alapjan.
+ */
 public class Factory {
 
+    /**
+     * Referencia a jatékot kezelo kontroller objektumra
+     */
     private Controller c;
 
     /**
@@ -12,6 +20,30 @@ public class Factory {
      */
     public Factory(Controller _c) {
         c = _c;
+    }
+
+    /**
+     * Eldonti, hogy a parameterkent kapott materials tomb tartalmaza-e
+     * a parameterkent kapott mold tombben talalhato, megfelelo tipusu nyersanyagokbol megfelelo mennyiseget.
+     * @param materials - Nyersanygyujtemeny, amelyrol ki akarjuk deriteni, hogy tartalmaz-e bizonyos tipusu nyersanyagokbol megfelelo mennyiseget.
+     * @param mold  - Nyersanyaggyujtemeny, amely mintakent szolgal a tartalmazaskerdes megvalaszolasahoz.
+     * @return - materials tomb tartalmazza-e a megfelelo nyersanyagokat.
+     */
+    public static boolean HasEnoughMaterial(ArrayList<Material> materials, ArrayList<Material> mold) {
+        boolean got_all = false;
+
+        for(int j = 0; j < materials.size() && !got_all; j++) {
+            for (int k = 0; k < mold.size(); k++) {
+                Material mold_sample = mold.get(k);
+                boolean match = mold_sample.CompareMaterial(materials.get(j));
+                if (match) {
+                    mold.remove(mold_sample);
+                    if (mold.size() == 0) got_all = true;
+                    break;
+                }
+            }
+        }
+        return got_all;
     }
 
     /**
@@ -48,8 +80,8 @@ public class Factory {
                 i.RemoveMaterial(m);
                 m.Disintegrate();
             }
-            Teleport t1 = new Teleport();
-            Teleport t2 = new Teleport();
+            Teleport t1 = new Teleport(c);
+            Teleport t2 = new Teleport(c);
             t1.SetPair(t2);
             t2.SetPair(t1);
             ArrayList<Teleport> teleports = new ArrayList<Teleport>();
@@ -99,7 +131,7 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            Robot robot = new Robot();
+            Robot robot = new Robot(c);
 
             return robot;
         }

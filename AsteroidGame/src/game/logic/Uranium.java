@@ -1,10 +1,18 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
- * Uranium nyersanyag, dolgok(robot, teleport, bázis) építéséhez szükséges. Aszteroidába helyezve a megfelelő körülmények között felrobbantja az aszteroidát.
+ * Uranium nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
+ * Aszteroidaba helyezve a megfelelo korulmenyek kozott felrobbantja az aszteroidat.
  * @author torok
  */
 public class Uranium extends Material{
+
+    /**
+     * Default konstruktor
+     */
+    public Uranium() {}
 
     /**
      * Konstruktor ami beallitja az uranium nevet.
@@ -15,7 +23,7 @@ public class Uranium extends Material{
     }
 
     /**
-     * Ha interactCount attribútum értéke nagyobb, mint 2, meghívja a Uranium::Disintegrate() metódusát, majd a paraméterként kapott aszteroida Explode() metódusát. Ha 2 vagy annál kisebb, a metódus egyszerűen visszatér.
+     * Ha interactCount attributum erteke nagyobb, mint 2, a nyersanyag kikerul a jatekbol es felrobbantja az aszteroidat.
      * @param a az aszteroida ahol nap eri
      */
     @Override
@@ -28,11 +36,10 @@ public class Uranium extends Material{
     }
 
     /**
-     * Meghívja a kontroller UraniumDisintegrate metódusát.
+     * Meghivja a kontroller UraniumDisintegrate metodusat.
      */
     @Override
     public void Disintegrate() {
-        super.Disintegrate();
-        c.UraniumDisintegrate();
+        c.UraniumDisintegrate(this);
     }
 }
