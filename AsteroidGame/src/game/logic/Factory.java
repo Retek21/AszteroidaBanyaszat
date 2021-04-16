@@ -1,5 +1,6 @@
 package game.logic;
 
+import game.controller.Controller;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +20,29 @@ public class Factory {
      */
     public Factory(Controller _c) {
         c = _c;
+    }
+
+    /**
+     *
+     * @param materials
+     * @param mold
+     * @return
+     */
+    public static boolean HasEnoughMaterial(ArrayList<Material> materials, ArrayList<Material> mold) {
+        boolean got_all = false;
+
+        for(int j = 0; j < materials.size() && !got_all; j++) {
+            for (int k = 0; k < mold.size(); k++) {
+                Material mold_sample = mold.get(k);
+                boolean match = mold_sample.CompareMaterial(materials.get(j));
+                if (match) {
+                    mold.remove(mold_sample);
+                    if (mold.size() == 0) got_all = true;
+                    break;
+                }
+            }
+        }
+        return got_all;
     }
 
     /**
@@ -55,8 +79,8 @@ public class Factory {
                 i.RemoveMaterial(m);
                 m.Disintegrate();
             }
-            Teleport t1 = new Teleport();
-            Teleport t2 = new Teleport();
+            Teleport t1 = new Teleport(c);
+            Teleport t2 = new Teleport(c);
             t1.SetPair(t2);
             t2.SetPair(t1);
             ArrayList<Teleport> teleports = new ArrayList<Teleport>();
@@ -106,7 +130,7 @@ public class Factory {
                 m.Disintegrate();
             }
 
-            Robot robot = new Robot();
+            Robot robot = new Robot(c);
 
             return robot;
         }

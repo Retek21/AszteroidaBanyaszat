@@ -1,5 +1,6 @@
 package game.logic;
 
+import game.controller.Controller;
 
 /**
  * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
@@ -40,6 +41,7 @@ public class Teleport implements Whereabout{
      * Jatekbol valo kikeruleskor ertesiteni kell a kontrollert.
      */
     private Controller c;
+
 
 
     /**

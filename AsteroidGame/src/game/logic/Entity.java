@@ -1,5 +1,6 @@
 package game.logic;
-import java.util.ArrayList;
+
+import game.controller.Controller;
 
 /**
  * Entity absztrakt ososztaly. Az aszteroidaovben tartozkodi entitasok
@@ -73,5 +74,13 @@ public abstract class Entity {
             }
         }
         return false;
+    }
+
+    /**
+     * Visszaadja az entitas inventory-jat.
+     * @return - Az entitas inventory-ja
+     */
+    public Inventory GetInventory() {
+        return null;
     }
 }

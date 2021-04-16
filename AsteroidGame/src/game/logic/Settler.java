@@ -1,5 +1,8 @@
 package game.logic;
+
+import game.controller.Controller;
 import java.util.ArrayList;
+
 /**
  * Settler osztaly, az Entity leszarmazotta,
  * feladata az aszteroidak kozti mozgas, azok megfurasa, banyaszata
@@ -33,6 +36,7 @@ public class Settler extends Entity{
      * Visszater a telepes inventoryjaval.
      * @return az inventory referenciaja
      */
+    @Override
     public Inventory GetInventory(){return inventory;}
 
     /**

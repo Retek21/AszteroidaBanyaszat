@@ -1,11 +1,18 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
  * Uranium nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
  * Aszteroidaba helyezve a megfelelo korulmenyek kozott felrobbantja az aszteroidat.
  * @author torok
  */
 public class Uranium extends Material{
+
+    /**
+     * Default konstruktor
+     */
+    public Uranium() {}
 
     /**
      * Konstruktor ami beallitja az uranium nevet.
@@ -33,6 +40,6 @@ public class Uranium extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.UraniumDisintegrate();
+        c.UraniumDisintegrate(this);
     }
 }

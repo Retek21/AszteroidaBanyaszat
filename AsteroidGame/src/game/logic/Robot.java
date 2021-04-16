@@ -1,4 +1,6 @@
 package game.logic;
+
+import game.controller.Controller;
 import java.util.ArrayList;
 import java.util.Random;
 /**

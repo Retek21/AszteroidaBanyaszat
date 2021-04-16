@@ -1,5 +1,7 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
  * A kulonbozo absztrakt nyersanyagok ososztalya, megvalositja a nyersanyagok megegyezo fuggvenyeit.
  * @author torok

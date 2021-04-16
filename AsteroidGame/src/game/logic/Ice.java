@@ -1,10 +1,18 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
  * Ice nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Ice extends Material{
+
+    /**
+     * Default konstruktor
+     */
+    public Ice() {}
+
     /**
      * Az Ice konstruktora ami beallitja a nevet.
      */
@@ -29,6 +37,6 @@ public class Ice extends Material{
      */
     @Override
     public void Disintegrate() {
-        c.IceDisintegrate();
+        c.IceDisintegrate(this);
     }
 }

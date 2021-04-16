@@ -1,5 +1,7 @@
 package game.logic;
 
+import game.controller.Controller;
+
 /**
  * Ufo osztaly, az Entity leszarmazotta,
  * feladata az aszteroidak kozti mozgas, azok banyaszata.
