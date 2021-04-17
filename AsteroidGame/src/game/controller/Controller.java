@@ -133,7 +133,7 @@ public class Controller {
 
 ////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
 
-    private String SearchForAsteroid(Asteroid a) {
+    private String SearchForAsteroid(Whereabout a) {
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
         {
@@ -145,7 +145,7 @@ public class Controller {
         return null;
     }
 
-    private String SearchForTeleport(Teleport t) {
+    private String SearchForTeleport(Whereabout t) {
         Iterator it = teleports.entrySet().iterator();
         while(it.hasNext())
         {
@@ -1687,11 +1687,11 @@ public class Controller {
             for (int i = 0; i < entities.size(); i++) {
                 out = "\t\t";
                 if(SearchForSettler(entities.get(i)) != null)
-                    out = out + "Settler: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                    out = out + "Settler: " + SearchForAsteroid(neighbours.get(i));
                 else if(SearchForRobot(entities.get(i)) != null)
-                    out = out + "Robot: " + SearchForTeleport((Teleport)neighbours.get(i));
+                    out = out + "Robot: " + SearchForTeleport(neighbours.get(i));
                 else if(SearchForUfo(entities.get(i)) != null)
-                    out = out + "Ufo: " + SearchForTeleport((Teleport)neighbours.get(i));
+                    out = out + "Ufo: " + SearchForTeleport(neighbours.get(i));
                 if(i+1 < entities.size())
                     out = out + ",";
                 WriteOut(out);
