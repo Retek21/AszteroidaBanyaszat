@@ -1686,7 +1686,7 @@ public class Controller {
                 if(SearchForAsteroid(neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
                 else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport((neighbours.get(i));
+                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 WriteOut(out);
