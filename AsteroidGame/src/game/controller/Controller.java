@@ -157,7 +157,7 @@ public class Controller {
         return null;
     }
 
-    private String SearchForSettler(Settler s) {
+    private String SearchForSettler(Entity s) {
         Iterator it = settlers.entrySet().iterator();
         while(it.hasNext())
         {
@@ -169,7 +169,7 @@ public class Controller {
         return null;
     }
 
-    private String SearchForRobot(Robot r) {
+    private String SearchForRobot(Entity r) {
         Iterator it = robots.entrySet().iterator();
         while(it.hasNext())
         {
@@ -181,7 +181,7 @@ public class Controller {
         return null;
     }
 
-    private String SearchForUfo(Ufo u) {
+    private String SearchForUfo(Entity u) {
         Iterator it = ufos.entrySet().iterator();
         while(it.hasNext())
         {
@@ -388,8 +388,8 @@ public class Controller {
                     default:
                         break;
                 }
-                br.close();
             }
+            br.close();
         }
         catch(IOException e)
         {
@@ -842,12 +842,12 @@ public class Controller {
             checkconditions = conditions;
             BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
             ArrayList<String> in = new ArrayList<String>();
+            int incnt = 0;
             String temp;
             while((temp = br.readLine()) != null)
                 in.add(temp);
             br.close();
 
-            Iterator cmdit = in.iterator();
 
             String[] cmd;
             while (!end) {
@@ -859,7 +859,8 @@ public class Controller {
                     Map.Entry pair = (Map.Entry) it.next();
                     out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
                     WriteOut(out);
-                    cmd = ((String)cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                     SettlerRound((String)pair.getKey(), cmd);
                 }
 
@@ -872,7 +873,8 @@ public class Controller {
                     out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         RobotRound((String)pair.getKey(), cmd);
                     }
                     else {
@@ -890,7 +892,8 @@ public class Controller {
                     out = "[ROUND OF UFO: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         UfoRound((String)pair.getKey(), cmd);
                     }
                     else {
@@ -908,7 +911,8 @@ public class Controller {
                     out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         TeleportRound((String)pair.getKey(), cmd);
                     } else {
                         cmd = null;
@@ -923,7 +927,8 @@ public class Controller {
                 WriteOut(out);
                 cmd = null;
                 if (manual) {
-                    cmd = ((String) cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                 }
                 SunRound(cmd);
 
@@ -934,7 +939,8 @@ public class Controller {
                 WriteOut(out);
                 cmd = null;
                 if (manual) {
-                    cmd = ((String) cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                 }
                 AsteroidfieldRound(cmd);
             }
@@ -1094,6 +1100,9 @@ public class Controller {
                     break;
                 case "rearrange":
                     Rearrange();
+                    break;
+                case "endgame":
+                    Endgame(false);
                     break;
                 default:
                     break;
@@ -1677,11 +1686,11 @@ public class Controller {
             }
             for (int i = 0; i < entities.size(); i++) {
                 out = "\t\t";
-                if(SearchForSettler((Settler)entities.get(i)) != null)
+                if(SearchForSettler(entities.get(i)) != null)
                     out = out + "Settler: " + SearchForAsteroid((Asteroid)neighbours.get(i));
-                else if(SearchForRobot((Robot)entities.get(i)) != null)
+                else if(SearchForRobot(entities.get(i)) != null)
                     out = out + "Robot: " + SearchForTeleport((Teleport)neighbours.get(i));
-                else if(SearchForUfo((Ufo) entities.get(i)) != null)
+                else if(SearchForUfo(entities.get(i)) != null)
                     out = out + "Ufo: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < entities.size())
                     out = out + ",";
