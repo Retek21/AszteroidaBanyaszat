@@ -1838,7 +1838,7 @@ public class Controller {
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(u)) {
                     found = true;
@@ -1846,7 +1846,7 @@ public class Controller {
                 }
             }
             it2 = asteroids.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
@@ -1872,7 +1872,7 @@ public class Controller {
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
                     found = true;
@@ -1880,7 +1880,7 @@ public class Controller {
                 }
             }
             it2 = asteroids.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
@@ -1906,7 +1906,7 @@ public class Controller {
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
                     found = true;
@@ -1914,7 +1914,7 @@ public class Controller {
                 }
             }
             it2 = asteroids.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
@@ -1941,7 +1941,7 @@ public class Controller {
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(c)) {
                     found = true;
@@ -1949,7 +1949,7 @@ public class Controller {
                 }
             }
             it2 = asteroids.entrySet().iterator();
-            while(!it2.hasNext() && !found) {
+            while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
                 if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
