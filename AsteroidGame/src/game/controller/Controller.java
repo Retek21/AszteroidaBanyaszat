@@ -992,18 +992,6 @@ public class Controller {
      */
     public void AsteroidExplode(Asteroid a)
     {
-        String out = "Invalid parameters."
-        Iterator it = asteroids.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == a) {
-                asteroids.remove(pair.getKey());
-                out = "Asteroid: " + pair.getKey() + " exploded.";
-            }
-        }
-        output.add(out);
-        System.out.println(out);
     }
 
     /**
@@ -1065,13 +1053,13 @@ public class Controller {
         {
             out = "Settler: " + id + " crafted ";
             if(!settlers.get(id).CraftRobot())
-                out = "Settler: " + id + " failed to craft."
+                out = "Settler: " + id + " failed to craft.";
         }
         if(param[1] == "teleport")
         {
             out = "Settler: " + id + " crafted ";
             if(!settlers.get(id).CraftTeleport())
-                out = "Settler: " + id + " failed to craft."
+                out = "Settler: " + id + " failed to craft.";
         }
         System.out.println(out);
         output.add(out);
