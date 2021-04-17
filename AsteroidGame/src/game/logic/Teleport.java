@@ -218,6 +218,14 @@ public class Teleport implements Whereabout{
     }
 
     /**
+     * Visszaadja azt, hogy a pár le van-e rakva
+     * @return a visszaadott logikai érték
+     */
+    public boolean GetPairReadyness(){
+        return pairready;
+    }
+
+    /**
      * visszaadja a gonecrazy boolean erteket
      * @return: gonecrazy logikai erteke
      */

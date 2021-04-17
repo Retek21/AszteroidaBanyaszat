@@ -47,6 +47,14 @@ public abstract class Material {
     }
 
     /**
+     * Visszaadja az interactcount értékét
+     * @return az interactcount
+     */
+    public int GetInteractCount(){
+        return interactCount;
+    }
+
+    /**
      * A nyersanyag megsemmisuleset a kontrollernek jelzo absztrakt metodus.
      */
     public abstract void Disintegrate();
