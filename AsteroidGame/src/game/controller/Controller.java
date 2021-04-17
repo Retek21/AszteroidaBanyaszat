@@ -1553,7 +1553,7 @@ public class Controller {
             String out = "Sunstorm hits:";
             Asteroid asteroid = asteroids.get(asteroidid);
             WriteOut(out);
-            out = "Asteroid: " + SearchForAsteroid(asteroid);
+            out = "\t\tAsteroid: " + SearchForAsteroid(asteroid);
             ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
             if(neighbours.size() > 0)
                 out = out + ",";
