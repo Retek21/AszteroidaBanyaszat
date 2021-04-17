@@ -388,8 +388,9 @@ public class Controller {
                     default:
                         break;
                 }
-                br.close();
+
             }
+            br.close();
         }
         catch(IOException e)
         {
