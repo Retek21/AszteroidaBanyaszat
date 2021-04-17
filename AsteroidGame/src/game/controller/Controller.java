@@ -834,7 +834,7 @@ public class Controller {
                 cmd = scanner.nextLine().split(" ");
 
             }
-            AsteroidfieldRound(cmd);
+            AsteroidfieldRound(cmd, false);
         }
 
         out = "[GAME OVER]";
@@ -959,8 +959,23 @@ public class Controller {
                 if (manual) {
                     cmd = (in.get(incnt)).split(" ");
                     incnt++;
+                    boolean iterating = true;
+                    while(iterating)
+                    {
+                        if(in.get(incnt+1).equals("true") || in.get(incnt+1).equals("false"))
+                        {
+                            String[] tempstring = new String[cmd.length+1];
+                            for(int j = 0; j < cmd.length; j++)
+                                tempstring[j] = cmd[j];
+                            tempstring[cmd.length] = in.get(incnt+1);
+                            cmd = tempstring;
+                            incnt++;
+                        }
+                        else
+                            iterating = false;
+                    }
                 }
-                AsteroidfieldRound(cmd);
+                AsteroidfieldRound(cmd, true);
             }
             out = "[GAME OVER]";
             WriteOut(out);
@@ -1110,25 +1125,27 @@ public class Controller {
 
     }
 
-    private void AsteroidfieldRound(String[] cmd) {
-        if (manual) {
-            switch (cmd[0])
-            {
-                case "step":
-                    Step();
-                    break;
-                case "rearrange":
-                    Rearrange();
-                    break;
-                case "endgame":
-                    Endgame(false);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            Rearrange();
+    private void AsteroidfieldRound(String[] cmd, boolean fromfile) {
+           if (manual) {
+               switch (cmd[0]) {
+                   case "step":
+                       Step();
+                       break;
+                   case "rearrange":
+                       if(!fromfile)
+                           RearrangeManually();
+                       else
+                           RearrangeFromFile(cmd);
+                       break;
+                   case "endgame":
+                       Endgame(false);
+                       break;
+                   default:
+                       break;
+               }
+           } else
+               Rearrange();
+
         if(checkconditions) CheckMaterials();
     }
 
@@ -1565,7 +1582,7 @@ public class Controller {
     /**
      *
      */
-    private void Rearrange()
+    private void RearrangeManually()
     {
         String out = "Sunnearness:";
         Scanner scanner = new Scanner(System.in);
@@ -1576,49 +1593,90 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
-            if(manual)
+            String in = scanner.nextLine();
+            if (in.equals("true")) {
+                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                out = out + "(true)";
+                System.out.print("(true)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
+                }
+            } else if (in.equals("false")) {
+                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                out = out + "(false)";
+                System.out.print("(false)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
+                }
+            }
+            output.add(out);
+        }
+    }
+
+    private void Rearrange()
+    {
+        String out = "Sunnearness:";
+        Iterator it = asteroids.entrySet().iterator();
+        WriteOut(out);
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            out = "\t\tAsteroid: " + pair.getKey() + " ";
+            System.out.print(out);
+            int b = new Random().nextInt(2);
+            if (b == 1)
             {
-                String in = scanner.nextLine();
-                if (in == "true") {
-                    ((Asteroid) pair.getValue()).SetSunnearness(true);
-                    out = out + "(true)";
-                    System.out.print("(true)");
-                    if (it.hasNext()) {
-                        out = out + ",";
-                        System.out.print(",");
-                    }
-                } else if (in == "false") {
-                    ((Asteroid) pair.getValue()).SetSunnearness(false);
-                    out = out + "(false)";
-                    System.out.print("(false)");
-                    if (it.hasNext()) {
-                        out = out + ",";
-                        System.out.print(",");
-                    }
+                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                out = out + "(true)";
+                System.out.print("(true)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
                 }
             }
             else
             {
-                int b = new Random().nextInt(2);
-                if (b == 1)
-                {
-                    ((Asteroid) pair.getValue()).SetSunnearness(true);
-                    out = out + "(true)";
-                    System.out.print("(true)");
-                    if (it.hasNext()) {
-                        out = out + ",";
-                        System.out.print(",");
-                    }
+                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                out = out + "(false)";
+                System.out.print("(false)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
                 }
-                else
-                {
-                    ((Asteroid) pair.getValue()).SetSunnearness(false);
-                    out = out + "(false)";
-                    System.out.print("(false)");
-                    if (it.hasNext()) {
-                        out = out + ",";
-                        System.out.print(",");
-                    }
+            }
+            output.add(out);
+        }
+    }
+
+    private void RearrangeFromFile(String[] param)
+    {
+        int cnt = 1;
+        String out = "Sunnearness:";
+        Iterator it = asteroids.entrySet().iterator();
+        WriteOut(out);
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            out = "\t\tAsteroid: " + pair.getKey() + " ";
+            System.out.print(out);
+            String in = param[cnt++];
+            if (in.equals("true")) {
+                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                out = out + "(true)";
+                System.out.print("(true)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
+                }
+            } else if (in.equals("false")) {
+                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                out = out + "(false)";
+                System.out.print("(false)");
+                if (it.hasNext()) {
+                    out = out + ",";
+                    System.out.print(",");
                 }
             }
             output.add(out);
