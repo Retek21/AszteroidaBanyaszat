@@ -1683,10 +1683,10 @@ public class Controller {
             }
             for (int i = 0; i < neighbours.size(); i++) {
                 out = "\t\t";
-                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
-                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
+                if(SearchForAsteroid(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
+                else if(SearchForTeleport(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport((neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 WriteOut(out);
