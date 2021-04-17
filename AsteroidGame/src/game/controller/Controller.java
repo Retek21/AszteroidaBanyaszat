@@ -1509,20 +1509,18 @@ public class Controller {
     {
         if(asteroids.containsKey(asteroidid))
         {
-            String out = "Sunstorm hits:\tAsteroid: " + asteroidid;
+            String out = "Sunstorm hits:";
             Asteroid asteroid = asteroids.get(asteroidid);
-            if(asteroid.GetNeighbours().size() > 0)
-                out = out + ",";
             System.out.println(out);
             output.add(out);
             ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
             for(int i = 0; i < neighbours.size(); i++)
             {
-                out = "\t\t\t";
+                out = "\t\t";
                 if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
                 else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
+                    out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 System.out.println(out);
@@ -1560,7 +1558,7 @@ public class Controller {
                 if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
                 else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
+                    out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 System.out.println(out);
