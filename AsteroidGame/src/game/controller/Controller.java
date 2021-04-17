@@ -133,7 +133,7 @@ public class Controller {
 
 ////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
 
-    public String SearchForAsteroid(Asteroid a) {
+    private String SearchForAsteroid(Asteroid a) {
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
         {
@@ -145,7 +145,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForTeleport(Teleport t) {
+    private String SearchForTeleport(Teleport t) {
         Iterator it = teleports.entrySet().iterator();
         while(it.hasNext())
         {
@@ -157,7 +157,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForSettler(Settler s) {
+    private String SearchForSettler(Settler s) {
         Iterator it = settlers.entrySet().iterator();
         while(it.hasNext())
         {
@@ -169,7 +169,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForRobot(Robot r) {
+    private String SearchForRobot(Robot r) {
         Iterator it = robots.entrySet().iterator();
         while(it.hasNext())
         {
@@ -181,7 +181,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForUfo(Ufo u) {
+    private String SearchForUfo(Ufo u) {
         Iterator it = ufos.entrySet().iterator();
         while(it.hasNext())
         {
@@ -193,7 +193,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForCoal(Material m) {
+    private String SearchForCoal(Material m) {
         Iterator it = coal.entrySet().iterator();
         while(it.hasNext())
         {
@@ -205,7 +205,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForIce(Material m) {
+    private String SearchForIce(Material m) {
         Iterator it = ice.entrySet().iterator();
         while(it.hasNext())
         {
@@ -217,7 +217,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForIron(Material m) {
+    private String SearchForIron(Material m) {
         Iterator it = iron.entrySet().iterator();
         while(it.hasNext())
         {
@@ -229,7 +229,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForUranium(Material m) {
+    private String SearchForUranium(Material m) {
         Iterator it = uran.entrySet().iterator();
         while(it.hasNext())
         {
@@ -241,7 +241,7 @@ public class Controller {
         return null;
     }
 
-    public String SearchForWhereabout(Whereabout w) {
+    private String SearchForWhereabout(Whereabout w) {
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
         {
@@ -406,7 +406,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetSunnearness(String[] param)
+    private void SetSunnearness(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -436,7 +436,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetCore(String[] param)
+    private void SetCore(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -467,7 +467,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetLayers(String[] param)
+    private void SetLayers(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -486,7 +486,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetNeighbour(String[] param)
+    private void SetNeighbour(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -522,7 +522,7 @@ public class Controller {
      *
      * @param param
      */
-    public void Make(String[] param)
+    private void Make(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -585,7 +585,7 @@ public class Controller {
      *
      * @param param
      */
-    public void AddInventory(String[] param)
+    private void AddInventory(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -622,7 +622,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetPair(String[] param)
+    private void SetPair(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -642,7 +642,7 @@ public class Controller {
      *
      * @param param
      */
-    public void SetInteractionCount(String[] param)
+    private void SetInteractionCount(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -672,7 +672,7 @@ public class Controller {
     /**
      *
      */
-    public void Done() {
+    private void Done() {
         initializing = false;
     }
 
@@ -680,7 +680,7 @@ public class Controller {
      *
      * @param param
      */
-    public void AddEntity(String[] param)
+    private void AddEntity(String[] param)
     {
         String out = "Invalid parameters.";
 
@@ -718,8 +718,7 @@ public class Controller {
     public void StartGamePhase(boolean man, boolean conditions)
     {
         String out = "[STARTING GAME]";
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
 
         manual = man;
         checkconditions = conditions;
@@ -728,204 +727,92 @@ public class Controller {
         while(!end)
         {
             if(end) break;
+
+//SETTLER
             Iterator it = settlers.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
-                output.add(out);
-                System.out.println(out);
                 cmd = scanner.nextLine().split(" ");
-                switch (cmd[0])
-                {
-                    case "drill":
-                        Drill((String)pair.getKey());
-                        break;
-                    case "mine":
-                        Mine((String)pair.getKey());
-                        break;
-                    case "craft":
-                        Craft((String)pair.getKey(), cmd);
-                        break;
-                    case "move":
-                        Move((String)pair.getKey(), cmd[1]);
-                        break;
-                    case "place":
-                        Place(cmd[1], (String)pair.getKey());
-                        break;
-                    case "endgame":
-                        Endgame(false);
-                        break;
-                    case "step":
-                        Step();
-                        break;
-                    default:
-                        break;
-                }
-                if(checkconditions)
-                {
-                    CheckMaterials();
-                    CheckVictory((Settler)pair.getValue());
-                }
+                SettlerRound((String)pair.getKey(), cmd);
             }
 
             if(end) break;
+
+//ROBOT
             it = robots.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
-                output.add(out);
-                System.out.println(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
-                    switch (cmd[0]) {
-                        case "drill":
-                            Drill((String)pair.getKey());
-                            break;
-                        case "move":
-                            Move((String)pair.getKey(), cmd[1]);
-                            break;
-                        case "step":
-                            Step();
-                            break;
-                        case "endgame":
-                            Endgame(false);
-                            break;
-                        case "dophase":
-                            RobotDoPhase((String)pair.getKey());
-                            break;
-                        default:
-                            break;
-                    }
+                    RobotRound((String)pair.getKey(), cmd);
                 }
                 else
                 {
-                    RobotDoPhase((String)pair.getKey());
+                    cmd = null;
+                    RobotRound((String)pair.getKey(), cmd);
                 }
-                if(checkconditions) CheckMaterials();
             }
 
             if(end) break;
+
+//UFO
             it = ufos.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF UFO: " + pair.getKey() + "]";
-                output.add(out);
-                System.out.println(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
-                    switch (cmd[0]) {
-                        case "mine":
-                            Mine((String)pair.getKey());
-                            break;
-                        case "move":
-                            Move((String)pair.getKey(), cmd[1]);
-                            break;
-                        case "step":
-                            Step();
-                            break;
-                        case "endgame":
-                            Endgame(false);
-                            break;
-                        case "dophase":
-                            UfoDoPhase((String)pair.getKey());
-                            break;
-                        default:
-                            break;
-                    }
+                    UfoRound((String)pair.getKey(), cmd);
                 }
                 else
                 {
-                    UfoDoPhase((String)pair.getKey());
+                    cmd = null;
+                    UfoRound((String)pair.getKey(), cmd);
                 }
-                if(checkconditions) CheckMaterials();
             }
 
             if(end) break;
+
+//TELEPORT
             it = teleports.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
-                output.add(out);
-                System.out.println(out);
                 if(((Teleport)pair.getValue()).GetCraziness())
                 {
                     if(manual ) {
                         cmd = scanner.nextLine().split(" ");
-                        switch (cmd[0]) {
-                            case "move":
-                                Move((String)pair.getKey(), cmd[1]);
-                                break;
-                            case "step":
-                                Step();
-                                break;
-                            case "endgame":
-                                Endgame(false);
-                                break;
-                            case "dophase":
-                                TeleportDoPhase((String)pair.getKey());
-                                break;
-                            default:
-                                break;
-                        }
+                        TeleportRound((String)pair.getKey(), cmd);
                     }
                     else
                     {
-                        TeleportDoPhase((String)pair.getKey());
+                        cmd = null;
+                        TeleportRound((String)pair.getKey(), cmd);
                     }
                 }
             }
 
-            if(manual)
-            {
-                if(end) break;
-                out = "[ROUND OF SUN]";
-                output.add(out);
-                System.out.println(out);
-                cmd = scanner.nextLine().split(" ");
-                switch (cmd[0])
-                {
-                    case "step":
-                        Step();
-                        break;
-                    case "sunstorm":
-                        SunStorm(cmd[1]);
-                        break;
-                    case "endgame":
-                        Endgame(false);
-                        break;
-                    default:
-                        break;
-                }
+            if(end) break;
 
-                if(end) break;
-                out = "[ROUND OF ASTEROIDFIELD]";
-                output.add(out);
-                System.out.println(out);
+//SUN
+            cmd = null;
+            if(manual) {
                 cmd = scanner.nextLine().split(" ");
-                switch (cmd[0])
-                {
-                    case "step":
-                        Step();
-                        break;
-                    case "rearrange":
-                        Rearrange();
-                        break;
-                    default:
-                        break;
-                }
+
             }
-            else
-            {
-                if(end) break;
-                SunStorm();
-                Rearrange();
+            SunRound(cmd);
+
+            if(end) break;
+
+//ASTEROIDFIELD
+            cmd = null;
+            if(manual) {
+                cmd = scanner.nextLine().split(" ");
+
             }
-            if(checkconditions) CheckMaterials();
+            AsteroidfieldRound(cmd);
         }
 
         out = "[GAME OVER]";
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -937,6 +824,8 @@ public class Controller {
     public void StartGamePhaseFromFile(String buildinput, boolean man, boolean conditions)
     {
         try {
+            String out = "[STARTING GAME]";
+            WriteOut(out);
             manual = man;
             checkconditions = conditions;
             BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
@@ -951,171 +840,258 @@ public class Controller {
             String[] cmd;
             while (!end) {
                 if (end) break;
+
+//SETTLER
                 Iterator it = settlers.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     cmd = ((String)cmdit.next()).split(" ");
-                    switch (cmd[0]) {
-                        case "drill":
-                            Drill((String) pair.getKey());
-                            break;
-                        case "mine":
-                            Mine((String) pair.getKey());
-                            break;
-                        case "craft":
-                            Craft((String) pair.getKey(), cmd);
-                            break;
-                        case "move":
-                            Move((String) pair.getKey(), cmd[1]);
-                            break;
-                        case "place":
-                            Move(cmd[1], (String) pair.getKey());
-                            break;
-                        case "endgame":
-                            Endgame(false);
-                            break;
-                        case "step":
-                            Step();
-                            break;
-                        default:
-                            break;
-                    }
-                    if (checkconditions) {
-                        CheckMaterials();
-                        CheckVictory((Settler) pair.getValue());
-                    }
+                    SettlerRound((String)pair.getKey(), cmd);
                 }
 
                 if (end) break;
+
+//ROBOT
                 it = robots.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
-                        switch (cmd[0]) {
-                            case "drill":
-                                Drill((String) pair.getKey());
-                                break;
-                            case "move":
-                                Move((String) pair.getKey(), cmd[1]);
-                                break;
-                            case "step":
-                                Step();
-                                break;
-                            case "endgame":
-                                Endgame(false);
-                                break;
-                            case "dophase":
-                                RobotDoPhase((String) pair.getKey());
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        RobotDoPhase((String) pair.getKey());
+                        RobotRound((String)pair.getKey(), cmd);
                     }
-                    if (checkconditions) CheckMaterials();
+                    else {
+                        cmd = null;
+                        RobotRound((String)pair.getKey(), cmd);
+                    }
                 }
 
                 if (end) break;
+
+//UFO
                 it = ufos.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
-                        switch (cmd[0]) {
-                            case "mine":
-                                Mine((String) pair.getKey());
-                                break;
-                            case "move":
-                                Move((String) pair.getKey(), cmd[1]);
-                                break;
-                            case "step":
-                                Step();
-                                break;
-                            case "endgame":
-                                Endgame(false);
-                                break;
-                            case "dophase":
-                                UfoDoPhase((String) pair.getKey());
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        UfoDoPhase((String) pair.getKey());
+                        UfoRound((String)pair.getKey(), cmd);
                     }
-                    if (checkconditions) CheckMaterials();
+                    else {
+                        cmd = null;
+                        UfoRound((String)pair.getKey(), cmd);
+                    }
                 }
 
                 if (end) break;
+
+//TELEPORT
                 it = teleports.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
-                        switch (cmd[0]) {
-                            case "move":
-                                Move((String) pair.getKey(), cmd[1]);
-                                break;
-                            case "step":
-                                Step();
-                                break;
-                            case "endgame":
-                                Endgame(false);
-                                break;
-                            case "dophase":
-                                TeleportDoPhase((String) pair.getKey());
-                                break;
-                            default:
-                                break;
-                        }
+                        TeleportRound((String)pair.getKey(), cmd);
                     } else {
-                        TeleportDoPhase((String) pair.getKey());
+                        cmd = null;
+                        TeleportRound((String)pair.getKey(), cmd);
                     }
                 }
 
+                if (end) break;
+
+//SUN
+                cmd = null;
                 if (manual) {
-                    if (end) break;
-                    cmd = ((String)cmdit.next()).split(" ");
-                    switch (cmd[0]) {
-                        case "step":
-                            Step();
-                            break;
-                        case "sunstorm":
-                            SunStorm(cmd[1]);
-                            break;
-                        case "endgame":
-                            Endgame(false);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    if (end) break;
-                    cmd = ((String)cmdit.next()).split(" ");
-                    switch (cmd[0]) {
-                        case "step":
-                            Step();
-                            break;
-                        case "rearrange":
-                            Rearrange();
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    if (end) break;
-                    SunStorm();
-                    Rearrange();
+                    cmd = ((String) cmdit.next()).split(" ");
                 }
-                if (checkconditions) CheckMaterials();
+                SunRound(cmd);
+
+                if (end) break;
+
+//ASTEROIDFIELD
+                cmd = null;
+                if (manual) {
+                    cmd = ((String) cmdit.next()).split(" ");
+                }
+                AsteroidfieldRound(cmd);
             }
+            out = "[GAME OVER]";
+            WriteOut(out);
         }
         catch(IOException e)
         {
             System.out.println("I/O Exception");
         }
+    }
+
+///////////////////////////ROUND HANDLING////////////////////////////////////////
+
+    private void SettlerRound(String settlerid, String[] cmd) {
+        String out = "[ROUND OF SETTLER: " + settlerid + "]";
+        WriteOut(out);
+        switch (cmd[0])
+        {
+            case "drill":
+                SettlerDrill(settlerid);
+                break;
+            case "mine":
+                SettlerMine(settlerid);
+                break;
+            case "craft":
+                Craft(settlerid, cmd);
+                break;
+            case "move":
+                SettlerMove(settlerid, cmd[1]);
+                break;
+            case "place":
+                Place(cmd[1], settlerid);
+                break;
+            case "endgame":
+                Endgame(false);
+                break;
+            case "step":
+                Step();
+                break;
+            default:
+                break;
+        }
+        if(checkconditions)
+        {
+            CheckMaterials();
+            CheckVictory(settlers.get(settlerid));
+        }
+    }
+
+    private void RobotRound(String robotid, String[] cmd) {
+        String out = "[ROUND OF ROBOT: " + robotid + "]";
+        WriteOut(out);
+        if (manual) {
+            switch (cmd[0]) {
+                case "drill":
+                    RobotDrill(robotid);
+                    break;
+                case "move":
+                    RobotMove(robotid, cmd[1]);
+                    break;
+                case "step":
+                    Step();
+                    break;
+                case "endgame":
+                    Endgame(false);
+                    break;
+                case "dophase":
+                    RobotDoPhase(robotid);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            RobotDoPhase(robotid);
+        if(checkconditions)
+            CheckMaterials();
+    }
+
+    private void UfoRound(String ufoid, String[] cmd) {
+        String out = "[ROUND OF UFO: " + ufoid + "]";
+        WriteOut(out);
+        if (manual) {
+            switch (cmd[0]) {
+                case "mine":
+                    UfoMine(ufoid);
+                    break;
+                case "move":
+                    UfoMove(ufoid, cmd[1]);
+                    break;
+                case "step":
+                    Step();
+                    break;
+                case "endgame":
+                    Endgame(false);
+                    break;
+                case "dophase":
+                    UfoDoPhase(ufoid);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            UfoDoPhase(ufoid);
+        if(checkconditions)
+            CheckMaterials();
+    }
+
+    private void TeleportRound(String teleportid, String[] cmd) {
+        String out = "[ROUND OF TELEPORT: " + teleportid + "]";
+        WriteOut(out);
+
+        if (manual) {
+            switch (cmd[0]) {
+                case "move":
+                    TeleportMove(teleportid, cmd[1]);
+                    break;
+                case "step":
+                    Step();
+                    break;
+                case "endgame":
+                    Endgame(false);
+                    break;
+                case "dophase":
+                    TeleportDoPhase(teleportid);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            TeleportDoPhase(teleportid);
+    }
+
+    private void SunRound(String[] cmd) {
+        String out = "[ROUND OF SUN]";
+        WriteOut(out);
+
+        if (manual) {
+            switch (cmd[0])
+            {
+                case "step":
+                    Step();
+                    break;
+                case "sunstorm":
+                    SunStorm(cmd[1]);
+                    break;
+                case "endgame":
+                    Endgame(false);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            SunStorm();
+
+    }
+
+    private void AsteroidfieldRound(String[] cmd) {
+        String out = "[ROUND OF ASTEROIDFIELD]";
+        WriteOut(out);
+
+        if (manual) {
+            switch (cmd[0])
+            {
+                case "step":
+                    Step();
+                    break;
+                case "rearrange":
+                    Rearrange();
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            Rearrange();
+        if(checkconditions) CheckMaterials();
     }
 
 ////////////////////////COMMANDS////////////////////////////////////
@@ -1125,7 +1101,7 @@ public class Controller {
      *
      * @param id
      */
-    public void RobotDoPhase(String id)
+    private void RobotDoPhase(String id)
     {
         if(robots.containsKey(id))
         {
@@ -1139,7 +1115,7 @@ public class Controller {
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
                 String where_id = SearchForWhereabout(neighbour);
                 if (where_id != null)
-                    Move(id, where_id);
+                    RobotMove(id, where_id);
             }
         }
     }
@@ -1148,7 +1124,7 @@ public class Controller {
      *
      * @param id
      */
-    public void UfoDoPhase(String id)
+    private void UfoDoPhase(String id)
     {
         if(ufos.containsKey(id))
         {
@@ -1160,9 +1136,9 @@ public class Controller {
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
                 String where_id = SearchForWhereabout(neighbour);
                 if (where_id != null)
-                    Move(id, where_id);
+                    UfoMove(id, where_id);
             }
-            else Mine(id);
+            else UfoMine(id);
         }
     }
 
@@ -1170,7 +1146,7 @@ public class Controller {
      *
      * @param id
      */
-    public void TeleportDoPhase(String id)
+    private void TeleportDoPhase(String id)
     {
         if(teleports.containsKey(id))
         {
@@ -1182,7 +1158,7 @@ public class Controller {
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
                 String where_id = SearchForWhereabout(neighbour);
                 if (where_id != null)
-                    Move(id, where_id);
+                    TeleportMove(id, where_id);
             }
         }
     }
@@ -1286,7 +1262,7 @@ public class Controller {
      * @param id
      * @param param
      */
-    public void Craft(String id, String[] param)
+    private void Craft(String id, String[] param)
     {
         String out = "Invalid parameters.";
         if(param[1] == "robot")
@@ -1323,7 +1299,7 @@ public class Controller {
      * @param id
      * @param settlerid
      */
-    public void Place(String id, String settlerid)
+    private void Place(String id, String settlerid)
     {
         String out = "Invalid parameters.";
 
@@ -1505,14 +1481,13 @@ public class Controller {
      *
      * @param asteroidid
      */
-    public void SunStorm(String asteroidid)
+    private void SunStorm(String asteroidid)
     {
         if(asteroids.containsKey(asteroidid))
         {
             String out = "Sunstorm hits:";
             Asteroid asteroid = asteroids.get(asteroidid);
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
             ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
             for(int i = 0; i < neighbours.size(); i++)
             {
@@ -1523,9 +1498,7 @@ public class Controller {
                     out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
-                System.out.println(out);
-                output.add(out);
-                neighbours.get(i).OnFire();
+                WriteOut(out);
             }
             sun.Sunstorm(asteroid);
         }
@@ -1534,7 +1507,7 @@ public class Controller {
     /**
      *
      */
-    public void SunStorm()
+    private void SunStorm()
     {
         ArrayList<Asteroid> tempasteroids = new ArrayList<Asteroid>();
         Iterator it = asteroids.entrySet().iterator();
@@ -1546,25 +1519,27 @@ public class Controller {
         int rand = new Random().nextInt(tempasteroids.size());
         Asteroid asteroid = tempasteroids.get(rand);
         SunStorm(SearchForAsteroid(asteroid));
+
     }
+
+////////////////REARRANGE////////////////
 
     /**
      *
      */
-    public void Rearrange()
+    private void Rearrange()
     {
         String out = "Sunnearness:";
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             out = "\t\tAsteroid: " + pair.getValue() + " ";
             System.out.print(out);
             String in = scanner.nextLine();
-            if (in == "true")
+            if (in.equals("true"))
             {
                 ((Asteroid) pair.getValue()).SetSunnearness(true);
                 out = out + "(true)";
@@ -1574,7 +1549,7 @@ public class Controller {
                     System.out.print(",");
                 }
             }
-            else if(in == "false")
+            else if(in.equals("false"))
             {
                 ((Asteroid)pair.getValue()).SetSunnearness(false);
                 out = out + "(false)";
@@ -1588,19 +1563,23 @@ public class Controller {
         }
     }
 
+///////////////STEP//////////////////////////
+
     /**
      *
      */
-    public void Step() {
+    private void Step() {
         String out = "Phase has been stepped.";
         WriteOut(out);
     }
+
+///////////////ENDGAME//////////////////////
 
     /**
      *
      * @param v
      */
-    public void Endgame(boolean v)
+    private void Endgame(boolean v)
     {
         end = true;
         victory = v;
@@ -1614,18 +1593,15 @@ public class Controller {
 
 
             out = "Asteroid: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
 
             out = "\tSunnearness: " + String.valueOf(a.GetSunnearness());
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
 
             out = "\tLayers: " + Integer.toString(a.GetLayer());
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
 
             out = "\tCore: ";
@@ -1634,19 +1610,16 @@ public class Controller {
             else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForCoal(a.GetMaterial());
             else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForCoal(a.GetMaterial());
             else out = out + "null";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
 
             ArrayList<Whereabout> neighbours = a.GetNeighbours();
             out = "\tNeighbours:";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
             if(neighbours.size() < 1)
             {
                 out = "\t\tnull";
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
             for (int i = 0; i < neighbours.size(); i++) {
                 out = "\t\t";
@@ -1656,20 +1629,17 @@ public class Controller {
                     out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
 
 
             ArrayList<Entity> entities = a.GetEntities();
             out = "\tEntities:";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
             if(entities.size() < 1)
             {
                 out = "\t\tnull";
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
             for (int i = 0; i < entities.size(); i++) {
                 out = "\t\t";
@@ -1681,8 +1651,7 @@ public class Controller {
                     out = out + "Ufo: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < entities.size())
                     out = out + ",";
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
         }
 
@@ -1692,29 +1661,25 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Teleport t = (Teleport)pair.getValue();
             out = "Teleport: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(SearchForTeleport(t.GetPair()) != null)
                 out = "\tPair: " + SearchForTeleport(t.GetPair());
             else
                 out = "\tPair: null";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(t.GetPairReadyness())
                 out = "\tState: active";
             else
                 out = "\tState: inactive";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(t.GetAsteroid() != null)
                 out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
             else
                 out = "\tPlace: null";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = settlers.entrySet().iterator();
@@ -1723,23 +1688,19 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Settler s = (Settler)pair.getValue();
             out = "Settler: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(s.GetAsteroid() != null)
                 out = "\tAsteroid: " + SearchForAsteroid(s.GetAsteroid());
             else
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\tInventory:";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\t\tMaterials:";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             ArrayList<Teleport> ta = s.GetInventory().GetTeleports();
             ArrayList<Material> ma = s.GetInventory().GetMaterials();
@@ -1747,8 +1708,7 @@ public class Controller {
             if(ma.size() == 0)
             {
                 out = "\t\t\tnull" ;
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
             for(int i = 0; i < ma.size(); i++)
             {
@@ -1757,26 +1717,22 @@ public class Controller {
                 else if(SearchForIron(ma.get(i)) != null) out = "\t\t\tIron: " + SearchForIron(ma.get(i));
                 else if(SearchForUranium(ma.get(i)) != null) out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
 
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
 
             out = "\t\tTeleports:";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(ta.size() == 0)
             {
                 out = "\t\t\tnull" ;
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
             for(int i = 0; i < ta.size(); i++)
             {
                 if(SearchForTeleport(ta.get(i)) != null) out = "\t\t\tTeleport: " + SearchForTeleport(ta.get(i));
 
-                System.out.println(out);
-                output.add(out);
+                WriteOut(out);
             }
         }
 
@@ -1786,15 +1742,14 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Robot r = (Robot)pair.getValue();
             out = "Robot: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(r.GetAsteroid() != null)
                 out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
             else
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+
+            WriteOut(out);
         }
 
         it = robots.entrySet().iterator();
@@ -1803,15 +1758,13 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Robot r = (Robot)pair.getValue();
             out = "Robot: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(r.GetAsteroid() != null)
                 out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
             else
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = ufos.entrySet().iterator();
@@ -1820,15 +1773,13 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Ufo u = (Ufo)pair.getValue();
             out = "Ufo: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             if(u.GetAsteroid() != null)
                 out = "\tAsteroid: " + SearchForAsteroid(u.GetAsteroid());
             else
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = uran.entrySet().iterator();
@@ -1837,12 +1788,10 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Uranium u = (Uranium)pair.getValue();
             out = "Uranium: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\tInteractCount: " + Integer.toString(u.GetInteractCount());
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
@@ -1864,8 +1813,7 @@ public class Controller {
             }
             if(!found)
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = ice.entrySet().iterator();
@@ -1874,12 +1822,10 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Ice i = (Ice)pair.getValue();
             out = "Ice: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
@@ -1901,8 +1847,7 @@ public class Controller {
             }
             if(!found)
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = iron.entrySet().iterator();
@@ -1911,12 +1856,10 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Iron i = (Iron)pair.getValue();
             out = "Iron: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             boolean found = false;
             Iterator it2 = settlers.entrySet().iterator();
@@ -1938,8 +1881,7 @@ public class Controller {
             }
             if(!found)
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         it = coal.entrySet().iterator();
@@ -1948,8 +1890,7 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             Coal c = (Coal)pair.getValue();
             out = "Coal: " + pair.getKey();
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
 
             out = "\tInteractCount: " + Integer.toString(c.GetInteractCount());
             System.out.println(out);
@@ -1975,8 +1916,7 @@ public class Controller {
             }
             if(!found)
                 out = "\tnull";
-            System.out.println(out);
-            output.add(out);
+            WriteOut(out);
         }
 
         try
@@ -1992,12 +1932,14 @@ public class Controller {
         }
     }
 
+///////////////CHECK CONDITIONS//////////////////////////
+
      /**
      * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
      * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
      * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
      */
-    public void CheckVictory(Settler s){
+     private void CheckVictory(Settler s){
         ArrayList<Material> materials = new ArrayList<Material>();
 
         Asteroid a = s.GetAsteroid();
@@ -2018,7 +1960,7 @@ public class Controller {
      * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
      * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
-    public void CheckMaterials(){
+    private void CheckMaterials(){
         int countCoal = coal.size();
         int countIce = ice.size();
         int countIron = iron.size();
