@@ -958,7 +958,6 @@ public class Controller {
                 cmd = null;
                 if (manual) {
                     cmd = (in.get(incnt)).split(" ");
-                    incnt++;
                     boolean iterating = true;
                     while(iterating)
                     {
@@ -974,6 +973,7 @@ public class Controller {
                         else
                             iterating = false;
                     }
+                    incnt++;
                 }
                 AsteroidfieldRound(cmd, true);
             }
@@ -1611,6 +1611,7 @@ public class Controller {
                     System.out.print(",");
                 }
             }
+            System.out.print("\n");
             output.add(out);
         }
     }
