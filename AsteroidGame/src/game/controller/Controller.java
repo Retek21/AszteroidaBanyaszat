@@ -1948,7 +1948,7 @@ public class Controller {
 
         try
         {
-            PrintWriter textout = new PrintWriter("Output.txt", "UTF-8");
+            PrintWriter textout = new PrintWriter("Test_Output.txt", "UTF-8");
             for(int i = 0; i < output.size(); i++)
                 textout.println(output.get(i));
             textout.close();
