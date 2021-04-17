@@ -1559,9 +1559,9 @@ public class Controller {
             for(int i = 0; i < neighbours.size(); i++)
             {
                 out = "\t\t";
-                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
+                if(SearchForAsteroid(neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
-                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
+                else if(SearchForTeleport(neighbours.get(i)) != null)
                     out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
@@ -1600,6 +1600,8 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
         WriteOut(out);
+        boolean[] nearness = new boolean[asteroids.size()];
+        int cnt = 0;
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
@@ -1607,7 +1609,7 @@ public class Controller {
             System.out.print(out);
             String in = scanner.nextLine();
             if (in.equals("true")) {
-                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                nearness[cnt++] = true;
                 out = out + "(true)";
                 System.out.print("(true)");
                 if (it.hasNext()) {
@@ -1615,7 +1617,7 @@ public class Controller {
                     System.out.print(",");
                 }
             } else if (in.equals("false")) {
-                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                nearness[cnt++] = false;
                 out = out + "(false)";
                 System.out.print("(false)");
                 if (it.hasNext()) {
@@ -1625,6 +1627,14 @@ public class Controller {
             }
             System.out.print("\n");
             output.add(out);
+        }
+
+        cnt = 0;
+        it = asteroids.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
         }
     }
 
@@ -1666,7 +1676,8 @@ public class Controller {
 
     private void RearrangeFromFile(String[] param)
     {
-        int cnt = 1;
+        boolean[] nearness = new boolean[asteroids.size()];
+        int cnt = 0;
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
         WriteOut(out);
@@ -1675,9 +1686,9 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
-            String in = param[cnt++];
+            String in = param[cnt+1];
             if (in.equals("true")) {
-                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                nearness[cnt++] = true;
                 out = out + "(true)";
                 System.out.print("(true)");
                 if (it.hasNext()) {
@@ -1685,7 +1696,7 @@ public class Controller {
                     System.out.print(",");
                 }
             } else if (in.equals("false")) {
-                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                nearness[cnt++] = false;
                 out = out + "(false)";
                 System.out.print("(false)");
                 if (it.hasNext()) {
@@ -1695,6 +1706,14 @@ public class Controller {
             }
             System.out.print("\n");
             output.add(out);
+        }
+
+        cnt = 0;
+        it = asteroids.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
         }
     }
 
