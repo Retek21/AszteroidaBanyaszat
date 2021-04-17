@@ -520,7 +520,6 @@ public class Controller {
                 }
                 else if(teleports.containsKey(param[2]))
                 {
-                    asteroids.get(param[1]).AddNeighbour(teleports.get(param[2]));
                     teleports.get(param[2]).Deploy(asteroids.get(param[1]));
                     out = "Asteroid: " + param[1] + " and Teleport: " + param[2] + " became neighbours.";
                 }
@@ -528,7 +527,6 @@ public class Controller {
             else if(teleports.containsKey(param[1]) && asteroids.containsKey(param[2]))
             {
                 teleports.get(param[1]).Deploy(asteroids.get(param[2]));
-                asteroids.get(param[2]).AddNeighbour(asteroids.get(param[1]));
                 out = "Teleport: " + param[1] + " and Asteroid: " + param[2] + " became neighbours.";
             }
         }
@@ -1555,14 +1553,18 @@ public class Controller {
             String out = "Sunstorm hits:";
             Asteroid asteroid = asteroids.get(asteroidid);
             WriteOut(out);
+            out = "Asteroid: " + SearchForAsteroid(asteroid);
             ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
+            if(neighbours.size() > 0)
+                out = out + ",";
+            WriteOut(out);
             for(int i = 0; i < neighbours.size(); i++)
             {
                 out = "\t\t";
                 if(SearchForAsteroid(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
                 else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
+                    out = out + "Teleport: " + SearchForTeleport(neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 WriteOut(out);
