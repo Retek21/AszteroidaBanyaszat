@@ -17,6 +17,10 @@ public abstract class Material {
      */
     protected int interactCount;
 
+    public String GetName() {
+        return name;
+    }
+
     /**
      * A metodus valositja meg, hogy mi torténik a nyersanyaggal, ha nap eri.
      * @param a az aszteroida ahol nap eri
