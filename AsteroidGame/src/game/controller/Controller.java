@@ -13,47 +13,47 @@ public class Controller {
     /**
      *
      */
-    private HashMap<String, Asteroid> asteroids = new HashMap<String, Asteroid>();
+    private LinkedHashMap<String, Asteroid> asteroids = new LinkedHashMap<String, Asteroid>();
 
     /**
      *
      */
-    private HashMap<String, Settler> settlers = new HashMap<String, Settler>();
+    private LinkedHashMap<String, Settler> settlers = new LinkedHashMap<String, Settler>();
 
     /**
      *
      */
-    private HashMap<String, Robot> robots = new HashMap<String, Robot>();
+    private LinkedHashMap<String, Robot> robots = new LinkedHashMap<String, Robot>();
 
     /**
      *
      */
-    private HashMap<String, Ufo> ufos = new HashMap<String, Ufo>();
+    private LinkedHashMap<String, Ufo> ufos = new LinkedHashMap<String, Ufo>();
 
     /**
      *
      */
-    private HashMap<String, Teleport> teleports = new HashMap<String, Teleport>();
+    private LinkedHashMap<String, Teleport> teleports = new LinkedHashMap<String, Teleport>();
 
     /**
      *
      */
-    private HashMap<String, Iron> iron = new HashMap<String, Iron>();
+    private LinkedHashMap<String, Iron> iron = new LinkedHashMap<String, Iron>();
 
     /**
      *
      */
-    private HashMap<String, Coal> coal = new HashMap<String, Coal>();
+    private LinkedHashMap<String, Coal> coal = new LinkedHashMap<String, Coal>();
 
     /**
      *
      */
-    private HashMap<String, Ice> ice = new HashMap<String, Ice>();
+    private LinkedHashMap<String, Ice> ice = new LinkedHashMap<String, Ice>();
 
     /**
      *
      */
-    private HashMap<String, Uranium> uran = new HashMap<String, Uranium>();
+    private LinkedHashMap<String, Uranium> uran = new LinkedHashMap<String, Uranium>();
 
     /**
      *
