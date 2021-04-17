@@ -842,12 +842,12 @@ public class Controller {
             checkconditions = conditions;
             BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
             ArrayList<String> in = new ArrayList<String>();
+            int incnt = 0;
             String temp;
             while((temp = br.readLine()) != null)
                 in.add(temp);
             br.close();
 
-            Iterator cmdit = in.iterator();
 
             String[] cmd;
             while (!end) {
@@ -859,7 +859,8 @@ public class Controller {
                     Map.Entry pair = (Map.Entry) it.next();
                     out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
                     WriteOut(out);
-                    cmd = ((String)cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                     SettlerRound((String)pair.getKey(), cmd);
                 }
 
@@ -872,7 +873,8 @@ public class Controller {
                     out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         RobotRound((String)pair.getKey(), cmd);
                     }
                     else {
@@ -890,7 +892,8 @@ public class Controller {
                     out = "[ROUND OF UFO: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         UfoRound((String)pair.getKey(), cmd);
                     }
                     else {
@@ -908,7 +911,8 @@ public class Controller {
                     out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
                     WriteOut(out);
                     if (manual) {
-                        cmd = ((String)cmdit.next()).split(" ");
+                        cmd = (in.get(incnt)).split(" ");
+                        incnt++;
                         TeleportRound((String)pair.getKey(), cmd);
                     } else {
                         cmd = null;
@@ -923,7 +927,8 @@ public class Controller {
                 WriteOut(out);
                 cmd = null;
                 if (manual) {
-                    cmd = ((String) cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                 }
                 SunRound(cmd);
 
@@ -934,7 +939,8 @@ public class Controller {
                 WriteOut(out);
                 cmd = null;
                 if (manual) {
-                    cmd = ((String) cmdit.next()).split(" ");
+                    cmd = (in.get(incnt)).split(" ");
+                    incnt++;
                 }
                 AsteroidfieldRound(cmd);
             }
