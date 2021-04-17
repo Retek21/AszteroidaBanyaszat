@@ -58,6 +58,10 @@ public class Teleport implements Whereabout{
         inventory = i;
     }
 
+    public Teleport GetPair() {
+        return pair;
+    }
+
     /**
      * Ha a teleport parja le van helyezve (pairready),
      * elkeri a parjatol annak gazdaaszteroidajat es
