@@ -2197,7 +2197,7 @@ public class Controller {
         String id = SearchForAsteroid(a);
         if (id != null)
         {
-            teleports.remove(id);
+            asteroids.remove(id);
 
             String out = "Asteroid: " + id + " exploded.";
             WriteOut(out);
