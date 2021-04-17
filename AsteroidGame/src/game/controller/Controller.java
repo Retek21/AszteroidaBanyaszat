@@ -1545,27 +1545,7 @@ public class Controller {
         }
         int rand = new Random().nextInt(tempasteroids.size());
         Asteroid asteroid = tempasteroids.get(rand);
-        ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
-        if(asteroid != null)
-        {
-            String out = "Sunstorm hits:";
-            System.out.println(out);
-            output.add(out);
-
-            asteroid.OnFire();
-            for (int i = 0; i < neighbours.size(); i++) {
-                out = "\t\t";
-                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
-                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
-                    out = out + "Teleport: " + SearchForTeleport((Teleport)neighbours.get(i));
-                if(i+1 < neighbours.size())
-                    out = out + ",";
-                System.out.println(out);
-                output.add(out);
-                neighbours.get(i).OnFire();
-            }
-        }
+        SunStorm(SearchForAsteroid(asteroid));
     }
 
     /**
