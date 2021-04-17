@@ -1737,9 +1737,11 @@ public class Controller {
 
             ArrayList<Whereabout> neighbours = a.GetNeighbours();
             out = "\tNeighbours:\t";
+            System.out.println(out);
+            output.add(out);
             if(neighbours.size() < 1)
             {
-                out = out + "null";
+                out = "\tnull";
                 System.out.println(out);
                 output.add(out);
             }
@@ -1757,14 +1759,14 @@ public class Controller {
 
 
             ArrayList<Entity> entities = a.GetEntities();
-            out = "\tNeighbours:";
+            out = "\tEntities:";
             if(entities.size() < 1)
             {
                 out = out + "null";
                 System.out.println(out);
                 output.add(out);
             }
-            for (int i = 0; i < neighbours.size(); i++) {
+            for (int i = 0; i < entities.size(); i++) {
                 out = "\t\t";
                 if(SearchForSettler((Settler)entities.get(i)) != null)
                     out = out + "Settler: " + SearchForAsteroid((Asteroid)neighbours.get(i));
