@@ -166,7 +166,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == s) {
+            if(pair.getValue() == u) {
                 return (String)pair.getKey();
             }
         }
@@ -190,7 +190,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == m {
+            if(pair.getValue() == m) {
                 return (String)pair.getKey();
             }
         }
@@ -1579,10 +1579,10 @@ public class Controller {
             for(int i = 0; i < neighbours.size(); i++)
             {
                 out = "\t\t\t";
-                if(SearchForAsteroid(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
-                else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 System.out.println(out);
@@ -1621,10 +1621,10 @@ public class Controller {
             asteroid.OnFire();
             for (int i = 0; i < neighbours.size(); i++) {
                 out = "\t\t\t";
-                if(SearchForAsteroid(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
-                else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 System.out.println(out);
@@ -1812,19 +1812,6 @@ public class Controller {
         }
     }
 
-    public String SearchForKey() {
-        Iterator it = teleports.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == t) {
-                teleports.remove(pair.getKey());
-                String out = "Teleport: " + pair.getKey() + " exploded.";
-                System.out.println(out);
-                output.add(out);
-            }
-        }
-    }
 
     public void Step() {
         String out = "Phase has been stepped.";
