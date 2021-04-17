@@ -1791,22 +1791,6 @@ public class Controller {
                 out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
             else
                 out = "\tnull";
-
-            WriteOut(out);
-        }
-
-        it = robots.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Robot r = (Robot)pair.getValue();
-            out = "Robot: " + pair.getKey();
-            WriteOut(out);
-
-            if(r.GetAsteroid() != null)
-                out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
-            else
-                out = "\tnull";
             WriteOut(out);
         }
 
