@@ -755,6 +755,7 @@ public class Controller {
                 WriteOut(out);
                 cmd = scanner.nextLine().split(" ");
                 SettlerRound((String)pair.getKey(), cmd);
+                if (end) break;
             }
 
             if(end) break;
@@ -774,6 +775,7 @@ public class Controller {
                     cmd = null;
                     RobotRound((String)pair.getKey(), cmd);
                 }
+                if (end) break;
             }
 
             if(end) break;
@@ -793,6 +795,7 @@ public class Controller {
                     cmd = null;
                     UfoRound((String)pair.getKey(), cmd);
                 }
+                if (end) break;
             }
 
             if(end) break;
@@ -814,6 +817,7 @@ public class Controller {
                         cmd = null;
                         TeleportRound((String)pair.getKey(), cmd);
                     }
+                    if (end) break;
                 }
             }
 
@@ -883,10 +887,10 @@ public class Controller {
                     cmd = (in.get(incnt)).split(" ");
                     incnt++;
                     SettlerRound((String)pair.getKey(), cmd);
+                    if (end) break;
                 }
 
                 if (end) break;
-
 //ROBOT
                 it = robots.entrySet().iterator();
                 while (it.hasNext()) {
@@ -902,6 +906,7 @@ public class Controller {
                         cmd = null;
                         RobotRound((String)pair.getKey(), cmd);
                     }
+                    if (end) break;
                 }
 
                 if (end) break;
@@ -921,6 +926,7 @@ public class Controller {
                         cmd = null;
                         UfoRound((String)pair.getKey(), cmd);
                     }
+                    if (end) break;
                 }
 
                 if (end) break;
@@ -940,6 +946,7 @@ public class Controller {
                             cmd = null;
                             TeleportRound((String) pair.getKey(), cmd);
                         }
+                        if (end) break;
                     }
                 }
 
@@ -1652,6 +1659,7 @@ public class Controller {
                     System.out.print(",");
                 }
             }
+            System.out.print("\n");
             output.add(out);
         }
     }
@@ -1685,6 +1693,7 @@ public class Controller {
                     System.out.print(",");
                 }
             }
+            System.out.print("\n");
             output.add(out);
         }
     }
