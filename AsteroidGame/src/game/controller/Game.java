@@ -19,7 +19,7 @@ public class Game {
         controller = Controller.GetInstanceOf();
         Scanner scanner = new Scanner(System.in);
         System.out.println("[ASTEROIDGAME - abgkp EDITION]");
-        String input = scanner.next();
+        String input = scanner.nextLine();
         String[] cmd = input.split(" ");
         switch(cmd[0])
         {
