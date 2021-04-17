@@ -90,7 +90,7 @@ public class Controller {
     /**
      *
      */
-    private ArrayList<String> output;
+    private ArrayList<String> output = new ArrayList<String>();
 
     /**
      *
@@ -238,7 +238,7 @@ public class Controller {
         sun.AddAsteroidfield(asteroidfield);
         while(initializing)
         {
-            String[] cmd = scanner.next().split(" ");
+            String[] cmd = scanner.nextLine().split(" ");
             switch (cmd[0]) {
                 case "set_sunnearness":
                     SetSunnearness(cmd);
@@ -414,47 +414,47 @@ public class Controller {
                 case "settler":
                     Settler s = new Settler();
                     settlers.put(param[2], s);
-                    out = "New Settler: " + param[1] + " has been created.";
+                    out = "New Settler: " + param[2] + " has been created.";
                     break;
                 case "robot":
                     Robot r = new Robot();
                     robots.put(param[2], r);
-                    out = "New Robot: " + param[1] + " has been created.";
+                    out = "New Robot: " + param[2] + " has been created.";
                     break;
                 case "ufo":
                     Ufo u = new Ufo();
                     ufos.put(param[2], u);
-                    out = "New Ufo: " + param[1] + " has been created.";
+                    out = "New Ufo: " + param[2] + " has been created.";
                     break;
                 case "asteroid":
                     Asteroid a = new Asteroid();
                     asteroids.put(param[2], a);
-                    out = "New Asteroid: " + param[1] + " has been created.";
+                    out = "New Asteroid: " + param[2] + " has been created.";
                     break;
                 case "teleport":
                     Teleport t= new Teleport();
                     teleports.put(param[2], t);
-                    out = "New Teleport: " + param[1] + " has been created.";
+                    out = "New Teleport: " + param[2] + " has been created.";
                     break;
                 case "coal":
                     Coal c = new Coal();
                     coal.put(param[2], c);
-                    out = "New Coal: " + param[1] + " has been created.";
+                    out = "New Coal: " + param[2] + " has been created.";
                     break;
                 case "ice":
                     Ice i = new Ice();
                     ice.put(param[2], i);
-                    out = "New Ice: " + param[1] + " has been created.";
+                    out = "New Ice: " + param[2] + " has been created.";
                     break;
                 case "iron":
                     Iron ir = new Iron();
                     iron.put(param[2], ir);
-                    out = "New Iron: " + param[1] + " has been created.";
+                    out = "New Iron: " + param[2] + " has been created.";
                     break;
                 case "uranium":
                     Uranium ur = new Uranium();
                     uran.put(param[2], ur);
-                    out = "New Uranium: " + param[1] + " has been created.";
+                    out = "New Uranium: " + param[2] + " has been created.";
                     break;
                 case "default":
                     break;
@@ -675,7 +675,7 @@ public class Controller {
             Iterator it = settlers.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                cmd = scanner.next().split(" ");
+                cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
                     case "drill":
@@ -693,7 +693,7 @@ public class Controller {
                     case "place":
                         Place(cmd[1], (String)pair.getKey());
                         break;
-                    case "end":
+                    case "endgame":
                         Endgame(false);
                         break;
                     case "step":
@@ -714,7 +714,7 @@ public class Controller {
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 if(manual) {
-                    cmd = scanner.next().split(" ");
+                    cmd = scanner.nextLine().split(" ");
                     switch (cmd[0]) {
                         case "drill":
                             Drill((String)pair.getKey());
@@ -725,7 +725,7 @@ public class Controller {
                         case "step":
                             Step();
                             break;
-                        case "end":
+                        case "endgame":
                             Endgame(false);
                             break;
                         case "dophase":
@@ -747,7 +747,7 @@ public class Controller {
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 if(manual) {
-                    cmd = scanner.next().split(" ");
+                    cmd = scanner.nextLine().split(" ");
                     switch (cmd[0]) {
                         case "mine":
                             Mine((String)pair.getKey());
@@ -758,7 +758,7 @@ public class Controller {
                         case "step":
                             Step();
                             break;
-                        case "end":
+                        case "endgame":
                             Endgame(false);
                             break;
                         case "dophase":
@@ -780,7 +780,7 @@ public class Controller {
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 if(manual) {
-                    cmd = scanner.next().split(" ");
+                    cmd = scanner.nextLine().split(" ");
                     switch (cmd[0]) {
                         case "move":
                             Move((String)pair.getKey(), cmd[1]);
@@ -788,7 +788,7 @@ public class Controller {
                         case "step":
                             Step();
                             break;
-                        case "end":
+                        case "endgame":
                             Endgame(false);
                             break;
                         case "dophase":
@@ -807,7 +807,7 @@ public class Controller {
             if(manual)
             {
                 if(end) break;
-                cmd = scanner.next().split(" ");
+                cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
                     case "step":
@@ -816,7 +816,7 @@ public class Controller {
                     case "sunstorm":
                         SunStorm(cmd[1]);
                         break;
-                    case "end":
+                    case "endgame":
                         Endgame(false);
                         break;
                     default:
@@ -824,7 +824,7 @@ public class Controller {
                 }
 
                 if(end) break;
-                cmd = scanner.next().split(" ");
+                cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
                     case "step":
@@ -894,7 +894,7 @@ public class Controller {
                         case "place":
                             Move(cmd[1], (String) pair.getKey());
                             break;
-                        case "end":
+                        case "endgame":
                             Endgame(false);
                             break;
                         case "step":
@@ -925,7 +925,7 @@ public class Controller {
                             case "step":
                                 Step();
                                 break;
-                            case "end":
+                            case "endgame":
                                 Endgame(false);
                                 break;
                             case "dophase":
@@ -956,7 +956,7 @@ public class Controller {
                             case "step":
                                 Step();
                                 break;
-                            case "end":
+                            case "endgame":
                                 Endgame(false);
                                 break;
                             case "dophase":
@@ -984,7 +984,7 @@ public class Controller {
                             case "step":
                                 Step();
                                 break;
-                            case "end":
+                            case "endgame":
                                 Endgame(false);
                                 break;
                             case "dophase":
@@ -1008,7 +1008,7 @@ public class Controller {
                         case "sunstorm":
                             SunStorm(cmd[1]);
                             break;
-                        case "end":
+                        case "endgame":
                             Endgame(false);
                             break;
                         default:
@@ -1652,7 +1652,7 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             out = out + "\tAsteroid: " + pair.getValue() + " ";
             System.out.print(out);
-            String in = scanner.next();
+            String in = scanner.nextLine();
             if (in == "true")
             {
                 ((Asteroid) pair.getValue()).SetSunnearness(true);
@@ -1684,9 +1684,8 @@ public class Controller {
         try
         {
             PrintWriter textout = new PrintWriter("Output.txt", "UTF-8");
-            Iterator<String> it = output.iterator();
-            while(it.hasNext())
-                textout.println(it.next());
+            for(int i = 0; i < output.size(); i++)
+                textout.println(output.get(i));
         }
         catch(IOException e)
         {
