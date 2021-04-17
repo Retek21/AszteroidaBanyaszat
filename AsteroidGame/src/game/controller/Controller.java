@@ -1631,14 +1631,10 @@ public class Controller {
         ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
         if(asteroid != null)
         {
-            String out = "Sunstorm hits:\tAsteroid: ";
-
-            if(asteroid.GetNeighbours().size() > 0)
-                out = out + SearchForAsteroid(asteroid) + ",";
-            else
-                out = out + SearchForAsteroid(asteroid);
+            String out = "Sunstorm hits:";
             System.out.println(out);
             output.add(out);
+
             asteroid.OnFire();
             for (int i = 0; i < neighbours.size(); i++) {
                 out = "\t\t";
@@ -1663,33 +1659,35 @@ public class Controller {
         String out = "Sunnearness:";
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
-        if(!it.hasNext())
-        {
-            System.out.println(out);
-            output.add(out);
-        }
+        System.out.println(out);
+        output.add(out);
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            out = out + "Asteroid: " + pair.getValue() + " ";
+            out = "\t\tAsteroid: " + pair.getValue() + " ";
             System.out.print(out);
             String in = scanner.nextLine();
             if (in == "true")
             {
                 ((Asteroid) pair.getValue()).SetSunnearness(true);
                 out = out + "(true)";
-                if(it.hasNext())
+                System.out.print("(true)");
+                if(it.hasNext()) {
                     out = out + ",";
+                    System.out.print(",");
+                }
             }
             else if(in == "false")
             {
                 ((Asteroid)pair.getValue()).SetSunnearness(false);
                 out = out + "(false)";
-                if(it.hasNext())
+                System.out.print("(false)");
+                if(it.hasNext()) {
                     out = out + ",";
+                    System.out.print(",");
+                }
             }
             output.add(out);
-            out = "\t\t";
         }
     }
 
@@ -1736,12 +1734,12 @@ public class Controller {
 
 
             ArrayList<Whereabout> neighbours = a.GetNeighbours();
-            out = "\tNeighbours:\t";
+            out = "\tNeighbours:";
             System.out.println(out);
             output.add(out);
             if(neighbours.size() < 1)
             {
-                out = "\tnull";
+                out = "\t\tnull";
                 System.out.println(out);
                 output.add(out);
             }
@@ -1760,9 +1758,11 @@ public class Controller {
 
             ArrayList<Entity> entities = a.GetEntities();
             out = "\tEntities:";
+            System.out.println(out);
+            output.add(out);
             if(entities.size() < 1)
             {
-                out = out + "null";
+                out = "\t\tnull";
                 System.out.println(out);
                 output.add(out);
             }
