@@ -796,10 +796,10 @@ public class Controller {
             it = teleports.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
-                WriteOut(out);
                 if(((Teleport)pair.getValue()).GetCraziness())
                 {
+                    out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
+                    WriteOut(out);
                     if(manual ) {
                         cmd = scanner.nextLine().split(" ");
                         TeleportRound((String)pair.getKey(), cmd);
@@ -924,15 +924,17 @@ public class Controller {
                 it = teleports.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
-                    out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
-                    WriteOut(out);
-                    if (manual) {
-                        cmd = (in.get(incnt)).split(" ");
-                        incnt++;
-                        TeleportRound((String)pair.getKey(), cmd);
-                    } else {
-                        cmd = null;
-                        TeleportRound((String)pair.getKey(), cmd);
+                    if(((Teleport)pair.getValue()).GetCraziness()) {
+                        out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
+                        WriteOut(out);
+                        if (manual) {
+                            cmd = (in.get(incnt)).split(" ");
+                            incnt++;
+                            TeleportRound((String) pair.getKey(), cmd);
+                        } else {
+                            cmd = null;
+                            TeleportRound((String) pair.getKey(), cmd);
+                        }
                     }
                 }
 
@@ -1572,7 +1574,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            out = "\t\tAsteroid: " + pair.getValue() + " ";
+            out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             if(manual)
             {
