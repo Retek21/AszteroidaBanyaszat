@@ -359,9 +359,13 @@ public class Controller {
      */
     public void StartInitPhaseFromFile(String buildinput)
     {
+
         String out = "[BUILDING GAME]";
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
+
+        sun = new Sun();
+        asteroidfield = new Asteroidfield();
+        sun.AddAsteroidfield(asteroidfield);
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
@@ -560,6 +564,7 @@ public class Controller {
                     break;
                 case "asteroid":
                     Asteroid a = new Asteroid();
+                    asteroidfield.AddAsteroid(a);
                     asteroids.put(param[2], a);
                     out = "New Asteroid: " + param[2] + " has been created.";
                     break;
