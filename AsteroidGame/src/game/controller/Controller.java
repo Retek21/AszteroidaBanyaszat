@@ -1538,25 +1538,49 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             out = "\t\tAsteroid: " + pair.getValue() + " ";
             System.out.print(out);
-            String in = scanner.nextLine();
-            if (in.equals("true"))
+            if(manual)
             {
-                ((Asteroid) pair.getValue()).SetSunnearness(true);
-                out = out + "(true)";
-                System.out.print("(true)");
-                if(it.hasNext()) {
-                    out = out + ",";
-                    System.out.print(",");
+                String in = scanner.nextLine();
+                if (in == "true") {
+                    ((Asteroid) pair.getValue()).SetSunnearness(true);
+                    out = out + "(true)";
+                    System.out.print("(true)");
+                    if (it.hasNext()) {
+                        out = out + ",";
+                        System.out.print(",");
+                    }
+                } else if (in == "false") {
+                    ((Asteroid) pair.getValue()).SetSunnearness(false);
+                    out = out + "(false)";
+                    System.out.print("(false)");
+                    if (it.hasNext()) {
+                        out = out + ",";
+                        System.out.print(",");
+                    }
                 }
             }
-            else if(in.equals("false"))
+            else
             {
-                ((Asteroid)pair.getValue()).SetSunnearness(false);
-                out = out + "(false)";
-                System.out.print("(false)");
-                if(it.hasNext()) {
-                    out = out + ",";
-                    System.out.print(",");
+                int b = new Random().nextInt(2);
+                if (b == 1)
+                {
+                    ((Asteroid) pair.getValue()).SetSunnearness(true);
+                    out = out + "(true)";
+                    System.out.print("(true)");
+                    if (it.hasNext()) {
+                        out = out + ",";
+                        System.out.print(",");
+                    }
+                }
+                else
+                {
+                    ((Asteroid) pair.getValue()).SetSunnearness(false);
+                    out = out + "(false)";
+                    System.out.print("(false)");
+                    if (it.hasNext()) {
+                        out = out + ",";
+                        System.out.print(",");
+                    }
                 }
             }
             output.add(out);
