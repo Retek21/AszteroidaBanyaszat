@@ -675,6 +675,9 @@ public class Controller {
             Iterator it = settlers.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
+                output.add(out);
+                System.out.println(out);
                 cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
@@ -713,6 +716,9 @@ public class Controller {
             it = robots.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
+                output.add(out);
+                System.out.println(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
                     switch (cmd[0]) {
@@ -746,6 +752,9 @@ public class Controller {
             it = ufos.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF UFO: " + pair.getKey() + "]";
+                output.add(out);
+                System.out.println(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
                     switch (cmd[0]) {
@@ -779,34 +788,43 @@ public class Controller {
             it = teleports.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                if(manual) {
-                    cmd = scanner.nextLine().split(" ");
-                    switch (cmd[0]) {
-                        case "move":
-                            Move((String)pair.getKey(), cmd[1]);
-                            break;
-                        case "step":
-                            Step();
-                            break;
-                        case "endgame":
-                            Endgame(false);
-                            break;
-                        case "dophase":
-                            TeleportDoPhase((String)pair.getKey());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
+                out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
+                output.add(out);
+                System.out.println(out);
+                if(((Teleport)pair.getValue()).GetCraziness())
                 {
-                    TeleportDoPhase((String)pair.getKey());
+                    if(manual ) {
+                        cmd = scanner.nextLine().split(" ");
+                        switch (cmd[0]) {
+                            case "move":
+                                Move((String)pair.getKey(), cmd[1]);
+                                break;
+                            case "step":
+                                Step();
+                                break;
+                            case "endgame":
+                                Endgame(false);
+                                break;
+                            case "dophase":
+                                TeleportDoPhase((String)pair.getKey());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        TeleportDoPhase((String)pair.getKey());
+                    }
                 }
             }
 
             if(manual)
             {
                 if(end) break;
+                out = "[ROUND OF SUN]";
+                output.add(out);
+                System.out.println(out);
                 cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
@@ -824,6 +842,9 @@ public class Controller {
                 }
 
                 if(end) break;
+                out = "[ROUND OF ASTEROIDFIELD]";
+                output.add(out);
+                System.out.println(out);
                 cmd = scanner.nextLine().split(" ");
                 switch (cmd[0])
                 {
