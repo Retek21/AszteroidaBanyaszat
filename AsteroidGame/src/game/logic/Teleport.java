@@ -134,10 +134,12 @@ public class Teleport implements Whereabout{
     public void SetPair(Teleport t)
     {
         pair = t;
-        if (pair.GetAsteroid() != null)
+        if (pair.GetAsteroid() != null) {
             pairready = true;
-        else
+        }
+        else {
             pairready = false;
+        }
     }
 
 
@@ -203,7 +205,8 @@ public class Teleport implements Whereabout{
        if(added){
            asteroid = a;
            inventory = null;
-           pair.SetPairReadyness(true);
+           if(pair != null)
+               pair.SetPairReadyness(true);
            return true;
        }
        return false;
