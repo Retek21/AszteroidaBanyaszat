@@ -1687,11 +1687,11 @@ public class Controller {
             for (int i = 0; i < entities.size(); i++) {
                 out = "\t\t";
                 if(SearchForSettler(entities.get(i)) != null)
-                    out = out + "Settler: " + SearchForAsteroid(neighbours.get(i));
+                    out = out + "Settler: " + SearchForSettler(entities.get(i));
                 else if(SearchForRobot(entities.get(i)) != null)
-                    out = out + "Robot: " + SearchForTeleport(neighbours.get(i));
+                    out = out + "Robot: " + SearchForRobot(entities.get(i));
                 else if(SearchForUfo(entities.get(i)) != null)
-                    out = out + "Ufo: " + SearchForTeleport(neighbours.get(i));
+                    out = out + "Ufo: " + SearchForUfo(entities.get(i));
                 if(i+1 < entities.size())
                     out = out + ",";
                 WriteOut(out);
