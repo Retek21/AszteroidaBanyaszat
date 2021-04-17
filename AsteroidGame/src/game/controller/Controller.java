@@ -129,6 +129,20 @@ public class Controller {
         output.add(out);
     }
 
+    private void GenerateOutputFile()
+    {
+        try
+        {
+            PrintWriter textout = new PrintWriter("Test_Output.txt", "UTF-8");
+            for(int i = 0; i < output.size(); i++)
+                textout.println(output.get(i));
+            textout.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("I/O Exception");
+        }
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
@@ -825,6 +839,8 @@ public class Controller {
 
         out = "[GAME OVER]";
         WriteOut(out);
+
+        GenerateOutputFile();
     }
 
     /**
@@ -946,6 +962,7 @@ public class Controller {
             }
             out = "[GAME OVER]";
             WriteOut(out);
+            GenerateOutputFile();
         }
         catch(IOException e)
         {
@@ -1944,18 +1961,6 @@ public class Controller {
             if(!found)
                 out = "\tnull";
             WriteOut(out);
-        }
-
-        try
-        {
-            PrintWriter textout = new PrintWriter("Test_Output.txt", "UTF-8");
-            for(int i = 0; i < output.size(); i++)
-                textout.println(output.get(i));
-            textout.close();
-        }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
         }
     }
 
