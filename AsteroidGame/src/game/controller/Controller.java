@@ -7,6 +7,9 @@ import java.util.*;
 
 
 public class Controller {
+
+///////////////////////////ATTRIBUTES////////////////////////////////////////
+
     /**
      *
      */
@@ -97,6 +100,10 @@ public class Controller {
      */
     private static Controller instance;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////////////////////////////
+
     /**
      *
      * @return
@@ -112,6 +119,19 @@ public class Controller {
      *
      */
     private Controller() {}
+
+    /**
+     *
+     * @param out
+     */
+    private void WriteOut(String out) {
+        System.out.println(out);
+        output.add(out);
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
 
     public String SearchForAsteroid(Asteroid a) {
         Iterator it = asteroids.entrySet().iterator();
@@ -221,6 +241,47 @@ public class Controller {
         return null;
     }
 
+    public String SearchForWhereabout(Whereabout w) {
+        Iterator it = asteroids.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            if(pair.getValue() == w)
+                return (String)pair.getKey();
+        }
+        it = teleports.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            if(pair.getValue() == w)
+                return (String)pair.getKey();
+        }
+        return null;
+    }
+
+    private String SearchForMaterial(Material m) {
+        String id;
+
+        id = SearchForIron(m);
+        if (id != null) return id;
+
+        id = SearchForIce(m);
+        if (id != null) return id;
+
+        id = SearchForCoal(m);
+        if (id != null) return id;
+
+        id = SearchForUranium(m);
+        if (id != null) return id;
+
+        return null;
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////INITIALIZING PHASE////////////////////////////////////////////////////////
+
+////////////////////////READ INPUT//////////////////////
 
     /**
      *
@@ -228,8 +289,7 @@ public class Controller {
     public void StartInitPhase()
     {
         String out = "[BUILDING GAME]";
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
 
         initializing = true;
         Scanner scanner = new Scanner(System.in);
@@ -276,9 +336,71 @@ public class Controller {
         }
 
         out = "[BUILDING ENDED]";
+        WriteOut(out);
+    }
+
+    /**
+     *
+     * @param buildinput
+     */
+    public void StartInitPhaseFromFile(String buildinput)
+    {
+        String out = "[BUILDING GAME]";
         System.out.println(out);
         output.add(out);
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
+            String in;
+            while ((in = br.readLine()) != null) {
+                String[] cmd = in.split(" ");
+                switch (cmd[0]) {
+                    case "set_sunnearness":
+                        SetSunnearness(cmd);
+                        break;
+                    case "set_core":
+                        SetCore(cmd);
+                        break;
+                    case "set_layers":
+                        SetLayers(cmd);
+                        break;
+                    case "set_neighbour":
+                        SetNeighbour(cmd);
+                        break;
+                    case "make":
+                        Make(cmd);
+                        break;
+                    case "add_entity":
+                        AddEntity(cmd);
+                        break;
+                    case "add_inventory":
+                        AddInventory(cmd);
+                        break;
+                    case "set_pair":
+                        SetPair(cmd);
+                        break;
+                    case "set_interact_count":
+                        SetInteractionCount(cmd);
+                        break;
+                    case "done":
+                        Done();
+                        break;
+                    default:
+                        break;
+                }
+                br.close();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("I/O Exception");
+        }
+
+        out = "[BUILDING ENDED]";
+        WriteOut(out);
     }
+
+////////////////////////COMMANDS//////////////////////
 
     /**
      *
@@ -307,8 +429,7 @@ public class Controller {
                     break;
             }
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -339,8 +460,7 @@ public class Controller {
             }
         }
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -359,8 +479,7 @@ public class Controller {
             }
         }
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -396,8 +515,7 @@ public class Controller {
             }
         }
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -460,8 +578,7 @@ public class Controller {
                     break;
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -498,8 +615,7 @@ public class Controller {
                 }
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -519,8 +635,7 @@ public class Controller {
                 out = "Teleport: " + param[1] + " and Teleport: " + param[2] + " became a pair.";
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -551,8 +666,7 @@ public class Controller {
             }
         }
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
     /**
@@ -588,72 +702,14 @@ public class Controller {
                 }
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
-    /**
-     *
-     * @param buildinput
-     */
-    public void StartInitPhaseFromFile(String buildinput)
-    {
-        String out = "[BUILDING GAME]";
-        System.out.println(out);
-        output.add(out);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
-            String in;
-            while ((in = br.readLine()) != null) {
-                String[] cmd = in.split(" ");
-                switch (cmd[0]) {
-                    case "set_sunnearness":
-                        SetSunnearness(cmd);
-                        break;
-                    case "set_core":
-                        SetCore(cmd);
-                        break;
-                    case "set_layers":
-                        SetLayers(cmd);
-                        break;
-                    case "set_neighbour":
-                        SetNeighbour(cmd);
-                        break;
-                    case "make":
-                        Make(cmd);
-                        break;
-                    case "add_entity":
-                        AddEntity(cmd);
-                        break;
-                    case "add_inventory":
-                        AddInventory(cmd);
-                        break;
-                    case "set_pair":
-                        SetPair(cmd);
-                        break;
-                    case "set_interact_count":
-                        SetInteractionCount(cmd);
-                        break;
-                    case "done":
-                        Done();
-                        break;
-                    default:
-                        break;
-                }
-                br.close();
-            }
-        }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
-        }
+////////////////////////////////////////////////////////GAME PHASE////////////////////////////////////////////////////////////////
 
-        out = "[BUILDING ENDED]";
-        System.out.println(out);
-        output.add(out);
-    }
-
+////////////////////////READ INPUT//////////////////////
     /**
      *
      * @param man
@@ -1041,6 +1097,9 @@ public class Controller {
         }
     }
 
+////////////////////////COMMANDS////////////////////////////////////
+
+////////////////DOPHASE///////////////
     /**
      *
      * @param id
@@ -1051,23 +1110,15 @@ public class Controller {
         {
             Robot r = robots.get(id);
             Asteroid a = r.GetAsteroid();
-            if(a.GetLayer() > 0)    Drill(id);
+            if(a.GetLayer() > 0)
+                RobotDrill(id);
             else if(a.GetNumberOfNeighbours() > 0)
             {
                 Random rand = new Random();
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
-                Iterator it = asteroids.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
-                it = teleports.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
+                String where_id = SearchForWhereabout(neighbour);
+                if (where_id != null)
+                    Move(id, where_id);
             }
         }
     }
@@ -1086,18 +1137,9 @@ public class Controller {
             {
                 Random rand = new Random();
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
-                Iterator it = asteroids.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
-                it = teleports.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
+                String where_id = SearchForWhereabout(neighbour);
+                if (where_id != null)
+                    Move(id, where_id);
             }
             else Mine(id);
         }
@@ -1117,156 +1159,20 @@ public class Controller {
             {
                 Random rand = new Random();
                 Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
-                Iterator it = asteroids.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
-                it = teleports.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(pair.getValue() == neighbour) Move(id, (String)pair.getKey());
-                }
-
+                String where_id = SearchForWhereabout(neighbour);
+                if (where_id != null)
+                    Move(id, where_id);
             }
         }
     }
 
-    /**
-     *
-     * @param r
-     */
-    public void AddRobot(Robot r)
-    {
-        boolean unique = false;
-        int n = 1;
-        while(!unique)
-        {
-            if(robots.containsKey("robot" + Integer.toString(n)))
-                n++;
-            else
-                unique = true;
-        }
-        robots.put("robot" + Integer.toString(n), r);
-        String out = output.get(output.size()-1) +  "Robot: robot" + Integer.toString(n) + ".";
-        System.out.println(out);
-        output.remove(output.size()-1);
-        output.add(out);
-    }
-
-    /**
-     *
-     * @param t1
-     * @param t2
-     */
-    public void AddTeleport(Teleport t1, Teleport t2)
-    {
-        boolean unique = false;
-        int n = 1;
-        while(!unique)
-        {
-            if(teleports.containsKey("teleport" + Integer.toString(n)) || teleports.containsKey("teleport" + Integer.toString(n+1)))
-                n+=2;
-            else
-                unique = true;
-        }
-        teleports.put("teleport" + Integer.toString(n), t1);
-        teleports.put("teleport" + Integer.toString(n+1), t2);
-        String out = output.get(output.size()-1) +  "Teleport: teleport" + Integer.toString(n) + " and Teleport: teleport" + Integer.toString(n+1) + ".";
-        System.out.println(out);
-        output.remove(output.size()-1);
-        output.add(out);
-    }
-
-    /**
-     *
-     * @param s
-     */
-    public void SettlerDie(Settler s)
-    {
-        String id = SearchForSettler(s);
-        if (id != null) {
-            settlers.remove(id);
-
-            String out = "Settler: " + id + " died.";
-            System.out.println(out);
-            output.add(out);
-        }
-    }
-
-    /**
-     *
-     * @param r
-     */
-    public void RobotDie(Robot r)
-    {
-        String id = SearchForRobot(r);
-        if (id != null) {
-            robots.remove(id);
-
-            String out = "Robot: " + id + " died.";
-            System.out.println(out);
-            output.add(out);
-        }
-    }
-
-    /**
-     *
-     * @param u
-     */
-    public void UfoDie(Ufo u)
-    {
-        String id = SearchForUfo(u);
-        if (id != null) {
-            ufos.remove(id);
-
-            String out = "Ufo: " + id + " died.";
-            System.out.println(out);
-            output.add(out);
-        }
-    }
-
-    /**
-     *
-     * @param a
-     */
-    public void AsteroidExplode(Asteroid a)
-    {
-        String id = SearchForAsteroid(a);
-        if (id != null) 
-        {
-            teleports.remove(id);
-
-            String out = "Asteroid: " + id + " exploded.";
-            System.out.println(out);
-            output.add(out);
-        }
-    }
-
-    /**
-     *
-     * @param t
-     */
-    public void TeleportExplode(Teleport t)
-    {
-        String id = SearchForTeleport(t);
-        if (id != null) 
-        {
-            teleports.remove(id);
-
-            String out = "Teleport: " + id + " died.";
-            System.out.println(out);
-            output.add(out);
-        }
-    }
+////////////////DRILL//////////////////////
 
     /**
      *
      * @param id
      */
-    public void Drill(String id)
+    private void SettlerDrill(String id)
     {
         String out = "Invalid parametes.";
 
@@ -1278,10 +1184,17 @@ public class Controller {
             else {
                 Asteroid a = settlers.get(id).GetAsteroid();
                 String asteroid_id = SearchForAsteroid(a);
-                out = "Settler: " + id + " drilled Asteroid: " + asteroid_id + ".";
+                if (asteroid_id != null)
+                    out = "Settler: " + id + " drilled Asteroid: " + asteroid_id + ".";
             }
         }
-        else if(robots.containsKey(id))
+        WriteOut(out);
+    }
+
+    private void RobotDrill(String id) {
+        String out = "Invalid parametes.";
+
+        if(robots.containsKey(id))
         {
             boolean success = robots.get(id).Drill();
             if (!success)
@@ -1289,18 +1202,20 @@ public class Controller {
             else {
                 Asteroid a = robots.get(id).GetAsteroid();
                 String asteroid_id = SearchForAsteroid(a);
-                out = "Robot: " + id + " drilled Asteroid: " + asteroid_id + ".";
+                if (asteroid_id != null)
+                    out = "Robot: " + id + " drilled Asteroid: " + asteroid_id + ".";
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
+
+////////////////MINE///////////////////////////////
 
     /**
      *
      * @param id
      */
-    public void Mine(String id)
+    private void SettlerMine(String id)
     {
         String out = "Invalid parameters.";
 
@@ -1314,37 +1229,18 @@ public class Controller {
                 String asteroid_id = SearchForAsteroid(a);
 
                 Material m = a.GetMaterial();
-                String material_id = SearchForCoal(m);
-                if (material_id != null) {
-                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with Coal: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForIce(m);
-                if (material_id != null) {
-                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with Ice: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForIron(m);
-                if (material_id != null) {
-                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with Iron: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForUranium(m);
-                if (material_id != null) {
-                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with Uranium: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
+                String material_id = SearchForMaterial(m);
+                if (asteroid_id != null && material_id != null)
+                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
             }
         }
-        else if(ufos.containsKey(id))
+        WriteOut(out);
+    }
+
+    private void UfoMine(String id) {
+        String out = "Invalid parameters.";
+
+        if(ufos.containsKey(id))
         {
             boolean success = ufos.get(id).Mine();
             if (!success)
@@ -1354,39 +1250,15 @@ public class Controller {
                 String asteroid_id = SearchForAsteroid(a);
 
                 Material m = a.GetMaterial();
-                String material_id = SearchForCoal(m);
-                if (material_id != null) {
-                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with Coal: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForIce(m);
-                if (material_id != null) {
-                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with Ice: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForIron(m);
-                if (material_id != null) {
-                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with Iron: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
-                material_id = SearchForUranium(m);
-                if (material_id != null) {
-                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with Uranium: " + material_id + ".";
-                    System.out.println(out);
-                    output.add(out);
-                    return;
-                }
+                String material_id = SearchForMaterial(m);
+                if (asteroid_id != null && material_id != null)
+                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
+
+////////////////////CRAFT////////////////////////////
 
     /**
      *
@@ -1398,19 +1270,32 @@ public class Controller {
         String out = "Invalid parameters.";
         if(param[1] == "robot")
         {
-            out = "Settler: " + id + " crafted ";
-            if(!settlers.get(id).CraftRobot())
+            boolean success = settlers.get(id).CraftRobot();
+
+            if(!success)
                 out = "Settler: " + id + " failed to craft.";
+            else {
+                out = "Settler: " + id + " crafted ";
+                out = out + output.get(output.size() - 1);
+                output.remove(output.size()-1);
+            }
         }
         if(param[1] == "teleport")
         {
-            out = "Settler: " + id + " crafted ";
-            if(!settlers.get(id).CraftTeleport())
+            boolean success = settlers.get(id).CraftTeleport();
+
+            if(!success)
                 out = "Settler: " + id + " failed to craft.";
+            else {
+                out = "Settler: " + id + " crafted ";
+                out = out + output.get(output.size() - 1);
+                output.remove(output.size()-1);
+            }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
+
+//////////////////////PLACE///////////////////////////////
 
     /**
      *
@@ -1460,96 +1345,97 @@ public class Controller {
         if (!success)
             out = "Settler: " + settlerid + " failed to place.";
 
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
 
-    /**
-     *
-     * @param id
-     * @param where
-     */
-    public void Move(String id, String where)
-    {
+///////////////////MOVE//////////////////////////
+
+    private void SettlerMove(String id, String where) {
         String out = "Invalid parameters.";
 
         Whereabout w;
-        if(asteroids.containsKey(where))
-        {
-            w = asteroids.get(where);
-            if(settlers.containsKey(id)) {
-                Asteroid current = settlers.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
+        Asteroid current = settlers.get(id).GetAsteroid();
+        String previous_asteroidid = SearchForAsteroid(current);
+
+        if (settlers.containsKey(id)) {
+            if (asteroids.containsKey(where)) {
+                w = asteroids.get(where);
+
                 boolean success = settlers.get(id).Move(w);
                 if (!success)
                     out = "Settler: " + id + " failed to move.";
                 else
                     out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
-            }
-            else if(robots.containsKey(id)) {
-                Asteroid current = robots.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
-                boolean success = robots.get(id).Move(w);
-                if (!success)
-                    out = "Robot: " + id + " failed to move.";
-                else
-                    out = "Robot: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
-            }
-            else if(teleports.containsKey(id)) {
-                Asteroid current = teleports.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
-                boolean success = teleports.get(id).Move(w);
-                if (!success)
-                    out = "Teleport: " + id + " failed to move.";
-                else
-                    out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
-            }
-            else if(ufos.containsKey(id)) {
-                Asteroid current = ufos.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
-                boolean success = ufos.get(id).Move(w);
-                if (!success)
-                    out = "Ufo: " + id + " failed to move.";
-                else
-                    out = "Ufo: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
-            }
-        }
-        else if(teleports.containsKey(where))
-        {
-            Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-            String to = SearchForAsteroid(a);
 
-            w = teleports.get(where);
-            if(settlers.containsKey(id)) {
-                Asteroid current = settlers.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
+            } else if (teleports.containsKey(where)) {
+                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
+                String to = SearchForAsteroid(a);
+
+                w = teleports.get(where);
                 boolean success = settlers.get(id).Move(w);
                 if (!success)
                     out = "Settler: " + id + " failed to move.";
                 else
                     out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
             }
-            else if(robots.containsKey(id)) {
-                Asteroid current = robots.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
+        }
+        WriteOut(out);
+    }
+
+    private void RobotMove(String id, String where) {
+        String out = "Invalid parameters.";
+
+        Whereabout w;
+        Asteroid current = robots.get(id).GetAsteroid();
+        String previous_asteroidid = SearchForAsteroid(current);
+
+        if (robots.containsKey(id)) {
+            if (asteroids.containsKey(where)) {
+                w = asteroids.get(where);
+
+                boolean success = robots.get(id).Move(w);
+                if (!success)
+                    out = "Robot: " + id + " failed to move.";
+                else
+                    out = "Robot: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
+
+            } else if (teleports.containsKey(where)) {
+                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
+                String to = SearchForAsteroid(a);
+
+                w = teleports.get(where);
                 boolean success = robots.get(id).Move(w);
                 if (!success)
                     out = "Robot: " + id + " failed to move.";
                 else
                     out = "Robot: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
             }
-            else if(teleports.containsKey(id)) {
-                Asteroid current = teleports.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
-                boolean success = teleports.get(id).Move(w);
+        }
+        WriteOut(out);
+    }
+
+    private void UfoMove(String id, String where) {
+        String out = "Invalid parameters.";
+
+        Whereabout w;
+        Asteroid current = ufos.get(id).GetAsteroid();
+        String previous_asteroidid = SearchForAsteroid(current);
+
+        if (ufos.containsKey(id)) {
+            if (asteroids.containsKey(where)) {
+                w = asteroids.get(where);
+
+                boolean success = ufos.get(id).Move(w);
                 if (!success)
-                    out = "Teleport: " + id + " failed to move.";
+                    out = "Ufo: " + id + " failed to move.";
                 else
-                    out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
-            }
-            else if(ufos.containsKey(id)) {
-                Asteroid current = ufos.get(id).GetAsteroid();
-                String previous_asteroidid = SearchForAsteroid(current);
+                    out = "Ufo: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
+
+            } else if (teleports.containsKey(where)) {
+                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
+                String to = SearchForAsteroid(a);
+
+                w = teleports.get(where);
                 boolean success = ufos.get(id).Move(w);
                 if (!success)
                     out = "Ufo: " + id + " failed to move.";
@@ -1557,9 +1443,42 @@ public class Controller {
                     out = "Ufo: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
             }
         }
-        System.out.println(out);
-        output.add(out);
+        WriteOut(out);
     }
+
+    private void TeleportMove(String id, String where) {
+        String out = "Invalid parameters.";
+
+        Whereabout w;
+        Asteroid current = teleports.get(id).GetAsteroid();
+        String previous_asteroidid = SearchForAsteroid(current);
+
+        if (teleports.containsKey(id)) {
+            if (asteroids.containsKey(where)) {
+                w = asteroids.get(where);
+
+                boolean success = teleports.get(id).Move(w);
+                if (!success)
+                    out = "Teleports: " + id + " failed to move.";
+                else
+                    out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
+
+            } else if (teleports.containsKey(where)) {
+                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
+                String to = SearchForAsteroid(a);
+
+                w = teleports.get(where);
+                boolean success = teleports.get(id).Move(w);
+                if (!success)
+                    out = "Teleport: " + id + " failed to move.";
+                else
+                    out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
+            }
+        }
+        WriteOut(out);
+    }
+
+///////////////////SUNSTORM/////////////////////////////
 
     /**
      *
@@ -1674,6 +1593,14 @@ public class Controller {
 
     /**
      *
+     */
+    public void Step() {
+        String out = "Phase has been stepped.";
+        WriteOut(out);
+    }
+
+    /**
+     *
      * @param v
      */
     public void Endgame(boolean v)
@@ -1731,23 +1658,138 @@ public class Controller {
             Endgame(false);
     }
 
+///////////////////////////EVENTS THAT CAN OCCUR DURING THE GAME///////////////////////////
+
+    /**
+     *
+     * @param r
+     */
+    public void AddRobot(Robot r)
+    {
+        boolean unique = false;
+        int n = 1;
+        while(!unique)
+        {
+            if(robots.containsKey("robot" + Integer.toString(n)))
+                n++;
+            else
+                unique = true;
+        }
+        robots.put("robot" + Integer.toString(n), r);
+        output.add("Robot: robot" + Integer.toString(n) + ".");
+    }
+
+    /**
+     *
+     * @param t1
+     * @param t2
+     */
+    public void AddTeleport(Teleport t1, Teleport t2)
+    {
+        boolean unique = false;
+        int n = 1;
+        while(!unique)
+        {
+            if(teleports.containsKey("teleport" + Integer.toString(n)) || teleports.containsKey("teleport" + Integer.toString(n+1)))
+                n+=2;
+            else
+                unique = true;
+        }
+        teleports.put("teleport" + Integer.toString(n), t1);
+        teleports.put("teleport" + Integer.toString(n+1), t2);
+        output.add("Teleport: teleport" + Integer.toString(n) + " and Teleport: teleport" + Integer.toString(n+1) + ".");
+    }
+
+    /**
+     *
+     * @param s
+     */
+    public void SettlerDie(Settler s)
+    {
+        String id = SearchForSettler(s);
+        if (id != null) {
+            settlers.remove(id);
+
+            String out = "Settler: " + id + " died.";
+            WriteOut(out);
+        }
+    }
+
+    /**
+     *
+     * @param r
+     */
+    public void RobotDie(Robot r)
+    {
+        String id = SearchForRobot(r);
+        if (id != null) {
+            robots.remove(id);
+
+            String out = "Robot: " + id + " died.";
+            WriteOut(out);
+        }
+    }
+
+    /**
+     *
+     * @param u
+     */
+    public void UfoDie(Ufo u)
+    {
+        String id = SearchForUfo(u);
+        if (id != null) {
+            ufos.remove(id);
+
+            String out = "Ufo: " + id + " died.";
+            WriteOut(out);
+        }
+    }
+
+    /**
+     *
+     * @param a
+     */
+    public void AsteroidExplode(Asteroid a)
+    {
+        String id = SearchForAsteroid(a);
+        if (id != null)
+        {
+            teleports.remove(id);
+
+            String out = "Asteroid: " + id + " exploded.";
+            WriteOut(out);
+        }
+    }
+
+    /**
+     *
+     * @param t
+     */
+    public void TeleportExplode(Teleport t)
+    {
+        String id = SearchForTeleport(t);
+        if (id != null)
+        {
+            teleports.remove(id);
+
+            String out = "Teleport: " + id + " died.";
+            WriteOut(out);
+        }
+    }
+
     /**
      *
      * @param c
      */
     public void CoalDisintegrate(Coal c)
     {
-        Iterator it = coal.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == c) {
-                coal.remove(pair.getKey());
+        String id = SearchForCoal(c);
+        if (id != null) {
+            coal.remove(id);
 
-                String out = "Coal: " + pair.getKey() + " disintegrated.";
-                System.out.println(out);
-                output.add(out);
-            }
+            String out = "Coal: " + id + " disintegrated.";
+            WriteOut(out);
+
         }
     }
 
@@ -1757,17 +1799,13 @@ public class Controller {
      */
     public void IceDisintegrate(Ice i)
     {
-        Iterator it = ice.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() ==i) {
-                ice.remove(pair.getKey());
+        String id = SearchForIce(i);
+        if (id != null) {
+            ice.remove(id);
 
-                String out = "Ice: " + pair.getKey() + " disintegrated.";
-                System.out.println(out);
-                output.add(out);
-            }
+            String out = "Ice: " + id + " disintegrated.";
+            WriteOut(out);
+
         }
     }
 
@@ -1777,17 +1815,13 @@ public class Controller {
      */
     public void IronDisintegrate(Iron i)
     {
-        Iterator it = iron.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == i) {
-                iron.remove(pair.getKey());
+        String id = SearchForCoal(i);
+        if (id != null) {
+            iron.remove(id);
 
-                String out = "Iron: " + pair.getKey() + " disintegrated.";
-                System.out.println(out);
-                output.add(out);
-            }
+            String out = "Iron: " + id + " disintegrated.";
+            WriteOut(out);
+
         }
     }
 
@@ -1797,24 +1831,14 @@ public class Controller {
      */
     public void UraniumDisintegrate(Uranium u)
     {
-        Iterator it = uran.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == u) {
-                uran.remove(pair.getKey());
+        String id = SearchForUranium(u);
+        if (id != null) {
+            uran.remove(id);
 
-                String out = "Uranium: " + pair.getKey() + " disintegrated.";
-                System.out.println(out);
-                output.add(out);
-            }
+            String out = "Uranium: " + id + " disintegrated.";
+            WriteOut(out);
+
         }
     }
-
-
-    public void Step() {
-        String out = "Phase has been stepped.";
-        System.out.println(out);
-        output.add(out);
-    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
