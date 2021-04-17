@@ -1633,7 +1633,7 @@ public class Controller {
         {
             String out = "Sunstorm hits:\tAsteroid: ";
 
-            if(asteroid.GetNeighbours().size() == 0)
+            if(asteroid.GetNeighbours().size() > 0)
                 out = out + SearchForAsteroid(asteroid) + ",";
             else
                 out = out + SearchForAsteroid(asteroid);
@@ -1641,7 +1641,7 @@ public class Controller {
             output.add(out);
             asteroid.OnFire();
             for (int i = 0; i < neighbours.size(); i++) {
-                out = "\t\t\t";
+                out = "\t\t";
                 if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
                 else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
@@ -1671,7 +1671,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            out = out + "\tAsteroid: " + pair.getValue() + " ";
+            out = out + "Asteroid: " + pair.getValue() + " ";
             System.out.print(out);
             String in = scanner.nextLine();
             if (in == "true")
@@ -1702,11 +1702,382 @@ public class Controller {
         end = true;
         victory = v;
 
+        String out;
+        Iterator it = asteroids.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Asteroid a = (Asteroid) pair.getValue();
+
+
+            out = "Asteroid: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+
+            out = "\tSunnearness: " + String.valueOf(a.GetSunnearness());
+            System.out.println(out);
+            output.add(out);
+
+
+            out = "\tLayers: " + Integer.toString(a.GetLayer());
+            System.out.println(out);
+            output.add(out);
+
+
+            out = "\tCore: ";
+            if(SearchForCoal(a.GetMaterial()) != null) out = out + "Coal: " + SearchForCoal(a.GetMaterial());
+            else if(SearchForIron(a.GetMaterial()) != null) out = out + "Iron: " + SearchForCoal(a.GetMaterial());
+            else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForCoal(a.GetMaterial());
+            else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForCoal(a.GetMaterial());
+            else out = out + "null";
+            System.out.println(out);
+            output.add(out);
+
+
+            ArrayList<Whereabout> neighbours = a.GetNeighbours();
+            out = "\tNeighbours:\t";
+            if(neighbours.size() < 1)
+            {
+                out = out + "null";
+                System.out.println(out);
+                output.add(out);
+            }
+            for (int i = 0; i < neighbours.size(); i++) {
+                out = "\t\t";
+                if(SearchForAsteroid((Asteroid)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                else if(SearchForTeleport((Teleport)neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport((Teleport)neighbours.get(i));
+                if(i+1 < neighbours.size())
+                    out = out + ",";
+                System.out.println(out);
+                output.add(out);
+            }
+
+
+            ArrayList<Entity> entities = a.GetEntities();
+            out = "\tNeighbours:";
+            if(entities.size() < 1)
+            {
+                out = out + "null";
+                System.out.println(out);
+                output.add(out);
+            }
+            for (int i = 0; i < neighbours.size(); i++) {
+                out = "\t\t";
+                if(SearchForSettler((Settler)entities.get(i)) != null)
+                    out = out + "Settler: " + SearchForAsteroid((Asteroid)neighbours.get(i));
+                else if(SearchForRobot((Robot)entities.get(i)) != null)
+                    out = out + "Robot: " + SearchForTeleport((Teleport)neighbours.get(i));
+                else if(SearchForUfo((Ufo) entities.get(i)) != null)
+                    out = out + "Ufo: " + SearchForTeleport((Teleport)neighbours.get(i));
+                if(i+1 < entities.size())
+                    out = out + ",";
+                System.out.println(out);
+                output.add(out);
+            }
+        }
+
+        it = teleports.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Teleport t = (Teleport)pair.getValue();
+            out = "Teleport: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            if(SearchForTeleport(t.GetPair()) != null)
+                out = "\tPair: " + SearchForTeleport(t.GetPair());
+            else
+                out = "\tPair: null";
+            System.out.println(out);
+            output.add(out);
+
+            if(t.GetPairReadyness())
+                out = "\tState: active";
+            else
+                out = "\tState: inactive";
+            System.out.println(out);
+            output.add(out);
+
+            if(t.GetAsteroid() != null)
+                out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
+            else
+                out = "\tPlace: null";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = settlers.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Settler s = (Settler)pair.getValue();
+            out = "Settler: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            if(s.GetAsteroid() != null)
+                out = "\tAsteroid: " + SearchForAsteroid(s.GetAsteroid());
+            else
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+
+            out = "\tInventory:";
+            System.out.println(out);
+            output.add(out);
+
+            out = "\t\tMaterials:";
+            System.out.println(out);
+            output.add(out);
+
+            ArrayList<Teleport> ta = s.GetInventory().GetTeleports();
+            ArrayList<Material> ma = s.GetInventory().GetMaterials();
+
+            if(ma.size() == 0)
+            {
+                out = "\t\t\tnull" ;
+                System.out.println(out);
+                output.add(out);
+            }
+            for(int i = 0; i < ma.size(); i++)
+            {
+                if(SearchForCoal(ma.get(i)) != null) out = "\t\t\tCoal: " + SearchForCoal(ma.get(i));
+                else if(SearchForIce(ma.get(i)) != null) out = "\t\t\tIce: " + SearchForIce(ma.get(i));
+                else if(SearchForIron(ma.get(i)) != null) out = "\t\t\tIron: " + SearchForIron(ma.get(i));
+                else if(SearchForUranium(ma.get(i)) != null) out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
+
+                System.out.println(out);
+                output.add(out);
+            }
+
+            out = "\t\tTeleports:";
+            System.out.println(out);
+            output.add(out);
+
+            if(ta.size() == 0)
+            {
+                out = "\t\t\tnull" ;
+                System.out.println(out);
+                output.add(out);
+            }
+            for(int i = 0; i < ta.size(); i++)
+            {
+                if(SearchForTeleport(ta.get(i)) != null) out = "\t\t\tTeleport: " + SearchForTeleport(ta.get(i));
+
+                System.out.println(out);
+                output.add(out);
+            }
+        }
+
+        it = robots.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Robot r = (Robot)pair.getValue();
+            out = "Robot: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            if(r.GetAsteroid() != null)
+                out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
+            else
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = robots.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Robot r = (Robot)pair.getValue();
+            out = "Robot: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            if(r.GetAsteroid() != null)
+                out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
+            else
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = ufos.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Ufo u = (Ufo)pair.getValue();
+            out = "Ufo: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            if(u.GetAsteroid() != null)
+                out = "\tAsteroid: " + SearchForAsteroid(u.GetAsteroid());
+            else
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = uran.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Uranium u = (Uranium)pair.getValue();
+            out = "Uranium: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            out = "\tInteractCount: " + Integer.toString(u.GetInteractCount());
+            System.out.println(out);
+            output.add(out);
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(u)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+            it2 = asteroids.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                {
+                    found = true;
+                    out = "\tAsteroid: " + pair2.getKey();
+                }
+            }
+            if(!found)
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = ice.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Ice i = (Ice)pair.getValue();
+            out = "Ice: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
+            System.out.println(out);
+            output.add(out);
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+            it2 = asteroids.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                {
+                    found = true;
+                    out = "\tAsteroid: " + pair2.getKey();
+                }
+            }
+            if(!found)
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = iron.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Iron i = (Iron)pair.getValue();
+            out = "Iron: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
+            System.out.println(out);
+            output.add(out);
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+            it2 = asteroids.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                {
+                    found = true;
+                    out = "\tAsteroid: " + pair2.getKey();
+                }
+            }
+            if(!found)
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
+        it = coal.entrySet().iterator();
+        while(!it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            Coal c = (Coal)pair.getValue();
+            out = "Coal: " + pair.getKey();
+            System.out.println(out);
+            output.add(out);
+
+            out = "\tInteractCount: " + Integer.toString(c.GetInteractCount());
+            System.out.println(out);
+            output.add(out);
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(c)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+            it2 = asteroids.entrySet().iterator();
+            while(!it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                {
+                    found = true;
+                    out = "\tAsteroid: " + pair2.getKey();
+                }
+            }
+            if(!found)
+                out = "\tnull";
+            System.out.println(out);
+            output.add(out);
+        }
+
         try
         {
             PrintWriter textout = new PrintWriter("Output.txt", "UTF-8");
             for(int i = 0; i < output.size(); i++)
                 textout.println(output.get(i));
+            textout.close();
         }
         catch(IOException e)
         {
