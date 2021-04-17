@@ -732,6 +732,8 @@ public class Controller {
             Iterator it = settlers.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
+                WriteOut(out);
                 cmd = scanner.nextLine().split(" ");
                 SettlerRound((String)pair.getKey(), cmd);
             }
@@ -742,6 +744,8 @@ public class Controller {
             it = robots.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
+                WriteOut(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
                     RobotRound((String)pair.getKey(), cmd);
@@ -759,6 +763,8 @@ public class Controller {
             it = ufos.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF UFO: " + pair.getKey() + "]";
+                WriteOut(out);
                 if(manual) {
                     cmd = scanner.nextLine().split(" ");
                     UfoRound((String)pair.getKey(), cmd);
@@ -776,6 +782,8 @@ public class Controller {
             it = teleports.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
+                out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
+                WriteOut(out);
                 if(((Teleport)pair.getValue()).GetCraziness())
                 {
                     if(manual ) {
@@ -793,6 +801,8 @@ public class Controller {
             if(end) break;
 
 //SUN
+            out = "[ROUND OF SUN]";
+            WriteOut(out);
             cmd = null;
             if(manual) {
                 cmd = scanner.nextLine().split(" ");
@@ -803,6 +813,8 @@ public class Controller {
             if(end) break;
 
 //ASTEROIDFIELD
+            out = "[ROUND OF ASTEROIDFIELD]";
+            WriteOut(out);
             cmd = null;
             if(manual) {
                 cmd = scanner.nextLine().split(" ");
@@ -845,6 +857,8 @@ public class Controller {
                 Iterator it = settlers.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
+                    out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
+                    WriteOut(out);
                     cmd = ((String)cmdit.next()).split(" ");
                     SettlerRound((String)pair.getKey(), cmd);
                 }
@@ -855,6 +869,8 @@ public class Controller {
                 it = robots.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
+                    out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
+                    WriteOut(out);
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
                         RobotRound((String)pair.getKey(), cmd);
@@ -871,6 +887,8 @@ public class Controller {
                 it = ufos.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
+                    out = "[ROUND OF UFO: " + pair.getKey() + "]";
+                    WriteOut(out);
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
                         UfoRound((String)pair.getKey(), cmd);
@@ -887,6 +905,8 @@ public class Controller {
                 it = teleports.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
+                    out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
+                    WriteOut(out);
                     if (manual) {
                         cmd = ((String)cmdit.next()).split(" ");
                         TeleportRound((String)pair.getKey(), cmd);
@@ -899,6 +919,8 @@ public class Controller {
                 if (end) break;
 
 //SUN
+                out = "[ROUND OF SUN]";
+                WriteOut(out);
                 cmd = null;
                 if (manual) {
                     cmd = ((String) cmdit.next()).split(" ");
@@ -908,6 +930,8 @@ public class Controller {
                 if (end) break;
 
 //ASTEROIDFIELD
+                out = "[ROUND OF ASTEROIDFIELD]";
+                WriteOut(out);
                 cmd = null;
                 if (manual) {
                     cmd = ((String) cmdit.next()).split(" ");
@@ -926,8 +950,7 @@ public class Controller {
 ///////////////////////////ROUND HANDLING////////////////////////////////////////
 
     private void SettlerRound(String settlerid, String[] cmd) {
-        String out = "[ROUND OF SETTLER: " + settlerid + "]";
-        WriteOut(out);
+
         switch (cmd[0])
         {
             case "drill":
@@ -962,8 +985,6 @@ public class Controller {
     }
 
     private void RobotRound(String robotid, String[] cmd) {
-        String out = "[ROUND OF ROBOT: " + robotid + "]";
-        WriteOut(out);
         if (manual) {
             switch (cmd[0]) {
                 case "drill":
@@ -992,8 +1013,6 @@ public class Controller {
     }
 
     private void UfoRound(String ufoid, String[] cmd) {
-        String out = "[ROUND OF UFO: " + ufoid + "]";
-        WriteOut(out);
         if (manual) {
             switch (cmd[0]) {
                 case "mine":
@@ -1022,9 +1041,6 @@ public class Controller {
     }
 
     private void TeleportRound(String teleportid, String[] cmd) {
-        String out = "[ROUND OF TELEPORT: " + teleportid + "]";
-        WriteOut(out);
-
         if (manual) {
             switch (cmd[0]) {
                 case "move":
@@ -1048,9 +1064,6 @@ public class Controller {
     }
 
     private void SunRound(String[] cmd) {
-        String out = "[ROUND OF SUN]";
-        WriteOut(out);
-
         if (manual) {
             switch (cmd[0])
             {
@@ -1073,9 +1086,6 @@ public class Controller {
     }
 
     private void AsteroidfieldRound(String[] cmd) {
-        String out = "[ROUND OF ASTEROIDFIELD]";
-        WriteOut(out);
-
         if (manual) {
             switch (cmd[0])
             {
