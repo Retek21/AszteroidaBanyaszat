@@ -2,11 +2,8 @@ package game.controller;
 
 import game.logic.*;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-import java.io.BufferedReader;
 
 
 public class Controller {
@@ -89,6 +86,11 @@ public class Controller {
      *
      */
     private boolean manual;
+
+    /**
+     *
+     */
+    private ArrayList<String> output;
 
     /**
      *
@@ -618,7 +620,186 @@ public class Controller {
      */
     public void StartGamePhaseFromFile(String buildinput, boolean man, boolean conditions)
     {
+        try {
+            manual = man;
+            checkconditions = conditions;
+            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
+            ArrayList<String> in = new ArrayList<String>();
+            String temp;
+            while((temp = br.readLine()) != null)
+                in.add(temp);
+            br.close();
 
+            Iterator cmdit = in.iterator();
+
+            String[] cmd;
+            while (!end) {
+                if (end) break;
+                Iterator it = settlers.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    cmd = ((String)cmdit.next()).split(" ");
+                    switch (cmd[0]) {
+                        case "drill":
+                            Drill((String) pair.getKey());
+                            break;
+                        case "mine":
+                            Mine((String) pair.getKey());
+                            break;
+                        case "craft":
+                            Craft((String) pair.getKey(), cmd);
+                            break;
+                        case "move":
+                            Move((String) pair.getKey(), cmd[1]);
+                            break;
+                        case "place":
+                            Move(cmd[1], (String) pair.getKey());
+                            break;
+                        case "end":
+                            Endgame(false);
+                            break;
+                        case "step":
+                            Step();
+                            break;
+                        default:
+                            break;
+                    }
+                    if (checkconditions) {
+                        CheckMaterials();
+                        CheckVictory((Settler) pair.getValue());
+                    }
+                }
+
+                if (end) break;
+                it = robots.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (manual) {
+                        cmd = ((String)cmdit.next()).split(" ");
+                        switch (cmd[0]) {
+                            case "drill":
+                                Drill((String) pair.getKey());
+                                break;
+                            case "move":
+                                Move((String) pair.getKey(), cmd[1]);
+                                break;
+                            case "step":
+                                Step();
+                                break;
+                            case "end":
+                                Endgame(false);
+                                break;
+                            case "dophase":
+                                RobotDoPhase((String) pair.getKey());
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        RobotDoPhase((String) pair.getKey());
+                    }
+                    if (checkconditions) CheckMaterials();
+                }
+
+                if (end) break;
+                it = ufos.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (manual) {
+                        cmd = ((String)cmdit.next()).split(" ");
+                        switch (cmd[0]) {
+                            case "mine":
+                                Mine((String) pair.getKey());
+                                break;
+                            case "move":
+                                Move((String) pair.getKey(), cmd[1]);
+                                break;
+                            case "step":
+                                Step();
+                                break;
+                            case "end":
+                                Endgame(false);
+                                break;
+                            case "dophase":
+                                UfoDoPhase((String) pair.getKey());
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        UfoDoPhase((String) pair.getKey());
+                    }
+                    if (checkconditions) CheckMaterials();
+                }
+
+                if (end) break;
+                it = teleports.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (manual) {
+                        cmd = ((String)cmdit.next()).split(" ");
+                        switch (cmd[0]) {
+                            case "move":
+                                Move((String) pair.getKey(), cmd[1]);
+                                break;
+                            case "step":
+                                Step();
+                                break;
+                            case "end":
+                                Endgame(false);
+                                break;
+                            case "dophase":
+                                TeleportDoPhase((String) pair.getKey());
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        TeleportDoPhase((String) pair.getKey());
+                    }
+                }
+
+                if (manual) {
+                    if (end) break;
+                    cmd = ((String)cmdit.next()).split(" ");
+                    switch (cmd[0]) {
+                        case "step":
+                            Step();
+                            break;
+                        case "sunstorm":
+                            SunStorm(cmd[1]);
+                            break;
+                        case "end":
+                            Endgame(false);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (end) break;
+                    cmd = ((String)cmdit.next()).split(" ");
+                    switch (cmd[0]) {
+                        case "step":
+                            Step();
+                            break;
+                        case "rearrange":
+                            Rearrange();
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    if (end) break;
+                    SunStorm();
+                    Rearrange();
+                }
+                if (checkconditions) CheckMaterials();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("I/O Exception");
+        }
     }
 
     /**
@@ -730,6 +911,10 @@ public class Controller {
                 unique = true;
         }
         robots.put("robot" + Integer.toString(n), r);
+        String out = output.get(output.size()-1) +  "Robot: robot" + Integer.toString(n) + ".";
+        System.out.println(out);
+        output.remove(output.size()-1);
+        output.add(out);
     }
 
     /**
@@ -750,6 +935,10 @@ public class Controller {
         }
         teleports.put("teleport" + Integer.toString(n), t1);
         teleports.put("teleport" + Integer.toString(n+1), t2);
+        String out = output.get(output.size()-1) +  "Teleport: teleport" + Integer.toString(n) + " and Teleport: teleport" + Integer.toString(n+1) + ".";
+        System.out.println(out);
+        output.remove(output.size()-1);
+        output.add(out);
     }
 
     /**
@@ -803,13 +992,18 @@ public class Controller {
      */
     public void AsteroidExplode(Asteroid a)
     {
+        String out = "Invalid parameters."
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getValue() == a)
+            if(pair.getValue() == a) {
                 asteroids.remove(pair.getKey());
+                out = "Asteroid: " + pair.getKey() + " exploded.";
+            }
         }
+        output.add(out);
+        System.out.println(out);
     }
 
     /**
@@ -866,10 +1060,21 @@ public class Controller {
      */
     public void Craft(String id, String[] param)
     {
+        String out = "Invalid parameters.";
         if(param[1] == "robot")
-            settlers.get(id).CraftRobot();
+        {
+            out = "Settler: " + id + " crafted ";
+            if(!settlers.get(id).CraftRobot())
+                out = "Settler: " + id + " failed to craft."
+        }
         if(param[1] == "teleport")
-            settlers.get(id).CraftTeleport();
+        {
+            out = "Settler: " + id + " crafted ";
+            if(!settlers.get(id).CraftTeleport())
+                out = "Settler: " + id + " failed to craft."
+        }
+        System.out.println(out);
+        output.add(out);
     }
 
     /**
@@ -919,7 +1124,29 @@ public class Controller {
     public void SunStorm(String asteroidid)
     {
         if(asteroids.containsKey(asteroidid))
-            sun.Sunstorm(asteroids.get(asteroidid));
+        {
+            String out = "Sunstorm hits:\tAsteroid: " + asteroidid;
+            Asteroid asteroid = asteroids.get(asteroidid);
+            if(asteroid.GetNeighbours().size() > 0)
+                out = out + ",";
+            System.out.println(out);
+            output.add(out);
+            ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
+            for(int i = 0; i < neighbours.size(); i++)
+            {
+                out = "\t\t\t";
+                if(SearchForAsteroid(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
+                else if(SearchForTeleport(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                if(i+1 < neighbours.size())
+                    out = out + ",";
+                System.out.println(out);
+                output.add(out);
+                neighbours.get(i).OnFire();
+            }
+            sun.Sunstorm(asteroid);
+        }
     }
 
     /**
@@ -927,7 +1154,40 @@ public class Controller {
      */
     public void SunStorm()
     {
-        sun.Sunstorm();
+        ArrayList<Asteroid> tempasteroids = new ArrayList<Asteroid>();
+        Iterator it = asteroids.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids.add((Asteroid) pair.getValue());
+        }
+        int rand = new Random().nextInt(tempasteroids.size());
+        Asteroid asteroid = tempasteroids.get(rand);
+        ArrayList<Whereabout> neighbours = asteroid.GetNeighbours();
+        if(asteroid != null)
+        {
+            String out = "Sunstorm hits:\tAsteroid: ";
+
+            if(asteroid.GetNeighbours().size() == 0)
+                out = out + SearchForAsteroid(asteroid) + ",";
+            else
+                out = out + SearchForAsteroid(asteroid);
+            System.out.println(out);
+            output.add(out);
+            asteroid.OnFire();
+            for (int i = 0; i < neighbours.size(); i++) {
+                out = "\t\t\t";
+                if(SearchForAsteroid(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
+                else if(SearchForTeleport(neighbours.get(i)) != null)
+                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                if(i+1 < neighbours.size())
+                    out = out + ",";
+                System.out.println(out);
+                output.add(out);
+                neighbours.get(i).OnFire();
+            }
+        }
     }
 
     /**
@@ -935,14 +1195,36 @@ public class Controller {
      */
     public void Rearrange()
     {
+        String out = "Sunnearness:";
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
+        if(!it.hasNext())
+        {
+            System.out.println(out);
+            output.add(out);
+        }
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            out = out + "\tAsteroid: " + pair.getValue() + " ";
+            System.out.print(out);
             String in = scanner.next();
-            if (in == "true")   ((Asteroid)pair.getValue()).SetSunnearness(true);
-            else if(in == "false")  ((Asteroid)pair.getValue()).SetSunnearness(false);
+            if (in == "true")
+            {
+                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                out = out + "(true)";
+                if(it.hasNext())
+                    out = out + ",";
+            }
+            else if(in == "false")
+            {
+                ((Asteroid)pair.getValue()).SetSunnearness(false);
+                out = out + "(false)";
+                if(it.hasNext())
+                    out = out + ",";
+            }
+            output.add(out);
+            out = "\t\t";
         }
     }
 
@@ -954,6 +1236,18 @@ public class Controller {
     {
         end = true;
         victory = v;
+
+        try
+        {
+            PrintWriter textout = new PrintWriter("Output.txt", "UTF-8");
+            Iterator<String> it = output.iterator();
+            while(it.hasNext())
+                textout.println(it.next());
+        }
+        catch(IOException e)
+        {
+            System.out.println("I/O Exception");
+        }
     }
 
      /**
