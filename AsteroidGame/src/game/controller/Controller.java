@@ -1240,12 +1240,12 @@ public class Controller {
 
         if(settlers.containsKey(id))
         {
+            Asteroid a = settlers.get(id).GetAsteroid();
+            String asteroid_id = SearchForAsteroid(a);
             boolean success = settlers.get(id).Drill();
             if (!success)
                 out = "Settler: " + id + " failed to drill.";
             else {
-                Asteroid a = settlers.get(id).GetAsteroid();
-                String asteroid_id = SearchForAsteroid(a);
                 if (asteroid_id != null)
                     out = "Settler: " + id + " drilled Asteroid: " + asteroid_id + ".";
             }
@@ -1258,12 +1258,12 @@ public class Controller {
 
         if(robots.containsKey(id))
         {
+            Asteroid a = robots.get(id).GetAsteroid();
+            String asteroid_id = SearchForAsteroid(a);
             boolean success = robots.get(id).Drill();
             if (!success)
                 out = "Robot: " + id + " failed to drill.";
             else {
-                Asteroid a = robots.get(id).GetAsteroid();
-                String asteroid_id = SearchForAsteroid(a);
                 if (asteroid_id != null)
                     out = "Robot: " + id + " drilled Asteroid: " + asteroid_id + ".";
             }
@@ -1283,18 +1283,16 @@ public class Controller {
 
         if(settlers.containsKey(id))
         {
+            Asteroid a = settlers.get(id).GetAsteroid();
+            String asteroid_id = SearchForAsteroid(a);
+
+            Material m = a.GetMaterial();
+            String material_id = SearchForMaterial(m);
             boolean success = settlers.get(id).Mine();
             if (!success)
                 out = "Settler: " + id + " failed to mine.";
-            else {
-                Asteroid a = settlers.get(id).GetAsteroid();
-                String asteroid_id = SearchForAsteroid(a);
-
-                Material m = a.GetMaterial();
-                String material_id = SearchForMaterial(m);
-                if (asteroid_id != null && material_id != null)
-                    out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
-            }
+            else if (asteroid_id != null && material_id != null)
+                out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
         }
         WriteOut(out);
     }
@@ -1304,18 +1302,16 @@ public class Controller {
 
         if(ufos.containsKey(id))
         {
+            Asteroid a = ufos.get(id).GetAsteroid();
+            String asteroid_id = SearchForAsteroid(a);
+
+            Material m = a.GetMaterial();
+            String material_id = SearchForMaterial(m);
             boolean success = ufos.get(id).Mine();
             if (!success)
                 out = "Ufo: " + id + " failed to mine.";
-            else {
-                Asteroid a = ufos.get(id).GetAsteroid();
-                String asteroid_id = SearchForAsteroid(a);
-
-                Material m = a.GetMaterial();
-                String material_id = SearchForMaterial(m);
-                if (asteroid_id != null && material_id != null)
-                    out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
-            }
+            else if (asteroid_id != null && material_id != null)
+                out = "Ufo: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
         }
         WriteOut(out);
     }
@@ -1412,6 +1408,11 @@ public class Controller {
 
 ///////////////////MOVE//////////////////////////
 
+    /**
+     *
+     * @param id
+     * @param where
+     */
     private void SettlerMove(String id, String where) {
         String out = "Invalid parameters.";
 
