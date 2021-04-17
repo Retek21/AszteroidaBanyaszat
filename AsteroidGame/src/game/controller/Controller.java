@@ -1704,7 +1704,7 @@ public class Controller {
 
         String out;
         Iterator it = asteroids.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Asteroid a = (Asteroid) pair.getValue();
@@ -1780,7 +1780,7 @@ public class Controller {
         }
 
         it = teleports.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Teleport t = (Teleport)pair.getValue();
@@ -1811,7 +1811,7 @@ public class Controller {
         }
 
         it = settlers.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Settler s = (Settler)pair.getValue();
@@ -1874,7 +1874,7 @@ public class Controller {
         }
 
         it = robots.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Robot r = (Robot)pair.getValue();
@@ -1891,7 +1891,7 @@ public class Controller {
         }
 
         it = robots.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Robot r = (Robot)pair.getValue();
@@ -1908,7 +1908,7 @@ public class Controller {
         }
 
         it = ufos.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Ufo u = (Ufo)pair.getValue();
@@ -1925,7 +1925,7 @@ public class Controller {
         }
 
         it = uran.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Uranium u = (Uranium)pair.getValue();
@@ -1962,7 +1962,7 @@ public class Controller {
         }
 
         it = ice.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Ice i = (Ice)pair.getValue();
@@ -1999,7 +1999,7 @@ public class Controller {
         }
 
         it = iron.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Iron i = (Iron)pair.getValue();
@@ -2036,7 +2036,7 @@ public class Controller {
         }
 
         it = coal.entrySet().iterator();
-        while(!it.hasNext())
+        while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
             Coal c = (Coal)pair.getValue();
