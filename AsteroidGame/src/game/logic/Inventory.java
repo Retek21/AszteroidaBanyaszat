@@ -100,7 +100,15 @@ public class Inventory {
 
         for(int i = 0; i < materials.size(); i++)
             materials.get(i).Disintegrate();
+
         for(int i = 0; i < teleports.size(); i++)
+        {
+            int tempsize = teleports.size();
             teleports.get(i).ExplodeWithPair();
+            if(teleports.size() == tempsize-1)
+                i--;
+            else if(teleports.size() == tempsize-2)
+                i-=2;
+        }
     }
 }
