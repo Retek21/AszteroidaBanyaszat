@@ -328,6 +328,10 @@ public class Asteroid implements Whereabout{
         Controller.GetInstanceOf().AsteroidExplode(this);
     }
 
+    public Asteroid GetLandingPad() {
+        return this;
+    }
+
     /**
      * visszaadja a parameterul kapott szamu aszteroidat
      * @param i: a kert whereabout szama
