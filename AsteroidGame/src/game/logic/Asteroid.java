@@ -110,6 +110,10 @@ public class Asteroid implements Whereabout{
         if(sunnearness) CheckInteraction();
     }
 
+    public void SetSunnearnessInit(boolean sunnearness) {
+        this.sunnearness = sunnearness;
+    }
+
     /**
      * visszaadja, hogy az aszteroida ures-e
      * @return: uresseg

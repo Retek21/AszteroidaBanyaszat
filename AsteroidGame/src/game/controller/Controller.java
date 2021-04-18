@@ -433,13 +433,13 @@ public class Controller {
             {
                 case "true":
                     if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearness(true);
+                        asteroids.get(param[1]).SetSunnearnessInit(true);
                         out = "Asteroid: " + param[1] + " sunnearness set to true.";
                     }
                     break;
                 case "false":
                     if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearness(false);
+                        asteroids.get(param[1]).SetSunnearnessInit(false);
                         out = "Asteroid: " + param[1] + " sunnearness set to false.";
                     }
                     break;
