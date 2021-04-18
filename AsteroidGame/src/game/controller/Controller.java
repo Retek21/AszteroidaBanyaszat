@@ -2285,7 +2285,7 @@ public class Controller {
      */
     public void IronDisintegrate(Iron i)
     {
-        String id = SearchForCoal(i);
+        String id = SearchForIron(i);
         if (id != null) {
             iron.remove(id);
 
