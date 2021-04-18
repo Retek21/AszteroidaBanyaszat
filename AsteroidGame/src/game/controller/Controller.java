@@ -1946,7 +1946,7 @@ public class Controller {
             it2 = asteroids.entrySet().iterator();
             while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
                     found = true;
                     out = "\tAsteroid: " + pair2.getKey();
@@ -1980,7 +1980,7 @@ public class Controller {
             it2 = asteroids.entrySet().iterator();
             while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
                     found = true;
                     out = "\tAsteroid: " + pair2.getKey();
@@ -2014,7 +2014,7 @@ public class Controller {
             it2 = asteroids.entrySet().iterator();
             while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
                     found = true;
                     out = "\tAsteroid: " + pair2.getKey();
@@ -2049,7 +2049,7 @@ public class Controller {
             it2 = asteroids.entrySet().iterator();
             while(it2.hasNext() && !found) {
                 Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForUranium(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
+                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
                 {
                     found = true;
                     out = "\tAsteroid: " + pair2.getKey();
