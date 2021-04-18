@@ -185,6 +185,15 @@ public class Asteroid implements Whereabout{
     }
 
     /**
+     * beállítja az aszteroida magját feltételek nélkül(teszteset inicializalasahoz szukseges)
+     * @param material a hozzaadando nyersanyag
+     */
+    public void SetCore(Material material){
+        this.material=material;
+        empty=false;
+    }
+
+    /**
      * Banyaszaskor a nyersanyag kikerul az aszteroida magjabol.
      * Ha ures az aszteroida, akkor nullal ter vissza,
      * kulonben visszaadja a kibanyaszott nyersanyagot

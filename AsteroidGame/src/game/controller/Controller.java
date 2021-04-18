@@ -461,19 +461,19 @@ public class Controller {
         if(param.length == 3)
         {
             if(iron.containsKey(param[2])) {
-                asteroids.get(param[1]).AddMaterial(iron.get(param[2]));
+                asteroids.get(param[1]).SetCore(iron.get(param[2]));
                 out = "Iron: " + param[2] + " added to Asteroid: " + param[1] + ".";
             }
             else if(ice.containsKey(param[2])) {
-                asteroids.get(param[1]).AddMaterial(ice.get(param[2]));
+                asteroids.get(param[1]).SetCore(ice.get(param[2]));
                 out = "Ice: " + param[2] + " added to Asteroid: " + param[1] + ".";
             }
             else if(coal.containsKey(param[2])) {
-                asteroids.get(param[1]).AddMaterial(coal.get(param[2]));
+                asteroids.get(param[1]).SetCore(coal.get(param[2]));
                 out = "Coal: " + param[2] + " added to Asteroid: " + param[1] + ".";
             }
             else if(uran.containsKey(param[2])) {
-                asteroids.get(param[1]).AddMaterial(uran.get(param[2]));
+                asteroids.get(param[1]).SetCore(uran.get(param[2]));
                 out = "Uranium: " + param[2] + " added to Asteroid: " + param[1] + ".";
             }
         }
