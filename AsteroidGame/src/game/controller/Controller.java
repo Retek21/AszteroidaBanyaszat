@@ -1840,7 +1840,7 @@ public class Controller {
                 out = "\tPair: null";
             WriteOut(out);
 
-            if(t.GetPairReadyness())
+            if(t.GetPair() != null && t.GetPair().GetPairReadiness())
                 out = "\tState: active";
             else
                 out = "\tState: inactive";
@@ -1849,18 +1849,20 @@ public class Controller {
             if(t.GetAsteroid() != null)
                 out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
 
-            boolean found = false;
-            Iterator it2 = settlers.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
-                    found = true;
-                    out = "\tSettler: " + pair2.getKey();
+            else {
+                boolean found = false;
+                Iterator it2 = settlers.entrySet().iterator();
+                while (it2.hasNext() && !found) {
+                    Map.Entry pair2 = (Map.Entry) it2.next();
+                    if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
+                        found = true;
+                        out = "\tSettler: " + pair2.getKey();
+                    }
                 }
-            }
 
-            if(!found)
-                out = "\tPlace: null";
+                if (!found)
+                    out = "\tPlace: null";
+            }
             WriteOut(out);
         }
 
