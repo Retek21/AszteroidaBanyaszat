@@ -969,7 +969,7 @@ public class Controller {
                 if (manual) {
                     cmd = (in.get(incnt)).split(" ");
                     boolean iterating = true;
-                    while(iterating)
+                    while(iterating && in.size()-1 > incnt)
                     {
                         if(in.get(incnt+1).equals("true") || in.get(incnt+1).equals("false"))
                         {
@@ -1603,11 +1603,13 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
         WriteOut(out);
+        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             String in = scanner.nextLine();
@@ -1632,12 +1634,9 @@ public class Controller {
             output.add(out);
         }
 
-        cnt = 0;
-        it = asteroids.entrySet().iterator();
-        while(it.hasNext())
+        for(int i = 0; i < tempasteroids.length; i++)
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
+            tempasteroids[i].SetSunnearness(nearness[i]);
         }
     }
 
@@ -1680,6 +1679,7 @@ public class Controller {
     private void RearrangeFromFile(String[] param)
     {
         boolean[] nearness = new boolean[asteroids.size()];
+        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         int cnt = 0;
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
@@ -1687,6 +1687,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             String in = param[cnt+1];
@@ -1711,12 +1712,9 @@ public class Controller {
             output.add(out);
         }
 
-        cnt = 0;
-        it = asteroids.entrySet().iterator();
-        while(it.hasNext())
+        for(int i = 0; i < tempasteroids.length; i++)
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
+            tempasteroids[i].SetSunnearness(nearness[i]);
         }
     }
 
@@ -1834,7 +1832,18 @@ public class Controller {
 
             if(t.GetAsteroid() != null)
                 out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
-            else
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+
+            if(!found)
                 out = "\tPlace: null";
             WriteOut(out);
         }
