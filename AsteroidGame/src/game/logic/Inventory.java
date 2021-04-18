@@ -107,7 +107,7 @@ public class Inventory {
             teleports.get(i).ExplodeWithPair();
             if(teleports.size() == tempsize-1)
                 i--;
-            else if(teleports.size() == tempsize-2)
+            else if(teleports.size() == tempsize-2 && teleports.size() > 1)
                 i-=2;
         }
     }
