@@ -30,18 +30,6 @@ public class Asteroidfield{
     }
 
     /**
-     * Megvaltoztatja, melyik aszteroida van napkozelben és melyik nem.
-     * Mindegyik aszteroida sunnear valtozoja veletlenszeruen kap egy true vagy false erteket.
-     */
-    public void Rearrange(){
-        Random random = new Random();
-        for (Asteroid asteroid: asteroids) {
-            asteroid.SetSunnearness(random.nextBoolean());
-        }
-
-    }
-
-    /**
      * visszatér a jatekban levo aszteroidak listajaval.
      * @return ArrayList<Asteroid> asteroids - aszteroidak listaja
      */

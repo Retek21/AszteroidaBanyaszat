@@ -1661,15 +1661,19 @@ public class Controller {
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
         WriteOut(out);
+        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
+        boolean[] nearness = new boolean[asteroids.size()];
+        int cnt = 0;
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             int b = new Random().nextInt(2);
             if (b == 1)
             {
-                ((Asteroid) pair.getValue()).SetSunnearness(true);
+                nearness[cnt++] = true;
                 out = out + "(true)";
                 System.out.print("(true)");
                 if (it.hasNext()) {
@@ -1679,7 +1683,7 @@ public class Controller {
             }
             else
             {
-                ((Asteroid) pair.getValue()).SetSunnearness(false);
+                nearness[cnt++] = false;
                 out = out + "(false)";
                 System.out.print("(false)");
                 if (it.hasNext()) {
@@ -1689,6 +1693,10 @@ public class Controller {
             }
             System.out.print("\n");
             output.add(out);
+        }
+        for(int i = 0; i < tempasteroids.length; i++)
+        {
+            tempasteroids[i].SetSunnearness(nearness[i]);
         }
     }
 
