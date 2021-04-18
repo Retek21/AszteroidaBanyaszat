@@ -2240,7 +2240,7 @@ public class Controller {
         {
             teleports.remove(id);
 
-            String out = "Teleport: " + id + " died.";
+            String out = "Teleport: " + id + " exploded.";
             WriteOut(out);
         }
     }
