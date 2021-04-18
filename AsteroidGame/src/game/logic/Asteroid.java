@@ -269,7 +269,7 @@ public class Asteroid implements Whereabout{
      * es meghivja a rajta tartozkodo entitaskora a die() metodust
      */
     public void OnFire(){
-        if(!empty && layers>0){
+        if(!empty || layers>0){
             for(int i=0;i< entities.size();i++)
                 entities.get(i).Die();
         }
