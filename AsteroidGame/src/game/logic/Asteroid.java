@@ -304,12 +304,12 @@ public class Asteroid implements Whereabout{
      * es kiveszi magat az aszteroidamezobol.
      */
     public void Explode(){
-        Controller.GetInstanceOf().AsteroidExplode(this);
         for(int i=0;i<entities.size();i++)
             entities.get(i).BlowUp();
         for(int i=0;i<neighbours.size();i++)
             NearbyExplosion(this);
         asteroidfield.RemoveAsteroid(this);
+        Controller.GetInstanceOf().AsteroidExplode(this);
     }
 
     /**
