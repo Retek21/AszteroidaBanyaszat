@@ -1326,7 +1326,7 @@ public class Controller {
     private void Craft(String id, String[] param)
     {
         String out = "Invalid parameters.";
-        if(param[1] == "robot")
+        if(param[1].equals("robot"))
         {
             boolean success = settlers.get(id).CraftRobot();
 
@@ -1338,7 +1338,7 @@ public class Controller {
                 output.remove(output.size()-1);
             }
         }
-        if(param[1] == "teleport")
+        if(param[1].equals("teleport"))
         {
             boolean success = settlers.get(id).CraftTeleport();
 
@@ -1783,7 +1783,7 @@ public class Controller {
                 if(SearchForAsteroid(neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
                 else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                    out = out + "Teleport: " + SearchForTeleport(neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 WriteOut(out);
