@@ -1431,8 +1431,12 @@ public class Controller {
                     out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = settlers.get(id).Move(w);
@@ -1463,8 +1467,12 @@ public class Controller {
                     out = "Robot: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = robots.get(id).Move(w);
@@ -1495,8 +1503,12 @@ public class Controller {
                     out = "Ufo: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = ufos.get(id).Move(w);
@@ -1527,8 +1539,12 @@ public class Controller {
                     out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = teleports.get(id).Move(w);
