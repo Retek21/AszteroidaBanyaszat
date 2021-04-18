@@ -178,6 +178,7 @@ public class Teleport implements Whereabout{
      */
     public boolean Move(Whereabout w){
         for(int i= 0; i<asteroid.GetNumberOfNeighbours();i++){
+            if (this.equals(w)) continue;
             if(w.equals(asteroid.GetNeighbours().get(i))){
                 Asteroid target = w.GetLandingPad();
                 if(target != null){
