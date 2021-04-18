@@ -1628,25 +1628,21 @@ public class Controller {
             tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
-            String in = scanner.nextLine();
+            String in = scanner.next();
             if (in.equals("true")) {
                 nearness[cnt++] = true;
                 out = out + "(true)";
-                System.out.print("(true)");
                 if (it.hasNext()) {
                     out = out + ",";
-                    System.out.print(",");
-                }
-            } else if (in.equals("false")) {
-                nearness[cnt++] = false;
-                out = out + "(false)";
-                System.out.print("(false)");
-                if (it.hasNext()) {
-                    out = out + ",";
-                    System.out.print(",");
                 }
             }
-            System.out.print("\n");
+            else if (in.equals("false")) {
+                nearness[cnt++] = false;
+                out = out + "(false)";
+                if (it.hasNext()) {
+                    out = out + ",";
+                }
+            }
             output.add(out);
         }
 
