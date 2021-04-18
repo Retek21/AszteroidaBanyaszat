@@ -97,9 +97,10 @@ public class Inventory {
      * A materials tomb elemeinek meghivódik a Disintegrate() metodusa, a teleports tomb elemeinek pedig az ExplodeWithPair() metodusa.
      */
     public void Clear() {
-        for(Material m : materials)
-            m.Disintegrate();
-        for(Teleport t : teleports)
-            t.ExplodeWithPair();
+
+        for(int i = 0; i < materials.size(); i++)
+            materials.get(i).Disintegrate();
+        for(int i = 0; i < teleports.size(); i++)
+            teleports.get(i).ExplodeWithPair();
     }
 }
