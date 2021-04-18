@@ -969,7 +969,7 @@ public class Controller {
                 if (manual) {
                     cmd = (in.get(incnt)).split(" ");
                     boolean iterating = true;
-                    while(iterating)
+                    while(iterating && in.size()-1 > incnt)
                     {
                         if(in.get(incnt+1).equals("true") || in.get(incnt+1).equals("false"))
                         {
@@ -1326,7 +1326,7 @@ public class Controller {
     private void Craft(String id, String[] param)
     {
         String out = "Invalid parameters.";
-        if(param[1] == "robot")
+        if(param[1].equals("robot"))
         {
             boolean success = settlers.get(id).CraftRobot();
 
@@ -1338,7 +1338,7 @@ public class Controller {
                 output.remove(output.size()-1);
             }
         }
-        if(param[1] == "teleport")
+        if(param[1].equals("teleport"))
         {
             boolean success = settlers.get(id).CraftTeleport();
 
@@ -1431,8 +1431,12 @@ public class Controller {
                     out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = settlers.get(id).Move(w);
@@ -1463,8 +1467,12 @@ public class Controller {
                     out = "Robot: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = robots.get(id).Move(w);
@@ -1495,8 +1503,12 @@ public class Controller {
                     out = "Ufo: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = ufos.get(id).Move(w);
@@ -1527,8 +1539,12 @@ public class Controller {
                     out = "Teleport: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
-                Asteroid a = teleports.get(where).GetPair().GetAsteroid();
-                String to = SearchForAsteroid(a);
+                Teleport pair = teleports.get(where).GetPair();
+                String to = "null";
+                if(pair != null) {
+                    Asteroid a = pair.GetAsteroid();
+                    to = SearchForAsteroid(a);
+                }
 
                 w = teleports.get(where);
                 boolean success = teleports.get(id).Move(w);
@@ -1603,11 +1619,13 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
         Iterator it = asteroids.entrySet().iterator();
         WriteOut(out);
+        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             String in = scanner.nextLine();
@@ -1632,12 +1650,9 @@ public class Controller {
             output.add(out);
         }
 
-        cnt = 0;
-        it = asteroids.entrySet().iterator();
-        while(it.hasNext())
+        for(int i = 0; i < tempasteroids.length; i++)
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
+            tempasteroids[i].SetSunnearness(nearness[i]);
         }
     }
 
@@ -1680,6 +1695,7 @@ public class Controller {
     private void RearrangeFromFile(String[] param)
     {
         boolean[] nearness = new boolean[asteroids.size()];
+        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         int cnt = 0;
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
@@ -1687,6 +1703,7 @@ public class Controller {
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
+            tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
             System.out.print(out);
             String in = param[cnt+1];
@@ -1711,12 +1728,9 @@ public class Controller {
             output.add(out);
         }
 
-        cnt = 0;
-        it = asteroids.entrySet().iterator();
-        while(it.hasNext())
+        for(int i = 0; i < tempasteroids.length; i++)
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            ((Asteroid)pair.getValue()).SetSunnearness(nearness[cnt++]);
+            tempasteroids[i].SetSunnearness(nearness[i]);
         }
     }
 
@@ -1783,7 +1797,7 @@ public class Controller {
                 if(SearchForAsteroid(neighbours.get(i)) != null)
                     out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
                 else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForTeleport(neighbours.get(i));
+                    out = out + "Teleport: " + SearchForTeleport(neighbours.get(i));
                 if(i+1 < neighbours.size())
                     out = out + ",";
                 WriteOut(out);
@@ -1834,7 +1848,18 @@ public class Controller {
 
             if(t.GetAsteroid() != null)
                 out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
-            else
+
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while(it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
+                }
+            }
+
+            if(!found)
                 out = "\tPlace: null";
             WriteOut(out);
         }
