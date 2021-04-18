@@ -271,7 +271,12 @@ public class Asteroid implements Whereabout{
     public void OnFire(){
         if(!empty || layers>0){
             for(int i=0;i< entities.size();i++)
+            {
+                int tempsize = entities.size();
                 entities.get(i).Die();
+                if(entities.size() == tempsize-1)
+                    i--;
+            }
         }
     }
 
@@ -305,9 +310,20 @@ public class Asteroid implements Whereabout{
      */
     public void Explode(){
         for(int i=0;i<entities.size();i++)
+        {
+            int tempsize = entities.size();
             entities.get(i).BlowUp();
+            if(entities.size() == tempsize-1)
+                i--;
+        }
+
         for(int i=0;i<neighbours.size();i++)
+        {
+            int tempsize = neighbours.size();
             neighbours.get(i).NearbyExplosion(this);
+            if(neighbours.size() == tempsize-1)
+                i--;
+        }
         asteroidfield.RemoveAsteroid(this);
         Controller.GetInstanceOf().AsteroidExplode(this);
     }
