@@ -32,12 +32,6 @@ public interface Whereabout {
      */
     public void OnFire();
 
-    /**
-     * Az interfeszt megvalosito objektum felveszi a
-     * szomszedai koze a parameterkent kapott objektumot.
-     * Ezutan kapcsolatba tud lepni vele.
-     * @param w: az uj szomszed,amit felvesz a nyilvantartasba.
-     * @return : a hozzaadas sikeressege
-     */
-    public boolean AddNeighbour(Whereabout w);
+
+    public Asteroid GetLandingPad();
 }
