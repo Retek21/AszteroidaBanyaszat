@@ -1777,9 +1777,9 @@ public class Controller {
 
             out = "\tCore: ";
             if(SearchForCoal(a.GetMaterial()) != null) out = out + "Coal: " + SearchForCoal(a.GetMaterial());
-            else if(SearchForIron(a.GetMaterial()) != null) out = out + "Iron: " + SearchForCoal(a.GetMaterial());
-            else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForCoal(a.GetMaterial());
-            else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForCoal(a.GetMaterial());
+            else if(SearchForIron(a.GetMaterial()) != null) out = out + "Iron: " + SearchForIron(a.GetMaterial());
+            else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForIce(a.GetMaterial());
+            else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForUranium(a.GetMaterial());
             else out = out + "null";
             WriteOut(out);
 
