@@ -307,7 +307,7 @@ public class Asteroid implements Whereabout{
         for(int i=0;i<entities.size();i++)
             entities.get(i).BlowUp();
         for(int i=0;i<neighbours.size();i++)
-            NearbyExplosion(this);
+            neighbours.get(i).NearbyExplosion(this);
         asteroidfield.RemoveAsteroid(this);
         Controller.GetInstanceOf().AsteroidExplode(this);
     }
