@@ -112,7 +112,7 @@ public class Inventory {
                 if(teleports.size() > 1)
                     i -= 2;
                 else
-                    i = 0;
+                    i = -1;
             }
         }
     }
