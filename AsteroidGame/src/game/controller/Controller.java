@@ -1787,7 +1787,7 @@ public class Controller {
             ArrayList<Whereabout> neighbours = a.GetNeighbours();
             out = "\tNeighbours:";
             WriteOut(out);
-            if(neighbours.size() < 1)
+            if(neighbours.isEmpty())
             {
                 out = "\t\tnull";
                 WriteOut(out);
