@@ -1,102 +1,105 @@
 package game.controller;
 
 import game.logic.*;
-
 import java.io.*;
 import java.util.*;
 
-
+/**
+ * Controller osztaly, mely a parancsertelmezesert,valamint azok feldolgozasaert felel
+ * es a felhasznaloval valo kommunikacioert.
+ */
 public class Controller {
 
 ///////////////////////////ATTRIBUTES////////////////////////////////////////
 
     /**
-     *
+     * Az aszteroidakat tarolo hashmap.
      */
     private LinkedHashMap<String, Asteroid> asteroids = new LinkedHashMap<String, Asteroid>();
 
     /**
-     *
+     * A telepeseket tarolo hashmap.
      */
     private LinkedHashMap<String, Settler> settlers = new LinkedHashMap<String, Settler>();
 
     /**
-     *
+     * A robotokat tarolo hashmap.
      */
     private LinkedHashMap<String, Robot> robots = new LinkedHashMap<String, Robot>();
 
     /**
-     *
+     * Az ufokat tarolo hashmap.
      */
     private LinkedHashMap<String, Ufo> ufos = new LinkedHashMap<String, Ufo>();
 
     /**
-     *
+     * A teleportokat tarolo hashmap.
      */
     private LinkedHashMap<String, Teleport> teleports = new LinkedHashMap<String, Teleport>();
 
     /**
-     *
+     * A vasakat tarolo hashmap.
      */
     private LinkedHashMap<String, Iron> iron = new LinkedHashMap<String, Iron>();
 
     /**
-     *
+     * A szeneket tarolo hashmap.
      */
     private LinkedHashMap<String, Coal> coal = new LinkedHashMap<String, Coal>();
 
     /**
-     *
+     * A vasakat tarolo hashmap.
      */
     private LinkedHashMap<String, Ice> ice = new LinkedHashMap<String, Ice>();
 
     /**
-     *
+     * Az uraniumot tarolo hashmap.
      */
     private LinkedHashMap<String, Uranium> uran = new LinkedHashMap<String, Uranium>();
 
     /**
-     *
+     * Az aszteroidaov, ami az aszteroidakat tartalmazza.
      */
     private Asteroidfield asteroidfield;
 
     /**
-     *
+     * A jatekban szereplo nap.
      */
     private Sun sun ;
 
     /**
-     *
+     * A jatek veget jelolo bool valtozo. Alaperteke hamis.
      */
     private boolean end = false;
 
     /**
-     *
+     * A gyozelmet jelolo bool valtozo. Alaperteke hamis.
      */
     private boolean victory = false;
 
     /**
-     *
+     * Az inicializalo fazist jelolo bool valtozo.
      */
     private boolean initializing;
 
     /**
-     *
+     * A leallasi felteteleke figyelo bool valtozo. Ha igaz,
+     * figyeli az egyes objektumok allapotat, es a jatek veget/gyozelmet allithatja be.
      */
     private boolean checkconditions;
 
     /**
-     *
+     * Manualis tesztelest beallito valtozo.
      */
     private boolean manual;
 
     /**
-     *
+     * A kimeneti stringeket tarolo tomb.
      */
     private ArrayList<String> output = new ArrayList<String>();
 
     /**
-     *
+     * A kontroller peldanya, singleton osztaly miatt.
      */
     private static Controller instance;
 
@@ -105,8 +108,8 @@ public class Controller {
 ////////////////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @return
+     * A singleton osztaly lekerdezeseert felelos metodus.
+     * @return visszater az osztaly peldanyaval.
      */
     public static Controller GetInstanceOf()
     {
@@ -116,7 +119,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Ures konstruktor.
      */
     private Controller() {}
 
@@ -125,14 +128,17 @@ public class Controller {
 ////////////////////////////////////////////////////////SEGED METHODS//////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param out
+     * Kiiratasert feleos metodus. A kimeneti tombbe irja a kapott parametert.
+     * @param out a kirando string.
      */
     private void WriteOut(String out) {
         System.out.println(out);
         output.add(out);
     }
 
+    /**
+     * Egy output text filet general.
+     */
     private void GenerateOutputFile()
     {
         try
@@ -151,6 +157,14 @@ public class Controller {
 
 ////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * az asteroids
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param a a keresendo asteroid.
+     * @return a parameter kulcsa.
+     */
     private String SearchForAsteroid(Whereabout a) {
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
@@ -163,6 +177,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * a teleports
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param t a keresendo wehreabout.
+     * @return a parameter kulcsa.
+     */
     private String SearchForTeleport(Whereabout t) {
         Iterator it = teleports.entrySet().iterator();
         while(it.hasNext())
@@ -175,6 +197,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * a settlers
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param s a keresendo telepes.
+     * @return a parameter kulcsa.
+     */
     private String SearchForSettler(Entity s) {
         Iterator it = settlers.entrySet().iterator();
         while(it.hasNext())
@@ -187,6 +217,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * a robots
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param r a keresendo robot.
+     * @return a parameter kulcsa.
+     */
     private String SearchForRobot(Entity r) {
         Iterator it = robots.entrySet().iterator();
         while(it.hasNext())
@@ -199,6 +237,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * az ufos
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param u a keresendo ufo.
+     * @return a parameter kulcsa.
+     */
     private String SearchForUfo(Entity u) {
         Iterator it = ufos.entrySet().iterator();
         while(it.hasNext())
@@ -211,6 +257,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * a coal
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param m a keresendo szen.
+     * @return a parameter kulcsa.
+     */
     private String SearchForCoal(Material m) {
         Iterator it = coal.entrySet().iterator();
         while(it.hasNext())
@@ -223,6 +277,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * az ice
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param m a keresendo jeg.
+     * @return a parameter kulcsa.
+     */
     private String SearchForIce(Material m) {
         Iterator it = ice.entrySet().iterator();
         while(it.hasNext())
@@ -235,6 +297,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * az iron
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param m a keresendo vas.
+     * @return a parameter kulcsa.
+     */
     private String SearchForIron(Material m) {
         Iterator it = iron.entrySet().iterator();
         while(it.hasNext())
@@ -247,6 +317,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * au uran
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param m a keresendo uranium.
+     * @return a parameter kulcsa.
+     */
     private String SearchForUranium(Material m) {
         Iterator it = uran.entrySet().iterator();
         while(it.hasNext())
@@ -259,6 +337,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot
+     * az asteroids as a teleports
+     * mapben, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param w a keresendo whereabout.
+     * @return a parameter kulcsa.
+     */
     private String SearchForWhereabout(Whereabout w) {
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
