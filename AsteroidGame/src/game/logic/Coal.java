@@ -3,7 +3,7 @@ package game.logic;
 import game.controller.Controller;
 
 /**
- * Coal nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
+ * Coal nyersanyag, objektumok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Coal extends Material{

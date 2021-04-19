@@ -40,7 +40,7 @@ public class Ufo extends Entity {
     /**
      * Metodus, mely az ufo halalkor hivodik.
      * Az os felulirasa. Az os metodusat meghivja, majd a
-     * controller Controller::UfoDie(Ufo u) metodusat is (mely eltavolítja
+     * controller Controller::UfoDie(Ufo u) metodusat is (mely eltavolitja
      * a tovabbi fazisokbol).
      */
     @Override

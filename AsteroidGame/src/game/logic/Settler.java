@@ -40,7 +40,7 @@ public class Settler extends Entity{
 
     /**
      * A telepes banyaszik az aszteroidan. Ha az inventory-ja tele van, vagy ures aszteroidat
-     * probal banyaszni, a cselekves siekrtelen, nem tortenik semmi. Egyeb esetben a nyersanyag
+     * probal banyaszni, a cselekves sikertelen, nem tortenik semmi. Egyeb esetben a nyersanyag
      * kikerul az aszteroidabol és addolodik az inventory-ba. Ekkor visszateresi erteke igaz,
      * egyebkent hamis.
      * @return a metodus sikeressege

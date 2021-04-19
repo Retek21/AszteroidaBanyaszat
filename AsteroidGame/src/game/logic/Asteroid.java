@@ -4,7 +4,7 @@ import game.controller.Controller;
 import java.util.ArrayList;
 
 /**
- * Aszteroid osztaly, megvalositja a Whereabout interfeszt.
+ * Aszteroida osztaly, megvalositja a Whereabout interfeszt.
  * Feladata a rajta torteno interakciok karbantartasa.
  * A jatekosok az aszteroidakon jatszak a jatekot.
  */
@@ -102,7 +102,7 @@ public class Asteroid implements Whereabout{
 
     /**
      * beallitja az aszteroida napkozelseget a kapott parameterre,
-     * majd megnezi, leellenorzi. hogy tortenik e interakcio
+     * majd megnezi, leellenorzi, hogy tortenik e interakcio
      * @param sunnearness: napkozelseg
      */
     public void SetSunnearness(boolean sunnearness) {
@@ -200,7 +200,7 @@ public class Asteroid implements Whereabout{
     /**
      * Banyaszaskor a nyersanyag kikerul az aszteroida magjabol.
      * Ha ures az aszteroida, akkor nullal ter vissza,
-     * kulonben visszaadja a kibanyaszott nyersanyagot
+     * kulonben visszaadja a kibanyaszott nyersanyagot.
      * @return: kibanyaszott nyersanyag
      */
     public Material RemoveMaterial(){
@@ -235,7 +235,9 @@ public class Asteroid implements Whereabout{
     }
 
     /**
-     * furas soran az entitas eggyel csokkenti az aszteroida retegeinek a szamat
+     * furas soran az entitas eggyel csokkenti az aszteroida retegeinek a szamat.
+     * ha a telepes a furas soran eltavolitotta az utolso reteget, meghivodik az
+     * interakcio ellenorzes fuggvenye
      * @return: a furas sikeressege
      */
     public boolean ThinLayer(){
@@ -297,7 +299,7 @@ public class Asteroid implements Whereabout{
 
     /**
      * Az aszteroida a parameterul kapott whereabout-ot eltavolitja a szomszedai kozul.
-     * Ha az eltavolitas utan a tomb ures, akkor felrobbantja magar.
+     * Ha az eltavolitas utan a tomb ures, akkor felrobbantja magat.
      * @param explodedAsteroid: a felrobbano aszteroida
      */
     public void NearbyExplosion(Asteroid explodedAsteroid){
@@ -310,7 +312,7 @@ public class Asteroid implements Whereabout{
      * Az aszteroida felrobbanasakor hivodik.
      * Hatasara az osszes rajta tartozkodo entitasra meghivja a BlowUp() metodust,
      * majd eltavolitja magat a szomszedainak a nyilvantartasabol,
-     * es kiveszi magat az aszteroidamezobol.
+     * es kiveszi magat az aszteroidamezobol, valamint a controller nyilvantartasabol.
      */
     public void Explode(){
         for(int i=0;i<entities.size();i++)
@@ -344,7 +346,7 @@ public class Asteroid implements Whereabout{
 
     /**
      * visszaadja a parameterul kapott szamu aszteroidat
-     * @param i: a kert whereabout szama
+     * @param i: a kert whereabout sorszama
      * @return: a whereabout
      */
     public Whereabout GetNeighbour(int i){

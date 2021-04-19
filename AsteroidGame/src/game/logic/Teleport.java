@@ -25,7 +25,7 @@ public class Teleport implements Whereabout{
     private Teleport pair;
 
     /**
-     * logikai ertek, ami azt jelzi, hogy a kapu aktív-e,
+     * logikai ertek, ami azt jelzi, hogy a kapu aktiv-e,
      * azaz a parjat mar lehelyeztek-e
      */
     private boolean pairready;

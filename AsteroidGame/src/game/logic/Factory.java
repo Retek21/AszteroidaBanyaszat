@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class Factory {
 
     /**
-     * Eldonti, hogy a parameterkent kapott materials tomb tartalmaza-e
+     * Eldonti, hogy a parameterkent kapott materials tomb tartalmazza-e
      * a parameterkent kapott mold tombben talalhato, megfelelo tipusu nyersanyagokbol megfelelo mennyiseget.
-     * @param materials - Nyersanygyujtemeny, amelyrol ki akarjuk deriteni, hogy tartalmaz-e bizonyos tipusu nyersanyagokbol megfelelo mennyiseget.
+     * @param materials - Nyersanyagyujtemeny, amelyrol ki akarjuk deriteni, hogy tartalmaz-e bizonyos tipusu nyersanyagokbol megfelelo mennyiseget.
      * @param mold  - Nyersanyaggyujtemeny, amely mintakent szolgal a tartalmazaskerdes megvalaszolasahoz.
      * @return - materials tomb tartalmazza-e a megfelelo nyersanyagokat.
      */
