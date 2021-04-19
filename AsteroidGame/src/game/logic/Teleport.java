@@ -161,18 +161,13 @@ public class Teleport implements Whereabout{
         gonecrazy = true;
     }
 
-    /**
-     * Ha a teleport parja le van helyezve, elkeri a parjatol annak gazdaaszteroidajat,
-     * es erre hivja meg a Deploy metodust.
-     * @param w: az uj szomszed,amit felvesz a nyilvantartasba.a
-     * @return: a hozzaadas sikeressege
-     */
-    public boolean AddNeighbour(Whereabout w){
+
+    public Asteroid GetLandingPad(){
         if(pairready){
             Asteroid target = pair.GetAsteroid();
-            return Deploy(target);
+            return target;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -183,12 +178,15 @@ public class Teleport implements Whereabout{
      */
     public boolean Move(Whereabout w){
         for(int i= 0; i<asteroid.GetNumberOfNeighbours();i++){
+            if (this.equals(asteroid.GetNeighbours().get(i))) continue;
             if(w.equals(asteroid.GetNeighbours().get(i))){
-                boolean add = w.AddNeighbour(this);
-                if(add){
+                Asteroid target = w.GetLandingPad();
+                if(target != null){
                     asteroid.RemoveNeighbour(this);
+                    Deploy(target);
                     return true;
                 }
+                else return false;
             }
         }
         return false;

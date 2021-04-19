@@ -108,7 +108,12 @@ public class Inventory {
             if(teleports.size() == tempsize-1)
                 i--;
             else if(teleports.size() == tempsize-2)
-                i-=2;
+            {
+                if(teleports.size() > 1)
+                    i -= 2;
+                else
+                    i = -1;
+            }
         }
     }
 }
