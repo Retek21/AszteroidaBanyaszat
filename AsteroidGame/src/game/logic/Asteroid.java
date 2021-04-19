@@ -332,6 +332,12 @@ public class Asteroid implements Whereabout{
         Controller.GetInstanceOf().AsteroidExplode(this);
     }
 
+    /**
+     * Visszaadja azt az aszteroidat, amely egy az aszteroidara lepo
+     * objektumnak celaszteroidaja lesz.
+     * Aszteroida eseteben ez onmaga.
+     * @return - Ralepo objektum celaszteroidaja.
+     */
     public Asteroid GetLandingPad() {
         return this;
     }

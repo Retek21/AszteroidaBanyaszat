@@ -32,6 +32,10 @@ public interface Whereabout {
      */
     public void OnFire();
 
-
+    /**
+     * Visszaadja azt az aszteroidat, amely a whereabout-ra lepo
+     * objektumnak celaszteroidaja lesz.
+     * @return - Ralepo objektum celaszteroidaja.
+     */
     public Asteroid GetLandingPad();
 }

@@ -1355,6 +1355,7 @@ public class Controller {
 
     /**
      * A megadott telepest furatja a metodus.
+     * A meghatarozott kimenetet megjeleniti.
      * @param id - A telepest azonosito id
      */
     private void SettlerDrill(String id)
@@ -1378,7 +1379,8 @@ public class Controller {
 
     /**
      * A robotot furatja a metodus
-     * @param id
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A robotot azonosito id
      */
     private void RobotDrill(String id) {
         String out = "Invalid parametes.";
@@ -1401,8 +1403,9 @@ public class Controller {
 ////////////////MINE///////////////////////////////
 
     /**
-     *
-     * @param id
+     * A telepest banyaszatja a metodus.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A telepest azonosito id
      */
     private void SettlerMine(String id)
     {
@@ -1424,6 +1427,11 @@ public class Controller {
         WriteOut(out);
     }
 
+    /**
+     * A ufot banyaszatja a metodus.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - Az ufot azonosito id
+     */
     private void UfoMine(String id) {
         String out = "Invalid parameters.";
 
@@ -1446,9 +1454,12 @@ public class Controller {
 ////////////////////CRAFT////////////////////////////
 
     /**
-     *
-     * @param id
-     * @param param
+     * A telepes barkacsoltatasat vegzo metodus.
+     * A kapott parancsparameterek alapjan donti el,
+     * hogy teleportot vagy robotot kell kesziteni.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A telepest azonosito id
+     * @param param - A kapott parancsparameterek
      */
     private void Craft(String id, String[] param)
     {
@@ -1483,9 +1494,12 @@ public class Controller {
 //////////////////////PLACE///////////////////////////////
 
     /**
-     *
-     * @param id
-     * @param settlerid
+     * A telepes lehelyezo cselekveset vegzo metodusaik.
+     * A kapott id alapjan megkeresi, hogy melyik map-ben
+     * talahato, es ez alapjan valasztja ki, melyik metodust hivja.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A lehelyezendo objektum azonositoja
+     * @param settlerid - A telepest azonosito id
      */
     private void Place(String id, String settlerid)
     {
@@ -1536,9 +1550,10 @@ public class Controller {
 ///////////////////MOVE//////////////////////////
 
     /**
-     *
-     * @param id
-     * @param where
+     * A telepest lepteti a megadott aszteroidara/teleporta.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A telepest azonosito id
+     * @param where - A mozgas celjat azonosito id
      */
     private void SettlerMove(String id, String where) {
         String out = "Invalid parameters.";
@@ -1576,6 +1591,12 @@ public class Controller {
         WriteOut(out);
     }
 
+    /**
+     * A robotot lepteti a megadott aszteroidara/teleportra.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - A robtot azonosito id
+     * @param where - A mozgas celjat azonosito id
+     */
     private void RobotMove(String id, String where) {
         String out = "Invalid parameters.";
 
@@ -1612,6 +1633,12 @@ public class Controller {
         WriteOut(out);
     }
 
+    /**
+     * Az ufot lepteti a megadott aszteroidara/teleportra.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - Az ufot azonosito id
+     * @param where - A mozgas celjat azonosito id
+     */
     private void UfoMove(String id, String where) {
         String out = "Invalid parameters.";
 
@@ -1648,6 +1675,12 @@ public class Controller {
         WriteOut(out);
     }
 
+    /**
+     * A teleportot lepteti a megadott aszteroidara/teleportra.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param id - Az teleportot azonosito id
+     * @param where - A mozgas celjat azonosito id
+     */
     private void TeleportMove(String id, String where) {
         String out = "Invalid parameters.";
 
@@ -1687,8 +1720,9 @@ public class Controller {
 ///////////////////SUNSTORM/////////////////////////////
 
     /**
-     *
-     * @param asteroidid
+     * A Sun osztaly Sunstorm metodusat hivja meg a parameterul kapott azonositoju aszteroidara.
+     * A meghatarozott kimenetet megjeleniti
+     * @param asteroidid - A napvihar celjakent szolgalo aszteroida azonositoja
      */
     private void SunStorm(String asteroidid)
     {
@@ -1718,7 +1752,8 @@ public class Controller {
     }
 
     /**
-     *
+     * A metodus kivalaszt veletlenszeruen egy aszteroidat, majd
+     * erre az aszteroidra hivja meg az korabbi SunStorm(String) metodust.
      */
     private void SunStorm()
     {
@@ -1738,7 +1773,10 @@ public class Controller {
 ////////////////REARRANGE////////////////
 
     /**
-     *
+     * A metodus ujrarendezi az aszteroidak napkozeliseget felhasznaloi input alapjan.
+     * Minden aszteroidahoz beolvassa a felhasznalotol, hogy true/false erteket adjon
+     * a napkozelisegenek.
+     * A meghatarozott kimenetet megjeleniti.
      */
     private void RearrangeManually()
     {
@@ -1779,6 +1817,10 @@ public class Controller {
         }
     }
 
+    /**
+     * A metodus ujrarendezi az aszteroidak napkozeliseget veletlenszeruen.
+     * A meghatarozott kimenetet megjeleniti.
+     */
     private void Rearrange()
     {
         String out = "Sunnearness:";
@@ -1823,6 +1865,12 @@ public class Controller {
         }
     }
 
+    /**
+     * A metodus ujrarendezi az aszteroidak napkozeliseget a kapott parancsparametereknek megfeleloen.
+     * A meghatarozott kimenetet megjeleniti.
+     * @param param - Parancsparameterek. True/false stringeket tartalmazo tomb, ennek megfeleloen
+     *                lesznek beallitva az aszteroida napkozelsegek.
+     */
     private void RearrangeFromFile(String[] param)
     {
         boolean[] nearness = new boolean[asteroids.size()];
@@ -1868,7 +1916,8 @@ public class Controller {
 ///////////////STEP//////////////////////////
 
     /**
-     *
+     * A metodus korok atugrasakor hivodik meg.
+     * Ennek megfeleloen nem csinal semmit, csak a megfelelo kimenetet megjelenit.
      */
     private void Step() {
         String out = "Phase has been stepped.";
@@ -1878,8 +1927,11 @@ public class Controller {
 ///////////////ENDGAME//////////////////////
 
     /**
-     *
-     * @param v
+     * A jatek befejezeset vegzo metodus.
+     * Beallitja victory flaget a gyozelemnek megfeleloen.
+     * Majd vegig iteral valamennyi mapen, es a bennuk talalhato elemeknek
+     * az adatait kiirja a kimenetre a meghatarozott modon.
+     * @param v - Gyozelemnek megfelelp boolean ertek.
      */
     private void Endgame(boolean v)
     {
