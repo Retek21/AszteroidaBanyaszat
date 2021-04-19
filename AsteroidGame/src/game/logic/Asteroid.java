@@ -330,6 +330,8 @@ public class Asteroid implements Whereabout{
             if(neighbours.size() == tempsize-1)
                 i--;
         }
+        if (material != null)
+            material.Disintegrate();
         asteroidfield.RemoveAsteroid(this);
         Controller.GetInstanceOf().AsteroidExplode(this);
     }
