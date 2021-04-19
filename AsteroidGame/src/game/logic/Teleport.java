@@ -58,6 +58,10 @@ public class Teleport implements Whereabout{
         inventory = i;
     }
 
+    /**
+     * Visszaadja a teleport párját.
+     * @return - A teleport párja
+     */
     public Teleport GetPair() {
         return pair;
     }
@@ -162,6 +166,13 @@ public class Teleport implements Whereabout{
     }
 
 
+    /**
+     * Visszaadja azt az aszteroidat, amely egy a teleportra lepo
+     * objektumnak celaszteroidaja lesz.
+     * Teleport eseteben, ez parjanak a gazdaszteroidaja.
+     * Ha nincs lehelyezve meg a parja, a metodus null-lal ter vissza.
+     * @return - Ralepo objektum celaszteroidaja.
+     */
     public Asteroid GetLandingPad(){
         if(pairready){
             Asteroid target = pair.GetAsteroid();
