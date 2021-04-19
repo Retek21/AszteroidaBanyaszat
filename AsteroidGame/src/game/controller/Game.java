@@ -27,17 +27,17 @@ public class Game {
                 Start(cmd);
                 break;
             case "exit":
-                Exit();
                 break;
             default:
-                Exit();
                 break;
         }
     }
 
     /**
-     *
-     * @param param
+     * A megfeleo parancsparameterekkel meghivja a jatek ket
+     * fazisat lebonyolito metodust. Eloszor a StartInitPhase-t, majd
+     * a StartGamePhase-t.
+     * @param param - Parancsparameterek, amelyek kellenek a jatek megfelelo inditasahoz
      */
     public void Start(String[] param)
     {
@@ -70,9 +70,4 @@ public class Game {
         if(c == -1)    controller.StartGamePhase(m,l);
         else           controller.StartGamePhaseFromFile(param[c], m, l);
     }
-
-    /**
-     *
-     */
-    public void Exit(){}
 }
