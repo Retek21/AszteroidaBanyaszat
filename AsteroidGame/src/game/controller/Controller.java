@@ -120,6 +120,10 @@ public class Controller {
      */
     private Controller() {}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////SEGED METHODS//////////////////////////////////////////////////////////////
+
     /**
      *
      * @param out
@@ -298,7 +302,9 @@ public class Controller {
 ////////////////////////READ INPUT//////////////////////
 
     /**
-     *
+     * A program palyaepito fazisanak levezenyleset kezelo metodus.
+     * Egy ciklusban bekeri a felhasznalotol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
+     * metodust.
      */
     public void StartInitPhase()
     {
@@ -354,8 +360,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param buildinput
+     * A program palyaepito fazisanak levezenyleset kezelo metodus.
+     * Egy ciklusban beolvassa a parameterkent kapott fajlbol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
+     * metodust.
+     * @param buildinput Annak a fajlnak az elerese, amelybol be kell olvasni a parancsokat.
      */
     public void StartInitPhaseFromFile(String buildinput)
     {
@@ -728,9 +736,14 @@ public class Controller {
 
 ////////////////////////READ INPUT//////////////////////
     /**
-     *
-     * @param man
-     * @param conditions
+     * A program jatekfazisat kezelo metodus.
+     * Vegigiteral a jatek szereploinek kulonbozo csoportjain, a csoportokon belul pedig az egyes szereplokon.
+     * A szereplok koreiben parancsot olvas be a felhasznalotol, majd meghivja a megfelelo metodust.
+     * Egyes szereplocsoportok eseten csak akkor olvas be, ha manual flag jelzett be van allitva.
+     * @param man - A boolean valtozo, amely megmondja, hogy a jatek a telepeseken kivul, a tobbi
+     *              szereplot automatikusan leptesse, vagy felhasznaloi inputra varjon.
+     * @param conditions - A boolean valtozo, amely megmondja, hogy a program figyelje-e
+     *                     az esetleges leallasi felteleket (gyozelem, vereseg) vagy ignoralja oket.
      */
     public void StartGamePhase(boolean man, boolean conditions)
     {
@@ -851,10 +864,15 @@ public class Controller {
     }
 
     /**
-     *
-     * @param buildinput
-     * @param man
-     * @param conditions
+     * A program jatekfazisat kezelo metodus.
+     * Vegigiteral a jatek szereploinek kulonbozo csoportjain, a csoportokon belul pedig az egyes szereplokon.
+     * A szereplok koreiben parancsot olvas be a parameterkent kapott fajlbol, majd meghivja a megfelelo metodust.
+     * Egyes szereplocsoportok eseten csak akkor olvas be, ha manual flag jelzett be van allitva.
+     * @param buildinput - Annak a fajlnak az elerese, amelybol be kell olvasni a parancsokat.
+     * @param man - A boolean valtozo, amely megmondja, hogy a jatek a telepeseken kivul, a tobbi
+     *              szereplot automatikusan leptesse, vagy felhasznaloi inputra varjon.
+     * @param conditions - A boolean valtozo, amely megmondja, hogy a program figyelje-e
+     *                     az esetleges leallasi felteleket (gyozelem, vereseg) vagy ignoralja oket.
      */
     public void StartGamePhaseFromFile(String buildinput, boolean man, boolean conditions)
     {
@@ -1163,8 +1181,10 @@ public class Controller {
 
 ////////////////DOPHASE///////////////
     /**
-     *
-     * @param id
+     * A metodus egy robot koret kezeli le.
+     * Ha van meg reteg a robot aszteroidajan, furatja azt, ha nincs,
+     * akkor tovabblepteti az egyik szomszedos aszteroidara.
+     * @param id - A robotot azonosito id
      */
     private void RobotDoPhase(String id)
     {
@@ -1186,8 +1206,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param id
+     * A metodus egy ufo koret kezeli le.
+     * Ha van meg reteg az aszteroidan vagy ures, tovabblepteti egy szomszedos aszteroidara,
+     * egyeb esetben banyasztatja
+     * @param id - Az ufot azonosito id
      */
     private void UfoDoPhase(String id)
     {
@@ -1208,8 +1230,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param id
+     * A metodus egy teleport koret kezeli le,
+     * A teleport veletlenszeruen atlep egy szomszedos aszteroidara.
+     * @param id - A teleportot azonosito id
      */
     private void TeleportDoPhase(String id)
     {
@@ -1231,8 +1254,8 @@ public class Controller {
 ////////////////DRILL//////////////////////
 
     /**
-     *
-     * @param id
+     * A megadott telepest furatja a metodus.
+     * @param id - A telepest azonosito id
      */
     private void SettlerDrill(String id)
     {
@@ -1253,6 +1276,10 @@ public class Controller {
         WriteOut(out);
     }
 
+    /**
+     * A robotot furatja a metodus
+     * @param id
+     */
     private void RobotDrill(String id) {
         String out = "Invalid parametes.";
 
