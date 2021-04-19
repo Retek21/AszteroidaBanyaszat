@@ -363,6 +363,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Metodus, mely megekeresi a parameterul adott objektumot a
+     * SearchForIron(m),SearchForIce(m),SearchForCoal(m),SearchForUranium(m)
+     * metodusokkal, es ha megtalalja azt, a kulcsat visszaadja.
+     * Egyebkent null-al ter vissza.
+     * @param m a keresendo nyersanyag.
+     * @return a parameter kulcsa.
+     */
     private String SearchForMaterial(Material m) {
         String id;
 
@@ -1918,6 +1926,8 @@ public class Controller {
     /**
      * A metodus korok atugrasakor hivodik meg.
      * Ennek megfeleloen nem csinal semmit, csak a megfelelo kimenetet megjelenit.
+
+     * What are you doing step-command?
      */
     private void Step() {
         String out = "Phase has been stepped.";
@@ -2314,8 +2324,10 @@ public class Controller {
 ///////////////////////////EVENTS THAT CAN OCCUR DURING THE GAME///////////////////////////
 
     /**
-     *
-     * @param r
+     * Metodus, mely a parameterul kapott robotnak general egy egyedi azonositot,
+     * es felveszi azt a robots mapbe. A output kimeneti listaba beleirja a muvelet sikeresseget.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param r a robot referenciaja
      */
     public void AddRobot(Robot r)
     {
@@ -2333,9 +2345,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param t1
-     * @param t2
+     * Metodus, mely a parameterul kapott teleportoknak general egy-egy egyedi azonositot,
+     * es felveszi azokat a teleports mapbe. A output kimeneti listaba beleirja a muvelet sikeresseget.
+     * @param t1 egyik teleport referenciaja
+     * @param t2 masik teleport referenciaja
      */
     public void AddTeleport(Teleport t1, Teleport t2)
     {
@@ -2354,8 +2367,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param s
+     * Metodus, mely telepes halalakor eltavolitja azt a settlers mapbol.
+     * Az outputba irja a telepes halalat.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param s telepes referenciaja
      */
     public void SettlerDie(Settler s)
     {
@@ -2369,8 +2384,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param r
+     * Metodus, mely robot halalakor eltavolitja azt a robots mapbol.
+     * Az outputba irja a robot halalat.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param r robot referenciaja
      */
     public void RobotDie(Robot r)
     {
@@ -2384,8 +2401,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param u
+     * Metodus, mely ufo halalakor eltavolitja azt a ufos mapbol.
+     * Az outputba irja az ufo halalat.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param u ufo referenciaja
      */
     public void UfoDie(Ufo u)
     {
@@ -2399,8 +2418,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a
+     * Metodus, mely az aszteroida felrobbanasakor eltavolitja azt az asteroids mapbol.
+     * Az outputba irja az aszteroida felrobbanasat.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param a aszteroida referenciaja
      */
     public void AsteroidExplode(Asteroid a)
     {
@@ -2415,8 +2436,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param t
+     * Metodus, mely a teleport felrobbanasakor eltavolitja azt az teleports mapbol.
+     * Az outputba irja az teleport felrobbanasat.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param t teleport referenciaja
      */
     public void TeleportExplode(Teleport t)
     {
@@ -2431,8 +2454,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param c
+     * Metodus, mely a szen megsemmisulesekor eltavolitja azt az coal mapbol.
+     * Az outputba irja az szen megsemmisuleset.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param c szen referenciaja
      */
     public void CoalDisintegrate(Coal c)
     {
@@ -2447,8 +2472,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param i
+     * Metodus, mely a jeg megsemmisulesekor eltavolitja azt az ice mapbol.
+     * Az outputba irja az jeg megsemmisuleset.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param i jeg referenciaja
      */
     public void IceDisintegrate(Ice i)
     {
@@ -2463,8 +2490,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param i
+     * Metodus, mely a vas megsemmisulesekor eltavolitja azt az iron mapbol.
+     * Az outputba irja az vas megsemmisuleset.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param i szen referenciaja
      */
     public void IronDisintegrate(Iron i)
     {
@@ -2479,8 +2508,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param u
+     * Metodus, mely az uranium megsemmisulesekor eltavolitja azt az uranium mapbol.
+     * Az outputba irja az uranium megsemmisuleset.
+     * A konzolon ertesiti a felhasznalot a muveletrol.
+     * @param u szen referenciaja
      */
     public void UraniumDisintegrate(Uranium u)
     {
