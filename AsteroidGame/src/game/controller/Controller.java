@@ -764,8 +764,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Beallatja hogy a megadott nyersanyag korabban hanyszor lepett interakcioba a nappal.
+     *  Ezutan kiirja vegbement valtozasokat.
+     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot, a
+     *             nyersanyag azonositojat, es az erteket
      */
     private void SetInteractionCount(String[] param)
     {
@@ -795,15 +797,18 @@ public class Controller {
     }
 
     /**
-     *
+     * Az inicializacio fazis veget jelzi.
+     * Az initializing bool valtozot hamissa valtoztatja, majd visszater.
      */
     private void Done() {
         initializing = false;
     }
 
     /**
-     *
-     * @param param
+     * Hozzaadja a megadott entitast a megadott aszteroidahoz.
+     *  Ezutan kiirja vegbement valtozasokat.
+     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot, az
+     *             entitas es az aszteroida azonositoit
      */
     private void AddEntity(String[] param)
     {

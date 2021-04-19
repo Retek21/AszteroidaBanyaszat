@@ -3,7 +3,7 @@ package game.logic;
 import java.util.ArrayList;
 
 /**
- * Minden Settler objektum rendelkezik egy inventory-val. Az osztaly felelossége,
+ * Minden Settler objektum rendelkezik egy inventory-val. Az osztaly felelossege,
  * hogy az adott telepesnel levo objektumokat tarolja, rendszerezze.
  */
 public class Inventory {
@@ -59,7 +59,7 @@ public class Inventory {
     }
 
     /**
-     * Visszaadja Visszater a materials kollekcioval.
+     * Visszater a materials kollekcioval.
      * @return - Az inventory-ban tarolt nyersanyagok tombje
      */
     public ArrayList<Material> GetMaterials() {
@@ -67,7 +67,7 @@ public class Inventory {
     }
 
     /**
-     * Visszaadja Visszater a teleports kollekcioval.
+     * Visszater a teleports kollekcioval.
      * @return - Az inventory-ban tarolt teleportok tombje
      */
     public ArrayList<Teleport> GetTeleports() {

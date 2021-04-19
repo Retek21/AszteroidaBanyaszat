@@ -3,7 +3,7 @@ package game.logic;
 import game.controller.Controller;
 
 /**
- * Ice nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
+ * Ice nyersanyag, objektumok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Ice extends Material{

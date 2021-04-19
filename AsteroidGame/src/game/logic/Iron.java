@@ -3,7 +3,7 @@ package game.logic;
 import game.controller.Controller;
 
 /**
- * Iron nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.\
+ * Iron nyersanyag, objektumok(robot, teleport, bazis) epitesehez szukseges.
  * @author torok
  */
 public class Iron extends Material{

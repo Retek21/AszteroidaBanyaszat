@@ -4,13 +4,14 @@ import java.util.Random;
 
 /**
  * Asteroidfield class
- * Az aszteroidamező az aszteroidák nyilvántartásáért felelős. Szabályozza a napközelséget, tárolja az aszteroidákat.
+ * Az aszteroidamezo az aszteroidak nyilvantartasaert felelos.
+ * Szabalyozza a napkozelseget, tarolja az aszteroidakat.
  * @author torok
  */
 public class Asteroidfield{
 
     /**
-     * Aszteroidák listaja
+     * Aszteroidak listaja
      */
     ArrayList<Asteroid> asteroids;
 
@@ -30,7 +31,7 @@ public class Asteroidfield{
     }
 
     /**
-     * visszatér a jatekban levo aszteroidak listajaval.
+     * visszater a jatekban levo aszteroidak listajaval.
      * @return ArrayList<Asteroid> asteroids - aszteroidak listaja
      */
     public ArrayList<Asteroid> GetAsteroids(){

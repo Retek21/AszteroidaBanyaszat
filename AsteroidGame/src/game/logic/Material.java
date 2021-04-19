@@ -44,7 +44,7 @@ public abstract class Material {
 
     /**
      * Beallitja az interactCount erteket a parameterkent kapott szamra.
-     * @param i- az ertek amivel noveli az interactcountot
+     * @param i- az ertek amivel valtoztatja az interactcountot
      */
     public void SetInteractCount(int i){
         interactCount = i;

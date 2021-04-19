@@ -3,7 +3,7 @@ package game.logic;
 import game.controller.Controller;
 
 /**
- * Uranium nyersanyag, dolgok(robot, teleport, bazis) epitesehez szukseges.
+ * Uranium nyersanyag, objektumok(robot, teleport, bazis) epitesehez szukseges.
  * Aszteroidaba helyezve a megfelelo korulmenyek kozott felrobbantja az aszteroidat.
  * @author torok
  */
