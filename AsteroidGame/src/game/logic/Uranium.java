@@ -24,7 +24,6 @@ public class Uranium extends Material{
     public void Interact(Asteroid a) {
         super.Interact(a);
         if(interactCount > 2) {
-            Disintegrate();
             a.Explode();
         }
     }
