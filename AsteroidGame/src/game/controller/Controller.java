@@ -48,7 +48,7 @@ public class Controller {
     private LinkedHashMap<String, Coal> coal = new LinkedHashMap<String, Coal>();
 
     /**
-     * A vasakat tarolo hashmap.
+     * A jegeket tarolo hashmap.
      */
     private LinkedHashMap<String, Ice> ice = new LinkedHashMap<String, Ice>();
 
