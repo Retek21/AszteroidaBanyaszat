@@ -429,8 +429,10 @@ public class Controller {
 ////////////////////////COMMANDS//////////////////////
 
     /**
-     *
-     * @param param
+     * Beallitja a kapott parameterre az aszteroidanak a napkozelseget.
+     * Ezutan kiirja vegbement valtozasokat.
+     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot,
+     *             az aszteroida azonositojat, es a beallitando erteket
      */
     private void SetSunnearness(String[] param)
     {
@@ -459,8 +461,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Beallitja az a kapott aszteroida magjat a kapott parameteru objektumra.
+     * Ezutan kiirja vegbement valtozasokat.
+     * @param param: a kapott karakterlanc, ami tartalmazza a parancsot,
+     *            az aszteroida azonositojat, es a beallitando nyersanyagot
      */
     private void SetCore(String[] param)
     {
@@ -490,8 +494,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
+     * Ezutan kiirja vegbement valtozasokat.
+     * @param param: a karakterlanc egy tombben, ami tartalmazza az parancsot, a
+     *             aszteroida azonositojat, es a beallitando erteket.
      */
     private void SetLayers(String[] param)
     {
@@ -509,8 +515,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     *  Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
+     *  Ezutan kiirja vegbement valtozasokat.
+     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot, es
+     *            két whereabout azonositojat.
      */
     private void SetNeighbour(String[] param)
     {
@@ -543,8 +551,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Elkesziti a a parameterkent kapott objektumot, es hozzarendeli az azonositojat.
+     * Ezutan kiirja vegbement valtozasokat.
+     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot, a
+     *             letrehozando objektum tipusat, es azonositojat
      */
     private void Make(String[] param)
     {
@@ -607,8 +617,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Hozzadja a parameterkent kapott objektumot a telepes inventory-jához.
+     *  Ezutan kiirja vegbement valtozasokat.
+     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
+     *             a telepes azonositojat, es a hozzaadando objektumot
      */
     private void AddInventory(String[] param)
     {
@@ -644,8 +656,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param param
+     * Osszeparosit ket teleportot, amit parameterkent kapott.
+     *  Ezutan kiirja vegbement valtozasokat.
+     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
+     *             es a ket teleport azonositojat
      */
     private void SetPair(String[] param)
     {
