@@ -151,7 +151,7 @@ public class GameFrame extends JFrame {
         buttonpanel.setLayout(new GridBagLayout());
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
-        c.ipadx = 40;
+        c.ipadx = 60;
         c.ipady = 7;
         c.gridy = 0;
         c.gridx = 0;
@@ -169,17 +169,18 @@ public class GameFrame extends JFrame {
         c.gridx = 4;
         buttonpanel.add(craftbutton, c);
 
+        c.ipadx = 48;
         c.gridy = 1;
         c.gridx = 3;
-        buttonpanel.add(craftable, c);
+        buttonpanel.add(placeable, c);
 
         c.gridy = 1;
         c.gridx = 4;
-        buttonpanel.add(placeable, c);
+        buttonpanel.add(craftable, c);
 
         naplopanel.WriteOut(new String[]{"TEST1"});
-        naplopanel.WriteOut(new String[]{"TEST2"});
-        naplopanel.WriteOut(new String[]{"TEST3", "\tTEST3", "\t\tTEST3"});
-        naplopanel.WriteOut(new String[]{"TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4", "TEST4"});
+        naplopanel.WriteOut(new String[]{"TEST1","TEST2"});
+        naplopanel.WriteOut(new String[]{"TEST1", "TEST2","TEST3", "\tTEST3", "\t\tTEST3"});
+        naplopanel.WriteOut(new String[]{"TEST1", "TEST2","TEST3", "\tTEST3", "\t\tTEST3", "TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4", "TEST4"});
     }
 }
