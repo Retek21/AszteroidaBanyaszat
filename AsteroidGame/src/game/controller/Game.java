@@ -1,10 +1,12 @@
 package game.controller;
 
-import game.controller.Controller;
-
-import java.util.Scanner;
+import game.userinterface.GameFrame;
+import game.userinterface.MenuFrame;
 
 public class Game {
+    GameFrame gameframe = new GameFrame(this);
+    MenuFrame menuframe = new MenuFrame(this);
+
     /**
      * A kontroller osztalyra mutato referencia, ennek segitsegevel inicializal, futtatja a jatekot
      */
@@ -14,6 +16,7 @@ public class Game {
      * Elinditja a programot, ez meg nem a jatek inditasa
      * A felhasznalotol beolvas egy parancsot, majd ezt felbontja részeire
      */
+    /*
     public void StartProgram()
     {
         controller = Controller.GetInstanceOf();
@@ -31,6 +34,9 @@ public class Game {
             default:
                 break;
         }
+    }*/
+    public void StartProgram(){
+        menuframe.setVisible(true);
     }
 
     /**
@@ -69,5 +75,16 @@ public class Game {
 
         if(c == -1)    controller.StartGamePhase(m,l);
         else           controller.StartGamePhaseFromFile(param[c], m, l);
+    }
+
+
+    public void StartGame(int numberofplayers){
+        menuframe.setVisible(false);
+        System.out.println(numberofplayers + " darab jatekossal inditanank");
+        gameframe.setVisible(true);
+    }
+
+    public void ExitProgram(){
+
     }
 }
