@@ -27,6 +27,9 @@ public class GameFrame extends JFrame {
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        //komponensek felinicializalasa
+
         naplopanel = new NaploPanel();
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -35,22 +38,51 @@ public class GameFrame extends JFrame {
         headpanel = new HeadPanel();
         phaselabel = new JLabel("Default Value");
         phaselabel.setFont(new Font ("Verdana", Font.BOLD, 26));
+        phaselabel.setForeground(new Color(140, 122, 230));
         dophasebutton = new GameButton("DoPhase");
-        //majd a headpanelba rakni kene
+        dophasebutton.setBackground(new Color(25, 45, 62));
+        dophasebutton.setForeground(new Color(48,245,196));
         movebutton = new GameButton("Move");
+        movebutton.setBackground(new Color(25, 45, 62));
+        movebutton.setForeground(new Color(48,245,196));
         drillbutton = new GameButton("Drill");
+        drillbutton.setBackground(new Color(25, 45, 62));
+        drillbutton.setForeground(new Color(48,245,196));
         minebutton = new GameButton("Mine");
+        minebutton.setBackground(new Color(25, 45, 62));
+        minebutton.setForeground(new Color(48,245,196));
         placebutton = new GameButton("Place");
+        placebutton.setBackground(new Color(25, 45, 62));
+        placebutton.setForeground(new Color(48,245,196));
         craftbutton = new GameButton("Craft");
+        craftbutton.setBackground(new Color(25, 45, 62));
+        craftbutton.setForeground(new Color(48,245,196));
         JPanel buttonpanel = new JPanel();
         craftable = new JComboBox(new String[]{"Robot", "Teleport"});
+        craftable.setFocusable(false);
+        craftable.setBackground(new Color(64,115,158));
+        craftable.setForeground(new Color(76,209,55));
         placeable = new JComboBox(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
+        placeable.setFocusable(false);
+        placeable.setBackground(new Color(64,115,158));
+        placeable.setForeground(new Color(76,209,55));
 
-        headpanel.setBackground(Color.black);
-        gamepanel.setBackground(Color.blue);
-        buttonpanel.setBackground(Color.red);
-        naplopanel.setBackground(Color.green);
-        infopanel.setBackground(Color.yellow);
+        //Panelek színei
+
+        headpanel.setBackground(new Color(25,42,86));
+        gamepanel.setBackground(new Color(50,56,65));
+        buttonpanel.setBackground(new Color(25,42,86));
+        naplopanel.setBackground(new Color(25,42,86));
+        infopanel.setBackground(new Color(25,42,86));
+
+
+        headpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        gamepanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        buttonpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        naplopanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infopanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        //komponensek elrendezese
 
         //A fopanel szetosztasa 2 reszre
 

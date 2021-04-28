@@ -20,7 +20,9 @@ public class NaploPanel extends JPanel {
         for(int i = lines.size(); i < text.length; i++)
         {
             //A tabulatort nem ismeri a label ezert at kell alakitani spacera
-            lines.add(new JLabel(text[i].replaceAll("\t", "        ")));
+            JLabel templabel = new JLabel(text[i].replaceAll("\t", "        "));
+            templabel.setForeground(new Color(140, 122, 230));
+            lines.add(templabel);
             this.add(lines.get(i));
         }
     }
