@@ -22,11 +22,20 @@ public class MenuFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JLabel namelabel1 = new JLabel("ASTEROID GAME");
         namelabel1.setFont(new Font ("Verdana", Font.BOLD, 26));
+        namelabel1.setForeground(new Color(249, 202,36));
         JLabel namelabel2 = new JLabel("abgkp EDITION");
         namelabel2.setFont(new Font ("Verdana", Font.BOLD, 26));
+        namelabel2.setForeground(new Color(249, 202,36));
         playbutton = new JButton("play");
+        playbutton.setFocusable(false);
+        playbutton.setBackground(new Color(72, 52, 212));
+        playbutton.setForeground(new Color(106, 176, 76));
         exitbutton = new JButton("exit");
+        exitbutton.setFocusable(false);
+        exitbutton.setBackground(new Color(72, 52, 212));
+        exitbutton.setForeground(new Color(106, 176, 76));
         mainpanel = new JPanel(new GridBagLayout());
+        mainpanel.setBackground(new Color(19, 15, 64));
 
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.NORTH;
