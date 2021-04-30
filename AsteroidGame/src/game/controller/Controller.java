@@ -391,257 +391,106 @@ public class Controller {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////INITIALIZING PHASE////////////////////////////////////////////////////////
-
-////////////////////////READ INPUT//////////////////////
-
-    /**
-     * A program palyaepito fazisanak levezenyleset kezelo metodus.
-     * Egy ciklusban bekeri a felhasznalotol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
-     * metodust.
-     */
-    public void StartInitPhase()
-    {
-        String out = "[BUILDING GAME]";
-        WriteOut(out);
-
-        initializing = true;
-        Scanner scanner = new Scanner(System.in);
-        sun = new Sun();
-        asteroidfield = new Asteroidfield();
-        sun.AddAsteroidfield(asteroidfield);
-        while(initializing)
-        {
-            String[] cmd = scanner.nextLine().split(" ");
-            switch (cmd[0]) {
-                case "set_sunnearness":
-                    SetSunnearness(cmd);
-                    break;
-                case "set_core":
-                    SetCore(cmd);
-                    break;
-                case "set_layers":
-                    SetLayers(cmd);
-                    break;
-                case "set_neighbour":
-                    SetNeighbour(cmd);
-                    break;
-                case "make":
-                    Make(cmd);
-                    break;
-                case "add_entity":
-                    AddEntity(cmd);
-                    break;
-                case "add_inventory":
-                    AddInventory(cmd);
-                    break;
-                case "set_pair":
-                    SetPair(cmd);
-                    break;
-                case "set_interact_count":
-                    SetInteractionCount(cmd);
-                    break;
-                case "done":
-                    Done();
-                    break;
-                default:
-                    break;
-            }
+    public void Init(int players) {
+        DisplayManager dm = DisplayManager.GetInstanceOf();
+        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+        for(int i = 0; i < 50; i++) {
+            String id = "a" + i;
+            Asteroid a = CreateAsteroid(id);
+            asteroids.add(a);
         }
-
-        out = "[BUILDING ENDED]";
-        WriteOut(out);
-    }
-
-    /**
-     * A program palyaepito fazisanak levezenyleset kezelo metodus.
-     * Egy ciklusban beolvassa a parameterkent kapott fajlbol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
-     * metodust.
-     * @param buildinput Annak a fajlnak az elerese, amelybol be kell olvasni a parancsokat.
-     */
-    public void StartInitPhaseFromFile(String buildinput)
-    {
-
-        String out = "[BUILDING GAME]";
-        WriteOut(out);
-
-        sun = new Sun();
-        asteroidfield = new Asteroidfield();
-        sun.AddAsteroidfield(asteroidfield);
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
-            String in;
-            while ((in = br.readLine()) != null) {
-                String[] cmd = in.split(" ");
-                switch (cmd[0]) {
-                    case "set_sunnearness":
-                        SetSunnearness(cmd);
-                        break;
-                    case "set_core":
-                        SetCore(cmd);
-                        break;
-                    case "set_layers":
-                        SetLayers(cmd);
-                        break;
-                    case "set_neighbour":
-                        SetNeighbour(cmd);
-                        break;
-                    case "make":
-                        Make(cmd);
-                        break;
-                    case "add_entity":
-                        AddEntity(cmd);
-                        break;
-                    case "add_inventory":
-                        AddInventory(cmd);
-                        break;
-                    case "set_pair":
-                        SetPair(cmd);
-                        break;
-                    case "set_interact_count":
-                        SetInteractionCount(cmd);
-                        break;
-                    case "done":
-                        Done();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            br.close();
+        dm.CreateAsteroidDisplay(asteroids);
+        for(int i = 0; i < players; i++) {
+            String id = "s" + i;
+            Asteroid a = CreateSettler(id);
         }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
+        for(int i = 0; i < players; i++) {
+            String id = "u" + i;
+            Asteroid a = CreateUfo(id);
         }
+        ///////////neighbour cuccok??////////
 
-        out = "[BUILDING ENDED]";
-        WriteOut(out);
+        /////////////////////////////////////
+
+        ///////////material cuccok????//////////
+
+        //////////////////////////////////////
+
+        /////////////layer, sunnear cucc???/////
+
+        ///////////////////////////////////////
+
+
     }
 
 ////////////////////////COMMANDS//////////////////////
 
-    /**
-     * Beallitja a kapott parameterre az aszteroidanak a napkozelseget.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             az aszteroida azonositojat, es a beallitando erteket
-     */
-    private void SetSunnearness(String[] param)
+
+    private void SetSunnearness(String id, boolean value)
     {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-            switch (param[2])
-            {
-                case "true":
-                    if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearnessInit(true);
-                        out = "Asteroid: " + param[1] + " sunnearness set to true.";
-                    }
-                    break;
-                case "false":
-                    if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearnessInit(false);
-                        out = "Asteroid: " + param[1] + " sunnearness set to false.";
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        WriteOut(out);
+        Asteroid a = asteroids.get(id);
+        a.SetSunnearnessInit(value);
     }
 
-    /**
-     * Beallitja az a kapott aszteroida magjat a kapott parameteru objektumra.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc, ami tartalmazza a parancsot,
-     *            az aszteroida azonositojat, es a beallitando nyersanyagot
-     */
-    private void SetCore(String[] param)
+    private void SetCore(String materialid, String asteroidid)
     {
-        String out = "Invalid parameters.";
 
-        if(param.length == 3)
-        {
-            if(iron.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(iron.get(param[2]));
-                out = "Iron: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(ice.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(ice.get(param[2]));
-                out = "Ice: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(coal.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(coal.get(param[2]));
-                out = "Coal: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(uran.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(uran.get(param[2]));
-                out = "Uranium: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
+        if(iron.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(iron.get(materialid);
         }
-
-        WriteOut(out);
+        else if(ice.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(ice.get(materialid));
+        }
+        else if(coal.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(coal.get(materialid));
+        }
+        else if(uran.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(uran.get(materialid));
+        }
     }
 
-    /**
-     * Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza az parancsot, a
-     *             aszteroida azonositojat, es a beallitando erteket.
-     */
-    private void SetLayers(String[] param)
+    private void SetLayers(String asteroidid, int value)
     {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(asteroids.containsKey(param[1])) {
-                asteroids.get(param[1]).SetLayer(Integer.parseInt(param[2]));
-                out = "Asteroid: " + param[1] + " layers set to " + param[2] + ".";
-            }
+        if(asteroids.containsKey(asteroidid)) {
+            asteroids.get(asteroidid).SetLayer(value);
         }
 
-        WriteOut(out);
     }
 
-    /**
-     *  Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot, es
-     *            két whereabout azonositojat.
-     */
-    private void SetNeighbour(String[] param)
+    private void SetNeighbourhood(String id1, String id2)
     {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
+        DisplayManager dm = DisplayManager.GetInstanceOf();
+        if(asteroids.containsKey(id1))
         {
-            if(asteroids.containsKey(param[1]))
+            if(asteroids.containsKey(id2))
             {
-                if(asteroids.containsKey(param[2]))
-                {
-                    asteroids.get(param[1]).AddNeighbour(asteroids.get(param[2]));
-                    asteroids.get(param[2]).AddNeighbour(asteroids.get(param[1]));
-                    out = "Asteroid: " + param[1] + " and Asteroid: " + param[2] + " became neighbours.";
-                }
-                else if(teleports.containsKey(param[2]))
-                {
-                    teleports.get(param[2]).Deploy(asteroids.get(param[1]));
-                    out = "Asteroid: " + param[1] + " and Teleport: " + param[2] + " became neighbours.";
-                }
+                Asteroid a1 = asteroids.get(id1);
+                Asteroid a2 = asteroids.get(id2);
+
+                a1.AddNeighbour(asteroids.get(id2));
+                a2.AddNeighbour(asteroids.get(id1));
+
+                dm.SetNeighbourhood(a1, a2);
             }
-            else if(teleports.containsKey(param[1]) && asteroids.containsKey(param[2]))
+            else if(teleports.containsKey(id2))
             {
-                teleports.get(param[1]).Deploy(asteroids.get(param[2]));
-                out = "Teleport: " + param[1] + " and Asteroid: " + param[2] + " became neighbours.";
+                Asteroid a = asteroids.get(id1);
+                Teleport t = teleports.get(id2);
+
+                t.Deploy(a);
+
+                dm.SetNeighbourhood(a, t);
             }
         }
+        else if(teleports.containsKey(id1) && asteroids.containsKey(id2))
+        {
+            Asteroid a = asteroids.get(id2);
+            Teleport t = teleports.get(id1);
 
-        WriteOut(out);
+            t.Deploy(a);
+
+            dm.SetNeighbourhood(a, t);
+        }
     }
 
     /**
@@ -708,108 +557,6 @@ public class Controller {
             }
         }
         WriteOut(out);
-    }
-
-    /**
-     * Hozzadja a parameterkent kapott objektumot a telepes inventory-jához.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             a telepes azonositojat, es a hozzaadando objektumot
-     */
-    private void AddInventory(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(settlers.containsKey(param[1]))
-            {
-                if(iron.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(iron.get(param[2]));
-                    out = "Iron: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(ice.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(ice.get(param[2]));
-                    out = "Ice: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(coal.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(coal.get(param[2]));
-                    out = "Coal: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(uran.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(uran.get(param[2]));
-                    out = "Uranium: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(teleports.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddTeleport(teleports.get(param[2]));
-                    out = "Teleport: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-            }
-        }
-        WriteOut(out);
-    }
-
-    /**
-     * Osszeparosit ket teleportot, amit parameterkent kapott.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             es a ket teleport azonositojat
-     */
-    private void SetPair(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(teleports.containsKey(param[1]) && teleports.containsKey(param[2]))
-            {
-                teleports.get(param[1]).SetPair(teleports.get(param[2]));
-                teleports.get(param[2]).SetPair(teleports.get(param[1]));
-                out = "Teleport: " + param[1] + " and Teleport: " + param[2] + " became a pair.";
-            }
-        }
-        WriteOut(out);
-    }
-
-    /**
-     * Beallatja hogy a megadott nyersanyag korabban hanyszor lepett interakcioba a nappal.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot, a
-     *             nyersanyag azonositojat, es az erteket
-     */
-    private void SetInteractionCount(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(iron.containsKey(param[1])) {
-                iron.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Iron: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-            else if(ice.containsKey(param[1])) {
-                ice.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Ice: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-            else if(coal.containsKey(param[1])) {
-                coal.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Coal: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-            else if(uran.containsKey(param[1])) {
-                uran.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Uranium: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-        }
-
-        WriteOut(out);
-    }
-
-    /**
-     * Az inicializacio fazis veget jelzi.
-     * Az initializing bool valtozot hamissa valtoztatja, majd visszater.
-     */
-    private void Done() {
-        initializing = false;
     }
 
     /**
