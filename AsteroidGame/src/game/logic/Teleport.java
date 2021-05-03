@@ -170,6 +170,7 @@ public class Teleport implements Whereabout{
      */
     public void OnFire(){
         gonecrazy = true;
+        Controller.GetInstanceOf().TeleportGoesCrazy(this);
     }
 
 

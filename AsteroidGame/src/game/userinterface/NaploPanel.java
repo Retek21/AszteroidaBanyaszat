@@ -5,22 +5,21 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class NaploPanel extends JPanel {
-    ArrayList<JLabel> lines = new ArrayList<JLabel>();
-    GridLayout gr;
+    private ArrayList<JLabel> lines = new ArrayList<JLabel>();
 
     public NaploPanel()
     {
-        gr = new GridLayout();
-        this.setLayout(gr);
+        this.setLayout(new GridLayout(0,1));
+        setBackground(new Color(25,42,86));
+        setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public void WriteOut(String[] text)
+    public void WriteOut(ArrayList<String> text)
     {
-        gr.setRows(text.length);
-        for(int i = lines.size(); i < text.length; i++)
+        for(int i = 0; i < text.size(); i++)
         {
             //A tabulatort nem ismeri a label ezert at kell alakitani spacera
-            JLabel templabel = new JLabel(text[i].replaceAll("\t", "        "));
+            JLabel templabel = new JLabel(text.get(i).replaceAll("\t", "        "));
             templabel.setForeground(new Color(140, 122, 230));
             lines.add(templabel);
             this.add(lines.get(i));

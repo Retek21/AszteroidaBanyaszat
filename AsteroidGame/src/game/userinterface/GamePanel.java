@@ -2,17 +2,13 @@ package game.userinterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GamePanel extends JPanel {
-    private Manager manager;
-    public void MouseClicked(){}
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for(int i =0; i < displaynumber; i++){
-            displays[i].update();
-        }
+public class GamePanel extends JPanel{
+    public GamePanel(){
+        super();
+        setBackground(new Color(50,56,65));
+        setBorder(BorderFactory.createLineBorder(Color.black));
     }
-
 }
