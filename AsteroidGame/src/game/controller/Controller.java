@@ -3,6 +3,7 @@ package game.controller;
 import game.logic.*;
 import java.io.*;
 import java.util.*;
+import game.userinterface.*;
 
 /**
  * Controller osztaly, mely a parancsertelmezesert,valamint azok feldolgozasaert felel
@@ -407,16 +408,16 @@ public class Controller {
         tm = TextOutputManager.GetInstanceOf();
         asteroidfield = new Asteroidfield();
         sun = new Sun();
-        actors.add("_sun");
-        actors.add("_asteroidfield");
+        actors.add(new Actor("_sun", State.AIROUND, "Sun"));
+        actors.add(new Actor("_asteroidfield", State.AIROUND, "Asteroidfield"));
 
-        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+        Asteroid[] asteroids = new Asteroid[50];
         for(int i = 0; i < 50; i++) {
             String id = "a" + i;
             Asteroid a = CreateAsteroid(id);
-            asteroids.add(a);
+            asteroids[i]=a;
         }
-        dm.CreateAsteroidDisplay(asteroids);
+        dm.CreateAsteroidfieldDisplay(asteroids);
         for(int i = 0; i < players; i++) {
             String id = "s" + i;
             CreateSettler(id);
@@ -440,10 +441,11 @@ public class Controller {
 
     }
 
-    private void CreateAsteroid(String id) {
+    private Asteroid CreateAsteroid(String id) {
         Asteroid a = new Asteroid();
         asteroidfield.AddAsteroid(a);
         asteroids.put(id, a);
+        return a;
     }
 
     private void CreateTeleport(String id) {
@@ -495,7 +497,7 @@ public class Controller {
     {
 
         if(iron.containsKey(materialid)) {
-            asteroids.get(asteroidid).SetCore(iron.get(materialid);
+            asteroids.get(asteroidid).SetCore(iron.get(materialid));
         }
         else if(ice.containsKey(materialid)) {
             asteroids.get(asteroidid).SetCore(ice.get(materialid));
@@ -1380,7 +1382,7 @@ public class Controller {
         }
         String id = "r" + Integer.toString(n);
         robots.put(id, r);
-        actors.add(new Actor(id, State.AIRound, "Robot: "));
+        actors.add(new Actor(id, State.AIROUND, "Robot: "));
         output.add("Robot: " + id + ".");
     }
 
@@ -1411,7 +1413,7 @@ public class Controller {
     public void TeleportGoesCrazy(Teleport t) {
         String id = SearchForTeleport(t);
         if (id != null) {
-            actors.add(new Actor(id, State.AIRound, "Teleport: "));
+            actors.add(new Actor(id, State.AIROUND, "Teleport: "));
 
             String out = "Teleport: " + id + " went TOTAL CRAZY!!";
             WriteOut(out);
