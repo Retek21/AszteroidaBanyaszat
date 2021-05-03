@@ -1,6 +1,6 @@
 package game.logic;
 
-import game.controller.Controller;
+import game.userinterface.Display;
 
 /**
  * Entity absztrakt ososztaly. Az aszteroidaovben tartozkodi entitasok
@@ -14,6 +14,12 @@ public abstract class Entity {
      * Az aszteroida, melyen a telepes tartozkodik.
      */
     protected Asteroid asteroid;
+
+    public Display getDisplay() {
+        return display;
+    }
+
+    protected Display display;
 
 
     /**
@@ -72,5 +78,9 @@ public abstract class Entity {
      */
     public Inventory GetInventory() {
         return null;
+    }
+
+    public void AddDisplay(Display display){
+        this.display = display;
     }
 }
