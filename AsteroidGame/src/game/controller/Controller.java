@@ -65,7 +65,7 @@ public class Controller {
     /**
      * A jatekban szereplo nap.
      */
-    private Sun sun ;
+    private Sun sun;
 
     /**
      * A jatek veget jelolo bool valtozo. Alaperteke hamis.
@@ -108,6 +108,8 @@ public class Controller {
 
     private String actor;
 
+    private ArrayList<Actor> actors = new ArrayList<Actor>();
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////////////////////////////
@@ -148,6 +150,17 @@ public class Controller {
     private void WriteInfo() {
         tm.WriteToInfo(output);
         output.clear();
+    }
+
+    private void WriteTitle(String title) {
+        tm.WriteToHead(title);
+    }
+
+    private Actor FindActor(String id) {
+        for(Actor ac : actors)
+            if (ac.GetID().equals(id))
+                return ac;
+        return null;
     }
 
 
@@ -394,6 +407,8 @@ public class Controller {
         tm = TextOutputManager.GetInstanceOf();
         asteroidfield = new Asteroidfield();
         sun = new Sun();
+        actors.add("_sun");
+        actors.add("_asteroidfield");
 
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
         for(int i = 0; i < 50; i++) {
@@ -561,9 +576,27 @@ public class Controller {
 ////////////////////////////////////////////////////////GAME PHASE//////////////////////////////////////////////////////
 
     public void NextRound() {
-        if (settlers.containsKey(actor)) {
-            Iterator<Map.Entry<String, Settler>> it = settlers.entrySet().iterator();
+        WriteNaplo();
+        CheckVictory(actor);
+        CheckMaterials();
 
+        Actor ac = null;
+        actors.sort(new ActorComparator());
+        for(int i = 0; i < actors.size(); i++) {
+            if (actors.get(i).GetID().equals(actor)) {
+                if (i != actors.size() - 1) {
+                    ac = actors.get(i + 1);
+                }
+                else {
+                    ac = actors.get(0);
+                }
+                break;
+            }
+        }
+        if (ac != null) {
+            actor = ac.GetID();
+            String title = "Round of " + ac.GetTitle() + ac.GetID();
+            WriteTitle(title);
         }
     }
 
@@ -576,9 +609,9 @@ public class Controller {
             UfoDoPhase(actor);
         else if (teleports.containsKey(actor))
             TeleportDoPhase(actor);
-        else if (actor.equals("sun"))
+        else if (actor.equals("_sun"))
             SunStorm();
-        else if (actor.equals("asteroidfield"))
+        else if (actor.equals("_asteroidfield"))
             Rearrange();
     }
 
@@ -824,7 +857,9 @@ public class Controller {
 
 ///////////////////MOVE//////////////////////////
 
-    public void SettlerMove(String where) {
+    public void SettlerMove(Whereabout wa)
+    {
+        String where = SearchForWhereabout(wa);
         String out = null;
 
         if (settlers.containsKey(actor)) {
@@ -1288,12 +1323,10 @@ public class Controller {
 
 ///////////////CHECK CONDITIONS//////////////////////////
 
-     /**
-     * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
-     * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
-     * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
-     */
-     private void CheckVictory(Settler s){
+     private void CheckVictory(String settlerid){
+         if (!settlers.containsKey(settlerid))
+             return;
+         Settler s = settlers.get(settlerid);
         ArrayList<Material> materials = new ArrayList<Material>();
 
         Asteroid a = s.GetAsteroid();
@@ -1345,8 +1378,10 @@ public class Controller {
             else
                 unique = true;
         }
-        robots.put("r" + Integer.toString(n), r);
-        output.add("Robot: r" + Integer.toString(n) + ".");
+        String id = "r" + Integer.toString(n);
+        robots.put(id, r);
+        actors.add(new Actor(id, State.AIRound, "Robot: "));
+        output.add("Robot: " + id + ".");
     }
 
     /**
@@ -1366,9 +1401,21 @@ public class Controller {
             else
                 unique = true;
         }
-        teleports.put("t" + Integer.toString(n), t1);
-        teleports.put("t" + Integer.toString(n+1), t2);
-        output.add("Teleport: t" + Integer.toString(n) + " and Teleport: t" + Integer.toString(n+1) + ".");
+        String id1 = "t" + Integer.toString(n);
+        String id2 = "t" + Integer.toString(n);
+        teleports.put(id1, t1);
+        teleports.put(id2, t2);
+        output.add("Teleport: " + id1 + " and Teleport: " + id2 + ".");
+    }
+
+    public void TeleportGoesCrazy(Teleport t) {
+        String id = SearchForTeleport(t);
+        if (id != null) {
+            actors.add(new Actor(id, State.AIRound, "Teleport: "));
+
+            String out = "Teleport: " + id + " went TOTAL CRAZY!!";
+            WriteOut(out);
+        }
     }
 
     /**
@@ -1382,6 +1429,8 @@ public class Controller {
         String id = SearchForSettler(s);
         if (id != null) {
             settlers.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Settler: " + id + " died.";
             WriteOut(out);
@@ -1399,6 +1448,8 @@ public class Controller {
         String id = SearchForRobot(r);
         if (id != null) {
             robots.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Robot: " + id + " died.";
             WriteOut(out);
@@ -1416,6 +1467,8 @@ public class Controller {
         String id = SearchForUfo(u);
         if (id != null) {
             ufos.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Ufo: " + id + " died.";
             WriteOut(out);
@@ -1452,6 +1505,11 @@ public class Controller {
         if (id != null)
         {
             teleports.remove(id);
+
+            Actor ac = FindActor(id);
+            if (ac != null)
+                actors.remove(ac);
+
 
             String out = "Teleport: " + id + " exploded.";
             WriteOut(out);
