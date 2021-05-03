@@ -65,7 +65,7 @@ public class Controller {
     /**
      * A jatekban szereplo nap.
      */
-    private Sun sun ;
+    private Sun sun;
 
     /**
      * A jatek veget jelolo bool valtozo. Alaperteke hamis.
@@ -103,6 +103,13 @@ public class Controller {
      */
     private static Controller instance;
 
+    private DisplayManager dm;
+    private TextOutputManager tm;
+
+    private String actor;
+
+    private ArrayList<Actor> actors = new ArrayList<Actor>();
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////////////////////////////
@@ -132,27 +139,31 @@ public class Controller {
      * @param out a kirando string.
      */
     private void WriteOut(String out) {
-        System.out.println(out);
         output.add(out);
     }
 
-    /**
-     * Egy output text filet general.
-     */
-    private void GenerateOutputFile()
-    {
-        try
-        {
-            PrintWriter textout = new PrintWriter("Test_Output.txt", "UTF-8");
-            for(int i = 0; i < output.size(); i++)
-                textout.println(output.get(i));
-            textout.close();
-        }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
-        }
+    private void WriteNaplo() {
+        tm.WriteToNaplo(output);
+        output.clear();
     }
+
+    private void WriteInfo() {
+        tm.WriteToInfo(output);
+        output.clear();
+    }
+
+    private void WriteTitle(String title) {
+        tm.WriteToHead(title);
+    }
+
+    private Actor FindActor(String id) {
+        for(Actor ac : actors)
+            if (ac.GetID().equals(id))
+                return ac;
+        return null;
+    }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////SEARCHFOR METHODS/////////////////////////////////////////////////////////
@@ -389,910 +400,221 @@ public class Controller {
         return null;
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////INITIALIZING PHASE////////////////////////////////////////////////////////
-
-////////////////////////READ INPUT//////////////////////
-
-    /**
-     * A program palyaepito fazisanak levezenyleset kezelo metodus.
-     * Egy ciklusban bekeri a felhasznalotol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
-     * metodust.
-     */
-    public void StartInitPhase()
-    {
-        String out = "[BUILDING GAME]";
-        WriteOut(out);
-
-        initializing = true;
-        Scanner scanner = new Scanner(System.in);
-        sun = new Sun();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////INIT PHASE///////////////////////////////////////////////////////
+    public void Init(int players) {
+        dm = DisplayManager.GetInstanceOf();
+        tm = TextOutputManager.GetInstanceOf();
         asteroidfield = new Asteroidfield();
-        sun.AddAsteroidfield(asteroidfield);
-        while(initializing)
-        {
-            String[] cmd = scanner.nextLine().split(" ");
-            switch (cmd[0]) {
-                case "set_sunnearness":
-                    SetSunnearness(cmd);
-                    break;
-                case "set_core":
-                    SetCore(cmd);
-                    break;
-                case "set_layers":
-                    SetLayers(cmd);
-                    break;
-                case "set_neighbour":
-                    SetNeighbour(cmd);
-                    break;
-                case "make":
-                    Make(cmd);
-                    break;
-                case "add_entity":
-                    AddEntity(cmd);
-                    break;
-                case "add_inventory":
-                    AddInventory(cmd);
-                    break;
-                case "set_pair":
-                    SetPair(cmd);
-                    break;
-                case "set_interact_count":
-                    SetInteractionCount(cmd);
-                    break;
-                case "done":
-                    Done();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        out = "[BUILDING ENDED]";
-        WriteOut(out);
-    }
-
-    /**
-     * A program palyaepito fazisanak levezenyleset kezelo metodus.
-     * Egy ciklusban beolvassa a parameterkent kapott fajlbol a palyaepito parancsokat es a parancsnak megfeleloen meghivja a megfelelo
-     * metodust.
-     * @param buildinput Annak a fajlnak az elerese, amelybol be kell olvasni a parancsokat.
-     */
-    public void StartInitPhaseFromFile(String buildinput)
-    {
-
-        String out = "[BUILDING GAME]";
-        WriteOut(out);
-
         sun = new Sun();
-        asteroidfield = new Asteroidfield();
-        sun.AddAsteroidfield(asteroidfield);
+        actors.add("_sun");
+        actors.add("_asteroidfield");
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
-            String in;
-            while ((in = br.readLine()) != null) {
-                String[] cmd = in.split(" ");
-                switch (cmd[0]) {
-                    case "set_sunnearness":
-                        SetSunnearness(cmd);
-                        break;
-                    case "set_core":
-                        SetCore(cmd);
-                        break;
-                    case "set_layers":
-                        SetLayers(cmd);
-                        break;
-                    case "set_neighbour":
-                        SetNeighbour(cmd);
-                        break;
-                    case "make":
-                        Make(cmd);
-                        break;
-                    case "add_entity":
-                        AddEntity(cmd);
-                        break;
-                    case "add_inventory":
-                        AddInventory(cmd);
-                        break;
-                    case "set_pair":
-                        SetPair(cmd);
-                        break;
-                    case "set_interact_count":
-                        SetInteractionCount(cmd);
-                        break;
-                    case "done":
-                        Done();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            br.close();
+        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+        for(int i = 0; i < 50; i++) {
+            String id = "a" + i;
+            Asteroid a = CreateAsteroid(id);
+            asteroids.add(a);
         }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
+        dm.CreateAsteroidDisplay(asteroids);
+        for(int i = 0; i < players; i++) {
+            String id = "s" + i;
+            CreateSettler(id);
         }
+        for(int i = 0; i < players; i++) {
+            String id = "u" + i;
+            CreateUfo(id);
+        }
+        ///////////neighbour cuccok??////////
 
-        out = "[BUILDING ENDED]";
-        WriteOut(out);
+        /////////////////////////////////////
+
+        ///////////material cuccok????//////////
+
+        //////////////////////////////////////
+
+        /////////////layer, sunnear cucc???/////
+
+        ///////////////////////////////////////
+
+
     }
 
-////////////////////////COMMANDS//////////////////////
+    private void CreateAsteroid(String id) {
+        Asteroid a = new Asteroid();
+        asteroidfield.AddAsteroid(a);
+        asteroids.put(id, a);
+    }
 
-    /**
-     * Beallitja a kapott parameterre az aszteroidanak a napkozelseget.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             az aszteroida azonositojat, es a beallitando erteket
-     */
-    private void SetSunnearness(String[] param)
+    private void CreateTeleport(String id) {
+        Teleport t = new Teleport();
+        teleports.put(id, t);
+    }
+
+    private void CreateSettler(String id) {
+        Settler s = new Settler();
+        settlers.put(id, s);
+    }
+
+    private void CreateRobot(String id) {
+        Robot r = new Robot();
+        robots.put(id, r);
+    }
+
+    private void CreateUfo(String id) {
+        Ufo u = new Ufo();
+        ufos.put(id, u);
+    }
+
+    private void CreateIron(String id) {
+        Iron i = new Iron();
+        iron.put(id, i);
+    }
+    private void CreateIce(String id) {
+        Ice i = new Ice();
+        ice.put(id, i);
+    }
+    private void CreateCoal(String id) {
+        Coal c = new Coal();
+        coal.put(id, c);
+    }
+    private void CreateUranium(String id) {
+        Uranium u = new Uranium();
+        uran.put(id, u);
+    }
+
+
+
+    private void SetSunnearness(String id, boolean value)
     {
-        String out = "Invalid parameters.";
+        Asteroid a = asteroids.get(id);
+        a.SetSunnearnessInit(value);
+    }
 
-        if(param.length == 3)
-            switch (param[2])
+    private void SetCore(String materialid, String asteroidid)
+    {
+
+        if(iron.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(iron.get(materialid);
+        }
+        else if(ice.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(ice.get(materialid));
+        }
+        else if(coal.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(coal.get(materialid));
+        }
+        else if(uran.containsKey(materialid)) {
+            asteroids.get(asteroidid).SetCore(uran.get(materialid));
+        }
+    }
+
+    private void SetLayers(String asteroidid, int value)
+    {
+        if(asteroids.containsKey(asteroidid)) {
+            asteroids.get(asteroidid).SetLayer(value);
+        }
+
+    }
+
+    private void SetNeighbourhood(String id1, String id2)
+    {
+        if(asteroids.containsKey(id1))
+        {
+            if(asteroids.containsKey(id2))
             {
-                case "true":
-                    if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearnessInit(true);
-                        out = "Asteroid: " + param[1] + " sunnearness set to true.";
-                    }
-                    break;
-                case "false":
-                    if(asteroids.containsKey(param[1])) {
-                        asteroids.get(param[1]).SetSunnearnessInit(false);
-                        out = "Asteroid: " + param[1] + " sunnearness set to false.";
-                    }
-                    break;
-                default:
-                    break;
+                Asteroid a1 = asteroids.get(id1);
+                Asteroid a2 = asteroids.get(id2);
+
+                a1.AddNeighbour(asteroids.get(id2));
+                a2.AddNeighbour(asteroids.get(id1));
+
+                dm.SetNeighbourhood(a1, a2);
             }
-
-        WriteOut(out);
-    }
-
-    /**
-     * Beallitja az a kapott aszteroida magjat a kapott parameteru objektumra.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc, ami tartalmazza a parancsot,
-     *            az aszteroida azonositojat, es a beallitando nyersanyagot
-     */
-    private void SetCore(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(iron.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(iron.get(param[2]));
-                out = "Iron: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(ice.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(ice.get(param[2]));
-                out = "Ice: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(coal.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(coal.get(param[2]));
-                out = "Coal: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-            else if(uran.containsKey(param[2])) {
-                asteroids.get(param[1]).SetCore(uran.get(param[2]));
-                out = "Uranium: " + param[2] + " added to Asteroid: " + param[1] + ".";
-            }
-        }
-
-        WriteOut(out);
-    }
-
-    /**
-     * Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza az parancsot, a
-     *             aszteroida azonositojat, es a beallitando erteket.
-     */
-    private void SetLayers(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(asteroids.containsKey(param[1])) {
-                asteroids.get(param[1]).SetLayer(Integer.parseInt(param[2]));
-                out = "Asteroid: " + param[1] + " layers set to " + param[2] + ".";
-            }
-        }
-
-        WriteOut(out);
-    }
-
-    /**
-     *  Beallitja az a kapott aszteroida retegeinek szamat a kapott ertekre.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot, es
-     *            két whereabout azonositojat.
-     */
-    private void SetNeighbour(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(asteroids.containsKey(param[1]))
+            else if(teleports.containsKey(id2))
             {
-                if(asteroids.containsKey(param[2]))
-                {
-                    asteroids.get(param[1]).AddNeighbour(asteroids.get(param[2]));
-                    asteroids.get(param[2]).AddNeighbour(asteroids.get(param[1]));
-                    out = "Asteroid: " + param[1] + " and Asteroid: " + param[2] + " became neighbours.";
-                }
-                else if(teleports.containsKey(param[2]))
-                {
-                    teleports.get(param[2]).Deploy(asteroids.get(param[1]));
-                    out = "Asteroid: " + param[1] + " and Teleport: " + param[2] + " became neighbours.";
-                }
-            }
-            else if(teleports.containsKey(param[1]) && asteroids.containsKey(param[2]))
-            {
-                teleports.get(param[1]).Deploy(asteroids.get(param[2]));
-                out = "Teleport: " + param[1] + " and Asteroid: " + param[2] + " became neighbours.";
+                Asteroid a = asteroids.get(id1);
+                Teleport t = teleports.get(id2);
+
+                t.Deploy(a);
+
+                dm.SetNeighbourhood(a, t);
             }
         }
+        else if(teleports.containsKey(id1) && asteroids.containsKey(id2))
+        {
+            Asteroid a = asteroids.get(id2);
+            Teleport t = teleports.get(id1);
 
-        WriteOut(out);
+            t.Deploy(a);
+
+            dm.SetNeighbourhood(a, t);
+        }
     }
 
-    /**
-     * Elkesziti a a parameterkent kapott objektumot, es hozzarendeli az azonositojat.
-     * Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot, a
-     *             letrehozando objektum tipusat, es azonositojat
-     */
-    private void Make(String[] param)
+    private void AddEntity(String entityid, String asteroidid)
     {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3){
-            switch(param[1])
-            {
-                case "settler":
-                    Settler s = new Settler();
-                    settlers.put(param[2], s);
-                    out = "New Settler: " + param[2] + " has been created.";
-                    break;
-                case "robot":
-                    Robot r = new Robot();
-                    robots.put(param[2], r);
-                    out = "New Robot: " + param[2] + " has been created.";
-                    break;
-                case "ufo":
-                    Ufo u = new Ufo();
-                    ufos.put(param[2], u);
-                    out = "New Ufo: " + param[2] + " has been created.";
-                    break;
-                case "asteroid":
-                    Asteroid a = new Asteroid();
-                    asteroidfield.AddAsteroid(a);
-                    asteroids.put(param[2], a);
-                    out = "New Asteroid: " + param[2] + " has been created.";
-                    break;
-                case "teleport":
-                    Teleport t= new Teleport();
-                    teleports.put(param[2], t);
-                    out = "New Teleport: " + param[2] + " has been created.";
-                    break;
-                case "coal":
-                    Coal c = new Coal();
-                    coal.put(param[2], c);
-                    out = "New Coal: " + param[2] + " has been created.";
-                    break;
-                case "ice":
-                    Ice i = new Ice();
-                    ice.put(param[2], i);
-                    out = "New Ice: " + param[2] + " has been created.";
-                    break;
-                case "iron":
-                    Iron ir = new Iron();
-                    iron.put(param[2], ir);
-                    out = "New Iron: " + param[2] + " has been created.";
-                    break;
-                case "uranium":
-                    Uranium ur = new Uranium();
-                    uran.put(param[2], ur);
-                    out = "New Uranium: " + param[2] + " has been created.";
-                    break;
-                case "default":
-                    break;
-            }
-        }
-        WriteOut(out);
-    }
-
-    /**
-     * Hozzadja a parameterkent kapott objektumot a telepes inventory-jához.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             a telepes azonositojat, es a hozzaadando objektumot
-     */
-    private void AddInventory(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
+        if(asteroids.containsKey(asteroidid))
         {
-            if(settlers.containsKey(param[1]))
-            {
-                if(iron.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(iron.get(param[2]));
-                    out = "Iron: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(ice.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(ice.get(param[2]));
-                    out = "Ice: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(coal.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(coal.get(param[2]));
-                    out = "Coal: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(uran.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddMaterial(uran.get(param[2]));
-                    out = "Uranium: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
-                else if(teleports.containsKey(param[2])) {
-                    settlers.get(param[1]).GetInventory().AddTeleport(teleports.get(param[2]));
-                    out = "Teleport: " + param[2] + " added to Settler: " + param[1] + "'s inventory.";
-                }
+            Asteroid a = asteroids.get(asteroidid);
+            if(settlers.containsKey(entityid)) {
+                Settler s = settlers.get(entityid);
+                a.AddEntity(s);
             }
-        }
-        WriteOut(out);
-    }
-
-    /**
-     * Osszeparosit ket teleportot, amit parameterkent kapott.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a karakterlanc egy tombben, ami tartalmazza a parancsot,
-     *             es a ket teleport azonositojat
-     */
-    private void SetPair(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(teleports.containsKey(param[1]) && teleports.containsKey(param[2]))
-            {
-                teleports.get(param[1]).SetPair(teleports.get(param[2]));
-                teleports.get(param[2]).SetPair(teleports.get(param[1]));
-                out = "Teleport: " + param[1] + " and Teleport: " + param[2] + " became a pair.";
+            else if(ufos.containsKey(entityid)) {
+                Ufo u = ufos.get(entityid);
+                a.AddEntity(u);
             }
-        }
-        WriteOut(out);
-    }
-
-    /**
-     * Beallatja hogy a megadott nyersanyag korabban hanyszor lepett interakcioba a nappal.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot, a
-     *             nyersanyag azonositojat, es az erteket
-     */
-    private void SetInteractionCount(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(iron.containsKey(param[1])) {
-                iron.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Iron: " + param[1] + "'s interactCount is set to " + param[2] + ".";
+            else if(robots.containsKey(entityid)) {
+                Robot r = robots.get(entityid);
+                a.AddEntity(r);
             }
-            else if(ice.containsKey(param[1])) {
-                ice.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Ice: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-            else if(coal.containsKey(param[1])) {
-                coal.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Coal: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-            else if(uran.containsKey(param[1])) {
-                uran.get(param[1]).SetInteractCount(Integer.parseInt(param[2]));
-                out = "Uranium: " + param[1] + "'s interactCount is set to " + param[2] + ".";
-            }
-        }
-
-        WriteOut(out);
-    }
-
-    /**
-     * Az inicializacio fazis veget jelzi.
-     * Az initializing bool valtozot hamissa valtoztatja, majd visszater.
-     */
-    private void Done() {
-        initializing = false;
-    }
-
-    /**
-     * Hozzaadja a megadott entitast a megadott aszteroidahoz.
-     *  Ezutan kiirja vegbement valtozasokat.
-     * @param param: a kapott karakterlanc egy tombben, ami tartalmazza a parancsot, az
-     *             entitas es az aszteroida azonositoit
-     */
-    private void AddEntity(String[] param)
-    {
-        String out = "Invalid parameters.";
-
-        if(param.length == 3)
-        {
-            if(asteroids.containsKey(param[1]))
-            {
-                if(settlers.containsKey(param[2])) {
-                    asteroids.get(param[1]).AddEntity(settlers.get(param[2]));
-                    out = "Settler: " + param[2] + " added to Asteroid: " + param[1] + ".";
-                }
-                else if(ufos.containsKey(param[2])) {
-                    asteroids.get(param[1]).AddEntity(ufos.get(param[2]));
-                    out = "Ufo: " + param[2] + " added to Asteroid: " + param[1] + ".";
-                }
-                else if(robots.containsKey(param[2])) {
-                    asteroids.get(param[1]).AddEntity(robots.get(param[2]));
-                    out = "Robot: " + param[2] + " added to Asteroid: " + param[1] + ".";
-                }
-            }
-        }
-        WriteOut(out);
-    }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////GAME PHASE////////////////////////////////////////////////////////////////
-
-////////////////////////READ INPUT//////////////////////
-    /**
-     * A program jatekfazisat kezelo metodus.
-     * Vegigiteral a jatek szereploinek kulonbozo csoportjain, a csoportokon belul pedig az egyes szereplokon.
-     * A szereplok koreiben parancsot olvas be a felhasznalotol, majd meghivja a megfelelo metodust.
-     * Egyes szereplocsoportok eseten csak akkor olvas be, ha manual flag jelzett be van allitva.
-     * @param man - A boolean valtozo, amely megmondja, hogy a jatek a telepeseken kivul, a tobbi
-     *              szereplot automatikusan leptesse, vagy felhasznaloi inputra varjon.
-     * @param conditions - A boolean valtozo, amely megmondja, hogy a program figyelje-e
-     *                     az esetleges leallasi felteleket (gyozelem, vereseg) vagy ignoralja oket.
-     */
-    public void StartGamePhase(boolean man, boolean conditions)
-    {
-        String out = "[STARTING GAME]";
-        WriteOut(out);
-
-        manual = man;
-        checkconditions = conditions;
-        Scanner scanner = new Scanner(System.in);
-        String[] cmd;
-        while(!end)
-        {
-            if(end) break;
-
-//SETTLER
-            Iterator it = settlers.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
-                WriteOut(out);
-                cmd = scanner.nextLine().split(" ");
-                SettlerRound((String)pair.getKey(), cmd);
-                if (end) break;
-            }
-
-            if(end) break;
-
-//ROBOT
-            it = robots.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
-                WriteOut(out);
-                if(manual) {
-                    cmd = scanner.nextLine().split(" ");
-                    RobotRound((String)pair.getKey(), cmd);
-                }
-                else
-                {
-                    cmd = null;
-                    RobotRound((String)pair.getKey(), cmd);
-                }
-                if (end) break;
-            }
-
-            if(end) break;
-
-//UFO
-            it = ufos.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                out = "[ROUND OF UFO: " + pair.getKey() + "]";
-                WriteOut(out);
-                if(manual) {
-                    cmd = scanner.nextLine().split(" ");
-                    UfoRound((String)pair.getKey(), cmd);
-                }
-                else
-                {
-                    cmd = null;
-                    UfoRound((String)pair.getKey(), cmd);
-                }
-                if (end) break;
-            }
-
-            if(end) break;
-
-//TELEPORT
-            it = teleports.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                if(((Teleport)pair.getValue()).GetCraziness())
-                {
-                    out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
-                    WriteOut(out);
-                    if(manual ) {
-                        cmd = scanner.nextLine().split(" ");
-                        TeleportRound((String)pair.getKey(), cmd);
-                    }
-                    else
-                    {
-                        cmd = null;
-                        TeleportRound((String)pair.getKey(), cmd);
-                    }
-                    if (end) break;
-                }
-            }
-
-            if(end) break;
-
-//SUN
-            out = "[ROUND OF SUN]";
-            WriteOut(out);
-            cmd = null;
-            if(manual) {
-                cmd = scanner.nextLine().split(" ");
-
-            }
-            SunRound(cmd);
-
-            if(end) break;
-
-//ASTEROIDFIELD
-            out = "[ROUND OF ASTEROIDFIELD]";
-            WriteOut(out);
-            cmd = null;
-            if(manual) {
-                cmd = scanner.nextLine().split(" ");
-
-            }
-            AsteroidfieldRound(cmd, false);
-        }
-
-        out = "[GAME OVER]";
-        WriteOut(out);
-
-        GenerateOutputFile();
-    }
-
-    /**
-     * A program jatekfazisat kezelo metodus.
-     * Vegigiteral a jatek szereploinek kulonbozo csoportjain, a csoportokon belul pedig az egyes szereplokon.
-     * A szereplok koreiben parancsot olvas be a parameterkent kapott fajlbol, majd meghivja a megfelelo metodust.
-     * Egyes szereplocsoportok eseten csak akkor olvas be, ha manual flag jelzett be van allitva.
-     * @param buildinput - Annak a fajlnak az elerese, amelybol be kell olvasni a parancsokat.
-     * @param man - A boolean valtozo, amely megmondja, hogy a jatek a telepeseken kivul, a tobbi
-     *              szereplot automatikusan leptesse, vagy felhasznaloi inputra varjon.
-     * @param conditions - A boolean valtozo, amely megmondja, hogy a program figyelje-e
-     *                     az esetleges leallasi felteleket (gyozelem, vereseg) vagy ignoralja oket.
-     */
-    public void StartGamePhaseFromFile(String buildinput, boolean man, boolean conditions)
-    {
-        try {
-            String out = "[STARTING GAME]";
-            WriteOut(out);
-            manual = man;
-            checkconditions = conditions;
-            BufferedReader br = new BufferedReader(new FileReader(new File(buildinput)));
-            ArrayList<String> in = new ArrayList<String>();
-            int incnt = 0;
-            String temp;
-            while((temp = br.readLine()) != null)
-                in.add(temp);
-            br.close();
-
-
-            String[] cmd;
-            while (!end) {
-                if (end) break;
-
-//SETTLER
-                Iterator it = settlers.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    out = "[ROUND OF SETTLER: " + pair.getKey() + "]";
-                    WriteOut(out);
-                    cmd = (in.get(incnt)).split(" ");
-                    incnt++;
-                    SettlerRound((String)pair.getKey(), cmd);
-                    if (end) break;
-                }
-
-                if (end) break;
-//ROBOT
-                it = robots.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    out = "[ROUND OF ROBOT: " + pair.getKey() + "]";
-                    WriteOut(out);
-                    if (manual) {
-                        cmd = (in.get(incnt)).split(" ");
-                        incnt++;
-                        RobotRound((String)pair.getKey(), cmd);
-                    }
-                    else {
-                        cmd = null;
-                        RobotRound((String)pair.getKey(), cmd);
-                    }
-                    if (end) break;
-                }
-
-                if (end) break;
-
-//UFO
-                it = ufos.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    out = "[ROUND OF UFO: " + pair.getKey() + "]";
-                    WriteOut(out);
-                    if (manual) {
-                        cmd = (in.get(incnt)).split(" ");
-                        incnt++;
-                        UfoRound((String)pair.getKey(), cmd);
-                    }
-                    else {
-                        cmd = null;
-                        UfoRound((String)pair.getKey(), cmd);
-                    }
-                    if (end) break;
-                }
-
-                if (end) break;
-
-//TELEPORT
-                it = teleports.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    if(((Teleport)pair.getValue()).GetCraziness()) {
-                        out = "[ROUND OF TELEPORT: " + pair.getKey() + "]";
-                        WriteOut(out);
-                        if (manual) {
-                            cmd = (in.get(incnt)).split(" ");
-                            incnt++;
-                            TeleportRound((String) pair.getKey(), cmd);
-                        } else {
-                            cmd = null;
-                            TeleportRound((String) pair.getKey(), cmd);
-                        }
-                        if (end) break;
-                    }
-                }
-
-                if (end) break;
-
-//SUN
-                out = "[ROUND OF SUN]";
-                WriteOut(out);
-                cmd = null;
-                if (manual) {
-                    cmd = (in.get(incnt)).split(" ");
-                    incnt++;
-                }
-                SunRound(cmd);
-
-                if (end) break;
-
-//ASTEROIDFIELD
-                out = "[ROUND OF ASTEROIDFIELD]";
-                WriteOut(out);
-                cmd = null;
-                if (manual) {
-                    cmd = (in.get(incnt)).split(" ");
-                    boolean iterating = true;
-                    while(iterating && in.size()-1 > incnt)
-                    {
-                        if(in.get(incnt+1).equals("true") || in.get(incnt+1).equals("false"))
-                        {
-                            String[] tempstring = new String[cmd.length+1];
-                            for(int j = 0; j < cmd.length; j++)
-                                tempstring[j] = cmd[j];
-                            tempstring[cmd.length] = in.get(incnt+1);
-                            cmd = tempstring;
-                            incnt++;
-                        }
-                        else
-                            iterating = false;
-                    }
-                    incnt++;
-                }
-                AsteroidfieldRound(cmd, true);
-            }
-            out = "[GAME OVER]";
-            WriteOut(out);
-            GenerateOutputFile();
-        }
-        catch(IOException e)
-        {
-            System.out.println("I/O Exception");
         }
     }
 
-///////////////////////////ROUND HANDLING////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void SettlerRound(String settlerid, String[] cmd) {
+////////////////////////////////////////////////////////GAME PHASE//////////////////////////////////////////////////////
 
-        switch (cmd[0])
-        {
-            case "drill":
-                SettlerDrill(settlerid);
+    public void NextRound() {
+        WriteNaplo();
+        CheckVictory(actor);
+        CheckMaterials();
+
+        Actor ac = null;
+        actors.sort(new ActorComparator());
+        for(int i = 0; i < actors.size(); i++) {
+            if (actors.get(i).GetID().equals(actor)) {
+                if (i != actors.size() - 1) {
+                    ac = actors.get(i + 1);
+                }
+                else {
+                    ac = actors.get(0);
+                }
                 break;
-            case "mine":
-                SettlerMine(settlerid);
-                break;
-            case "craft":
-                Craft(settlerid, cmd);
-                break;
-            case "move":
-                SettlerMove(settlerid, cmd[1]);
-                break;
-            case "place":
-                Place(cmd[1], settlerid);
-                break;
-            case "endgame":
-                Endgame(false);
-                break;
-            case "step":
-                Step();
-                break;
-            default:
-                break;
-        }
-        if(checkconditions)
-        {
-            CheckMaterials();
-            CheckVictory(settlers.get(settlerid));
-        }
-    }
-
-    private void RobotRound(String robotid, String[] cmd) {
-        if (manual) {
-            switch (cmd[0]) {
-                case "drill":
-                    RobotDrill(robotid);
-                    break;
-                case "move":
-                    RobotMove(robotid, cmd[1]);
-                    break;
-                case "step":
-                    Step();
-                    break;
-                case "endgame":
-                    Endgame(false);
-                    break;
-                case "dophase":
-                    RobotDoPhase(robotid);
-                    break;
-                default:
-                    break;
             }
         }
-        else
-            RobotDoPhase(robotid);
-        if(checkconditions)
-            CheckMaterials();
-    }
-
-    private void UfoRound(String ufoid, String[] cmd) {
-        if (manual) {
-            switch (cmd[0]) {
-                case "mine":
-                    UfoMine(ufoid);
-                    break;
-                case "move":
-                    UfoMove(ufoid, cmd[1]);
-                    break;
-                case "step":
-                    Step();
-                    break;
-                case "endgame":
-                    Endgame(false);
-                    break;
-                case "dophase":
-                    UfoDoPhase(ufoid);
-                    break;
-                default:
-                    break;
-            }
+        if (ac != null) {
+            actor = ac.GetID();
+            String title = "Round of " + ac.GetTitle() + ac.GetID();
+            WriteTitle(title);
         }
-        else
-            UfoDoPhase(ufoid);
-        if(checkconditions)
-            CheckMaterials();
     }
-
-    private void TeleportRound(String teleportid, String[] cmd) {
-        if (manual) {
-            switch (cmd[0]) {
-                case "move":
-                    TeleportMove(teleportid, cmd[1]);
-                    break;
-                case "step":
-                    Step();
-                    break;
-                case "endgame":
-                    Endgame(false);
-                    break;
-                case "dophase":
-                    TeleportDoPhase(teleportid);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            TeleportDoPhase(teleportid);
-    }
-
-    private void SunRound(String[] cmd) {
-        if (manual) {
-            switch (cmd[0])
-            {
-                case "step":
-                    Step();
-                    break;
-                case "sunstorm":
-                    SunStorm(cmd[1]);
-                    break;
-                case "endgame":
-                    Endgame(false);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            SunStorm();
-
-    }
-
-    private void AsteroidfieldRound(String[] cmd, boolean fromfile) {
-           if (manual) {
-               switch (cmd[0]) {
-                   case "step":
-                       Step();
-                       break;
-                   case "rearrange":
-                       if(!fromfile)
-                           RearrangeManually();
-                       else
-                           RearrangeFromFile(cmd);
-                       break;
-                   case "endgame":
-                       Endgame(false);
-                       break;
-                   default:
-                       break;
-               }
-           } else
-               Rearrange();
-
-        if(checkconditions) CheckMaterials();
-    }
-
-////////////////////////COMMANDS////////////////////////////////////
 
 ////////////////DOPHASE///////////////
+
+    public void DoPhase() {
+        if (robots.containsKey(actor))
+            RobotDoPhase(actor);
+        else if (ufos.containsKey(actor))
+            UfoDoPhase(actor);
+        else if (teleports.containsKey(actor))
+            TeleportDoPhase(actor);
+        else if (actor.equals("_sun"))
+            SunStorm();
+        else if (actor.equals("_asteroidfield"))
+            Rearrange();
+    }
+
     /**
      * A metodus egy robot koret kezeli le.
      * Ha van meg reteg a robot aszteroidajan, furatja azt, ha nincs,
@@ -1366,25 +688,20 @@ public class Controller {
 
 ////////////////DRILL//////////////////////
 
-    /**
-     * A megadott telepest furatja a metodus.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param id - A telepest azonosito id
-     */
-    private void SettlerDrill(String id)
+    public void SettlerDrill()
     {
-        String out = "Invalid parametes.";
+        String out = null;
 
-        if(settlers.containsKey(id))
+        if(settlers.containsKey(actor))
         {
-            Asteroid a = settlers.get(id).GetAsteroid();
+            Asteroid a = settlers.get(actor).GetAsteroid();
             String asteroid_id = SearchForAsteroid(a);
-            boolean success = settlers.get(id).Drill();
+            boolean success = settlers.get(actor).Drill();
             if (!success)
-                out = "Settler: " + id + " failed to drill.";
+                out = "Settler: " + actor + " failed to drill.";
             else {
                 if (asteroid_id != null)
-                    out = "Settler: " + id + " drilled Asteroid: " + asteroid_id + ".";
+                    out = "Settler: " + actor + " drilled Asteroid: " + asteroid_id + ".";
             }
         }
         WriteOut(out);
@@ -1396,7 +713,7 @@ public class Controller {
      * @param id - A robotot azonosito id
      */
     private void RobotDrill(String id) {
-        String out = "Invalid parametes.";
+        String out = null;
 
         if(robots.containsKey(id))
         {
@@ -1415,27 +732,22 @@ public class Controller {
 
 ////////////////MINE///////////////////////////////
 
-    /**
-     * A telepest banyaszatja a metodus.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param id - A telepest azonosito id
-     */
-    private void SettlerMine(String id)
+    public void SettlerMine()
     {
-        String out = "Invalid parameters.";
+        String out = null;
 
-        if(settlers.containsKey(id))
+        if(settlers.containsKey(actor))
         {
-            Asteroid a = settlers.get(id).GetAsteroid();
+            Asteroid a = settlers.get(actor).GetAsteroid();
             String asteroid_id = SearchForAsteroid(a);
 
             Material m = a.GetMaterial();
             String material_id = SearchForMaterial(m);
-            boolean success = settlers.get(id).Mine();
+            boolean success = settlers.get(actor).Mine();
             if (!success)
-                out = "Settler: " + id + " failed to mine.";
+                out = "Settler: " + actor + " failed to mine.";
             else if (asteroid_id != null && material_id != null)
-                out = "Settler: " + id + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
+                out = "Settler: " + actor + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
         }
         WriteOut(out);
     }
@@ -1446,7 +758,7 @@ public class Controller {
      * @param id - Az ufot azonosito id
      */
     private void UfoMine(String id) {
-        String out = "Invalid parameters.";
+        String out = null;
 
         if(ufos.containsKey(id))
         {
@@ -1466,39 +778,31 @@ public class Controller {
 
 ////////////////////CRAFT////////////////////////////
 
-    /**
-     * A telepes barkacsoltatasat vegzo metodus.
-     * A kapott parancsparameterek alapjan donti el,
-     * hogy teleportot vagy robotot kell kesziteni.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param id - A telepest azonosito id
-     * @param param - A kapott parancsparameterek
-     */
-    private void Craft(String id, String[] param)
+    public void SettlerCraft(String thing)
     {
-        String out = "Invalid parameters.";
-        if(param[1].equals("robot"))
-        {
-            boolean success = settlers.get(id).CraftRobot();
+        String out = null;
+        if(settlers.containsKey(actor)) {
+            if (thing.equals("robot")) {
+                boolean success = settlers.get(actor).CraftRobot();
 
-            if(!success)
-                out = "Settler: " + id + " failed to craft.";
-            else {
-                out = "Settler: " + id + " crafted ";
-                out = out + output.get(output.size() - 1);
-                output.remove(output.size()-1);
+                if (!success)
+                    out = "Settler: " + actor + " failed to craft.";
+                else {
+                    out = "Settler: " + actor + " crafted ";
+                    out = out + output.get(output.size() - 1);
+                    output.remove(output.size() - 1);
+                }
             }
-        }
-        if(param[1].equals("teleport"))
-        {
-            boolean success = settlers.get(id).CraftTeleport();
+            if (thing.equals("teleport")) {
+                boolean success = settlers.get(actor).CraftTeleport();
 
-            if(!success)
-                out = "Settler: " + id + " failed to craft.";
-            else {
-                out = "Settler: " + id + " crafted ";
-                out = out + output.get(output.size() - 1);
-                output.remove(output.size()-1);
+                if (!success)
+                    out = "Settler: " + actor + " failed to craft.";
+                else {
+                    out = "Settler: " + actor + " crafted ";
+                    out = out + output.get(output.size() - 1);
+                    output.remove(output.size() - 1);
+                }
             }
         }
         WriteOut(out);
@@ -1506,84 +810,71 @@ public class Controller {
 
 //////////////////////PLACE///////////////////////////////
 
-    /**
-     * A telepes lehelyezo cselekveset vegzo metodusaik.
-     * A kapott id alapjan megkeresi, hogy melyik map-ben
-     * talahato, es ez alapjan valasztja ki, melyik metodust hivja.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param id - A lehelyezendo objektum azonositoja
-     * @param settlerid - A telepest azonosito id
-     */
-    private void Place(String id, String settlerid)
+    public void SettlerPlace(String thingid)
     {
-        String out = "Invalid parameters.";
+        String out = null;
 
-        Asteroid a = settlers.get(settlerid).GetAsteroid();
-        String asteroid_id = SearchForAsteroid(a);
+        if(settlers.containsKey(actor)) {
 
-        boolean success = false;
+            Asteroid a = settlers.get(actor).GetAsteroid();
+            String asteroid_id = SearchForAsteroid(a);
 
-        if(coal.containsKey(id)) {
-            success = settlers.get(settlerid).PlaceMaterial(coal.get(id));
-            if (success) {
-                out = "Settler: " + settlerid + " placed Coal: " + id + " at Asteroid: " + asteroid_id + ".";
-            }
-        }
-        else if(iron.containsKey(id)) {
-            success = settlers.get(settlerid).PlaceMaterial(iron.get(id));
-            if (success) {
-                out = "Settler: " + settlerid + " placed Iron: " + id + " at Asteroid: " + asteroid_id + ".";
-            }
-        }
-        else if(ice.containsKey(id)) {
-            success = settlers.get(settlerid).PlaceMaterial(ice.get(id));
-            if (success) {
-                out = "Settler: " + settlerid + " placed Ice: " + id + " at Asteroid: " + asteroid_id + ".";
-            }
-        }
-        else if(uran.containsKey(id)) {
-            success = settlers.get(settlerid).PlaceMaterial(uran.get(id));
-            if (success) {
-                out = "Settler: " + settlerid + " placed Uranium: " + id + " at Asteroid: " + asteroid_id + ".";
-            }
-        }
-        else if(teleports.containsKey(id)) {
-            success = settlers.get(settlerid).PlaceTeleport(teleports.get(id));
-            if (success) {
-                out = "Settler: " + settlerid + " placed Teleport: " + id + " at Asteroid: " + asteroid_id + ".";
-            }
-        }
+            boolean success = false;
 
-        if (!success)
-            out = "Settler: " + settlerid + " failed to place.";
+            if (coal.containsKey(thingid)) {
+                success = settlers.get(actor).PlaceMaterial(coal.get(thingid));
+                if (success) {
+                    out = "Settler: " + actor + " placed Coal: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                }
+            } else if (iron.containsKey(thingid)) {
+                success = settlers.get(actor).PlaceMaterial(iron.get(thingid));
+                if (success) {
+                    out = "Settler: " + actor + " placed Iron: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                }
+            } else if (ice.containsKey(thingid)) {
+                success = settlers.get(actor).PlaceMaterial(ice.get(thingid));
+                if (success) {
+                    out = "Settler: " + actor + " placed Ice: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                }
+            } else if (uran.containsKey(thingid)) {
+                success = settlers.get(actor).PlaceMaterial(uran.get(thingid));
+                if (success) {
+                    out = "Settler: " + actor + " placed Uranium: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                }
+            } else if (teleports.containsKey(thingid)) {
+                success = settlers.get(actor).PlaceTeleport(teleports.get(thingid));
+                if (success) {
+                    out = "Settler: " + actor + " placed Teleport: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                }
+            }
 
+            if (!success)
+                out = "Settler: " + actor + " failed to place.";
+
+        }
         WriteOut(out);
     }
 
 ///////////////////MOVE//////////////////////////
 
-    /**
-     * A telepest lepteti a megadott aszteroidara/teleporta.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param id - A telepest azonosito id
-     * @param where - A mozgas celjat azonosito id
-     */
-    private void SettlerMove(String id, String where) {
-        String out = "Invalid parameters.";
+    public void SettlerMove(Whereabout wa)
+    {
+        String where = SearchForWhereabout(wa);
+        String out = null;
 
-        Whereabout w;
-        Asteroid current = settlers.get(id).GetAsteroid();
-        String previous_asteroidid = SearchForAsteroid(current);
+        if (settlers.containsKey(actor)) {
+            Whereabout w;
+            Asteroid current = settlers.get(actor).GetAsteroid();
+            String previous_asteroidid = SearchForAsteroid(current);
 
-        if (settlers.containsKey(id)) {
             if (asteroids.containsKey(where)) {
                 w = asteroids.get(where);
 
-                boolean success = settlers.get(id).Move(w);
+                boolean success = settlers.get(actor).Move(w);
                 if (!success)
-                    out = "Settler: " + id + " failed to move.";
+                    out = "Settler: " + actor + " failed to move.";
                 else
-                    out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
+                    out = "Settler: " + actor + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + where + ".";
 
             } else if (teleports.containsKey(where)) {
                 Teleport pair = teleports.get(where).GetPair();
@@ -1594,11 +885,11 @@ public class Controller {
                 }
 
                 w = teleports.get(where);
-                boolean success = settlers.get(id).Move(w);
+                boolean success = settlers.get(actor).Move(w);
                 if (!success)
-                    out = "Settler: " + id + " failed to move.";
+                    out = "Settler: " + actor + " failed to move.";
                 else
-                    out = "Settler: " + id + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
+                    out = "Settler: " + actor + " moved from Asteroid: " + previous_asteroidid + " to Asteroid: " + to + ".";
             }
         }
         WriteOut(out);
@@ -1611,7 +902,7 @@ public class Controller {
      * @param where - A mozgas celjat azonosito id
      */
     private void RobotMove(String id, String where) {
-        String out = "Invalid parameters.";
+        String out = null;
 
         Whereabout w;
         Asteroid current = robots.get(id).GetAsteroid();
@@ -1653,7 +944,7 @@ public class Controller {
      * @param where - A mozgas celjat azonosito id
      */
     private void UfoMove(String id, String where) {
-        String out = "Invalid parameters.";
+        String out = null;
 
         Whereabout w;
         Asteroid current = ufos.get(id).GetAsteroid();
@@ -1695,7 +986,7 @@ public class Controller {
      * @param where - A mozgas celjat azonosito id
      */
     private void TeleportMove(String id, String where) {
-        String out = "Invalid parameters.";
+        String out = null;
 
         Whereabout w;
         Asteroid current = teleports.get(id).GetAsteroid();
@@ -1786,51 +1077,6 @@ public class Controller {
 ////////////////REARRANGE////////////////
 
     /**
-     * A metodus ujrarendezi az aszteroidak napkozeliseget felhasznaloi input alapjan.
-     * Minden aszteroidahoz beolvassa a felhasznalotol, hogy true/false erteket adjon
-     * a napkozelisegenek.
-     * A meghatarozott kimenetet megjeleniti.
-     */
-    private void RearrangeManually()
-    {
-        String out = "Sunnearness:";
-        Scanner scanner = new Scanner(System.in);
-        Iterator it = asteroids.entrySet().iterator();
-        WriteOut(out);
-        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
-        boolean[] nearness = new boolean[asteroids.size()];
-        int cnt = 0;
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            tempasteroids[cnt] = (Asteroid) pair.getValue();
-            out = "\t\tAsteroid: " + pair.getKey() + " ";
-            System.out.print(out);
-            String in = scanner.next();
-            if (in.equals("true")) {
-                nearness[cnt++] = true;
-                out = out + "(true)";
-                if (it.hasNext()) {
-                    out = out + ",";
-                }
-            }
-            else if (in.equals("false")) {
-                nearness[cnt++] = false;
-                out = out + "(false)";
-                if (it.hasNext()) {
-                    out = out + ",";
-                }
-            }
-            output.add(out);
-        }
-
-        for(int i = 0; i < tempasteroids.length; i++)
-        {
-            tempasteroids[i].SetSunnearness(nearness[i]);
-        }
-    }
-
-    /**
      * A metodus ujrarendezi az aszteroidak napkozeliseget veletlenszeruen.
      * A meghatarozott kimenetet megjeleniti.
      */
@@ -1878,67 +1124,188 @@ public class Controller {
         }
     }
 
-    /**
-     * A metodus ujrarendezi az aszteroidak napkozeliseget a kapott parancsparametereknek megfeleloen.
-     * A meghatarozott kimenetet megjeleniti.
-     * @param param - Parancsparameterek. True/false stringeket tartalmazo tomb, ennek megfeleloen
-     *                lesznek beallitva az aszteroida napkozelsegek.
-     */
-    private void RearrangeFromFile(String[] param)
-    {
-        boolean[] nearness = new boolean[asteroids.size()];
-        Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
-        int cnt = 0;
-        String out = "Sunnearness:";
-        Iterator it = asteroids.entrySet().iterator();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////INFO COMMANDS/////////////////////////////////////////////////////////////////
+
+    public void InfoAboutAsteroid(Asteroid a) {
+        String out;
+        String id = SearchForAsteroid(a);
+        out = "Asteroid: " + id;
         WriteOut(out);
-        while(it.hasNext())
+        out = "\tSunnearness: " + String.valueOf(a.GetSunnearness());
+        WriteOut(out);
+        out = "\tLayers: " + Integer.toString(a.GetLayer());
+        WriteOut(out);
+
+
+        out = "\tCore: ";
+        if(SearchForCoal(a.GetMaterial()) != null) out = out + "Coal: " + SearchForCoal(a.GetMaterial());
+        else if(SearchForIron(a.GetMaterial()) != null) out = out + "Iron: " + SearchForIron(a.GetMaterial());
+        else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForIce(a.GetMaterial());
+        else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForUranium(a.GetMaterial());
+        else out = out + "null";
+        WriteOut(out);
+
+
+        ArrayList<Whereabout> neighbours = a.GetNeighbours();
+        out = "\tNeighbours:";
+        WriteOut(out);
+        if(neighbours.isEmpty())
         {
-            Map.Entry pair = (Map.Entry) it.next();
-            tempasteroids[cnt] = (Asteroid) pair.getValue();
-            out = "\t\tAsteroid: " + pair.getKey() + " ";
-            System.out.print(out);
-            String in = param[cnt+1];
-            if (in.equals("true")) {
-                nearness[cnt++] = true;
-                out = out + "(true)";
-                System.out.print("(true)");
-                if (it.hasNext()) {
-                    out = out + ",";
-                    System.out.print(",");
-                }
-            } else if (in.equals("false")) {
-                nearness[cnt++] = false;
-                out = out + "(false)";
-                System.out.print("(false)");
-                if (it.hasNext()) {
-                    out = out + ",";
-                    System.out.print(",");
+            out = "\t\tnull";
+            WriteOut(out);
+        }
+        for (int i = 0; i < neighbours.size(); i++) {
+            out = "\t\t";
+            if(SearchForAsteroid(neighbours.get(i)) != null)
+                out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
+            else if(SearchForTeleport(neighbours.get(i)) != null)
+                out = out + "Teleport: " + SearchForTeleport(neighbours.get(i));
+            if(i+1 < neighbours.size())
+                out = out + ",";
+            WriteOut(out);
+        }
+
+
+        ArrayList<Entity> entities = a.GetEntities();
+        out = "\tEntities:";
+        WriteOut(out);
+        if(entities.size() < 1)
+        {
+            out = "\t\tnull";
+            WriteOut(out);
+        }
+        for (int i = 0; i < entities.size(); i++) {
+            out = "\t\t";
+            if(SearchForSettler(entities.get(i)) != null)
+                out = out + "Settler: " + SearchForSettler(entities.get(i));
+            else if(SearchForRobot(entities.get(i)) != null)
+                out = out + "Robot: " + SearchForRobot(entities.get(i));
+            else if(SearchForUfo(entities.get(i)) != null)
+                out = out + "Ufo: " + SearchForUfo(entities.get(i));
+            if(i+1 < entities.size())
+                out = out + ",";
+            WriteOut(out);
+        }
+        WriteInfo();
+    }
+
+    public void InfoAboutTeleport(Teleport t) {
+        String out;
+        String id = SearchForTeleport(t);
+        out = "Teleport: " + id;
+        WriteOut(out);
+        if(SearchForTeleport(t.GetPair()) != null)
+            out = "\tPair: " + SearchForTeleport(t.GetPair());
+        else
+            out = "\tPair: null";
+        WriteOut(out);
+
+        if(t.GetPair() != null && t.GetPair().GetPairReadiness())
+            out = "\tState: active";
+        else
+            out = "\tState: inactive";
+        WriteOut(out);
+
+        if(t.GetAsteroid() != null)
+            out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
+
+        else {
+            boolean found = false;
+            Iterator it2 = settlers.entrySet().iterator();
+            while (it2.hasNext() && !found) {
+                Map.Entry pair2 = (Map.Entry) it2.next();
+                if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
+                    found = true;
+                    out = "\tSettler: " + pair2.getKey();
                 }
             }
-            System.out.print("\n");
-            output.add(out);
+
+            if (!found)
+                out = "\tPlace: null";
         }
-
-        for(int i = 0; i < tempasteroids.length; i++)
-        {
-            tempasteroids[i].SetSunnearness(nearness[i]);
-        }
-    }
-
-///////////////STEP//////////////////////////
-
-    /**
-     * A metodus korok atugrasakor hivodik meg.
-     * Ennek megfeleloen nem csinal semmit, csak a megfelelo kimenetet megjelenit.
-
-     * What are you doing step-command?
-     */
-    private void Step() {
-        String out = "Phase has been stepped.";
         WriteOut(out);
+        WriteInfo();
     }
 
+    public void InfoAboutSettler(Settler s) {
+        String out;
+        String id = SearchForSettler(s);
+        out = "Settler: " + id;
+        WriteOut(out);
+        if(s.GetAsteroid() != null)
+            out = "\tAsteroid: " + SearchForAsteroid(s.GetAsteroid());
+        else
+            out = "\tnull";
+        WriteOut(out);
+
+        out = "\tInventory:";
+        WriteOut(out);
+
+        out = "\t\tMaterials:";
+        WriteOut(out);
+
+        ArrayList<Teleport> ta = s.GetInventory().GetTeleports();
+        ArrayList<Material> ma = s.GetInventory().GetMaterials();
+
+        if(ma.size() == 0)
+        {
+            out = "\t\t\tnull" ;
+            WriteOut(out);
+        }
+        for(int i = 0; i < ma.size(); i++)
+        {
+            if(SearchForCoal(ma.get(i)) != null) out = "\t\t\tCoal: " + SearchForCoal(ma.get(i));
+            else if(SearchForIce(ma.get(i)) != null) out = "\t\t\tIce: " + SearchForIce(ma.get(i));
+            else if(SearchForIron(ma.get(i)) != null) out = "\t\t\tIron: " + SearchForIron(ma.get(i));
+            else if(SearchForUranium(ma.get(i)) != null) out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
+
+            WriteOut(out);
+        }
+
+        out = "\t\tTeleports:";
+        WriteOut(out);
+
+        if(ta.size() == 0)
+        {
+            out = "\t\t\tnull" ;
+            WriteOut(out);
+        }
+        for(int i = 0; i < ta.size(); i++) {
+            if (SearchForTeleport(ta.get(i)) != null) out = "\t\t\tTeleport: " + SearchForTeleport(ta.get(i));
+
+            WriteOut(out);
+        }
+        WriteInfo();
+    }
+
+    public void InfoAboutRobot(Robot r) {
+        String out;
+        String id = SearchForRobot(r);
+        out = "Robot: " + id;
+        WriteOut(out);
+        if(r.GetAsteroid() != null)
+            out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
+        else
+            out = "\tnull";
+        WriteOut(out);
+        WriteInfo();
+    }
+
+    public void InfoAboutUfo(Ufo u) {
+        String out;
+        String id = SearchForUfo(u);
+        out = "Ufo: " + id;
+        WriteOut(out);
+        if(u.GetAsteroid() != null)
+            out = "\tAsteroid: " + SearchForAsteroid(u.GetAsteroid());
+        else
+            out = "\tnull";
+        WriteOut(out);
+        WriteInfo();
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////ENDGAME//////////////////////
 
     /**
@@ -1952,348 +1319,14 @@ public class Controller {
     {
         end = true;
         victory = v;
-
-        String out;
-        Iterator it = asteroids.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Asteroid a = (Asteroid) pair.getValue();
-
-
-            out = "Asteroid: " + pair.getKey();
-            WriteOut(out);
-
-
-            out = "\tSunnearness: " + String.valueOf(a.GetSunnearness());
-            WriteOut(out);
-
-
-            out = "\tLayers: " + Integer.toString(a.GetLayer());
-            WriteOut(out);
-
-
-            out = "\tCore: ";
-            if(SearchForCoal(a.GetMaterial()) != null) out = out + "Coal: " + SearchForCoal(a.GetMaterial());
-            else if(SearchForIron(a.GetMaterial()) != null) out = out + "Iron: " + SearchForIron(a.GetMaterial());
-            else if(SearchForIce(a.GetMaterial()) != null) out = out + "Ice: " + SearchForIce(a.GetMaterial());
-            else if(SearchForUranium(a.GetMaterial()) != null) out = out + "Uranium: " + SearchForUranium(a.GetMaterial());
-            else out = out + "null";
-            WriteOut(out);
-
-
-            ArrayList<Whereabout> neighbours = a.GetNeighbours();
-            out = "\tNeighbours:";
-            WriteOut(out);
-            if(neighbours.isEmpty())
-            {
-                out = "\t\tnull";
-                WriteOut(out);
-            }
-            for (int i = 0; i < neighbours.size(); i++) {
-                out = "\t\t";
-                if(SearchForAsteroid(neighbours.get(i)) != null)
-                    out = out + "Asteroid: " + SearchForAsteroid(neighbours.get(i));
-                else if(SearchForTeleport(neighbours.get(i)) != null)
-                    out = out + "Teleport: " + SearchForTeleport(neighbours.get(i));
-                if(i+1 < neighbours.size())
-                    out = out + ",";
-                WriteOut(out);
-            }
-
-
-            ArrayList<Entity> entities = a.GetEntities();
-            out = "\tEntities:";
-            WriteOut(out);
-            if(entities.size() < 1)
-            {
-                out = "\t\tnull";
-                WriteOut(out);
-            }
-            for (int i = 0; i < entities.size(); i++) {
-                out = "\t\t";
-                if(SearchForSettler(entities.get(i)) != null)
-                    out = out + "Settler: " + SearchForSettler(entities.get(i));
-                else if(SearchForRobot(entities.get(i)) != null)
-                    out = out + "Robot: " + SearchForRobot(entities.get(i));
-                else if(SearchForUfo(entities.get(i)) != null)
-                    out = out + "Ufo: " + SearchForUfo(entities.get(i));
-                if(i+1 < entities.size())
-                    out = out + ",";
-                WriteOut(out);
-            }
-        }
-
-        it = teleports.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Teleport t = (Teleport)pair.getValue();
-            out = "Teleport: " + pair.getKey();
-            WriteOut(out);
-
-            if(SearchForTeleport(t.GetPair()) != null)
-                out = "\tPair: " + SearchForTeleport(t.GetPair());
-            else
-                out = "\tPair: null";
-            WriteOut(out);
-
-            if(t.GetPair() != null && t.GetPair().GetPairReadiness())
-                out = "\tState: active";
-            else
-                out = "\tState: inactive";
-            WriteOut(out);
-
-            if(t.GetAsteroid() != null)
-                out = "\tPlace: Asteroid: " + SearchForAsteroid(t.GetAsteroid());
-
-            else {
-                boolean found = false;
-                Iterator it2 = settlers.entrySet().iterator();
-                while (it2.hasNext() && !found) {
-                    Map.Entry pair2 = (Map.Entry) it2.next();
-                    if (((Settler) pair2.getValue()).GetInventory().GetTeleports().contains(t)) {
-                        found = true;
-                        out = "\tSettler: " + pair2.getKey();
-                    }
-                }
-
-                if (!found)
-                    out = "\tPlace: null";
-            }
-            WriteOut(out);
-        }
-
-        it = settlers.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Settler s = (Settler)pair.getValue();
-            out = "Settler: " + pair.getKey();
-            WriteOut(out);
-
-            if(s.GetAsteroid() != null)
-                out = "\tAsteroid: " + SearchForAsteroid(s.GetAsteroid());
-            else
-                out = "\tnull";
-            WriteOut(out);
-
-            out = "\tInventory:";
-            WriteOut(out);
-
-            out = "\t\tMaterials:";
-            WriteOut(out);
-
-            ArrayList<Teleport> ta = s.GetInventory().GetTeleports();
-            ArrayList<Material> ma = s.GetInventory().GetMaterials();
-
-            if(ma.size() == 0)
-            {
-                out = "\t\t\tnull" ;
-                WriteOut(out);
-            }
-            for(int i = 0; i < ma.size(); i++)
-            {
-                if(SearchForCoal(ma.get(i)) != null) out = "\t\t\tCoal: " + SearchForCoal(ma.get(i));
-                else if(SearchForIce(ma.get(i)) != null) out = "\t\t\tIce: " + SearchForIce(ma.get(i));
-                else if(SearchForIron(ma.get(i)) != null) out = "\t\t\tIron: " + SearchForIron(ma.get(i));
-                else if(SearchForUranium(ma.get(i)) != null) out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
-
-                WriteOut(out);
-            }
-
-            out = "\t\tTeleports:";
-            WriteOut(out);
-
-            if(ta.size() == 0)
-            {
-                out = "\t\t\tnull" ;
-                WriteOut(out);
-            }
-            for(int i = 0; i < ta.size(); i++)
-            {
-                if(SearchForTeleport(ta.get(i)) != null) out = "\t\t\tTeleport: " + SearchForTeleport(ta.get(i));
-
-                WriteOut(out);
-            }
-        }
-
-        it = robots.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Robot r = (Robot)pair.getValue();
-            out = "Robot: " + pair.getKey();
-            WriteOut(out);
-
-            if(r.GetAsteroid() != null)
-                out = "\tAsteroid: " + SearchForAsteroid(r.GetAsteroid());
-            else
-                out = "\tnull";
-            WriteOut(out);
-        }
-
-        it = ufos.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Ufo u = (Ufo)pair.getValue();
-            out = "Ufo: " + pair.getKey();
-            WriteOut(out);
-
-            if(u.GetAsteroid() != null)
-                out = "\tAsteroid: " + SearchForAsteroid(u.GetAsteroid());
-            else
-                out = "\tnull";
-            WriteOut(out);
-        }
-
-        it = uran.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Uranium u = (Uranium)pair.getValue();
-            out = "Uranium: " + pair.getKey();
-            WriteOut(out);
-
-            out = "\tInteractCount: " + Integer.toString(u.GetInteractCount());
-            WriteOut(out);
-
-            boolean found = false;
-            Iterator it2 = settlers.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(u)) {
-                    found = true;
-                    out = "\tSettler: " + pair2.getKey();
-                }
-            }
-            it2 = asteroids.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
-                {
-                    found = true;
-                    out = "\tAsteroid: " + pair2.getKey();
-                }
-            }
-            if(!found)
-                out = "\tnull";
-            WriteOut(out);
-        }
-
-        it = ice.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Ice i = (Ice)pair.getValue();
-            out = "Ice: " + pair.getKey();
-            WriteOut(out);
-
-            out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
-            WriteOut(out);
-
-            boolean found = false;
-            Iterator it2 = settlers.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
-                    found = true;
-                    out = "\tSettler: " + pair2.getKey();
-                }
-            }
-            it2 = asteroids.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
-                {
-                    found = true;
-                    out = "\tAsteroid: " + pair2.getKey();
-                }
-            }
-            if(!found)
-                out = "\tnull";
-            WriteOut(out);
-        }
-
-        it = iron.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Iron i = (Iron)pair.getValue();
-            out = "Iron: " + pair.getKey();
-            WriteOut(out);
-
-            out = "\tInteractCount: " + Integer.toString(i.GetInteractCount());
-            WriteOut(out);
-
-            boolean found = false;
-            Iterator it2 = settlers.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(i)) {
-                    found = true;
-                    out = "\tSettler: " + pair2.getKey();
-                }
-            }
-            it2 = asteroids.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
-                {
-                    found = true;
-                    out = "\tAsteroid: " + pair2.getKey();
-                }
-            }
-            if(!found)
-                out = "\tnull";
-            WriteOut(out);
-        }
-
-        it = coal.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry) it.next();
-            Coal c = (Coal)pair.getValue();
-            out = "Coal: " + pair.getKey();
-            WriteOut(out);
-
-            out = "\tInteractCount: " + Integer.toString(c.GetInteractCount());
-            System.out.println(out);
-            output.add(out);
-
-            boolean found = false;
-            Iterator it2 = settlers.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (((Settler) pair2.getValue()).GetInventory().GetMaterials().contains(c)) {
-                    found = true;
-                    out = "\tSettler: " + pair2.getKey();
-                }
-            }
-            it2 = asteroids.entrySet().iterator();
-            while(it2.hasNext() && !found) {
-                Map.Entry pair2 = (Map.Entry) it2.next();
-                if (SearchForMaterial(((Asteroid)pair2.getValue()).GetMaterial()) == pair.getKey())
-                {
-                    found = true;
-                    out = "\tAsteroid: " + pair2.getKey();
-                }
-            }
-            if(!found)
-                out = "\tnull";
-            WriteOut(out);
-        }
     }
 
 ///////////////CHECK CONDITIONS//////////////////////////
 
-     /**
-     * Megnezi, hogy a parameterul kapott telepes aszteroidajan tartozkodo telepesek birtokolnak-e eleg nyersanyagot
-     * a jatek megnyeresehez. Ha nem, nem csinal semmit, ha igen, akkor lezarja a jatekot.
-     * @param s - A telepes, akinek az aszteroidajan futtatjuk az ellenorzest.
-     */
-     private void CheckVictory(Settler s){
+     private void CheckVictory(String settlerid){
+         if (!settlers.containsKey(settlerid))
+             return;
+         Settler s = settlers.get(settlerid);
         ArrayList<Material> materials = new ArrayList<Material>();
 
         Asteroid a = s.GetAsteroid();
@@ -2340,13 +1373,15 @@ public class Controller {
         int n = 1;
         while(!unique)
         {
-            if(robots.containsKey("robot" + Integer.toString(n)))
+            if(robots.containsKey("r" + Integer.toString(n)))
                 n++;
             else
                 unique = true;
         }
-        robots.put("robot" + Integer.toString(n), r);
-        output.add("Robot: robot" + Integer.toString(n) + ".");
+        String id = "r" + Integer.toString(n);
+        robots.put(id, r);
+        actors.add(new Actor(id, State.AIRound, "Robot: "));
+        output.add("Robot: " + id + ".");
     }
 
     /**
@@ -2361,14 +1396,26 @@ public class Controller {
         int n = 1;
         while(!unique)
         {
-            if(teleports.containsKey("teleport" + Integer.toString(n)) || teleports.containsKey("teleport" + Integer.toString(n+1)))
+            if(teleports.containsKey("t" + Integer.toString(n)) || teleports.containsKey("t" + Integer.toString(n+1)))
                 n+=2;
             else
                 unique = true;
         }
-        teleports.put("teleport" + Integer.toString(n), t1);
-        teleports.put("teleport" + Integer.toString(n+1), t2);
-        output.add("Teleport: teleport" + Integer.toString(n) + " and Teleport: teleport" + Integer.toString(n+1) + ".");
+        String id1 = "t" + Integer.toString(n);
+        String id2 = "t" + Integer.toString(n);
+        teleports.put(id1, t1);
+        teleports.put(id2, t2);
+        output.add("Teleport: " + id1 + " and Teleport: " + id2 + ".");
+    }
+
+    public void TeleportGoesCrazy(Teleport t) {
+        String id = SearchForTeleport(t);
+        if (id != null) {
+            actors.add(new Actor(id, State.AIRound, "Teleport: "));
+
+            String out = "Teleport: " + id + " went TOTAL CRAZY!!";
+            WriteOut(out);
+        }
     }
 
     /**
@@ -2382,6 +1429,8 @@ public class Controller {
         String id = SearchForSettler(s);
         if (id != null) {
             settlers.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Settler: " + id + " died.";
             WriteOut(out);
@@ -2399,6 +1448,8 @@ public class Controller {
         String id = SearchForRobot(r);
         if (id != null) {
             robots.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Robot: " + id + " died.";
             WriteOut(out);
@@ -2416,6 +1467,8 @@ public class Controller {
         String id = SearchForUfo(u);
         if (id != null) {
             ufos.remove(id);
+            Actor ac = FindActor(id);
+            actors.remove(ac);
 
             String out = "Ufo: " + id + " died.";
             WriteOut(out);
@@ -2452,6 +1505,11 @@ public class Controller {
         if (id != null)
         {
             teleports.remove(id);
+
+            Actor ac = FindActor(id);
+            if (ac != null)
+                actors.remove(ac);
+
 
             String out = "Teleport: " + id + " exploded.";
             WriteOut(out);
