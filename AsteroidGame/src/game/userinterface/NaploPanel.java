@@ -14,12 +14,12 @@ public class NaploPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public void WriteOut(String[] text)
+    public void WriteOut(ArrayList<String> text)
     {
-        for(int i = 0; i < text.length; i++)
+        for(int i = 0; i < text.size(); i++)
         {
             //A tabulatort nem ismeri a label ezert at kell alakitani spacera
-            JLabel templabel = new JLabel(text[i].replaceAll("\t", "        "));
+            JLabel templabel = new JLabel(text.get(i).replaceAll("\t", "        "));
             templabel.setForeground(new Color(140, 122, 230));
             lines.add(templabel);
             this.add(lines.get(i));

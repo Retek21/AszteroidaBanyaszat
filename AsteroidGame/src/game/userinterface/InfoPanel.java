@@ -2,6 +2,7 @@ package game.userinterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class InfoPanel extends JPanel {
     public InfoPanel()
@@ -10,12 +11,12 @@ public class InfoPanel extends JPanel {
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
-    public void WriteInfo(String[] info)
+    public void WriteInfo(ArrayList<String> info)
     {
         this.removeAll();
-        for(int i = 0; i< info.length; i++)
+        for(int i = 0; i< info.size(); i++)
         {
-            JLabel templabel = new JLabel(info[i].replaceAll("\t", "        "));
+            JLabel templabel = new JLabel(info.get(i).replaceAll("\t", "        "));
             templabel.setForeground(new Color(140, 122, 230));
             this.add(templabel);
         }

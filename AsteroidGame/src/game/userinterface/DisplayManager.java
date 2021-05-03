@@ -17,7 +17,7 @@ public class DisplayManager {
 
     private  static DisplayManager instance=null;
     private DisplayManager(){}
-    public static DisplayManager GetInstance(){
+    public static DisplayManager GetInstanceOf(){
         if(instance==null)
             instance=new DisplayManager();
         return instance;

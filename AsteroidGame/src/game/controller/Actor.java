@@ -1,5 +1,7 @@
 package game.controller;
 
+import game.userinterface.State;
+
 public class Actor {
     private String id;
     private State state;

@@ -2,15 +2,11 @@ package game.userinterface;
 
 import game.controller.Controller;
 
-enum State{
-    SETTLERROUND,
-    WAITFORMOVE,
-    AIROUND
-}
-
 public class InputManager {
 
-    private Manager manager;
+    private static InputManager instance;
+
+    private DisplayManager manager;
 
     private Controller controller;
 
@@ -23,8 +19,18 @@ public class InputManager {
 
     private State state;
 
-    public InputManager(GameButton dophase,GameButton move,GameButton drill,GameButton mine,GameButton place,GameButton craft)
+    private InputManager()
     {
+        manager = DisplayManager.GetInstanceOf();
+    }
+
+    public static InputManager GetInstanceOf(){
+        if(instance == null)
+            instance = new InputManager();
+        return instance;
+    }
+
+    public void SetComponents(GameButton dophase,GameButton move,GameButton drill,GameButton mine,GameButton place,GameButton craft){
         dophasebutton = dophase;
         movebutton = move;
         drillbutton = drill;

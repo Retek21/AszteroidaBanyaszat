@@ -13,6 +13,8 @@ public class GameFrame extends JFrame {
 
     InputManager inputmanager;
 
+    TextOutputManager textoutputmanager;
+
     private NaploPanel naplopanel;
     private InfoPanel infopanel;
     private GamePanel gamepanel;
@@ -59,7 +61,13 @@ public class GameFrame extends JFrame {
         craftable = new OptionsComboBox(new String[]{"Robot", "Teleport"});
         placeable = new OptionsComboBox(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
 
-        inputmanager = new InputManager(dophasebutton,movebutton,drillbutton,minebutton,placebutton,craftbutton);
+        //managerek elkeszitese, bekotese
+
+        inputmanager = InputManager.GetInstanceOf();
+        inputmanager.SetComponents(dophasebutton,movebutton,drillbutton,minebutton,placebutton,craftbutton);
+
+        textoutputmanager = TextOutputManager.GetInstanceOf();
+        textoutputmanager.SetComponents(naplopanel, infopanel, phaselabel);
 
         //komponensek elrendezese
 
@@ -157,13 +165,6 @@ public class GameFrame extends JFrame {
         c.gridx = 4;
         buttonpanel.add(craftable, c);
 
-        naplopanel.WriteOut(new String[]{"TEST1"});
-        naplopanel.WriteOut(new String[]{"TEST1","TEST2"});
-        naplopanel.WriteOut(new String[]{"TEST1", "TEST2","TEST3", "\tTEST3", "\t\tTEST3"});
-        naplopanel.WriteOut(new String[]{"TEST1", "TEST2","TEST3", "\tTEST3", "\t\tTEST3", "TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4","TEST4", "TEST4"});
-
-        infopanel.WriteInfo(new String[]{"TEST ERROR", "TEST ERROR", "TEST ERROR"});
-        infopanel.WriteInfo(new String[]{"TEST1", "\tTEST2", "\t\tTEST2"});
 
 
         //ActionListener felinicializalasa
