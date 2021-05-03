@@ -1,6 +1,8 @@
 package game.logic;
 
 import game.controller.Controller;
+import game.userinterface.Display;
+
 import java.util.ArrayList;
 
 /**
@@ -166,5 +168,8 @@ public class Settler extends Entity{
             return true;
         }
         return false;
+    }
+    public void AddDisplay(Display display){
+        this.display  = display;
     }
 }

@@ -1,6 +1,7 @@
 package game.logic;
 
 import game.controller.Controller;
+import game.userinterface.Display;
 
 /**
  * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
@@ -36,6 +37,8 @@ public class Teleport implements Whereabout{
      */
     private boolean gonecrazy;
 
+    private Display display;
+
     /**
      * Default konstruktor
      */
@@ -44,6 +47,10 @@ public class Teleport implements Whereabout{
         inventory = null;
         pair = null;
         gonecrazy = false;
+    }
+
+    public Display getDisplay() {
+        return display;
     }
 
     /**
@@ -244,5 +251,9 @@ public class Teleport implements Whereabout{
      */
     public boolean GetCraziness(){
         return gonecrazy;
+    }
+
+    public void AddDisplay(Display display){
+        this.display = display;
     }
 }

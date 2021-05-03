@@ -1,6 +1,8 @@
 package game.logic;
 
 import game.controller.Controller;
+import game.userinterface.Display;
+
 import java.util.ArrayList;
 
 /**
@@ -50,6 +52,7 @@ public class Asteroid implements Whereabout{
      * az aszteroida default konstruktora
      * beallitja az alapertelmezett attributumokat
      */
+    private Display display;
     public Asteroid() {
         sunnearness=false;
         empty=true;
@@ -361,5 +364,13 @@ public class Asteroid implements Whereabout{
      */
     public int GetNumberOfNeighbours(){
         return neighbours.size();
+    }
+
+    public Display getDisplay() {
+        return display;
+    }
+
+    public void AddDisplay(Display display){
+        this.display = display;
     }
 }

@@ -46,7 +46,7 @@ public class DisplayManager {
         UfoDisplay ud =new UfoDisplay(u);
         ufoDisplays.add(ud);
     }
-    public  void CreateConnectionDisplay(Display d1,Display d2){
+    public  void CreateConnectionDisplay(Display d1, Display d2){
         ConnectionDisplay cd=new ConnectionDisplay(d1,d2);
         connectionDisplays.add(cd);
     }
@@ -117,6 +117,7 @@ public class DisplayManager {
                         sd.SelectOutline();
                         sd.GetSubject();
                         Controller.GetInstanceOf().InfoAboutSettler();
+
                         break;
                     }
                 }
@@ -163,8 +164,8 @@ public class DisplayManager {
         for(AsteroidDisplay ad:asteroidDisplays){
             boolean pointInWherebout=ad.PointInArea(x,y);
             if(pointInWherebout){
-                ad.GetSubject();
-                Controller.GetInstanceOf().SettlerMove(ad);
+                Whereabout a = ad.GetSubject();
+                Controller.GetInstanceOf().SettlerMove(a);
                 break;
             }
         }
