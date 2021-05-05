@@ -178,7 +178,7 @@ public class DisplayManager {
                 for(SettlerDisplay sd:settlerDisplays){
                     pointInEntity=sd.PointInArea(x,y);
                     if(pointInEntity){
-                        sd.SelectOutline();
+                        sd.SetSelected(true);
                         sd.GetSubject();
                         Controller.GetInstanceOf().InfoAboutSettler();
 
@@ -188,7 +188,7 @@ public class DisplayManager {
                 for(RobotDisplay rd:robotDisplays){
                     pointInEntity=rd.PointInArea(x,y);
                     if(pointInEntity){
-                        rd.SelectOutline();
+                        rd.SetSelected(true);
                         rd.GetSubject();
                         Controller.GetInstanceOf().InfoAboutRobot();
                         break;
@@ -197,14 +197,14 @@ public class DisplayManager {
                 for(UfoDisplay ud:ufoDisplays){
                     pointInEntity=ud.PointInArea(x,y);
                     if(pointInEntity){
-                        ud.SelectOutline();
+                        ud.SetSelected(true);
                         ud.GetSubject();
                         Controller.GetInstanceOf().InfoAboutUfo();
                         break;
                     }
                 }
                 if(!pointInEntity){
-                    ad.SelectOutline();
+                    ad.SetSelected(true);
                     ad.GetSubject();
                     Controller.GetInstanceOf().InfoAboutAsteroid();
                     break;
@@ -216,7 +216,7 @@ public class DisplayManager {
         {
             boolean pointInWherebout=td.PointInArea(x,y);
             if(pointInWherebout){
-                td.SelectOutline();
+                td.SetSelected(true);
                 td.GetSubject();
                 Controller.GetInstanceOf().InfoAboutTeleport();
                 break;
