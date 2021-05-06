@@ -84,6 +84,8 @@ public class MenuFrame extends JFrame {
                 int numberofplayers = Integer.parseInt(tempstring);
                 if (numberofplayers < 2)
                     JOptionPane.showMessageDialog(this, "More than 1 player is needed.", "Error", JOptionPane.WARNING_MESSAGE);
+                else if(numberofplayers > 5)
+                    JOptionPane.showMessageDialog(this, "The maximum number of players is 5.", "Error", JOptionPane.WARNING_MESSAGE);
                 else
                     game.StartGame(numberofplayers);
             }

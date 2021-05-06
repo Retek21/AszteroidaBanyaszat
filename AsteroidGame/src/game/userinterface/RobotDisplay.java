@@ -1,15 +1,42 @@
 package game.userinterface;
 
+import game.logic.Asteroid;
+import game.logic.Entity;
 import game.logic.Robot;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class RobotDisplay extends Display{
+    public Robot GetSubject() {
+        return subject;
+    }
+
     private Robot subject;
 
-    public void RoundOutline(){}
+
+
+    public RobotDisplay(Robot subject){
+        this.subject = subject;
+        Asteroid a = subject.GetAsteroid();
+        AsteroidDisplay ad = (AsteroidDisplay) a.GetDisplay();
+        ad.CoordinateServer(this);
+    }
+
+    public void Paint(Graphics g2d){
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        g2d.setColor(new Color(1,100,100));
+        g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        if(IsSelected()){
+            g2d.setColor(new Color(1,100,100));
+        }else if(IsRoundoutline()){
+            g2d.setColor(new Color(100,100,100));
+        }
+        g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        SetSelected(false);
+        SetRoundoutline(false);
+    }
     @Override
-    public void Update(){}
-    public void SelectOutline(){}
-    @Override
-    public void Clear(){}
-    public boolean PointInArea(int x, int y){return true;}
+    public void Clear(){ DisplayManager.GetInstance().RemoveRobotDisplay(this);}
+
 }

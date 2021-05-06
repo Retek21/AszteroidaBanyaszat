@@ -1,5 +1,7 @@
 package game.logic;
 
+import game.userinterface.Display;
+
 /**
  * Egy interface, amely a szomszedossagi viszonyokert felelos
  * teleportok, aszteroidak kozott.
@@ -38,4 +40,6 @@ public interface Whereabout {
      * @return - Ralepo objektum celaszteroidaja.
      */
     public Asteroid GetLandingPad();
+
+    public Display GetDisplay();
 }

@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
 
     private NaploPanel naplopanel;
     private InfoPanel infopanel;
-    private GamePanel gamepanel;
+    private DisplayManager gamepanel;
 
     private GameButton dophasebutton;
     private GameButton movebutton;
@@ -46,7 +46,7 @@ public class GameFrame extends JFrame {
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         infopanel = new InfoPanel();
-        gamepanel = new GamePanel();
+        gamepanel = DisplayManager.GetInstance();
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
         phaselabel.setFont(new Font ("Verdana", Font.BOLD, 26));

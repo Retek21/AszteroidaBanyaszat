@@ -404,7 +404,7 @@ public class Controller {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////INIT PHASE///////////////////////////////////////////////////////
     public void Init(int players) {
-        dm = DisplayManager.GetInstanceOf();
+        dm = DisplayManager.GetInstance();
         tm = TextOutputManager.GetInstanceOf();
         asteroidfield = new Asteroidfield();
         sun = new Sun();
@@ -530,7 +530,7 @@ public class Controller {
                 a1.AddNeighbour(asteroids.get(id2));
                 a2.AddNeighbour(asteroids.get(id1));
 
-                dm.SetNeighbourhood(a1, a2);
+                //dm.SetNeighbourhood(a1, a2);
             }
             else if(teleports.containsKey(id2))
             {
@@ -539,7 +539,7 @@ public class Controller {
 
                 t.Deploy(a);
 
-                dm.SetNeighbourhood(a, t);
+               // dm.SetNeighbourhood(a, t);
             }
         }
         else if(teleports.containsKey(id1) && asteroids.containsKey(id2))
@@ -549,7 +549,7 @@ public class Controller {
 
             t.Deploy(a);
 
-            dm.SetNeighbourhood(a, t);
+            //dm.SetNeighbourhood(a, t);
         }
     }
 
