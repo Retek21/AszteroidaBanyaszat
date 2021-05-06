@@ -21,7 +21,7 @@ public class InputManager {
 
     private InputManager()
     {
-        manager = DisplayManager.GetInstanceOf();
+        manager = DisplayManager.GetInstance();
     }
 
     public static InputManager GetInstanceOf(){
@@ -94,8 +94,10 @@ public class InputManager {
     {
         switch (buttoncmd){
             case "DoPhase":
-                controller.DoPhase();
+                //controller.DoPhase();
                 System.out.println("DoPhase pressed");
+                DisplayManager.GetInstance().Test();
+                DisplayManager.GetInstance().repaint();
                 break;
             case "Move":
                 System.out.println("Move pressed");

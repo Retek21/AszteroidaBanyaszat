@@ -1,40 +1,49 @@
 package game.userinterface;
 
+import game.logic.Asteroid;
 import game.logic.Entity;
 import game.logic.Settler;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class SettlerDisplay extends Display{
+public class SettlerDisplay extends Display {
+
     private Settler subject;
     private boolean moved;
 
-    public SettlerDisplay(Settler subject, int x, int y) {
+    public Settler GetSubject() {
+        return subject;
+    }
+
+    public SettlerDisplay(Settler subject) {
         this.subject = subject;
-        subject.AddDisplay(this);
-        getShape().setBounds(x,y,50,50);
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        ad.CoordinateServer(this);
     }
 
     @Override
-    public void RoundOutline(Graphics2D g2d){
-
-    }
-
-    @Override
-    public void Update(Graphics2D g2d){
-        ArrayList<Entity> subjectEntities = subject.GetAsteroid().GetEntities();
-        Random random = new Random();
-        int x = random.nextInt(1200);
-        int y = random.nextInt(900);
-        for (Entity et: subjectEntities) {
-
+    public void Paint(Graphics g2d) {
+        Asteroid asteroid = subject.GetAsteroid();
+        AsteroidDisplay ad = (AsteroidDisplay) asteroid.GetDisplay();
+        if(moved){
+            ad.CoordinateServer(this);
         }
+        g2d.setColor(new Color(255, 180, 120));
+        g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        if (IsSelected()) {
+            g2d.setColor(new Color(1, 225, 150));
+        } else if (IsRoundoutline()) {
+            g2d.setColor(new Color(130, 140, 150));
+        }
+        g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        SetSelected(false);
+        SetRoundoutline(false);
+        moved = false;
     }
-    public void SelectOutline(){}
+
     @Override
-    public void Clear(){
-            DisplayManager.GetInstance().RemoveSettlerDisplay(this);
+    public void Clear() {
+        DisplayManager.GetInstance().RemoveSettlerDisplay(this);
     }
 }

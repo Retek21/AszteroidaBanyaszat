@@ -1,36 +1,61 @@
 package game.userinterface;
 import java.awt.*;
 
-public class Display{
+public class Display {
 
-    private Rectangle shape;
+    private Rectangle shape = new Rectangle();
+    private boolean selected;
+    private boolean roundoutline;
+    private boolean isNeigbhour;
+    private Point sectorCoordinates;
 
-    public void setColor(Color color) {
-        this.color = color;
+    public Point GetSectorCoordinates() {
+        return sectorCoordinates;
     }
 
-    public Color getColor() {
-        return color;
+    public void SetSectorCoordinates(Point sectorCoordinates) {
+        this.sectorCoordinates = sectorCoordinates;
     }
 
-    private Color color;
-
-    public Rectangle getShape() {
+    public Rectangle GetShape() {
         return shape;
     }
 
-    public void setShape(Rectangle shape) {
+    public boolean IsSelected() {
+        return selected;
+    }
+
+    public boolean IsRoundoutline() {
+        return roundoutline;
+    }
+
+    public boolean IsNeigbhour() {
+        return isNeigbhour;
+    }
+
+
+    public void SetShape(Rectangle shape) {
         this.shape = shape;
     }
 
-    public void Update(Graphics2D g2d){}
-    public void SelectOutline(Graphics2D g2d){}
-    public void RoundOutline(Graphics2D g2d) {}
+    public void SetSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public void SetRoundoutline(boolean roundoutline) {
+        this.roundoutline = roundoutline;
+    }
+
+    public void SetisNeigbhour(boolean neigbhour) {
+        isNeigbhour = neigbhour;
+    }
+
+    public void Paint(Graphics g){}
     public void Clear(){}
     public boolean PointInArea(int x, int y){
         return shape.contains(x,y);
     }
     public boolean Intersect(Display display){
-       return shape.intersects(display.getShape());
+       return shape.intersects(display.GetShape());
     }
 }

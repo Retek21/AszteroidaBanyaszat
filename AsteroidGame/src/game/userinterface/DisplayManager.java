@@ -4,11 +4,12 @@ import game.controller.Controller;
 import game.logic.*;
 import game.logic.Robot;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DisplayManager {
+public class DisplayManager extends JPanel{
 
     private ArrayList<UfoDisplay> ufoDisplays=new ArrayList<UfoDisplay>();
     private ArrayList<RobotDisplay> robotDisplays=new ArrayList<RobotDisplay>();
@@ -16,18 +17,28 @@ public class DisplayManager {
     private ArrayList<TeleportDisplay> teleportDisplays=new ArrayList<TeleportDisplay>();
     private ArrayList<AsteroidDisplay> asteroidDisplays=new ArrayList<AsteroidDisplay>();
     //private ArrayList<ConnectionDisplay> connectionDisplays=new ArrayList<ConnectionDisplay>();
-    private SunDisplay sunDisplay=new SunDisplay();
-    private GamePanel gamePanel=new GamePanel();
+    private SunDisplay sunDisplay;
     boolean[][] AllocatedAsteroidSectors=new boolean[10][10];
 
     private  static DisplayManager instance=null;
-    private DisplayManager(){}
+    private DisplayManager(){
+        super();
+        setBackground(new Color(50,56,65));
+        setBorder(BorderFactory.createLineBorder(Color.black));
+    }
     public static DisplayManager GetInstance(){
         if(instance==null)
             instance=new DisplayManager();
         return instance;
     }
-
+    public void Test(){
+        Asteroid[] asteroids = new Asteroid[36];
+        for(int i = 0; i < 36; i ++){
+            asteroids[i] = new Asteroid();
+            asteroids[i].SetSunnearness(true);
+        }
+       CreateAsteroidfieldDisplay(asteroids);
+    }
     //GETTERS
     public ArrayList<UfoDisplay> GetUfoDisplays(){return ufoDisplays;}
     public ArrayList<RobotDisplay> GetRobotDisplays(){return robotDisplays;}
@@ -60,8 +71,9 @@ public class DisplayManager {
             }
         }
 
-        x = (x * gamePanel.getWidth()) / 10;
-        y = (y * gamePanel.getHeight()) / 10;
+        x = (x * getWidth()) / 10;
+        System.out.println(getWidth());
+        y = (y * getHeight()) / 10;
 
         return new Point(x,y);
     }
@@ -76,15 +88,14 @@ public class DisplayManager {
             asteroidDisplays.add(ad);
         }
 
-        Point coordOfSun = CoordinateServer();
-        sunDisplay = new SunDisplay(coordOfSun.x,coordOfSun.y);
+        sunDisplay = new SunDisplay((getWidth()-200)/2,(getHeight()-200)/2);
     }
     public void CreateTeleportDisplay(Teleport t){
         TeleportDisplay td=new TeleportDisplay(t);
         teleportDisplays.add(td);
     }
     public void CreateSettlerDisplay(Settler s){
-        SettlerDisplay sd=new SettlerDisplay(sd);
+        SettlerDisplay sd=new SettlerDisplay(s);
         settlerDisplays.add(sd);
     }
     public void CreateRobotDisplay(Robot r){
@@ -130,9 +141,6 @@ public class DisplayManager {
         g2d.drawOval(getShape().x, getShape().y, getShape().width, getShape().height);
     }*/
 
-    public void UpdateGamePanel(){
-        gamePanel.DrawDisplays();
-    }
 
     /*public void DrawDisplays(){
         //DrawSun();
@@ -179,8 +187,8 @@ public class DisplayManager {
                     pointInEntity=sd.PointInArea(x,y);
                     if(pointInEntity){
                         sd.SetSelected(true);
-                        sd.GetSubject();
-                        Controller.GetInstanceOf().InfoAboutSettler();
+                        Settler s = sd.GetSubject();
+                        Controller.GetInstanceOf().InfoAboutSettler(s);
 
                         break;
                     }
@@ -189,8 +197,7 @@ public class DisplayManager {
                     pointInEntity=rd.PointInArea(x,y);
                     if(pointInEntity){
                         rd.SetSelected(true);
-                        rd.GetSubject();
-                        Controller.GetInstanceOf().InfoAboutRobot();
+                        Controller.GetInstanceOf().InfoAboutRobot(rd.GetSubject());
                         break;
                     }
                 }
@@ -198,15 +205,13 @@ public class DisplayManager {
                     pointInEntity=ud.PointInArea(x,y);
                     if(pointInEntity){
                         ud.SetSelected(true);
-                        ud.GetSubject();
-                        Controller.GetInstanceOf().InfoAboutUfo();
+                        Controller.GetInstanceOf().InfoAboutUfo(ud.GetSubject());
                         break;
                     }
                 }
                 if(!pointInEntity){
                     ad.SetSelected(true);
-                    ad.GetSubject();
-                    Controller.GetInstanceOf().InfoAboutAsteroid();
+                    Controller.GetInstanceOf().InfoAboutAsteroid(ad.GetSubject());
                     break;
                 }
             }
@@ -217,8 +222,7 @@ public class DisplayManager {
             boolean pointInWherebout=td.PointInArea(x,y);
             if(pointInWherebout){
                 td.SetSelected(true);
-                td.GetSubject();
-                Controller.GetInstanceOf().InfoAboutTeleport();
+                Controller.GetInstanceOf().InfoAboutTeleport(td.GetSubject());
                 break;
             }
         }
@@ -236,13 +240,31 @@ public class DisplayManager {
         for(TeleportDisplay td:teleportDisplays){
             boolean pointInWherebout=td.PointInArea(x,y);
             if(pointInWherebout){
-                td.GetSubject();
-                Controller.GetInstanceOf().SettlerMove(td);
+                Controller.GetInstanceOf().SettlerMove(td.GetSubject());
                 break;
             }
         }
     }
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        if(sunDisplay != null) {
+            sunDisplay.Paint(g);
+            for (AsteroidDisplay ad : asteroidDisplays)
+                ad.Paint(g);
+            for (TeleportDisplay td : teleportDisplays)
+                td.Paint(g);
+            for (SettlerDisplay sd : settlerDisplays)
+                sd.Paint(g);
+            for (RobotDisplay rd : robotDisplays)
+                rd.Paint(g);
+            for (UfoDisplay ud : ufoDisplays)
+                ud.Paint(g);
+        }
+    }
 
+    public void DrawDisplays(){
+        repaint();
+    }
     /*public boolean Intersect(Display d1,Display d2){
         //Area(Shape) ,ha krinya implementálta
     }*/

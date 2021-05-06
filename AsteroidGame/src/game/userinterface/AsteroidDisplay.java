@@ -1,53 +1,95 @@
 package game.userinterface;
 
 import game.logic.Asteroid;
+import game.logic.Whereabout;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class AsteroidDisplay extends Display{
 
-    public Asteroid getSubject() {
+    public Asteroid GetSubject() {
         return subject;
     }
 
     private Asteroid subject;
-    private boolean selected;
-    private boolean roundoutline;
-    private boolean neighbour;
+
+    public Rectangle[][] getMyfields() {
+        return myfields;
+    }
+
+    private Rectangle[][] myfields = new Rectangle[4][4];
+
+    public boolean[][] getAllocatedAsteroidSectors() {
+        return AllocatedAsteroidSectors;
+    }
+
+    boolean[][] AllocatedAsteroidSectors = new boolean[4][4];
+    private void SectorInit(){
+        for(int i=0;i<4;i++){
+            for(int j=0;j<4;j++){
+                AllocatedAsteroidSectors[i][j]=false;
+            }
+        }
+    }
+
+    public void CoordinateServer(Display d){
+        Random random=new Random();
+        boolean freeSector=false;
+        int x=-1;
+        int y=-1;
+
+        while(!freeSector){
+            x = random.nextInt(4);
+            y = random.nextInt(4);
+            if(!AllocatedAsteroidSectors[x][y]){
+                AllocatedAsteroidSectors[x][y]=true;
+                freeSector=true;
+                d.SetSectorCoordinates(new Point(x,y));
+            }
+        }
+
+        x = d.GetShape().x + (x * GetShape().width) / 4;
+        y = d.GetShape().y + (y * GetShape().height) / 4;
+    }
+    private boolean isNeighbour;
+    public void SetisNeighbour(boolean neighbour) {
+        this.isNeighbour = neighbour;
+    }
 
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
-        subject.AddDisplay(this);
-        getShape().setBounds(x, y, 100, 100);
+        subject.SetMyDisplay(this);
+        GetShape().setBounds(x, y, 80, 80);
+        SectorInit();
     }
 
     @Override
-    public void Update(Graphics2D g2d) {
+    public void Paint(Graphics g2d) {
         if (subject.GetSunnearness()) {
-            g2d.setColor(Color.getHSBColor(21, 100, 40));
+            g2d.setColor(new Color(163, 45, 16));
         } else {
-            g2d.setColor(Color.getHSBColor(21, 100, 17));
+            g2d.setColor(new Color(85, 48, 17));
         }
-
-        g2d.fillOval(getShape().x, getShape().y, getShape().width, getShape().height);
-        g2d.setColor();
-        g2d.drawOval(getShape().x, getShape().y, getShape().width, getShape().height);
+        g2d.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        if (IsSelected()) {
+            g2d.setColor(new Color(150, 150, 0));
+            ArrayList<Whereabout> neighbours = subject.GetNeighbours();
+            for (Whereabout neighbour: neighbours
+                 ) {
+                neighbour.GetDisplay().SetisNeigbhour(true);
+            }
+        }else if(IsRoundoutline()){
+            g2d.setColor(new Color(0, 0, 0));
+        }else if(isNeighbour){
+            g2d.setColor(new Color(0, 200, 255));
+        }
+        g2d.drawOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        SetSelected(false);
+        SetRoundoutline(false);
+        isNeighbour = false;
     }
-
-    @Override
-    public void SelectOutline(Graphics2D g2d) {
-        g2d.setColor(new Color(200, 22, 217));
-    }
-
-    @Override
-    public void RoundOutline(Graphics2D g2d) {
-        g2d.setColor(new Color(0, 0, 0));
-    }
-
-    public void NeighbourOutLine(Graphics2D g2d) {
-        g2d.setColor(new Color(0, 200, 255));
-    }
-
     @Override
     public void Clear() {
         DisplayManager.GetInstance().RemoveAsteroidDisplay(this);
