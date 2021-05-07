@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UfoDisplay extends Display{
+public class UfoDisplay extends EntityDisplay{
     public Ufo GetSubject() {
         return subject;
     }
@@ -23,6 +23,9 @@ public class UfoDisplay extends Display{
     @Override
     public void Paint(Graphics g2d){
         AsteroidDisplay asteroid = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        if(GetMoved()){
+            asteroid.CoordinateServer(this);
+        }
         g2d.setColor(new Color(1,150,250));
         g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         if(IsSelected()){
@@ -33,6 +36,7 @@ public class UfoDisplay extends Display{
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         SetSelected(false);
         SetRoundoutline(false);
+        SetMoved(false);
     }
 
     @Override

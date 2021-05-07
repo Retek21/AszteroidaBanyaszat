@@ -1,7 +1,7 @@
 package game.logic;
 
 import game.controller.Controller;
-import game.userinterface.Display;
+import game.userinterface.EntityDisplay;
 
 /**
  * Ufo osztaly, az Entity leszarmazotta,
@@ -50,7 +50,7 @@ public class Ufo extends Entity {
         Controller.GetInstanceOf().UfoDie(this);
     }
 
-    public void AddDisplay(Display display){
+    public void AddDisplay(EntityDisplay display){
         this.display = display;
     }
 }
