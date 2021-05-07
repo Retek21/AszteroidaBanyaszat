@@ -406,38 +406,84 @@ public class Controller {
     public void Init(int players) {
         dm = DisplayManager.GetInstance();
         tm = TextOutputManager.GetInstanceOf();
+        Random r = new Random();
+
+//SUN/ASTEROIDFIELD
         asteroidfield = new Asteroidfield();
         sun = new Sun();
-        actors.add(new Actor("_sun", State.AIROUND, "Sun"));
-        actors.add(new Actor("_asteroidfield", State.AIROUND, "Asteroidfield"));
+        actors.add(new Actor("_sun", State.AIROUND, "Round of Sun"));
+        actors.add(new Actor("_asteroidfield", State.AIROUND, "Round of Asteroidfield"));
 
-        Asteroid[] asteroids = new Asteroid[50];
-        for(int i = 0; i < 50; i++) {
+//ASTEROIDS
+        Asteroid[] _asteroids = new Asteroid[36];
+        for(int i = 0; i < 36; i++) {
             String id = "a" + i;
             Asteroid a = CreateAsteroid(id);
-            asteroids[i]=a;
+            _asteroids[i]=a;
         }
-        dm.CreateAsteroidfieldDisplay(asteroids);
+        dm.CreateAsteroidfieldDisplay(_asteroids);
+
+//SETTLERS
+        Object[] ids = asteroids.keySet().toArray();
+
         for(int i = 0; i < players; i++) {
             String id = "s" + i;
-            CreateSettler(id);
+            Settler s = CreateSettler(id);
+
+            String aid = (String)ids[r.nextInt(ids.length)];
+            AddEntity(id, aid);
+
+            actors.add(new Actor(id, State.SETTLERROUND, "Round of Settler: " + id));
+
+            dm.CreateSettlerDisplay(s);
         }
+//UFOS
         for(int i = 0; i < players; i++) {
             String id = "u" + i;
-            CreateUfo(id);
+            Ufo u = CreateUfo(id);
+
+            String aid = (String)ids[r.nextInt(ids.length)];
+            AddEntity(id, aid);
+
+            actors.add(new Actor(id, State.AIROUND, "Round of Ufo: " + id));
+
+            dm.CreateUfoDisplay(u);
         }
         ///////////neighbour cuccok??////////
 
         /////////////////////////////////////
 
-        ///////////material cuccok????//////////
+//MATERIALS
+        for(int i = 0; i < 7; i++) {
+            String id = "ur" + i;
+            Uranium u = CreateUranium(id);
+            String aid = (String)ids[r.nextInt(ids.length)];
+            SetCore(id, aid);
+        }
+        for(int i = 0; i < 7; i++) {
+            String id = "c" + i;
+            Coal c = CreateCoal(id);
+            String aid = (String)ids[r.nextInt(ids.length)];
+            SetCore(id, aid);
+        }
+        for(int i = 0; i < 8; i++) {
+            String id = "i" + i;
+            Ice ic = CreateIce(id);
+            String aid = (String)ids[r.nextInt(ids.length)];
+            SetCore(id, aid);
+        }
+        for(int i = 0; i < 8; i++) {
+            String id = "ir" + i;
+            Iron ir = CreateIron(id);
+            String aid = (String)ids[r.nextInt(ids.length)];
+            SetCore(id, aid);
+        }
 
-        //////////////////////////////////////
-
-        /////////////layer, sunnear cucc???/////
-
-        ///////////////////////////////////////
-
+//LAYERS, SUNNEARNESS
+        for(int i = 0; i < ids.length; i++) {
+            String aid = (String)ids[i];
+            SetLayers(aid, r.nextInt(4) + 1);
+        }
 
     }
 
@@ -453,9 +499,10 @@ public class Controller {
         teleports.put(id, t);
     }
 
-    private void CreateSettler(String id) {
+    private Settler CreateSettler(String id) {
         Settler s = new Settler();
         settlers.put(id, s);
+        return s;
     }
 
     private void CreateRobot(String id) {
@@ -463,26 +510,31 @@ public class Controller {
         robots.put(id, r);
     }
 
-    private void CreateUfo(String id) {
+    private Ufo CreateUfo(String id) {
         Ufo u = new Ufo();
         ufos.put(id, u);
+        return u;
     }
 
-    private void CreateIron(String id) {
+    private Iron CreateIron(String id) {
         Iron i = new Iron();
         iron.put(id, i);
+        return i;
     }
-    private void CreateIce(String id) {
+    private Ice CreateIce(String id) {
         Ice i = new Ice();
         ice.put(id, i);
+        return i;
     }
-    private void CreateCoal(String id) {
+    private Coal CreateCoal(String id) {
         Coal c = new Coal();
         coal.put(id, c);
+        return c;
     }
-    private void CreateUranium(String id) {
+    private Uranium CreateUranium(String id) {
         Uranium u = new Uranium();
         uran.put(id, u);
+        return u;
     }
 
 
@@ -597,7 +649,17 @@ public class Controller {
         }
         if (ac != null) {
             actor = ac.GetID();
-            String title = "Round of " + ac.GetTitle() + ac.GetID();
+
+            if (settlers.containsKey(actor))
+                settlers.get(actor).getDisplay().SetRoundoutline(true);
+            else if (robots.containsKey(actor))
+                robots.get(actor).getDisplay().SetRoundoutline(true);
+            else if (ufos.containsKey(actor))
+                ufos.get(actor).getDisplay().SetRoundoutline(true);
+            else if (teleports.containsKey(actor))
+                teleports.get(actor).getDisplay().SetRoundoutline(true);
+
+            String title = ac.GetTitle();
             WriteTitle(title);
         }
     }
@@ -615,6 +677,7 @@ public class Controller {
             SunStorm();
         else if (actor.equals("_asteroidfield"))
             Rearrange();
+        NextRound();
     }
 
     /**
@@ -707,6 +770,7 @@ public class Controller {
             }
         }
         WriteOut(out);
+        NextRound();
     }
 
     /**
@@ -752,6 +816,7 @@ public class Controller {
                 out = "Settler: " + actor + " mined Asteroid: " + asteroid_id + " with " + m.GetName() + ": " + material_id + ".";
         }
         WriteOut(out);
+        NextRound();
     }
 
     /**
@@ -808,53 +873,82 @@ public class Controller {
             }
         }
         WriteOut(out);
+        NextRound();
     }
 
 //////////////////////PLACE///////////////////////////////
 
-    public void SettlerPlace(String thingid)
+    public void SettlerPlace(String thing)
     {
         String out = null;
 
         if(settlers.containsKey(actor)) {
+            Settler s = settlers.get(actor);
+            boolean success = false;
 
             Asteroid a = settlers.get(actor).GetAsteroid();
             String asteroid_id = SearchForAsteroid(a);
 
-            boolean success = false;
-
-            if (coal.containsKey(thingid)) {
-                success = settlers.get(actor).PlaceMaterial(coal.get(thingid));
-                if (success) {
-                    out = "Settler: " + actor + " placed Coal: " + thingid + " at Asteroid: " + asteroid_id + ".";
+            if (thing.equals("teleport")) {
+                ArrayList<Teleport> tps = s.GetInventory().GetTeleports();
+                if (tps.isEmpty()) { }
+                else {
+                    boolean nopair = false;
+                    Teleport t = null;
+                    for (Teleport tt : tps) {
+                        if (tt.GetPairReadiness()) {
+                            nopair = true;
+                            t = tt;
+                        }
+                    }
+                    if (!nopair) {
+                        t = tps.get(0);
+                    }
+                    String tid = SearchForTeleport(t);
+                    success = settlers.get(actor).PlaceTeleport(teleports.get(tid));
+                    if (success) {
+                        out = "Settler: " + actor + " placed Teleport: " + tid + " at Asteroid: " + asteroid_id + ".";
+                        dm.CreateTeleportDisplay(t);
+                    }
                 }
-            } else if (iron.containsKey(thingid)) {
-                success = settlers.get(actor).PlaceMaterial(iron.get(thingid));
-                if (success) {
-                    out = "Settler: " + actor + " placed Iron: " + thingid + " at Asteroid: " + asteroid_id + ".";
+            }
+            else {
+                ArrayList<Material> mats = s.GetInventory().GetMaterials();
+                Material m;
+                switch (thing) {
+                    case "Uranium":
+                        m = new Uranium();
+                        break;
+                    case "Iron":
+                        m = new Iron();
+                        break;
+                    case "Ice":
+                        m = new Ice();
+                        break;
+                    case "Coal":
+                        m = new Coal();
+                        break;
+                    default:
+                        m = new Coal();
+                        break;
                 }
-            } else if (ice.containsKey(thingid)) {
-                success = settlers.get(actor).PlaceMaterial(ice.get(thingid));
-                if (success) {
-                    out = "Settler: " + actor + " placed Ice: " + thingid + " at Asteroid: " + asteroid_id + ".";
-                }
-            } else if (uran.containsKey(thingid)) {
-                success = settlers.get(actor).PlaceMaterial(uran.get(thingid));
-                if (success) {
-                    out = "Settler: " + actor + " placed Uranium: " + thingid + " at Asteroid: " + asteroid_id + ".";
-                }
-            } else if (teleports.containsKey(thingid)) {
-                success = settlers.get(actor).PlaceTeleport(teleports.get(thingid));
-                if (success) {
-                    out = "Settler: " + actor + " placed Teleport: " + thingid + " at Asteroid: " + asteroid_id + ".";
+                for(Material mm : mats) {
+                    if (mm.GetName().equals(m.GetName())) {
+                        success = settlers.get(actor).PlaceMaterial(mm);
+                        if (success) {
+                            String mid = SearchForMaterial(mm);
+                            out = "Settler: " + actor + " placed " + mm.GetName() + ": " + mid + " at Asteroid: " + asteroid_id + ".";
+                            break;
+                        }
+                    }
                 }
             }
 
             if (!success)
                 out = "Settler: " + actor + " failed to place.";
-
         }
         WriteOut(out);
+        NextRound();
     }
 
 ///////////////////MOVE//////////////////////////
@@ -895,6 +989,7 @@ public class Controller {
             }
         }
         WriteOut(out);
+        NextRound();
     }
 
     /**
@@ -1073,7 +1168,7 @@ public class Controller {
         int rand = new Random().nextInt(tempasteroids.size());
         Asteroid asteroid = tempasteroids.get(rand);
         SunStorm(SearchForAsteroid(asteroid));
-
+        NextRound();
     }
 
 ////////////////REARRANGE////////////////
@@ -1095,35 +1190,28 @@ public class Controller {
             Map.Entry pair = (Map.Entry) it.next();
             tempasteroids[cnt] = (Asteroid) pair.getValue();
             out = "\t\tAsteroid: " + pair.getKey() + " ";
-            System.out.print(out);
             int b = new Random().nextInt(2);
             if (b == 1)
             {
                 nearness[cnt++] = true;
                 out = out + "(true)";
-                System.out.print("(true)");
-                if (it.hasNext()) {
+                if (it.hasNext())
                     out = out + ",";
-                    System.out.print(",");
-                }
             }
             else
             {
                 nearness[cnt++] = false;
                 out = out + "(false)";
-                System.out.print("(false)");
-                if (it.hasNext()) {
+                if (it.hasNext())
                     out = out + ",";
-                    System.out.print(",");
-                }
             }
-            System.out.print("\n");
-            output.add(out);
+            WriteOut(out);
         }
         for(int i = 0; i < tempasteroids.length; i++)
         {
             tempasteroids[i].SetSunnearness(nearness[i]);
         }
+        NextRound();
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1384,6 +1472,8 @@ public class Controller {
         robots.put(id, r);
         actors.add(new Actor(id, State.AIROUND, "Robot: "));
         output.add("Robot: " + id + ".");
+
+        dm.CreateRobotDisplay(r);
     }
 
     /**
