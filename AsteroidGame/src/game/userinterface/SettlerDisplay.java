@@ -31,13 +31,13 @@ public class SettlerDisplay extends EntityDisplay {
             ad.CoordinateServer(this);
         }
         g2d.setColor(new Color(255, 180, 120));
-        g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.fillRect(GetShape().x, GetShape().y, 20, 20);
         if (IsSelected()) {
             g2d.setColor(new Color(1, 225, 150));
         } else if (IsRoundoutline()) {
             g2d.setColor(new Color(130, 140, 150));
         }
-        g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.drawRect(GetShape().x, GetShape().y, 20, 20);
         SetSelected(false);
         SetRoundoutline(false);
         SetMoved(false);

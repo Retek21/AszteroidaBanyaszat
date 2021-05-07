@@ -46,6 +46,7 @@ public abstract class Entity {
      */
     public void Die(){
         asteroid.RemoveEntity(this);
+        display.Clear();
     }
 
     /**
