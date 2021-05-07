@@ -20,6 +20,7 @@ public class SettlerDisplay extends EntityDisplay {
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.CoordinateServer(this);
         SetMoved(false);
+        subject.AddDisplay(this);
     }
 
 

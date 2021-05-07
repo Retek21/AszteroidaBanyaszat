@@ -25,13 +25,13 @@ public class TeleportDisplay extends Display {
             AsteroidDisplay ad = (AsteroidDisplay) subject.getDisplay();
             ad.TeleportSectorAllocation(this);
         }
-        g2d.setColor(new Color(180,180,180));
+        g2d.setColor(new Color(153,50,204));
         g2d.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         if(IsSelected()){
             g2d.setColor(new Color(255, 20, 20));
         }else if(IsRoundoutline()){
             g2d.setColor(new Color(250, 230, 20));
-        }else if(IsNeigbhour()){
+        }else if(IsNeighbour()){
             g2d.setColor(new Color(20,200,0));
         }
         g2d.drawOval(GetShape().x, GetShape().y,GetShape().width,GetShape().height);

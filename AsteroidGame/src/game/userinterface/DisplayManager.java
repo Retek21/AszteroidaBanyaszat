@@ -60,7 +60,7 @@ public class DisplayManager extends JPanel{
                 /*{true, true, true, true, false, false, true},
                 {false, false, false, true, false, false, true},
                 {false, false, false, true, false, false, true},
-                {true, true, true, true, true, true, true},
+                {true, true, true, false, true, true, true},
                 {true, false, false, true, false, false, false},
                 {true, false, false, true, false, false, false},
                 {true, false, false, true, true, true, true}*/
@@ -72,74 +72,50 @@ public class DisplayManager extends JPanel{
             instance=new DisplayManager();
         return instance;
     }
+
     public void Test(){
 
         Asteroid[] asteroids = new Asteroid[numberOfAsteroids];
         for(int i = 0; i < numberOfAsteroids; i ++){
             asteroids[i] = new Asteroid();
-            //asteroids[i].SetSunnearness(true);
         }
         CreateAsteroidfieldDisplay(asteroids);
-
-        //for debug: print number of true sectors (sun excluded)
-        System.out.println("w:"+getWidth()+" h:"+getHeight());
-        int trues=0;
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<columns;j++){
-                if(AllocatedAsteroidSectors[i][j])
-                    trues++;
-
-        /*Asteroid[] asteroid = new Asteroid[1];
-        asteroid[0] = new Asteroid();
-        System.out.println(getWidth()+ " " +getHeight());
-        CreateAsteroidfieldDisplay(asteroid);
 
         Teleport[] teleports = new Teleport[9];
         for(int i =0; i < 9; i++){
             teleports[i] = new Teleport();
-            System.out.println(teleports[i].Deploy(asteroid[0]));
+            System.out.println(teleports[i].Deploy(asteroids[0]));
             CreateTeleportDisplay(teleports[i]);
         }
 
        Settler[] settlers = new Settler[16];
        for(int i = 0; i < 16; i++){
            settlers[i] = new Settler();
-           settlers[i].SetAsteroid(asteroid[0]);
+           settlers[i].SetAsteroid(asteroids[0]);
            CreateSettlerDisplay(settlers[i]);
-       }*/
-    }
-    //GETTERS
-    public ArrayList<UfoDisplay> GetUfoDisplays(){return ufoDisplays;}
-    public ArrayList<RobotDisplay> GetRobotDisplays(){return robotDisplays;}
-    public ArrayList<SettlerDisplay> GetSettlerDisplays(){return settlerDisplays;}
-    public ArrayList<TeleportDisplay> GetTeleportDisplays(){return teleportDisplays;}
-    public ArrayList<AsteroidDisplay> GetAsteroidDisplays(){return asteroidDisplays;}
-    public SunDisplay GetSunDisplay(){return sunDisplay;}
-
-    private void SectorInit(){
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                AllocatedAsteroidSectors[i][j]=false;
-            }
-        }
-        System.out.println("trues: "+trues);
+       }
     }
 
     //CREATE
     public void CreateAsteroidfieldDisplay(Asteroid[] af){
         for(int i=0;i<af.length;i++){
-            //Point coord = CoordinateServer();
+            boolean found = false;
             for(int k=0;k<rows;k++){
                 for(int j=0;j<columns;j++){
                     if( AllocatedAsteroidSectors[k][j]){
+                        AllocatedAsteroidSectors[k][j] = false;
                         int x = k;
                         int y = j;
                         x = (x * getWidth()) / rows;
                         y = (y * getHeight()) / columns;
                         AsteroidDisplay ad=new AsteroidDisplay(af[i], x, y);
                         asteroidDisplays.add(ad);
+                        found = true;
+                        break;
                     }
                 }
+                if(found)
+                    break;
             }
         }
         sunDisplay = new SunDisplay((3 * getWidth()) / rows,(3* getHeight()) / columns);
@@ -258,9 +234,6 @@ public class DisplayManager extends JPanel{
     public void DrawDisplays(){
         repaint();
     }
-    /*public boolean Intersect(Display d1,Display d2){
-        //Area(Shape) ,ha krinya implementálta
-    }*/
 
     private Display activedisplay;
 

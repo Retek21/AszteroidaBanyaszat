@@ -87,7 +87,7 @@ public class AsteroidDisplay extends Display{
         if (subject.GetSunnearness()) {
             g2d.setColor(new Color(163, 45, 16));
         } else {
-            g2d.setColor(new Color(150, 150, 150));
+            g2d.setColor(new Color(51, 25, 0));
         }
         g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
         if (IsSelected()) {
@@ -99,7 +99,7 @@ public class AsteroidDisplay extends Display{
             }
         }else if(IsRoundoutline()){
             g2d.setColor(new Color(250, 230, 20));
-        }else if(isNeighbour){
+        }else if(IsNeighbour()){
             g2d.setColor(new Color(20,200,0));
         }
         g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
