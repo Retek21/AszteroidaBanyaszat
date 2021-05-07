@@ -19,25 +19,40 @@ public class DisplayManager extends JPanel{
     //private ArrayList<ConnectionDisplay> connectionDisplays=new ArrayList<ConnectionDisplay>();
     private SunDisplay sunDisplay;
     boolean[][] AllocatedAsteroidSectors=new boolean[10][10];
-
+    JScrollPane sp = new JScrollPane();
     private  static DisplayManager instance=null;
     private DisplayManager(){
         super();
         setBackground(new Color(50,56,65));
         setBorder(BorderFactory.createLineBorder(Color.black));
+        sp.setSize(900,650);
+        sp.setVisible(true);
     }
+
     public static DisplayManager GetInstance(){
         if(instance==null)
             instance=new DisplayManager();
         return instance;
     }
     public void Test(){
-        Asteroid[] asteroids = new Asteroid[36];
-        for(int i = 0; i < 36; i ++){
-            asteroids[i] = new Asteroid();
-            asteroids[i].SetSunnearness(true);
+        Asteroid[] asteroid = new Asteroid[1];
+        asteroid[0] = new Asteroid();
+        System.out.println(getWidth()+ " " +getHeight());
+        CreateAsteroidfieldDisplay(asteroid);
+
+        Teleport[] teleports = new Teleport[9];
+        for(int i =0; i < 9; i++){
+            teleports[i] = new Teleport();
+            System.out.println(teleports[i].Deploy(asteroid[0]));
+            CreateTeleportDisplay(teleports[i]);
         }
-       CreateAsteroidfieldDisplay(asteroids);
+
+       Settler[] settlers = new Settler[16];
+       for(int i = 0; i < 16; i++){
+           settlers[i] = new Settler();
+           settlers[i].SetAsteroid(asteroid[0]);
+           CreateSettlerDisplay(settlers[i]);
+       }
     }
     //GETTERS
     public ArrayList<UfoDisplay> GetUfoDisplays(){return ufoDisplays;}

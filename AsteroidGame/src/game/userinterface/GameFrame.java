@@ -47,6 +47,7 @@ public class GameFrame extends JFrame {
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
+        System.out.println();
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
         phaselabel.setFont(new Font ("Verdana", Font.BOLD, 26));
