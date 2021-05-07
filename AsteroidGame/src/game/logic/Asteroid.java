@@ -346,6 +346,7 @@ public class Asteroid implements Whereabout{
             material.Disintegrate();
         asteroidfield.RemoveAsteroid(this);
         Controller.GetInstanceOf().AsteroidExplode(this);
+        myDisplay.Clear();
     }
 
     /**
