@@ -7,26 +7,63 @@ import game.logic.Robot;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DisplayManager extends JPanel{
-
-    private ArrayList<UfoDisplay> ufoDisplays=new ArrayList<UfoDisplay>();
-    private ArrayList<RobotDisplay> robotDisplays=new ArrayList<RobotDisplay>();
-    private ArrayList<SettlerDisplay> settlerDisplays=new ArrayList<SettlerDisplay>();
-    private ArrayList<TeleportDisplay> teleportDisplays=new ArrayList<TeleportDisplay>();
-    private ArrayList<AsteroidDisplay> asteroidDisplays=new ArrayList<AsteroidDisplay>();
-    //private ArrayList<ConnectionDisplay> connectionDisplays=new ArrayList<ConnectionDisplay>();
-    private SunDisplay sunDisplay;
-    boolean[][] AllocatedAsteroidSectors=new boolean[10][10];
-    JScrollPane sp = new JScrollPane();
     private  static DisplayManager instance=null;
+    private ArrayList<UfoDisplay> ufoDisplays;
+    private ArrayList<RobotDisplay> robotDisplays;
+    private ArrayList<SettlerDisplay> settlerDisplays;
+    private ArrayList<TeleportDisplay> teleportDisplays;
+    private ArrayList<AsteroidDisplay> asteroidDisplays;
+    private SunDisplay sunDisplay;
+    private int rows;
+    private int columns;
+    private int numberOfAsteroids;
+    boolean[][] AllocatedAsteroidSectors;
+
     private DisplayManager(){
         super();
         setBackground(new Color(50,56,65));
         setBorder(BorderFactory.createLineBorder(Color.black));
-        sp.setSize(900,650);
-        sp.setVisible(true);
+
+        //initialize variables
+        ufoDisplays=new ArrayList<UfoDisplay>();
+        robotDisplays=new ArrayList<RobotDisplay>();
+        settlerDisplays=new ArrayList<SettlerDisplay>();
+        teleportDisplays=new ArrayList<TeleportDisplay>();
+        asteroidDisplays=new ArrayList<AsteroidDisplay>();
+        rows = 7;
+        columns = 7;
+        numberOfAsteroids=36;
+        AllocatedAsteroidSectors=new  boolean[][]{
+                //real
+                {true, false, false, true, true, true, true},
+                {true, true, true, true, true, true, true},
+                {true, false, false, false, true, true, true},
+                {true, true, false, false, true, false, true},
+                {true, true, true, false, false, true, true},
+                {true, true, false, true, true, false, true},
+                {true, false, true, true, true, true, true}
+
+                //test
+                /*{true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true},
+                {false, true, false, false, false, true, false},
+                {true, true, false, false, false, true, true},
+                {false, true, false, false, false, true, false},
+                {true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true}*/
+
+                //fun
+                /*{true, true, true, true, false, false, true},
+                {false, false, false, true, false, false, true},
+                {false, false, false, true, false, false, true},
+                {true, true, true, true, true, true, true},
+                {true, false, false, true, false, false, false},
+                {true, false, false, true, false, false, false},
+                {true, false, false, true, true, true, true}*/
+        };
+
     }
 
     public static DisplayManager GetInstance(){
@@ -35,7 +72,23 @@ public class DisplayManager extends JPanel{
         return instance;
     }
     public void Test(){
-        Asteroid[] asteroid = new Asteroid[1];
+
+        Asteroid[] asteroids = new Asteroid[numberOfAsteroids];
+        for(int i = 0; i < numberOfAsteroids; i ++){
+            asteroids[i] = new Asteroid();
+            //asteroids[i].SetSunnearness(true);
+        }
+        CreateAsteroidfieldDisplay(asteroids);
+
+        //for debug: print number of true sectors (sun excluded)
+        System.out.println("w:"+getWidth()+" h:"+getHeight());
+        int trues=0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<columns;j++){
+                if(AllocatedAsteroidSectors[i][j])
+                    trues++;
+
+        /*Asteroid[] asteroid = new Asteroid[1];
         asteroid[0] = new Asteroid();
         System.out.println(getWidth()+ " " +getHeight());
         CreateAsteroidfieldDisplay(asteroid);
@@ -52,7 +105,7 @@ public class DisplayManager extends JPanel{
            settlers[i] = new Settler();
            settlers[i].SetAsteroid(asteroid[0]);
            CreateSettlerDisplay(settlers[i]);
-       }
+       }*/
     }
     //GETTERS
     public ArrayList<UfoDisplay> GetUfoDisplays(){return ufoDisplays;}
@@ -68,43 +121,29 @@ public class DisplayManager extends JPanel{
                 AllocatedAsteroidSectors[i][j]=false;
             }
         }
-        AllocatedAsteroidSectors[5][5]=true;//SUN
-    }
-
-    private Point CoordinateServer(){
-        Random random=new Random();
-        boolean freeSector=false;
-        int x=-1;
-        int y=-1;
-
-        while(!freeSector){
-            x = random.nextInt(10);
-            y = random.nextInt(10);
-            if(!AllocatedAsteroidSectors[x][y]){
-                AllocatedAsteroidSectors[x][y]=true;
-                freeSector=true;
-            }
-        }
-
-        x = (x * getWidth()) / 10;
-        System.out.println(getWidth());
-        y = (y * getHeight()) / 10;
-
-        return new Point(x,y);
+        System.out.println("trues: "+trues);
     }
 
     //CREATE
     public void CreateAsteroidfieldDisplay(Asteroid[] af){
-        SectorInit();
-
         for(int i=0;i<af.length;i++){
-            Point coord = CoordinateServer();
-            AsteroidDisplay ad=new AsteroidDisplay(af[i], coord.x,coord.y);
-            asteroidDisplays.add(ad);
+            //Point coord = CoordinateServer();
+            for(int k=0;k<rows;k++){
+                for(int j=0;j<columns;j++){
+                    if( AllocatedAsteroidSectors[k][j]){
+                        int x = k;
+                        int y = j;
+                        x = (x * getWidth()) / rows;
+                        y = (y * getHeight()) / columns;
+                        AsteroidDisplay ad=new AsteroidDisplay(af[i], x, y);
+                        asteroidDisplays.add(ad);
+                    }
+                }
+            }
         }
-
-        sunDisplay = new SunDisplay((getWidth()-200)/2,(getHeight()-200)/2);
+        sunDisplay = new SunDisplay((3 * getWidth()) / rows,(3* getHeight()) / columns);
     }
+
     public void CreateTeleportDisplay(Teleport t){
         TeleportDisplay td=new TeleportDisplay(t);
         teleportDisplays.add(td);
@@ -121,75 +160,13 @@ public class DisplayManager extends JPanel{
         UfoDisplay ud =new UfoDisplay(u);
         ufoDisplays.add(ud);
     }
-    /*public  void CreateConnectionDisplay(Display d1, Display d2){
-        ConnectionDisplay cd=new ConnectionDisplay(d1,d2);
-        connectionDisplays.add(cd);
-    }*/
 
     //REMOVE
-    public void RemoveSettlerDisplay(SettlerDisplay sd){
-        settlerDisplays.remove(sd);
-    }
-    public void RemoveRobotDisplay(RobotDisplay rd) {
-        robotDisplays.remove(rd);
-    }
-    public void RemoveUfoDisplay(UfoDisplay ud){
-        ufoDisplays.remove(ud);
-    }
-    public void RemoveTeleportDisplay(TeleportDisplay td){
-        teleportDisplays.remove(td);
-    }
-    public void RemoveAsteroidDisplay(AsteroidDisplay ad){
-        asteroidDisplays.remove(ad);
-    }
-
-    /*public void RemoveConnectionDisplay(ConnectionDisplay cd){
-        connectionDisplays.remove(cd);
-    }*/
-
-    /*private void DrawSun(){
-        Graphics2D g2d=(Graphics2D) ;
-        g2d.setColor(Color.YELLOW);
-
-        g2d.fillOval(getShape().x, getShape().y, getShape().width, getShape().height);
-        g2d.setColor();
-        g2d.drawOval(getShape().x, getShape().y, getShape().width, getShape().height);
-    }*/
-
-
-    /*public void DrawDisplays(){
-        //DrawSun();
-        for (AsteroidDisplay ad:asteroidDisplays)
-            ad.Update();
-        for(TeleportDisplay td:teleportDisplays)
-            td.Update();
-        for (SettlerDisplay sd:settlerDisplays)
-            sd.Update();
-        for(RobotDisplay rd:robotDisplays)
-            rd.Update();
-        for(UfoDisplay ud:ufoDisplays)
-            ud.Update();
-    }*/
-
-    /*public void SetNeighbourhood(Whereabout w1, Whereabout w2){
-        Display d1;
-        Display d2;
-        for(AsteroidDisplay tmp:asteroidDisplays){
-            if(tmp.GetSubject()==w1)
-                d1==tmp;
-            if(tmp.GetSubject()==w2)
-                d2==tmp;
-        }
-        for(TeleportDisplay tmp:teleportDisplays){
-            if(tmp.GetSubject()==w1)
-                d1==tmp;
-            if(tmp.GetSubject()==w2)
-                d2==tmp;
-        }
-        if(d1!=null && d2!=null){
-            CreateConnectionDisplay(d1,d2);
-        }
-    }*/
+    public void RemoveSettlerDisplay(SettlerDisplay sd){settlerDisplays.remove(sd);}
+    public void RemoveRobotDisplay(RobotDisplay rd) {robotDisplays.remove(rd);}
+    public void RemoveUfoDisplay(UfoDisplay ud){ufoDisplays.remove(ud); }
+    public void RemoveTeleportDisplay(TeleportDisplay td){teleportDisplays.remove(td);}
+    public void RemoveAsteroidDisplay(AsteroidDisplay ad){asteroidDisplays.remove(ad);}
 
     public void ClickOnGamePanel(int x, int y){
         for(AsteroidDisplay ad:asteroidDisplays)
@@ -204,7 +181,6 @@ public class DisplayManager extends JPanel{
                         sd.SetSelected(true);
                         Settler s = sd.GetSubject();
                         Controller.GetInstanceOf().InfoAboutSettler(s);
-
                         break;
                     }
                 }
@@ -260,6 +236,7 @@ public class DisplayManager extends JPanel{
             }
         }
     }
+
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         if(sunDisplay != null) {
@@ -280,8 +257,4 @@ public class DisplayManager extends JPanel{
     public void DrawDisplays(){
         repaint();
     }
-    /*public boolean Intersect(Display d1,Display d2){
-        //Area(Shape) ,ha krinya implementálta
-    }*/
-
-}
+ }
