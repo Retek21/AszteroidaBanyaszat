@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OptionsComboBox extends JComboBox {
-    public OptionsComboBox(){
+    public OptionsComboBox(int[] ints){
         super();
         setFocusable(false);
         setBackground(new Color(64,115,158));
