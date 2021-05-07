@@ -85,7 +85,7 @@ public class AsteroidDisplay extends Display{
     @Override
     public void Paint(Graphics g2d) {
         if (subject.GetSunnearness()) {
-            g2d.setColor(new Color(163, 45, 16));
+            g2d.setColor(new Color(110, 73, 13));
         } else {
             g2d.setColor(new Color(51, 25, 0));
         }
