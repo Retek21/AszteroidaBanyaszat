@@ -63,13 +63,16 @@ public class DisplayManager extends JPanel{
                 {true, false, false, true, false, false, false},
                 {true, false, false, true, true, true, true}*/
         };
+
     }
+
     public static DisplayManager GetInstance(){
         if(instance==null)
             instance=new DisplayManager();
         return instance;
     }
     public void Test(){
+
         Asteroid[] asteroids = new Asteroid[numberOfAsteroids];
         for(int i = 0; i < numberOfAsteroids; i ++){
             asteroids[i] = new Asteroid();
@@ -84,6 +87,38 @@ public class DisplayManager extends JPanel{
             for(int j=0;j<columns;j++){
                 if(AllocatedAsteroidSectors[i][j])
                     trues++;
+
+        /*Asteroid[] asteroid = new Asteroid[1];
+        asteroid[0] = new Asteroid();
+        System.out.println(getWidth()+ " " +getHeight());
+        CreateAsteroidfieldDisplay(asteroid);
+
+        Teleport[] teleports = new Teleport[9];
+        for(int i =0; i < 9; i++){
+            teleports[i] = new Teleport();
+            System.out.println(teleports[i].Deploy(asteroid[0]));
+            CreateTeleportDisplay(teleports[i]);
+        }
+
+       Settler[] settlers = new Settler[16];
+       for(int i = 0; i < 16; i++){
+           settlers[i] = new Settler();
+           settlers[i].SetAsteroid(asteroid[0]);
+           CreateSettlerDisplay(settlers[i]);
+       }*/
+    }
+    //GETTERS
+    public ArrayList<UfoDisplay> GetUfoDisplays(){return ufoDisplays;}
+    public ArrayList<RobotDisplay> GetRobotDisplays(){return robotDisplays;}
+    public ArrayList<SettlerDisplay> GetSettlerDisplays(){return settlerDisplays;}
+    public ArrayList<TeleportDisplay> GetTeleportDisplays(){return teleportDisplays;}
+    public ArrayList<AsteroidDisplay> GetAsteroidDisplays(){return asteroidDisplays;}
+    public SunDisplay GetSunDisplay(){return sunDisplay;}
+
+    private void SectorInit(){
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                AllocatedAsteroidSectors[i][j]=false;
             }
         }
         System.out.println("trues: "+trues);

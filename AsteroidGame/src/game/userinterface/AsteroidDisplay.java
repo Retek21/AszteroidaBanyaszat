@@ -15,20 +15,22 @@ public class AsteroidDisplay extends Display{
 
     private Asteroid subject;
 
-    public Rectangle[][] getMyfields() {
-        return myfields;
+    public AsteroidDisplay(Asteroid subject, int x, int y) {
+        this.subject = subject;
+        subject.SetMyDisplay(this);
+        GetShape().setBounds(x, y , 150, 150);
+        SectorInit();
+        TeleportSectorInit();
     }
-
-    private Rectangle[][] myfields = new Rectangle[4][4];
 
     public boolean[][] getAllocatedAsteroidSectors() {
         return AllocatedAsteroidSectors;
     }
 
-    boolean[][] AllocatedAsteroidSectors = new boolean[4][4];
+    boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
     private void SectorInit(){
-        for(int i=0;i<4;i++){
-            for(int j=0;j<4;j++){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
                 AllocatedAsteroidSectors[i][j]=false;
             }
         }
@@ -44,27 +46,42 @@ public class AsteroidDisplay extends Display{
             x = random.nextInt(4);
             y = random.nextInt(4);
             if(!AllocatedAsteroidSectors[x][y]){
-                AllocatedAsteroidSectors[x][y]=true;
-                freeSector=true;
-                d.SetSectorCoordinates(new Point(x,y));
+                AllocatedAsteroidSectors[x][y] = true;
+                freeSector = true;
+                d.SetSectorCoordinates(new Point(x, y));
             }
         }
 
-        x = d.GetShape().x + (x * GetShape().width) / 4;
-        y = d.GetShape().y + (y * GetShape().height) / 4;
-    }
-    private boolean isNeighbour;
-    public void SetisNeighbour(boolean neighbour) {
-        this.isNeighbour = neighbour;
+        d.GetShape().x = GetShape().x + (x * (GetShape().width -30) ) / 4;
+        d.GetShape().y = (GetShape().y + (y * (GetShape().height - 30)) / 4) + 30;
     }
 
-    public AsteroidDisplay(Asteroid subject, int x, int y) {
-        this.subject = subject;
-        subject.SetMyDisplay(this);
-        GetShape().setBounds(x, y, 80, 80);
-        SectorInit();
-    }
+    boolean[] AllocatedTeleportSectors= new boolean[9];
+    ArrayList<TeleportDisplay> tds=new ArrayList<TeleportDisplay>();
 
+    void TeleportSectorInit(){
+        for(int i=0;i<9;i++)
+            AllocatedTeleportSectors[i]=false;
+    }
+    void TeleportSectorAllocation(TeleportDisplay t){
+        for(int i=0;i<9;i++){
+            if(!AllocatedTeleportSectors[i]){
+                AllocatedTeleportSectors[i]=true;
+                int x;
+                int y;
+                if(i<5){
+                    x = GetShape().x +  (i *GetShape().width) / 5;
+                    y = GetShape().y; //+ GetShape().height;
+                }
+                else{
+                    x = GetShape().x + GetShape().width - 30;
+                    y = GetShape().y + (i-4) * GetShape().height / 5;
+                }
+                t.GetShape().setBounds(x,y,30,30);
+                break;
+            }
+        }
+    }
     @Override
     public void Paint(Graphics g2d) {
         if (subject.GetSunnearness()) {
@@ -72,7 +89,7 @@ public class AsteroidDisplay extends Display{
         } else {
             g2d.setColor(new Color(85, 48, 17));
         }
-        g2d.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
         if (IsSelected()) {
             g2d.setColor(new Color(150, 150, 0));
             ArrayList<Whereabout> neighbours = subject.GetNeighbours();
@@ -82,13 +99,13 @@ public class AsteroidDisplay extends Display{
             }
         }else if(IsRoundoutline()){
             g2d.setColor(new Color(0, 0, 0));
-        }else if(isNeighbour){
+        }else if(IsNeigbhour()){
             g2d.setColor(new Color(0, 200, 255));
         }
-        g2d.drawOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
         SetSelected(false);
         SetRoundoutline(false);
-        isNeighbour = false;
+        SetisNeigbhour(false);
     }
     @Override
     public void Clear() {
