@@ -189,6 +189,11 @@ public class Teleport implements Whereabout{
         return null;
     }
 
+    @Override
+    public Display GetDisplay() {
+        return display;
+    }
+
     /**
      * A teleport miutan megkergult, mozogni kezd az aszteroidak kozott
      * A kapott parameteru objektumot allitja be uj szomszedjakent.

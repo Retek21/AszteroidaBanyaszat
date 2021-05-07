@@ -1,33 +1,38 @@
 package game.userinterface;
 
+import game.logic.Entity;
 import game.logic.Ufo;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class UfoDisplay extends Display{
+    public Ufo GetSubject() {
+        return subject;
+    }
+
     private Ufo subject;
 
-    public UfoDisplay(Ufo subject, int x, int y) {
+    public UfoDisplay(Ufo subject){
         this.subject = subject;
-        setX(x);
-        setY(y);
-        setShape(new Ellipse2D.Float( getX(),getY(),50,50));
+        AsteroidDisplay asteroid = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        asteroid.CoordinateServer(this);
     }
-    @Override
-    public void SelectOutline(Graphics2D g2d){
-        g2d.setColor(Color.getHSBColor(2,100,28));
-        g2d.drawOval(getShape().getBounds().x, getShape().getBounds().y,getShape().getBounds().width,getShape().getBounds().height);
-    }
-    @Override
-    public void RoundOutline(Graphics2D g2d){
-        g2d.setColor(Color.getHSBColor(48,100,128));
-        g2d.drawOval(getShape().getBounds().x, getShape().getBounds().y,getShape().getBounds().width,getShape().getBounds().height);
-    }
-    @Override
-    public void Update(Graphics2D g2d){
 
-        g2d.fill(getShape());
+    @Override
+    public void Paint(Graphics g2d){
+        AsteroidDisplay asteroid = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        g2d.setColor(new Color(1,150,250));
+        g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        if(IsSelected()){
+            g2d.setColor(new Color(100,111,160));
+        }else if(IsRoundoutline()){
+            g2d.setColor(new Color(250,0,0));
+        }
+        g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        SetSelected(false);
+        SetRoundoutline(false);
     }
 
     @Override

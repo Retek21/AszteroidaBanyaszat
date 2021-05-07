@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameButton extends JButton {
-    private Manager manager;
+    private DisplayManager manager;
     public GameButton(){
         super();
         setFocusable(false);
