@@ -636,6 +636,7 @@ public class Controller {
         settlers.get(actor).getDisplay().SetRoundoutline(true);
         String title = ac.GetTitle();
         WriteTitle(title);
+        InputManager.GetInstanceOf().SetState(ac.GetState());
     }
 
     public void NextRound() {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class InfoPanel extends JPanel {
     public InfoPanel()
     {
-        this.setLayout(new GridLayout(0,1));
+        this.setLayout(new GridLayout(26,1));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
