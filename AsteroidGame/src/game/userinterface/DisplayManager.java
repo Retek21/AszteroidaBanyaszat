@@ -84,7 +84,7 @@ public class DisplayManager {
         teleportDisplays.add(td);
     }
     public void CreateSettlerDisplay(Settler s){
-        SettlerDisplay sd=new SettlerDisplay(sd);
+        SettlerDisplay sd=new SettlerDisplay(s);
         settlerDisplays.add(sd);
     }
     public void CreateRobotDisplay(Robot r){
