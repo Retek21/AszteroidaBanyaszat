@@ -7,10 +7,9 @@ import game.logic.Settler;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SettlerDisplay extends Display {
+public class SettlerDisplay extends EntityDisplay {
 
     private Settler subject;
-    private boolean moved;
 
     public Settler GetSubject() {
         return subject;
@@ -20,13 +19,15 @@ public class SettlerDisplay extends Display {
         this.subject = subject;
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.CoordinateServer(this);
+        SetMoved(false);
     }
+
 
     @Override
     public void Paint(Graphics g2d) {
         Asteroid asteroid = subject.GetAsteroid();
         AsteroidDisplay ad = (AsteroidDisplay) asteroid.GetDisplay();
-        if(moved){
+        if(GetMoved()){
             ad.CoordinateServer(this);
         }
         g2d.setColor(new Color(255, 180, 120));
@@ -39,7 +40,7 @@ public class SettlerDisplay extends Display {
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         SetSelected(false);
         SetRoundoutline(false);
-        moved = false;
+        SetMoved(false);
     }
 
     @Override

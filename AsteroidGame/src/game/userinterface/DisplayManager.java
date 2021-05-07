@@ -3,6 +3,7 @@ package game.userinterface;
 import game.controller.Controller;
 import game.logic.*;
 import game.logic.Robot;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class DisplayManager extends JPanel{
         super();
         setBackground(new Color(50,56,65));
         setBorder(BorderFactory.createLineBorder(Color.black));
+        setPreferredSize(new Dimension(1050,1050));
     }
     public static DisplayManager GetInstance(){
         if(instance==null)
@@ -268,5 +270,14 @@ public class DisplayManager extends JPanel{
     /*public boolean Intersect(Display d1,Display d2){
         //Area(Shape) ,ha krinya implementálta
     }*/
+
+    private Display activedisplay;
+
+    public void RoundStart(Display display)
+    {
+        activedisplay.SetRoundoutline(false);
+        activedisplay=display;
+        display.SetRoundoutline(true);
+    }
 
 }

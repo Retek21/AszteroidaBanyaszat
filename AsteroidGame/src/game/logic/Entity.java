@@ -1,6 +1,7 @@
 package game.logic;
 
 import game.userinterface.Display;
+import game.userinterface.EntityDisplay;
 
 /**
  * Entity absztrakt ososztaly. Az aszteroidaovben tartozkodi entitasok
@@ -19,7 +20,7 @@ public abstract class Entity {
         return display;
     }
 
-    protected Display display;
+    protected EntityDisplay display;
 
 
     /**
@@ -66,6 +67,7 @@ public abstract class Entity {
         if (asteroid.GetNeighbours().contains(w)) {
             if (w.AddEntity(this)) {
                 current.RemoveEntity(this);
+                display.SetMoved(true);
                 return true;
             }
         }
@@ -80,7 +82,7 @@ public abstract class Entity {
         return null;
     }
 
-    public void AddDisplay(Display display){
+    public void AddDisplay(EntityDisplay display){
         this.display = display;
     }
 }
