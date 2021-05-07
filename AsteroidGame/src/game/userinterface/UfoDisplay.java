@@ -29,9 +29,9 @@ public class UfoDisplay extends EntityDisplay{
         g2d.setColor(new Color(1,150,250));
         g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         if(IsSelected()){
-            g2d.setColor(new Color(100,111,160));
+            g2d.setColor(new Color(255, 20, 20));
         }else if(IsRoundoutline()){
-            g2d.setColor(new Color(250,0,0));
+            g2d.setColor(new Color(250, 230, 20));
         }
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         SetSelected(false);

@@ -31,9 +31,9 @@ public class RobotDisplay extends EntityDisplay{
         g2d.setColor(new Color(1,100,100));
         g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         if(IsSelected()){
-            g2d.setColor(new Color(1,100,100));
+            g2d.setColor(new Color(255, 20, 20));
         }else if(IsRoundoutline()){
-            g2d.setColor(new Color(100,100,100));
+            g2d.setColor(new Color(250, 230, 20));
         }
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         SetSelected(false);

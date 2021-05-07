@@ -87,20 +87,20 @@ public class AsteroidDisplay extends Display{
         if (subject.GetSunnearness()) {
             g2d.setColor(new Color(163, 45, 16));
         } else {
-            g2d.setColor(new Color(85, 48, 17));
+            g2d.setColor(new Color(150, 150, 150));
         }
         g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
         if (IsSelected()) {
-            g2d.setColor(new Color(150, 150, 0));
+            g2d.setColor(new Color(255, 20, 20));
             ArrayList<Whereabout> neighbours = subject.GetNeighbours();
             for (Whereabout neighbour: neighbours
                  ) {
                 neighbour.GetDisplay().SetisNeigbhour(true);
             }
         }else if(IsRoundoutline()){
-            g2d.setColor(new Color(0, 0, 0));
-        }else if(IsNeigbhour()){
-            g2d.setColor(new Color(0, 200, 255));
+            g2d.setColor(new Color(250, 230, 20));
+        }else if(isNeighbour){
+            g2d.setColor(new Color(20,200,0));
         }
         g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
         SetSelected(false);
