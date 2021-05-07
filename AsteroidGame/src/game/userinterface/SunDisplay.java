@@ -5,7 +5,7 @@ import java.awt.*;
 public class SunDisplay extends Display{
 
     public SunDisplay(int x, int y){
-        GetShape().setBounds(x,y,200,200);
+        GetShape().setBounds(x,y,80,80);
     }
 
     @Override

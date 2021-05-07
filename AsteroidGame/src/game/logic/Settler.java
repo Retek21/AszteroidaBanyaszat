@@ -1,7 +1,7 @@
 package game.logic;
 
 import game.controller.Controller;
-import game.userinterface.Display;
+import game.userinterface.EntityDisplay;
 
 import java.util.ArrayList;
 
@@ -169,7 +169,7 @@ public class Settler extends Entity{
         }
         return false;
     }
-    public void AddDisplay(Display display){
+    public void AddDisplay(EntityDisplay display){
         this.display  = display;
     }
 }

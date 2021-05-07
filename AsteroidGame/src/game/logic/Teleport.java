@@ -126,6 +126,7 @@ public class Teleport implements Whereabout{
         else if(inventory != null)
             inventory.RemoveTeleport(this);
         Controller.GetInstanceOf().TeleportExplode(this);
+        display.Clear();
     }
 
     /**

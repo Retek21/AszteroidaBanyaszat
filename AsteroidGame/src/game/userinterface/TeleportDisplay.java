@@ -15,12 +15,16 @@ public class TeleportDisplay extends Display {
     public TeleportDisplay(Teleport subject) {
         this.subject = subject;
         subject.AddDisplay(this);
-        AsteroidDisplay ad = (AsteroidDisplay) subject.getDisplay();
-        ad.CoordinateServer(this);
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        ad.TeleportSectorAllocation(this);
     }
 
     @Override
     public void Paint(Graphics g2d){
+        if(subject.GetCraziness()){
+            AsteroidDisplay ad = (AsteroidDisplay) subject.getDisplay();
+            ad.TeleportSectorAllocation(this);
+        }
         g2d.setColor(new Color(180,180,180));
         g2d.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
         if(IsSelected()){
@@ -30,7 +34,7 @@ public class TeleportDisplay extends Display {
         }else if(IsNeigbhour()){
             g2d.setColor(new Color(20,200,0));
         }
-        g2d.drawRect(GetShape().x, GetShape().y,GetShape().width,GetShape().height);
+        g2d.drawOval(GetShape().x, GetShape().y,GetShape().width,GetShape().height);
         SetSelected(false);
         SetRoundoutline(false);
         SetisNeigbhour(false);
