@@ -50,6 +50,26 @@ public class GameFrame extends JFrame {
         JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
         scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        scrollablegamepanel.getVerticalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
+            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        scrollablegamepanel.repaint();
+                    }
+                });
+            }
+        });
+        scrollablegamepanel.getHorizontalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
+            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        scrollablegamepanel.repaint();
+                    }
+                });
+            }
+        });
+
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
         phaselabel.setFont(new Font ("Verdana", Font.BOLD, 26));
@@ -167,8 +187,6 @@ public class GameFrame extends JFrame {
         c.gridy = 1;
         c.gridx = 4;
         buttonpanel.add(craftable, c);
-
-
 
         //ActionListener felinicializalasa
 

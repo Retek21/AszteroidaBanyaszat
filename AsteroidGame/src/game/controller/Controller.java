@@ -484,7 +484,7 @@ public class Controller {
             String aid = (String)ids[i];
             SetLayers(aid, r.nextInt(4) + 1);
         }
-
+        FirstRound();
     }
 
     private Asteroid CreateAsteroid(String id) {
@@ -629,6 +629,15 @@ public class Controller {
 
 ////////////////////////////////////////////////////////GAME PHASE//////////////////////////////////////////////////////
 
+    public void FirstRound(){
+        actors.sort(new ActorComparator());
+        Actor ac = actors.get(0);
+        actor = ac.GetID();
+        settlers.get(actor).getDisplay().SetRoundoutline(true);
+        String title = ac.GetTitle();
+        WriteTitle(title);
+    }
+
     public void NextRound() {
         WriteNaplo();
         CheckVictory(actor);
@@ -661,6 +670,7 @@ public class Controller {
 
             String title = ac.GetTitle();
             WriteTitle(title);
+            InputManager.GetInstanceOf().SetState(ac.GetState());
         }
     }
 
@@ -1168,7 +1178,6 @@ public class Controller {
         int rand = new Random().nextInt(tempasteroids.size());
         Asteroid asteroid = tempasteroids.get(rand);
         SunStorm(SearchForAsteroid(asteroid));
-        NextRound();
     }
 
 ////////////////REARRANGE////////////////
@@ -1211,7 +1220,6 @@ public class Controller {
         {
             tempasteroids[i].SetSunnearness(nearness[i]);
         }
-        NextRound();
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

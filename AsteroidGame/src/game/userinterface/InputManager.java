@@ -22,6 +22,7 @@ public class InputManager {
     private InputManager()
     {
         manager = DisplayManager.GetInstance();
+        controller = Controller.GetInstanceOf();
     }
 
     public static InputManager GetInstanceOf(){
@@ -81,11 +82,11 @@ public class InputManager {
     public void GameFieldClicked(int x, int y)
     {
         if(state==State.WAITFORMOVE){
-            //manager.ClickOnMoveTarget(x, y);
+            manager.ClickOnMoveTarget(x, y);
             System.out.println("WaitforMoveban kattintva x:" + x + " y:" + y);
         }
         else{
-           // manager.ClickOnGamePanel(x , y);
+            manager.ClickOnGamePanel(x , y);
             System.out.println("NemWaitforMoveban kattintva x:" + x + " y:" + y);
         }
     }
@@ -94,10 +95,10 @@ public class InputManager {
     {
         switch (buttoncmd){
             case "DoPhase":
-                //controller.DoPhase();
+                controller.DoPhase();
                 System.out.println("DoPhase pressed");
-                DisplayManager.GetInstance().Test();
-                DisplayManager.GetInstance().repaint();
+                //DisplayManager.GetInstance().Test();
+                //DisplayManager.GetInstance().repaint();
                 break;
             case "Move":
                 System.out.println("Move pressed");

@@ -6,7 +6,7 @@ public class Display {
     private Rectangle shape = new Rectangle();
     private boolean selected;
     private boolean roundoutline;
-    private boolean isNeigbhour;
+    private boolean isNeighbour;
     private Point sectorCoordinates;
 
     public Point GetSectorCoordinates() {
@@ -29,8 +29,8 @@ public class Display {
         return roundoutline;
     }
 
-    public boolean IsNeigbhour() {
-        return isNeigbhour;
+    public boolean IsNeighbour() {
+        return isNeighbour;
     }
 
 
@@ -40,14 +40,17 @@ public class Display {
 
     public void SetSelected(boolean selected) {
         this.selected = selected;
+        DisplayManager.GetInstance().DrawDisplays();
     }
 
     public void SetRoundoutline(boolean roundoutline) {
         this.roundoutline = roundoutline;
+        DisplayManager.GetInstance().DrawDisplays();
     }
 
     public void SetisNeigbhour(boolean neigbhour) {
-        isNeigbhour = neigbhour;
+        isNeighbour = neigbhour;
+        DisplayManager.GetInstance().DrawDisplays();
     }
 
     public void Paint(Graphics g){}
@@ -58,4 +61,5 @@ public class Display {
     public boolean Intersect(Display display){
        return shape.intersects(display.GetShape());
     }
+
 }
