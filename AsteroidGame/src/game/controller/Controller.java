@@ -558,15 +558,15 @@ public class Controller {
             return true;
         }
         else if(ice.containsKey(materialid)) {
-            a.SetCore(iron.get(materialid));
+            a.SetCore(ice.get(materialid));
             return true;
         }
         else if(coal.containsKey(materialid)) {
-            a.SetCore(iron.get(materialid));
+            a.SetCore(coal.get(materialid));
             return true;
         }
         else if(uran.containsKey(materialid)) {
-            a.SetCore(iron.get(materialid));
+            a.SetCore(uran.get(materialid));
             return true;
         }
         return false;
