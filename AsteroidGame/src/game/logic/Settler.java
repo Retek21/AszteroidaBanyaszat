@@ -169,7 +169,7 @@ public class Settler extends Entity{
         }
         return false;
     }
-    public void AddDisplay(EntityDisplay display){
+    public void SetDisplay(EntityDisplay display){
         this.display  = display;
     }
 }

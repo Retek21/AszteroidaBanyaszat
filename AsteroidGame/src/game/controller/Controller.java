@@ -1,7 +1,7 @@
 package game.controller;
 
 import game.logic.*;
-import java.io.*;
+
 import java.util.*;
 import game.userinterface.*;
 
@@ -735,7 +735,7 @@ public class Controller {
         actors.sort(new ActorComparator());
         Actor ac = actors.get(0);
         actor = ac.GetID();
-        settlers.get(actor).getDisplay().SetRoundoutline(true);
+        settlers.get(actor).GetDisplay().SetRoundoutline(true);
         String title = ac.GetTitle();
         WriteTitle(title);
         InputManager.GetInstanceOf().SetState(ac.GetState());
@@ -763,13 +763,13 @@ public class Controller {
             actor = ac.GetID();
 
             if (settlers.containsKey(actor))
-                settlers.get(actor).getDisplay().SetRoundoutline(true);
+                settlers.get(actor).GetDisplay().SetRoundoutline(true);
             else if (robots.containsKey(actor))
-                robots.get(actor).getDisplay().SetRoundoutline(true);
+                robots.get(actor).GetDisplay().SetRoundoutline(true);
             else if (ufos.containsKey(actor))
-                ufos.get(actor).getDisplay().SetRoundoutline(true);
+                ufos.get(actor).GetDisplay().SetRoundoutline(true);
             else if (teleports.containsKey(actor))
-                teleports.get(actor).getDisplay().SetRoundoutline(true);
+                teleports.get(actor).GetDisplay().SetRoundoutline(true);
 
             String title = ac.GetTitle();
             WriteTitle(title);

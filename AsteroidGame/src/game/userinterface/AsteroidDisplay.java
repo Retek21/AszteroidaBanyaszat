@@ -7,18 +7,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AsteroidDisplay extends Display{
-
-    public Asteroid GetSubject() {
-        return subject;
-    }
+public class AsteroidDisplay extends WhereaboutDisplay{
 
     private Asteroid subject;
+    boolean[] AllocatedTeleportSectors= new boolean[9];
+    boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
 
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
-        subject.SetMyDisplay(this);
+        subject.SetDisplay(this);
         GetShape().setBounds(x, y , 150, 150);
+        SetFillColor(new Color(51, 25, 0));
+        SetOutlineColor(new Color(51, 25, 0));
         SectorInit();
         TeleportSectorInit();
     }
@@ -27,7 +27,6 @@ public class AsteroidDisplay extends Display{
         return AllocatedAsteroidSectors;
     }
 
-    boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
     private void SectorInit(){
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -36,7 +35,11 @@ public class AsteroidDisplay extends Display{
         }
     }
 
-    public void CoordinateServer(Display d){
+    public Asteroid GetSubject() {
+        return subject;
+    }
+
+    public void EnititySectorAllocation(EntityDisplay d){
         Random random=new Random();
         boolean freeSector=false;
         int x=-1;
@@ -48,16 +51,15 @@ public class AsteroidDisplay extends Display{
             if(!AllocatedAsteroidSectors[x][y]){
                 AllocatedAsteroidSectors[x][y] = true;
                 freeSector = true;
-                d.SetSectorCoordinates(new Point(x, y));
+                d.SetSectorpoints(new Point(x,y));
             }
         }
 
         d.GetShape().x = GetShape().x + (x * (GetShape().width -30) ) / 4;
         d.GetShape().y = (GetShape().y + (y * (GetShape().height - 30)) / 4) + 30;
+        d.GetShape().height = 20;
+        d.GetShape().width = 20;
     }
-
-    boolean[] AllocatedTeleportSectors= new boolean[9];
-    ArrayList<TeleportDisplay> tds=new ArrayList<TeleportDisplay>();
 
     void TeleportSectorInit(){
         for(int i=0;i<9;i++)
@@ -71,7 +73,7 @@ public class AsteroidDisplay extends Display{
                 int y;
                 if(i<5){
                     x = GetShape().x +  (i *GetShape().width) / 5;
-                    y = GetShape().y; //+ GetShape().height;
+                    y = GetShape().y;
                 }
                 else{
                     x = GetShape().x + GetShape().width - 30;
@@ -84,32 +86,39 @@ public class AsteroidDisplay extends Display{
     }
     @Override
     public void Paint(Graphics g2d) {
-        if (subject.GetSunnearness()) {
-            g2d.setColor(new Color(110, 73, 13));
-        } else {
-            g2d.setColor(new Color(51, 25, 0));
-        }
+        g2d.setColor(GetFillColor());
         g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
         if (IsSelected()) {
             g2d.setColor(new Color(255, 20, 20));
-            ArrayList<Whereabout> neighbours = subject.GetNeighbours();
-            for (Whereabout neighbour: neighbours
-                 ) {
-                neighbour.GetDisplay().SetisNeigbhour(true);
-            }
         }else if(IsRoundoutline()){
             g2d.setColor(new Color(250, 230, 20));
         }else if(IsNeighbour()){
-            g2d.setColor(new Color(20,200,0));
+            g2d.setColor(GetOutlineColor());
         }
         g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
-        SetSelected(false);
-        SetRoundoutline(false);
-        SetisNeigbhour(false);
     }
     @Override
     public void Clear() {
         DisplayManager.GetInstance().RemoveAsteroidDisplay(this);
+        super.Clear();
     }
 
+    @Override
+    public void Notify() {
+        if(subject.GetSunnearness()) {
+            SetFillColor(new Color(110, 73, 13));
+        }else{
+            SetFillColor(new Color(51, 25, 0));
+        }
+        DisplayManager.GetInstance().repaint();
+    }
+
+    @Override
+    public void NotifyNeighbour() {
+        ArrayList<Whereabout> neighbours = subject.GetNeighbours();
+        for (Whereabout neighbour: neighbours
+        ) {
+            neighbour.GetDisplay().SetOutlineColor(new Color(20,200,0));
+        }
+    }
 }

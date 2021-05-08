@@ -3,6 +3,7 @@ package game.logic;
 import game.controller.Controller;
 import game.userinterface.AsteroidDisplay;
 import game.userinterface.Display;
+import game.userinterface.WhereaboutDisplay;
 
 import java.util.ArrayList;
 
@@ -49,19 +50,19 @@ public class Asteroid implements Whereabout{
      */
     private Asteroidfield asteroidfield;
     @Override
-    public Display GetDisplay() {
-        return myDisplay;
+    public WhereaboutDisplay GetDisplay() {
+        return display;
     }
 
-    public void SetMyDisplay(Display myDisplay) {
-        this.myDisplay = myDisplay;
+    public void SetDisplay(WhereaboutDisplay display) {
+        this.display = display;
     }
 
     /**
      * az aszteroida default konstruktora
      * beallitja az alapertelmezett attributumokat
      */
-    private Display myDisplay;
+    private WhereaboutDisplay display;
     public Asteroid() {
         sunnearness=false;
         empty=true;
@@ -119,6 +120,7 @@ public class Asteroid implements Whereabout{
      */
     public void SetSunnearness(boolean sunnearness) {
         this.sunnearness = sunnearness;
+        display.Notify();
         if(sunnearness) CheckInteraction();
     }
 
@@ -346,7 +348,7 @@ public class Asteroid implements Whereabout{
             material.Disintegrate();
         asteroidfield.RemoveAsteroid(this);
         Controller.GetInstanceOf().AsteroidExplode(this);
-        myDisplay.Clear();
+        display.Clear();
     }
 
     /**

@@ -50,7 +50,7 @@ public class Ufo extends Entity {
         Controller.GetInstanceOf().UfoDie(this);
     }
 
-    public void AddDisplay(EntityDisplay display){
+    public void SetDisplay(EntityDisplay display){
         this.display = display;
     }
 }

@@ -2,6 +2,7 @@ package game.logic;
 
 import game.controller.Controller;
 import game.userinterface.Display;
+import game.userinterface.WhereaboutDisplay;
 
 /**
  * Teleport osztaly, a Whereabout, és Placeable interfeszeket valositja meg.
@@ -37,7 +38,7 @@ public class Teleport implements Whereabout{
      */
     private boolean gonecrazy;
 
-    private Display display;
+    private WhereaboutDisplay display;
 
     /**
      * Default konstruktor
@@ -49,7 +50,8 @@ public class Teleport implements Whereabout{
         gonecrazy = false;
     }
 
-    public Display getDisplay() {
+
+    public WhereaboutDisplay GetDisplay() {
         return display;
     }
 
@@ -190,10 +192,6 @@ public class Teleport implements Whereabout{
         return null;
     }
 
-    @Override
-    public Display GetDisplay() {
-        return display;
-    }
 
     /**
      * A teleport miutan megkergult, mozogni kezd az aszteroidak kozott
@@ -209,6 +207,7 @@ public class Teleport implements Whereabout{
                 if(target != null){
                     asteroid.RemoveNeighbour(this);
                     Deploy(target);
+                    display.Notify();
                     return true;
                 }
                 else return false;
@@ -259,7 +258,7 @@ public class Teleport implements Whereabout{
         return gonecrazy;
     }
 
-    public void AddDisplay(Display display){
+    public void SetDisplay(WhereaboutDisplay display){
         this.display = display;
     }
 }

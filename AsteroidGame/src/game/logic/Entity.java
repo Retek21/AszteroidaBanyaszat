@@ -16,7 +16,7 @@ public abstract class Entity {
      */
     protected Asteroid asteroid;
 
-    public Display getDisplay() {
+    public Display GetDisplay() {
         return display;
     }
 
@@ -68,7 +68,7 @@ public abstract class Entity {
         if (asteroid.GetNeighbours().contains(w)) {
             if (w.AddEntity(this)) {
                 current.RemoveEntity(this);
-                display.SetMoved(true);
+                display.Notify();
                 return true;
             }
         }
@@ -83,7 +83,7 @@ public abstract class Entity {
         return null;
     }
 
-    public void AddDisplay(EntityDisplay display){
+    public void SetDisplay(EntityDisplay display){
         this.display = display;
     }
 }
