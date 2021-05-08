@@ -220,10 +220,10 @@ public class DisplayManager extends JPanel {
                 if (!pointInEntity) {
                     ad.SetSelected(true);
                     allDisplays.remove(ad);
-                    Controller.GetInstanceOf().InfoAboutAsteroid(ad.GetSubject());
                     for (Display astd : allDisplays) {
                         astd.SetSelected(false);
                     }
+                    Controller.GetInstanceOf().InfoAboutAsteroid(ad.GetSubject());
                     break;
                 }
             }
@@ -240,8 +240,10 @@ public class DisplayManager extends JPanel {
     }
     public void ManageRoundOutlines(Display d){
         ArrayList<Display> allDisplays = getDisplayArrayList();
-        allDisplays.remove(d);
-        d.SetRoundoutline(true);
+        if(d != null) {
+            allDisplays.remove(d);
+            d.SetRoundoutline(true);
+        }
         for(Display display: allDisplays){
             display.SetRoundoutline(false);
         }

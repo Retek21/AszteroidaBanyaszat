@@ -48,5 +48,6 @@ public class EntityDisplay extends Display{
     public void Clear() {
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.GetAllocatedAsteroidSectors()[sectorpoints.x][sectorpoints.y] = false;
+        DisplayManager.GetInstance().repaint();
     }
 }

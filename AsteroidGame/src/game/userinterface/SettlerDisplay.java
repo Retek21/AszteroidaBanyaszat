@@ -18,6 +18,7 @@ public class SettlerDisplay extends EntityDisplay {
     public void Paint(Graphics g2d) {
         g2d.setColor(new Color(255, 180, 120));
         g2d.fillRect(GetShape().x, GetShape().y, 20, 20);
+        System.out.println(g2d.getColor());
         if (IsSelected()) {
             g2d.setColor(new Color(255, 20, 20));
         } else if (IsRoundoutline()) {
