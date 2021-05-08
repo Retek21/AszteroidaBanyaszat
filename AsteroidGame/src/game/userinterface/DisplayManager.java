@@ -20,7 +20,7 @@ public class DisplayManager extends JPanel{
     private int rows;
     private int columns;
     private int numberOfAsteroids;
-    boolean[][] AllocatedAsteroidSectors;
+    private boolean[][] AllocatedAsteroidSectors;
 
     private DisplayManager(){
         super();
@@ -66,6 +66,13 @@ public class DisplayManager extends JPanel{
                 {true, false, false, true, true, true, true}*/
         };
     }
+
+    public boolean[][] GetAllocatedAsteroidSectors() {
+        return AllocatedAsteroidSectors;
+    }
+
+    public int GetRows() {return rows;}
+    public int GetColumns() {return columns;}
 
     public static DisplayManager GetInstance(){
         if(instance==null)
