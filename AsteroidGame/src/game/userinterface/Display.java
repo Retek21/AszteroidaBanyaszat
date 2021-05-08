@@ -24,7 +24,7 @@ public class Display {
 
     public void SetSelected(boolean selected) {
         this.selected = selected;
-        //DisplayManager.GetInstance().repaint();
+        DisplayManager.GetInstance().repaint();
     }
 
     public void SetRoundoutline(boolean roundoutline) {
