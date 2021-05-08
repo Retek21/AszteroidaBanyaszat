@@ -1,6 +1,7 @@
 package game.logic;
 
 import game.userinterface.Display;
+import game.userinterface.WhereaboutDisplay;
 
 /**
  * Egy interface, amely a szomszedossagi viszonyokert felelos
@@ -41,5 +42,7 @@ public interface Whereabout {
      */
     public Asteroid GetLandingPad();
 
-    public Display GetDisplay();
+    public WhereaboutDisplay GetDisplay();
+
+    public void SetDisplay(WhereaboutDisplay display);
 }

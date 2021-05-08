@@ -6,33 +6,36 @@ public class Display {
     private Rectangle shape = new Rectangle();
     private boolean selected;
     private boolean roundoutline;
-    private boolean isNeighbour;
-    private Point sectorCoordinates;
+    private Color fillColor;
 
-    public Point GetSectorCoordinates() {
-        return sectorCoordinates;
+    public Color GetFillColor() {
+        return fillColor;
     }
 
-    public void SetSectorCoordinates(Point sectorCoordinates) {
-        this.sectorCoordinates = sectorCoordinates;
+    public void SetFillColor(Color fillColor) {
+        this.fillColor = fillColor;
     }
+
+    public Color GetOutlineColor() {
+        return outlineColor;
+    }
+
+    public void SetOutlineColor(Color outlineColor) {
+        this.outlineColor = outlineColor;
+    }
+
+    private Color outlineColor;
 
     public Rectangle GetShape() {
         return shape;
     }
 
-    public boolean IsSelected() {
-        return selected;
+    public boolean IsSelected() { return selected;
     }
 
     public boolean IsRoundoutline() {
         return roundoutline;
     }
-
-    public boolean IsNeighbour() {
-        return isNeighbour;
-    }
-
 
     public void SetShape(Rectangle shape) {
         this.shape = shape;
@@ -40,26 +43,23 @@ public class Display {
 
     public void SetSelected(boolean selected) {
         this.selected = selected;
-        DisplayManager.GetInstance().DrawDisplays();
+        //DisplayManager.GetInstance().repaint();
     }
 
     public void SetRoundoutline(boolean roundoutline) {
         this.roundoutline = roundoutline;
-        DisplayManager.GetInstance().DrawDisplays();
-    }
-
-    public void SetisNeigbhour(boolean neigbhour) {
-        isNeighbour = neigbhour;
-        DisplayManager.GetInstance().DrawDisplays();
+        DisplayManager.GetInstance().repaint();
     }
 
     public void Paint(Graphics g){}
-    public void Clear(){}
+    public void Clear(){
+        DisplayManager.GetInstance().repaint();
+    }
     public boolean PointInArea(int x, int y){
         return shape.contains(x,y);
     }
     public boolean Intersect(Display display){
        return shape.intersects(display.GetShape());
     }
-
+    public void Notify(){}
 }
