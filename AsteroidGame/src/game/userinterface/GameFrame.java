@@ -214,12 +214,12 @@ public class GameFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                inputmanager.GameFieldClicked(e.getX(), e.getY());
+
             }
             @Override
             public void mouseExited(MouseEvent e){}
             @Override
-            public void mousePressed(MouseEvent e){}
+            public void mousePressed(MouseEvent e){ inputmanager.GameFieldClicked(e.getX(), e.getY()); }
             @Override
             public void mouseReleased(MouseEvent e){}
             @Override

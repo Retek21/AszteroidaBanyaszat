@@ -762,14 +762,16 @@ public class Controller {
         if (ac != null) {
             actor = ac.GetID();
 
+            Display d = null;
             if (settlers.containsKey(actor))
-                settlers.get(actor).GetDisplay().SetRoundoutline(true);
+                d = settlers.get(actor).GetDisplay();
             else if (robots.containsKey(actor))
-                robots.get(actor).GetDisplay().SetRoundoutline(true);
+                d = robots.get(actor).GetDisplay();
             else if (ufos.containsKey(actor))
-                ufos.get(actor).GetDisplay().SetRoundoutline(true);
+                d = ufos.get(actor).GetDisplay();
             else if (teleports.containsKey(actor))
-                teleports.get(actor).GetDisplay().SetRoundoutline(true);
+                d = teleports.get(actor).GetDisplay();
+            dm.ManageRoundOutlines(d);
 
             String title = ac.GetTitle();
             WriteTitle(title);
