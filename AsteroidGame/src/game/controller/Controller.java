@@ -140,7 +140,8 @@ public class Controller {
      * @param out a kirando string.
      */
     private void WriteOut(String out) {
-        output.add(out);
+        if (out != null)
+            output.add(out);
     }
 
     private void WriteNaplo() {
@@ -421,11 +422,12 @@ public class Controller {
             Asteroid a = CreateAsteroid(id);
             _asteroids[i]=a;
         }
+
+        Object[] ids = asteroids.keySet().toArray();
+        CreateNeighbourhoods(ids);
         dm.CreateAsteroidfieldDisplay(_asteroids);
 
 //SETTLERS
-        Object[] ids = asteroids.keySet().toArray();
-
         for(int i = 0; i < players; i++) {
             String id = "s" + i;
             Settler s = CreateSettler(id);
@@ -449,34 +451,35 @@ public class Controller {
 
             dm.CreateUfoDisplay(u);
         }
-        ///////////neighbour cuccok??////////
-
-        /////////////////////////////////////
 
 //MATERIALS
         for(int i = 0; i < 7; i++) {
             String id = "ur" + i;
             Uranium u = CreateUranium(id);
             String aid = (String)ids[r.nextInt(ids.length)];
-            SetCore(id, aid);
+            while (!SetCore(id, aid))
+                aid = (String)ids[r.nextInt(ids.length)];
         }
         for(int i = 0; i < 7; i++) {
             String id = "c" + i;
             Coal c = CreateCoal(id);
             String aid = (String)ids[r.nextInt(ids.length)];
-            SetCore(id, aid);
+            while (!SetCore(id, aid))
+                aid = (String)ids[r.nextInt(ids.length)];
         }
         for(int i = 0; i < 8; i++) {
             String id = "i" + i;
             Ice ic = CreateIce(id);
             String aid = (String)ids[r.nextInt(ids.length)];
-            SetCore(id, aid);
+            while (!SetCore(id, aid))
+                aid = (String)ids[r.nextInt(ids.length)];
         }
         for(int i = 0; i < 8; i++) {
             String id = "ir" + i;
             Iron ir = CreateIron(id);
             String aid = (String)ids[r.nextInt(ids.length)];
-            SetCore(id, aid);
+            while (!SetCore(id, aid))
+                aid = (String)ids[r.nextInt(ids.length)];
         }
 
 //LAYERS, SUNNEARNESS
@@ -545,21 +548,28 @@ public class Controller {
         a.SetSunnearnessInit(value);
     }
 
-    private void SetCore(String materialid, String asteroidid)
+    private boolean SetCore(String materialid, String asteroidid)
     {
+        Asteroid a = asteroids.get(asteroidid);
+        if (!a.IsEmpty()) return false;
 
         if(iron.containsKey(materialid)) {
-            asteroids.get(asteroidid).SetCore(iron.get(materialid));
+            a.SetCore(iron.get(materialid));
+            return true;
         }
         else if(ice.containsKey(materialid)) {
-            asteroids.get(asteroidid).SetCore(ice.get(materialid));
+            a.SetCore(iron.get(materialid));
+            return true;
         }
         else if(coal.containsKey(materialid)) {
-            asteroids.get(asteroidid).SetCore(coal.get(materialid));
+            a.SetCore(iron.get(materialid));
+            return true;
         }
         else if(uran.containsKey(materialid)) {
-            asteroids.get(asteroidid).SetCore(uran.get(materialid));
+            a.SetCore(iron.get(materialid));
+            return true;
         }
+        return false;
     }
 
     private void SetLayers(String asteroidid, int value)
@@ -580,18 +590,18 @@ public class Controller {
                 Asteroid a2 = asteroids.get(id2);
 
                 a1.AddNeighbour(asteroids.get(id2));
-                a2.AddNeighbour(asteroids.get(id1));
+    //          a2.AddNeighbour(asteroids.get(id1));
 
-                //dm.SetNeighbourhood(a1, a2);
+
             }
-            else if(teleports.containsKey(id2))
+    /*        else if(teleports.containsKey(id2))
             {
                 Asteroid a = asteroids.get(id1);
                 Teleport t = teleports.get(id2);
 
                 t.Deploy(a);
 
-               // dm.SetNeighbourhood(a, t);
+
             }
         }
         else if(teleports.containsKey(id1) && asteroids.containsKey(id2))
@@ -599,9 +609,101 @@ public class Controller {
             Asteroid a = asteroids.get(id2);
             Teleport t = teleports.get(id1);
 
-            t.Deploy(a);
+            t.Deploy(a);*/
 
-            //dm.SetNeighbourhood(a, t);
+
+        }
+    }
+
+    private void CreateNeighbourhoods(Object[] ids) {
+        int index = 0;
+        boolean[][] sectors = dm.GetAllocatedAsteroidSectors();
+        int rows = dm.GetRows();
+        int columns = dm.GetColumns();
+        String[][] asteroidgrid = new String[rows][columns];;
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                if (sectors[i][j]) {
+                    asteroidgrid[i][j] = (String) ids[index];
+                    index++;
+                }
+                else
+                    asteroidgrid[i][j] = null;
+            }
+        }
+
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+
+                if(asteroidgrid[i][j] == null) continue;
+
+                if (i == 0) {
+                    if (j == 0) {
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                        if(sectors[i+1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j+1]);
+                    }
+                    else if (j == columns-1) {
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i+1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j-1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                    }
+                    else {
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i+1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j-1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                        if(sectors[i+1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j+1]);
+                    }
+                }
+
+                else if (i == rows-1) {
+                    if (j == 0) {
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i-1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j+1]);
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                    }
+                    else if (j == columns-1) {
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i-1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j-1]);
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                    }
+                    else {
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i-1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j-1]);
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                        if(sectors[i-1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j+1]);
+                    }
+                }
+
+                else {
+                    if (j == 0) {
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                        if(sectors[i-1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j+1]);
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                        if(sectors[i+1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j+1]);
+                    }
+                    else if (j == columns-1) {
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                        if(sectors[i-1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j-1]);
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                        if(sectors[i+1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j-1]);
+                    }
+                    else {
+                        if(sectors[i-1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j-1]);
+                        if(sectors[i-1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j]);
+                        if(sectors[i-1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i-1][j+1]);
+                        if(sectors[i][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j-1]);
+                        if(sectors[i][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i][j+1]);
+                        if(sectors[i+1][j-1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j-1]);
+                        if(sectors[i+1][j]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j]);
+                        if(sectors[i+1][j+1]) SetNeighbourhood(asteroidgrid[i][j], asteroidgrid[i+1][j+1]);
+                    }
+                }
+            }
         }
     }
 
@@ -883,6 +985,8 @@ public class Controller {
                 }
             }
         }
+        else
+            out = "Settler: " + actor + " failed to craft.";
         WriteOut(out);
         NextRound();
     }

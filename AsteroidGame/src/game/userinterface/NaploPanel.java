@@ -16,7 +16,7 @@ public class NaploPanel extends JPanel {
         startnum = 0;
         for(int i = 0; i < 25; i++)
         {
-            JLabel templabel = new JLabel("");
+            JLabel templabel = new JLabel(" ");
             templabel.setForeground(new Color(140, 122, 230));
             lines.add(templabel);
             this.add(lines.get(i));
@@ -33,7 +33,7 @@ public class NaploPanel extends JPanel {
                 JLabel templabel = new JLabel(text.get(i).replaceAll("\t", "        "));
                 templabel.setForeground(new Color(140, 122, 230));
                 lines.add(templabel);
-                this.add(lines.get(i));
+                this.add(lines.get(lines.size()-1));
             }
             else
             {
