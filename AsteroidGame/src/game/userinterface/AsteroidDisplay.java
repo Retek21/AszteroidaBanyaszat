@@ -10,6 +10,30 @@ import java.util.Random;
 public class AsteroidDisplay extends WhereaboutDisplay{
 
     private Asteroid subject;
+
+    private Color fillColor;
+    private Color outlineColor;
+
+    public Color GetFillColor() {
+        return fillColor;
+    }
+
+    public void SetFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    public Color GetOutlineColor() {
+        return outlineColor;
+    }
+
+    public void SetOutlineColor(Color outlineColor) {
+        this.outlineColor = outlineColor;
+    }
+
+    public boolean[] GetAllocatedTeleportSectors() {
+        return AllocatedTeleportSectors;
+    }
+
     boolean[] AllocatedTeleportSectors= new boolean[9];
     boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
 
@@ -23,7 +47,7 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         TeleportSectorInit();
     }
 
-    public boolean[][] getAllocatedAsteroidSectors() {
+    public boolean[][] GetAllocatedAsteroidSectors() {
         return AllocatedAsteroidSectors;
     }
 
@@ -80,6 +104,7 @@ public class AsteroidDisplay extends WhereaboutDisplay{
                     y = GetShape().y + (i-4) * GetShape().height / 5;
                 }
                 t.GetShape().setBounds(x,y,30,30);
+                t.SetSectorpoint(i);
                 break;
             }
         }
@@ -93,7 +118,7 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         }else if(IsRoundoutline()){
             g2d.setColor(new Color(250, 230, 20));
         }else if(IsNeighbour()){
-            g2d.setColor(GetOutlineColor());
+            g2d.setColor(new Color(20,200,0));
         }
         g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
     }
@@ -113,12 +138,11 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         DisplayManager.GetInstance().repaint();
     }
 
-    @Override
-    public void NotifyNeighbour() {
+    public void NotifyNeighbourhood() {
         ArrayList<Whereabout> neighbours = subject.GetNeighbours();
         for (Whereabout neighbour: neighbours
         ) {
-            neighbour.GetDisplay().SetOutlineColor(new Color(20,200,0));
+            neighbour.GetDisplay().SetisNeigbhour(true);
         }
     }
 }

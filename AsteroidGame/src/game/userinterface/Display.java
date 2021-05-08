@@ -6,25 +6,6 @@ public class Display {
     private Rectangle shape = new Rectangle();
     private boolean selected;
     private boolean roundoutline;
-    private Color fillColor;
-
-    public Color GetFillColor() {
-        return fillColor;
-    }
-
-    public void SetFillColor(Color fillColor) {
-        this.fillColor = fillColor;
-    }
-
-    public Color GetOutlineColor() {
-        return outlineColor;
-    }
-
-    public void SetOutlineColor(Color outlineColor) {
-        this.outlineColor = outlineColor;
-    }
-
-    private Color outlineColor;
 
     public Rectangle GetShape() {
         return shape;

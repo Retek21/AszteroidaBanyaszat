@@ -164,12 +164,7 @@ public class DisplayManager extends JPanel {
     }
 
     public void ClickOnGamePanel(int x, int y) {
-        ArrayList<Display> allDisplays = new ArrayList<>();
-        allDisplays.addAll(asteroidDisplays);
-        allDisplays.addAll(settlerDisplays);
-        allDisplays.addAll(ufoDisplays);
-        allDisplays.addAll(teleportDisplays);
-        allDisplays.addAll(robotDisplays);
+        ArrayList<Display> allDisplays = getDisplayArrayList();
         for (AsteroidDisplay ad : asteroidDisplays) {
             boolean pointInWhereabout = ad.PointInArea(x, y);
             if (pointInWhereabout) {
@@ -182,7 +177,6 @@ public class DisplayManager extends JPanel {
                         for (Display d : allDisplays) {
                             d.SetSelected(false);
                         }
-                        allDisplays.add(sd);
                         Settler s = (Settler) sd.GetSubject();
                         Controller.GetInstanceOf().InfoAboutSettler(s);
                         break;
@@ -193,6 +187,10 @@ public class DisplayManager extends JPanel {
                         pointInEntity = rd.PointInArea(x, y);
                         if (pointInEntity) {
                             rd.SetSelected(true);
+                            allDisplays.remove(rd);
+                            for (Display d : allDisplays) {
+                                d.SetSelected(false);
+                            }
                             Controller.GetInstanceOf().InfoAboutRobot((Robot) rd.GetSubject());
                             break;
                         }
@@ -203,6 +201,10 @@ public class DisplayManager extends JPanel {
                         pointInEntity = ud.PointInArea(x, y);
                         if (pointInEntity) {
                             ud.SetSelected(true);
+                            allDisplays.remove(ud);
+                            for (Display d : allDisplays) {
+                                d.SetSelected(false);
+                            }
                             Controller.GetInstanceOf().InfoAboutUfo((Ufo) ud.GetSubject());
                             break;
                         }
@@ -215,7 +217,9 @@ public class DisplayManager extends JPanel {
                     for (Display astd : allDisplays) {
                         astd.SetSelected(false);
                     }
-                    allDisplays.add(ad);
+                    for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
+                        asteroidDisplayd.SetisNeigbhour(false);
+                    }
                     break;
                 }
             }
@@ -229,6 +233,31 @@ public class DisplayManager extends JPanel {
                 break;
             }
         }
+    }
+    public void ManageRoundOutlines(Display d){
+        ArrayList<Display> allDisplays = getDisplayArrayList();
+        allDisplays.remove(d);
+        d.SetRoundoutline(true);
+        for(Display display: allDisplays){
+            display.SetRoundoutline(false);
+        }
+    }
+    public void SetNeigbhourHood(){
+        for(SettlerDisplay d: settlerDisplays){
+            if(d.IsRoundoutline()){
+                AsteroidDisplay ad = (AsteroidDisplay) d.GetSubject().GetAsteroid().GetDisplay();
+                ad.NotifyNeighbourhood();
+            }
+        }
+    }
+    private ArrayList<Display> getDisplayArrayList() {
+        ArrayList<Display> allDisplays = new ArrayList<>();
+        allDisplays.addAll(asteroidDisplays);
+        allDisplays.addAll(settlerDisplays);
+        allDisplays.addAll(ufoDisplays);
+        allDisplays.addAll(teleportDisplays);
+        allDisplays.addAll(robotDisplays);
+        return allDisplays;
     }
 
     public void ClickOnMoveTarget(int x, int y) {

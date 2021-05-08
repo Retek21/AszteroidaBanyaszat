@@ -43,4 +43,10 @@ public class EntityDisplay extends Display{
         ad.EnititySectorAllocation(this);
         DisplayManager.GetInstance().repaint();
     }
+
+    @Override
+    public void Clear() {
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        ad.GetAllocatedAsteroidSectors()[sectorpoints.x][sectorpoints.y] = false;
+    }
 }

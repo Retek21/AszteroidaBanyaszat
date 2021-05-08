@@ -10,5 +10,4 @@ public class WhereaboutDisplay extends Display{
     public boolean IsNeighbour() {
         return isNeighbour;
     }
-    public void NotifyNeighbour(){}
 }
