@@ -23,8 +23,6 @@ public class UfoDisplay extends EntityDisplay{
             g2d.setColor(new Color(250, 230, 20));
         }
         g2d.drawRect(GetShape().x, GetShape().y, 20, 20);
-        SetSelected(false);
-        SetRoundoutline(false);
     }
 
     @Override

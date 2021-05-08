@@ -224,9 +224,6 @@ public class DisplayManager extends JPanel {
                     for (Display astd : allDisplays) {
                         astd.SetSelected(false);
                     }
-                    for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
-                        asteroidDisplayd.SetisNeigbhour(false);
-                    }
                     break;
                 }
             }
@@ -273,6 +270,9 @@ public class DisplayManager extends JPanel {
             if (pointInWherebout) {
                 Whereabout a = ad.GetSubject();
                 Controller.GetInstanceOf().SettlerMove(a);
+                for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
+                    asteroidDisplayd.SetisNeigbhour(false);
+                }
                 break;
             }
         }
@@ -280,6 +280,9 @@ public class DisplayManager extends JPanel {
             boolean pointInWherebout = td.PointInArea(x, y);
             if (pointInWherebout) {
                 Controller.GetInstanceOf().SettlerMove(td.GetSubject());
+                for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
+                    asteroidDisplayd.SetisNeigbhour(false);
+                }
                 break;
             }
         }
