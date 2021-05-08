@@ -102,6 +102,7 @@ public class InputManager {
                 break;
             case "Move":
                 System.out.println("Move pressed");
+                DisplayManager.GetInstance().SetNeigbhourHood();
                 SetState(State.WAITFORMOVE);
                 break;
             case "Drill":

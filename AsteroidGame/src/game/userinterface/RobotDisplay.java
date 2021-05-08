@@ -27,10 +27,10 @@ public class RobotDisplay extends EntityDisplay{
             g2d.setColor(new Color(250, 230, 20));
         }
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
-        SetSelected(false);
-        SetRoundoutline(false);
     }
     @Override
-    public void Clear(){ DisplayManager.GetInstance().RemoveRobotDisplay(this);}
+    public void Clear(){
+        super.Clear();
+        DisplayManager.GetInstance().RemoveRobotDisplay(this);}
 
 }

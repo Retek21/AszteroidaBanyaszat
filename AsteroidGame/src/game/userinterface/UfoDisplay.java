@@ -29,6 +29,7 @@ public class UfoDisplay extends EntityDisplay{
 
     @Override
     public void Clear(){
+        super.Clear();
         DisplayManager.GetInstance().RemoveUfoDisplay(this);
     }
 }
