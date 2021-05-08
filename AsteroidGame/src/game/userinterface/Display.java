@@ -9,6 +9,25 @@ public class Display {
     private boolean isNeigbhour;
     private Point sectorCoordinates;
 
+    public Color GetFillcolor() {
+        return fillcolor;
+    }
+
+    public void SetFillcolor(Color fillcolor) {
+        this.fillcolor = fillcolor;
+    }
+
+    public Color getOutlinecolor() {
+        return outlinecolor;
+    }
+
+    public void setOutlinecolor(Color outlinecolor) {
+        this.outlinecolor = outlinecolor;
+    }
+
+    private Color fillcolor;
+    private Color outlinecolor;
+
     public Point GetSectorCoordinates() {
         return sectorCoordinates;
     }
@@ -58,4 +77,5 @@ public class Display {
     public boolean Intersect(Display display){
        return shape.intersects(display.GetShape());
     }
+    public void Notify(){ }
 }
