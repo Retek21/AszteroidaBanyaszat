@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AsteroidDisplay extends Display {
+public class AsteroidDisplay extends Display{
 
     public Asteroid GetSubject() {
         return subject;
@@ -18,7 +18,7 @@ public class AsteroidDisplay extends Display {
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
         subject.SetMyDisplay(this);
-        GetShape().setBounds(x, y, 150, 150);
+        GetShape().setBounds(x, y , 150, 150);
         SectorInit();
         TeleportSectorInit();
     }
@@ -28,94 +28,85 @@ public class AsteroidDisplay extends Display {
     }
 
     boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
-
-    private void SectorInit() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                AllocatedAsteroidSectors[i][j] = false;
+    private void SectorInit(){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                AllocatedAsteroidSectors[i][j]=false;
             }
         }
     }
 
-    public void CoordinateServer(Display d) {
-        Random random = new Random();
-        boolean freeSector = false;
-        int x = -1;
-        int y = -1;
+    public void CoordinateServer(Display d){
+        Random random=new Random();
+        boolean freeSector=false;
+        int x=-1;
+        int y=-1;
 
-        while (!freeSector) {
+        while(!freeSector){
             x = random.nextInt(4);
             y = random.nextInt(4);
-            if (!AllocatedAsteroidSectors[x][y]) {
+            if(!AllocatedAsteroidSectors[x][y]){
                 AllocatedAsteroidSectors[x][y] = true;
                 freeSector = true;
                 d.SetSectorCoordinates(new Point(x, y));
             }
         }
 
-        d.GetShape().x = GetShape().x + (x * (GetShape().width - 30)) / 4;
+        d.GetShape().x = GetShape().x + (x * (GetShape().width -30) ) / 4;
         d.GetShape().y = (GetShape().y + (y * (GetShape().height - 30)) / 4) + 30;
     }
 
-    boolean[] AllocatedTeleportSectors = new boolean[9];
-    ArrayList<TeleportDisplay> tds = new ArrayList<TeleportDisplay>();
+    boolean[] AllocatedTeleportSectors= new boolean[9];
+    ArrayList<TeleportDisplay> tds=new ArrayList<TeleportDisplay>();
 
-    void TeleportSectorInit() {
-        for (int i = 0; i < 9; i++)
-            AllocatedTeleportSectors[i] = false;
+    void TeleportSectorInit(){
+        for(int i=0;i<9;i++)
+            AllocatedTeleportSectors[i]=false;
     }
-
-    void TeleportSectorAllocation(TeleportDisplay t) {
-        for (int i = 0; i < 9; i++) {
-            if (!AllocatedTeleportSectors[i]) {
-                AllocatedTeleportSectors[i] = true;
+    void TeleportSectorAllocation(TeleportDisplay t){
+        for(int i=0;i<9;i++){
+            if(!AllocatedTeleportSectors[i]){
+                AllocatedTeleportSectors[i]=true;
                 int x;
                 int y;
-                if (i < 5) {
-                    x = GetShape().x + (i * GetShape().width) / 5;
+                if(i<5){
+                    x = GetShape().x +  (i *GetShape().width) / 5;
                     y = GetShape().y; //+ GetShape().height;
-                } else {
-                    x = GetShape().x + GetShape().width - 30;
-                    y = GetShape().y + (i - 4) * GetShape().height / 5;
                 }
-                t.GetShape().setBounds(x, y, 30, 30);
+                else{
+                    x = GetShape().x + GetShape().width - 30;
+                    y = GetShape().y + (i-4) * GetShape().height / 5;
+                }
+                t.GetShape().setBounds(x,y,30,30);
                 break;
             }
         }
     }
-
-
     @Override
     public void Paint(Graphics g2d) {
         if (subject.GetSunnearness()) {
-            g2d.setColor(new Color(163, 45, 16));
+            g2d.setColor(new Color(110, 73, 13));
         } else {
-            g2d.setColor(new Color(85, 48, 17));
+            g2d.setColor(new Color(51, 25, 0));
         }
-        g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height - 30);
+        g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
         if (IsSelected()) {
-            g2d.setColor(new Color(150, 150, 0));
+            g2d.setColor(new Color(255, 20, 20));
             ArrayList<Whereabout> neighbours = subject.GetNeighbours();
-            for (Whereabout neighbour : neighbours
-            ) {
+            for (Whereabout neighbour: neighbours
+                 ) {
                 neighbour.GetDisplay().SetisNeigbhour(true);
             }
-        } else if (IsRoundoutline()) {
-            g2d.setColor(new Color(0, 0, 0));
-        } else if (IsNeigbhour()) {
-            g2d.setColor(new Color(0, 200, 255));
+        }else if(IsRoundoutline()){
+            g2d.setColor(new Color(250, 230, 20));
+        }else if(IsNeighbour()){
+            g2d.setColor(new Color(20,200,0));
         }
-        g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height - 30);
+        g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
         SetSelected(false);
         SetRoundoutline(false);
         SetisNeigbhour(false);
     }
-
-    @Override
-    public void Notify() {
-
-    }
-
     @Override
     public void Clear() {
         DisplayManager.GetInstance().RemoveAsteroidDisplay(this);

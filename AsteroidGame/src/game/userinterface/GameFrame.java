@@ -47,7 +47,29 @@ public class GameFrame extends JFrame {
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
-        System.out.println();
+        JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
+        scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        scrollablegamepanel.getVerticalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
+            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        scrollablegamepanel.repaint();
+                    }
+                });
+            }
+        });
+        scrollablegamepanel.getHorizontalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
+            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        scrollablegamepanel.repaint();
+                    }
+                });
+            }
+        });
+
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
         phaselabel.setFont(new Font ("Verdana", Font.BOLD, 26));
@@ -101,7 +123,7 @@ public class GameFrame extends JFrame {
         c.gridy=1;
         c.gridheight = 3;
         c.ipady = 600;
-        leftside.add(gamepanel, c);
+        leftside.add(scrollablegamepanel, c);
 
         c.gridy=4;
         c.gridheight = 1;
@@ -165,8 +187,6 @@ public class GameFrame extends JFrame {
         c.gridy = 1;
         c.gridx = 4;
         buttonpanel.add(craftable, c);
-
-
 
         //ActionListener felinicializalasa
 

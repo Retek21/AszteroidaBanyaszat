@@ -10,7 +10,7 @@ public class Game {
     /**
      * A kontroller osztalyra mutato referencia, ennek segitsegevel inicializal, futtatja a jatekot
      */
-    private Controller controller;
+    private Controller controller=Controller.GetInstanceOf();
 
     /**
      * Elinditja a programot, ez meg nem a jatek inditasa
@@ -82,6 +82,7 @@ public class Game {
         menuframe.setVisible(false);
         System.out.println(numberofplayers + " darab jatekossal inditanank");
         gameframe.setVisible(true);
+        controller.Init(numberofplayers);
     }
 
     public void ExitProgram(){

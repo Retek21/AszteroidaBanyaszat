@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UfoDisplay extends Display{
+public class UfoDisplay extends EntityDisplay{
     public Ufo GetSubject() {
         return subject;
     }
@@ -16,23 +16,31 @@ public class UfoDisplay extends Display{
 
     public UfoDisplay(Ufo subject){
         this.subject = subject;
-        AsteroidDisplay asteroid = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
-        asteroid.CoordinateServer(this);
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        ad.CoordinateServer(this);
+        SetMoved(false);
+        subject.AddDisplay(this);
     }
 
     @Override
-    public void Paint(Graphics g2d){
+    public void Paint(Graphics g2d) {
         AsteroidDisplay asteroid = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
-        g2d.setColor(new Color(1,150,250));
-        g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
-        if(IsSelected()){
-            g2d.setColor(new Color(100,111,160));
-        }else if(IsRoundoutline()){
-            g2d.setColor(new Color(250,0,0));
+        if (GetMoved()) {
+            asteroid.CoordinateServer(this);
         }
-        g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.setColor(new Color(1, 150, 250));
+        //g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.fillRect(GetShape().x, GetShape().y, 20, 20);
+        if (IsSelected()) {
+            g2d.setColor(new Color(255, 20, 20));
+        } else if (IsRoundoutline()) {
+            g2d.setColor(new Color(250, 230, 20));
+        }
+        //g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
+        g2d.drawRect(GetShape().x, GetShape().y, 20, 20);
         SetSelected(false);
         SetRoundoutline(false);
+        SetMoved(false);
     }
 
     @Override

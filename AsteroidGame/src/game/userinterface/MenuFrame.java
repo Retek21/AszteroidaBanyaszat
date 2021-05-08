@@ -76,23 +76,26 @@ public class MenuFrame extends JFrame {
         exitbutton.addActionListener(actionlistener);
     }
 
-    public void PlayPressed(){
+    public void PlayPressed() {
         try {
             String tempstring = (String) JOptionPane.showInputDialog(this, "Number of Players:", "Asteroid Game [agbkp Edition]", JOptionPane.PLAIN_MESSAGE);
             if(tempstring != null)
             {
                 int numberofplayers = Integer.parseInt(tempstring);
-                if (numberofplayers < 2)
+                if (numberofplayers < 2 )
                     JOptionPane.showMessageDialog(this, "More than 1 player is needed.", "Error", JOptionPane.WARNING_MESSAGE);
-                else if(numberofplayers > 5)
-                    JOptionPane.showMessageDialog(this, "The maximum number of players is 5.", "Error", JOptionPane.WARNING_MESSAGE);
+                else if (numberofplayers >5 )
+                        JOptionPane.showMessageDialog(this, "Less than 6 player is needed.", "Error", JOptionPane.WARNING_MESSAGE);
                 else
-                    game.StartGame(numberofplayers);
+                        game.StartGame(numberofplayers);
+
             }
         }
         catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Incorrect Input.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+
+        }
+
 
 }
