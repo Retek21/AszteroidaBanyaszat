@@ -4,7 +4,7 @@ import java.awt.*;
 public class Display {
 
     private Rectangle shape = new Rectangle();
-    private boolean selected;
+    protected boolean selected;
     private boolean roundoutline;
 
     public Rectangle GetShape() {
@@ -33,6 +33,9 @@ public class Display {
     }
 
     public void Paint(Graphics g){}
+    public void MarkedToClear() {
+        DisplayManager.GetInstance().AddToClearPuffer(this);
+    }
     public void Clear(){
         DisplayManager.GetInstance().repaint();
     }
