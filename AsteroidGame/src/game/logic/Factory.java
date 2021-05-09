@@ -121,7 +121,6 @@ public class Factory {
             }
 
             Robot robot = new Robot();
-            Controller.GetInstanceOf().AddRobot(robot);
             return robot;
         }
         else {
