@@ -26,9 +26,14 @@ public class DisplayManager extends JPanel {
 
     private DisplayManager() {
         super();
+        Init();
+
+    }
+
+    public void Init() {
         setBackground(new Color(50, 56, 65));
         setBorder(BorderFactory.createLineBorder(Color.black));
-       // setPreferredSize(new Dimension(1022, 623));
+        // setPreferredSize(new Dimension(1022, 623));
 
         //initialize variables
         blinkingtime = 8;
@@ -52,24 +57,6 @@ public class DisplayManager extends JPanel {
                 {true, true, false, true, true, false},
                 {true, false, true, true, true, true},
                 {true, true, true, true, true, true}
-
-                //test
-                /*{true, true, true, true, true, true, true},
-                {true, true, true, true, true, true, true},
-                {false, true, false, false, false, true, false},
-                {true, true, false, false, false, true, true},
-                {false, true, false, false, false, true, false},
-                {true, true, true, true, true, true, true},
-                {true, true, true, true, true, true, true}*/
-
-                //fun
-                /*{true, true, true, true, false, false, true},
-                {false, false, false, true, false, false, true},
-                {false, false, false, true, false, false, true},
-                {true, true, true, false, true, true, true},
-                {true, false, false, true, false, false, false},
-                {true, false, false, true, false, false, false},
-                {true, false, false, true, true, true, true}*/
         };
     }
 
@@ -262,6 +249,40 @@ public class DisplayManager extends JPanel {
             display.SetRoundoutline(false);
         }
     }
+
+    public void RefreshSelectedDisplay(){
+        for(TeleportDisplay d : teleportDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutTeleport(d.GetSubject());
+                return;
+            }
+        }
+        for(SettlerDisplay d : settlerDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutSettler((Settler) d.GetSubject());
+                return;
+            }
+        }
+        for(RobotDisplay d : robotDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutRobot((Robot) d.GetSubject());
+                return;
+            }
+        }
+        for(UfoDisplay d : ufoDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutUfo((Ufo) d.GetSubject());
+                return;
+            }
+        }
+        for(AsteroidDisplay d : asteroidDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutAsteroid(d.GetSubject());
+                return;
+            }
+        }
+    }
+
     public void SetNeigbhourHood(){
         for(SettlerDisplay d: settlerDisplays){
             if(d.IsRoundoutline()){

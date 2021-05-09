@@ -69,32 +69,6 @@ public class Controller {
     private Sun sun;
 
     /**
-     * A jatek veget jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean end = false;
-
-    /**
-     * A gyozelmet jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean victory = false;
-
-    /**
-     * Az inicializalo fazist jelolo bool valtozo.
-     */
-    private boolean initializing;
-
-    /**
-     * A leallasi felteteleke figyelo bool valtozo. Ha igaz,
-     * figyeli az egyes objektumok allapotat, es a jatek veget/gyozelmet allithatja be.
-     */
-    private boolean checkconditions;
-
-    /**
-     * Manualis tesztelest beallito valtozo.
-     */
-    private boolean manual;
-
-    /**
      * A kimeneti stringeket tarolo tomb.
      */
     private ArrayList<String> output = new ArrayList<String>();
@@ -130,6 +104,10 @@ public class Controller {
      * Ures konstruktor.
      */
     private Controller() {}
+
+    public static void Reset() {
+        instance = null;
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -404,6 +382,29 @@ public class Controller {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////INIT PHASE///////////////////////////////////////////////////////
+
+    public void PreInit() {
+        asteroids = new LinkedHashMap<String, Asteroid>();
+
+        settlers = new LinkedHashMap<String, Settler>();
+
+        robots = new LinkedHashMap<String, Robot>();
+
+        ufos = new LinkedHashMap<String, Ufo>();
+
+        teleports = new LinkedHashMap<String, Teleport>();
+
+        iron = new LinkedHashMap<String, Iron>();
+
+        coal = new LinkedHashMap<String, Coal>();
+
+        ice = new LinkedHashMap<String, Ice>();
+
+        uran = new LinkedHashMap<String, Uranium>();
+
+        actors = new ArrayList<Actor>();
+    }
+
     public void Init(int players) {
         dm = DisplayManager.GetInstance();
         tm = TextOutputManager.GetInstanceOf();
@@ -438,6 +439,14 @@ public class Controller {
             s.GetInventory().AddTeleport(tt);
             t.SetPair(tt);
             tt.SetPair(t);
+
+            s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+            s.GetInventory().AddMaterial(new Uranium());
+           s.GetInventory().AddMaterial(new Uranium());
+            s.GetInventory().AddMaterial(new Coal());
+           s.GetInventory().AddMaterial(new Ice());
 
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
@@ -768,7 +777,7 @@ public class Controller {
     public void NextRound() {
         WriteNaplo();
         CheckVictory(actor);
-        CheckMaterials();
+        CheckDefeat();
 
         Actor ac = null;
         actors.sort(new ActorComparator());
@@ -1329,7 +1338,6 @@ public class Controller {
     {
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
-    //  WriteOut(out);
         Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
@@ -1353,7 +1361,6 @@ public class Controller {
                 if (it.hasNext())
                     out = out + ",";
             }
-    //      WriteOut(out);
         }
         for(int i = 0; i < tempasteroids.length; i++)
         {
@@ -1438,7 +1445,7 @@ public class Controller {
             out = "\tPair: null";
         WriteOut(out);
 
-        if(t.GetPair() != null && t.GetPair().GetPairReadiness())
+        if(t.GetPair() != null && t.GetPairReadiness())
             out = "\tState: active";
         else
             out = "\tState: inactive";
@@ -1554,8 +1561,7 @@ public class Controller {
      */
     private void Endgame(boolean v)
     {
-        end = true;
-        victory = v;
+        Game.GetInstanceOf().ExitGame(v);
     }
 
 ///////////////CHECK CONDITIONS//////////////////////////
@@ -1584,16 +1590,20 @@ public class Controller {
      * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
      * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
-    private void CheckMaterials(){
+    private void CheckDefeat(){
         int countCoal = coal.size();
         int countIce = ice.size();
         int countIron = iron.size();
         int countUranium = uran.size();
 
-        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3)
-            return;
-        else
+        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3) {}
+        else {
             Endgame(false);
+            return;
+        }
+        if(settlers.isEmpty()) {
+            Endgame(false);
+        }
     }
 
 ///////////////////////////EVENTS THAT CAN OCCUR DURING THE GAME///////////////////////////
@@ -1641,7 +1651,7 @@ public class Controller {
                 unique = true;
         }
         String id1 = "t" + Integer.toString(n);
-        String id2 = "t" + Integer.toString(n);
+        String id2 = "t" + Integer.toString(n+1);
         teleports.put(id1, t1);
         teleports.put(id2, t2);
         output.add("Teleport: " + id1 + " and Teleport: " + id2 + ".");

@@ -15,6 +15,7 @@ public class TextOutputManager {
 
     private TextOutputManager() {}
 
+
     public static TextOutputManager GetInstanceOf(){
         if(instance == null)
             instance = new TextOutputManager();
