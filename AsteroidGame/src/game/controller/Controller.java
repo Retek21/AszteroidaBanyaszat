@@ -777,7 +777,7 @@ public class Controller {
     public void NextRound() {
         WriteNaplo();
         CheckVictory(actor);
-        CheckMaterials();
+        CheckDefeat();
 
         Actor ac = null;
         actors.sort(new ActorComparator());
@@ -1590,16 +1590,20 @@ public class Controller {
      * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
      * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
-    private void CheckMaterials(){
+    private void CheckDefeat(){
         int countCoal = coal.size();
         int countIce = ice.size();
         int countIron = iron.size();
         int countUranium = uran.size();
 
-        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3)
-            return;
-        else
+        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3) {}
+        else {
             Endgame(false);
+            return;
+        }
+        if(settlers.isEmpty()) {
+            Endgame(false);
+        }
     }
 
 ///////////////////////////EVENTS THAT CAN OCCUR DURING THE GAME///////////////////////////
