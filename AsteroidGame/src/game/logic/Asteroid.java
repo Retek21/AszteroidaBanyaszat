@@ -30,6 +30,11 @@ public class Asteroid implements Whereabout{
      */
     private boolean empty;
 
+    private boolean onfire;
+    private boolean exploding;
+
+    private WhereaboutDisplay display;
+
     /**
      * az aszteroida szomszedai, ahova az entitasok lepni tudnak az aszteroidarol
      */
@@ -49,6 +54,7 @@ public class Asteroid implements Whereabout{
      * az aszteroidamezo, amiben az aszteroida benne van
      */
     private Asteroidfield asteroidfield;
+
     @Override
     public WhereaboutDisplay GetDisplay() {
         return display;
@@ -58,13 +64,14 @@ public class Asteroid implements Whereabout{
         this.display = display;
     }
 
+
     /**
      * az aszteroida default konstruktora
      * beallitja az alapertelmezett attributumokat
      */
-    private WhereaboutDisplay display;
     public Asteroid() {
         sunnearness=false;
+        onfire = false;
         empty=true;
         neighbours = new ArrayList<Whereabout>();
         entities = new ArrayList<Entity>();
@@ -289,6 +296,10 @@ public class Asteroid implements Whereabout{
      * es meghivja a rajta tartozkodo entitaskora a die() metodust
      */
     public void OnFire(){
+        onfire = true;
+        display.Notify();
+        onfire = false;
+
         if(!empty || layers>0){
             for(int i=0;i< entities.size();i++)
             {
@@ -329,6 +340,11 @@ public class Asteroid implements Whereabout{
      * es kiveszi magat az aszteroidamezobol, valamint a controller nyilvantartasabol.
      */
     public void Explode(){
+        exploding = true;
+        display.Notify();
+
+        Controller.GetInstanceOf().AsteroidExplode(this);
+
         for(int i=0;i<entities.size();i++)
         {
             int tempsize = entities.size();
@@ -347,8 +363,8 @@ public class Asteroid implements Whereabout{
         if (material != null)
             material.Disintegrate();
         asteroidfield.RemoveAsteroid(this);
-        Controller.GetInstanceOf().AsteroidExplode(this);
-        display.Clear();
+
+        display.MarkedToClear();
     }
 
     /**
@@ -377,5 +393,8 @@ public class Asteroid implements Whereabout{
     public int GetNumberOfNeighbours(){
         return neighbours.size();
     }
+
+    public boolean GetOnFireness() { return onfire; }
+    public boolean GetExplodingness() { return exploding; }
 
 }

@@ -7,12 +7,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TeleportDisplay extends WhereaboutDisplay {
-    private Teleport subject;
-    private int sectorpoint;
 
     public Teleport GetSubject() {
         return subject;
     }
+
+    private Teleport subject;
+
+    private Color color;
 
     public int GetSectorpoint() {
         return sectorpoint;
@@ -22,24 +24,57 @@ public class TeleportDisplay extends WhereaboutDisplay {
         this.sectorpoint = sectorpoint;
     }
 
+    private int sectorpoint;
+
     public TeleportDisplay(Teleport subject) {
         this.subject = subject;
         subject.SetDisplay(this);
+   /*     if (!subject.GetPairReadiness())
+            color = new Color(4, 46, 135);
+        else
+            color = new Color(153,50,204);
+
+        Display pair = subject.GetPair().GetDisplay();
+        if (pair != null) pair.Notify();*/
+
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.TeleportSectorAllocation(this);
+
+    }
+
+    public void SetSelectedAsPair(boolean selected) {
+        super.selected = selected;
+    }
+
+    @Override
+    public void SetSelected(boolean selected) {
+        super.selected = selected;
+        if (selected)
+            if (subject.GetPairReadiness()) {
+                TeleportDisplay pair = (TeleportDisplay) subject.GetPair().GetDisplay();
+                pair.SetSelectedAsPair(true);
+            }
+        DisplayManager.GetInstance().repaint();
     }
 
     @Override
     public void Paint(Graphics g2d){
-        g2d.setColor(new Color(153,50,204));
+        Color color;
+        if(underSunStorm && blink % 2 == 0)
+            color = new Color(255, 255, 0);
+        else if (!subject.GetPairReadiness())
+            color = new Color(4, 46, 135);
+        else
+            color = new Color(153,50,204);
+        g2d.setColor(color);
         g2d.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
-        if(IsSelected()){
-            subject.GetPair().GetDisplay().SetSelected(true);
-            g2d.setColor(new Color(255, 20, 20));
-        }else if(IsRoundoutline()){
+        if (IsRoundoutline()){
             g2d.setColor(new Color(250, 230, 20));
-        }else if(IsNeighbour()){
+        } else if(IsNeighbour()){
             g2d.setColor(new Color(20,200,0));
+        }
+        else if(IsSelected()){
+            g2d.setColor(new Color(255, 20, 20));
         }
         g2d.drawOval(GetShape().x, GetShape().y,GetShape().width,GetShape().height);
     }
@@ -53,7 +88,16 @@ public class TeleportDisplay extends WhereaboutDisplay {
     }
 
     public void Notify() {
-            AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
-            ad.TeleportSectorAllocation(this);
+
+        if (!underSunStorm && blink == 0) {
+            underSunStorm = subject.GetOnFireness();
+            if (underSunStorm) {
+                blink = DisplayManager.GetInstance().GetBlinkingTime();;
+            }
+        }
+
+        AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
+        ad.TeleportSectorAllocation(this);
+
     }
 }

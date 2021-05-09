@@ -10,6 +10,7 @@ public class InfoPanel extends JPanel {
         this.setLayout(new GridLayout(26,1));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
+
     }
     public void WriteInfo(ArrayList<String> info)
     {
@@ -20,5 +21,7 @@ public class InfoPanel extends JPanel {
             templabel.setForeground(new Color(140, 122, 230));
             this.add(templabel);
         }
+        revalidate();
+        repaint();
     }
 }

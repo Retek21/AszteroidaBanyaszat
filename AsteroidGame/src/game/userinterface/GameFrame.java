@@ -4,10 +4,7 @@ import game.controller.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class GameFrame extends JFrame {
 
@@ -35,7 +32,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(Game g){
         game = g;
-        setSize(1200, 900);
+        setSize(1280, 800);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,10 +41,15 @@ public class GameFrame extends JFrame {
 
         naplopanel = new NaploPanel();
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
-        scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollnaplo.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+            }
+        });
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
-        JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
+    /*    JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
         scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -68,7 +70,7 @@ public class GameFrame extends JFrame {
                     }
                 });
             }
-        });
+        });*/
 
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
@@ -99,6 +101,7 @@ public class GameFrame extends JFrame {
         this.setLayout(new GridBagLayout());
         JPanel leftside = new JPanel();
         JPanel rightside = new JPanel();
+        rightside.setPreferredSize(new Dimension(280, 2 * 381));
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
@@ -123,7 +126,8 @@ public class GameFrame extends JFrame {
         c.gridy=1;
         c.gridheight = 3;
         c.ipady = 600;
-        leftside.add(scrollablegamepanel, c);
+        leftside.add(gamepanel, c);
+     //   leftside.add(scrollablegamepanel, c);
 
         c.gridy=4;
         c.gridheight = 1;

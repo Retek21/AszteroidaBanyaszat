@@ -428,9 +428,16 @@ public class Controller {
         dm.CreateAsteroidfieldDisplay(_asteroids);
 
 //SETTLERS
-        for(int i = 0; i < players; i++) {
+       for(int i = 0; i < players; i++) {
             String id = "s" + i;
             Settler s = CreateSettler(id);
+
+            Teleport t = CreateTeleport("t" + i);
+            s.GetInventory().AddTeleport(t);
+            Teleport tt = CreateTeleport("t" + i+60);
+            s.GetInventory().AddTeleport(tt);
+            t.SetPair(tt);
+            tt.SetPair(t);
 
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
@@ -438,7 +445,9 @@ public class Controller {
             actors.add(new Actor(id, State.SETTLERROUND, "Round of Settler: " + id));
 
             dm.CreateSettlerDisplay(s);
-        }
+       }
+
+
 //UFOS
         for(int i = 0; i < players; i++) {
             String id = "u" + i;
@@ -451,11 +460,24 @@ public class Controller {
 
             dm.CreateUfoDisplay(u);
         }
+//ROBOTS
+        for(int i = 0; i < 3; i++) {
+            String id = "r" + i;
+            Robot ro = CreateRobot(id);
+
+            String aid = (String)ids[r.nextInt(ids.length)];
+            AddEntity(id, aid);
+
+            actors.add(new Actor(id, State.AIROUND, "Round of Robot: " + id));
+
+            dm.CreateRobotDisplay(ro);
+        }
 
 //MATERIALS
         for(int i = 0; i < 7; i++) {
             String id = "ur" + i;
             Uranium u = CreateUranium(id);
+            u.SetInteractCount(2);
             String aid = (String)ids[r.nextInt(ids.length)];
             while (!SetCore(id, aid))
                 aid = (String)ids[r.nextInt(ids.length)];
@@ -497,9 +519,10 @@ public class Controller {
         return a;
     }
 
-    private void CreateTeleport(String id) {
+    private Teleport CreateTeleport(String id) {
         Teleport t = new Teleport();
         teleports.put(id, t);
+        return t;
     }
 
     private Settler CreateSettler(String id) {
@@ -508,9 +531,10 @@ public class Controller {
         return s;
     }
 
-    private void CreateRobot(String id) {
+    private Robot CreateRobot(String id) {
         Robot r = new Robot();
         robots.put(id, r);
+        return r;
     }
 
     private Ufo CreateUfo(String id) {
@@ -857,11 +881,13 @@ public class Controller {
             Asteroid a = t.GetAsteroid();
             if(a.GetNumberOfNeighbours() > 0)
             {
+                String where_id = null;
                 Random rand = new Random();
-                Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
-                String where_id = SearchForWhereabout(neighbour);
-                if (where_id != null)
-                    TeleportMove(id, where_id);
+                while (where_id == null || where_id.equals(id)) {
+                    Whereabout neighbour = a.GetNeighbour(rand.nextInt(a.GetNumberOfNeighbours()));
+                    where_id = SearchForWhereabout(neighbour);
+                }
+                TeleportMove(id, where_id);
             }
         }
     }
@@ -964,7 +990,7 @@ public class Controller {
     {
         String out = null;
         if(settlers.containsKey(actor)) {
-            if (thing.equals("robot")) {
+            if (thing.equals("Robot")) {
                 boolean success = settlers.get(actor).CraftRobot();
 
                 if (!success)
@@ -975,7 +1001,7 @@ public class Controller {
                     output.remove(output.size() - 1);
                 }
             }
-            if (thing.equals("teleport")) {
+            if (thing.equals("Teleport")) {
                 boolean success = settlers.get(actor).CraftTeleport();
 
                 if (!success)
@@ -1006,7 +1032,7 @@ public class Controller {
             Asteroid a = settlers.get(actor).GetAsteroid();
             String asteroid_id = SearchForAsteroid(a);
 
-            if (thing.equals("teleport")) {
+            if (thing.equals("Teleport")) {
                 ArrayList<Teleport> tps = s.GetInventory().GetTeleports();
                 if (tps.isEmpty()) { }
                 else {
@@ -1275,6 +1301,11 @@ public class Controller {
      */
     private void SunStorm()
     {
+        int happening = new Random().nextInt(2);
+        if (happening == 0) {
+            WriteOut("The Sun rests.");
+            return;
+        }
         ArrayList<Asteroid> tempasteroids = new ArrayList<Asteroid>();
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
@@ -1285,6 +1316,7 @@ public class Controller {
         int rand = new Random().nextInt(tempasteroids.size());
         Asteroid asteroid = tempasteroids.get(rand);
         SunStorm(SearchForAsteroid(asteroid));
+        new BlinkerThread().start();
     }
 
 ////////////////REARRANGE////////////////
@@ -1297,7 +1329,7 @@ public class Controller {
     {
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
-        WriteOut(out);
+    //  WriteOut(out);
         Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
@@ -1321,7 +1353,7 @@ public class Controller {
                 if (it.hasNext())
                     out = out + ",";
             }
-            WriteOut(out);
+    //      WriteOut(out);
         }
         for(int i = 0; i < tempasteroids.length; i++)
         {
@@ -1585,7 +1617,7 @@ public class Controller {
         }
         String id = "r" + Integer.toString(n);
         robots.put(id, r);
-        actors.add(new Actor(id, State.AIROUND, "Robot: "));
+        actors.add(new Actor(id, State.AIROUND, "Round of Robot: " + id));
         output.add("Robot: " + id + ".");
 
         dm.CreateRobotDisplay(r);
@@ -1618,7 +1650,7 @@ public class Controller {
     public void TeleportGoesCrazy(Teleport t) {
         String id = SearchForTeleport(t);
         if (id != null) {
-            actors.add(new Actor(id, State.AIROUND, "Teleport: "));
+            actors.add(new Actor(id, State.AIROUND, "Round of Teleport: " + id));
 
             String out = "Teleport: " + id + " went TOTAL CRAZY!!";
             WriteOut(out);
@@ -1690,6 +1722,7 @@ public class Controller {
      */
     public void AsteroidExplode(Asteroid a)
     {
+        new BlinkerThread().start();
         String id = SearchForAsteroid(a);
         if (id != null)
         {

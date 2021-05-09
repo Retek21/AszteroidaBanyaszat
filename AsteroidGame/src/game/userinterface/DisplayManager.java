@@ -16,7 +16,9 @@ public class DisplayManager extends JPanel {
     private ArrayList<SettlerDisplay> settlerDisplays;
     private ArrayList<TeleportDisplay> teleportDisplays;
     private ArrayList<AsteroidDisplay> asteroidDisplays;
+    private ArrayList<Display> clearpuffer;
     private SunDisplay sunDisplay;
+    private int blinkingtime;
     private int rows;
     private int columns;
     private int numberOfAsteroids;
@@ -26,27 +28,30 @@ public class DisplayManager extends JPanel {
         super();
         setBackground(new Color(50, 56, 65));
         setBorder(BorderFactory.createLineBorder(Color.black));
-        setPreferredSize(new Dimension(1050, 1050));
+       // setPreferredSize(new Dimension(1022, 623));
 
         //initialize variables
+        blinkingtime = 8;
         ufoDisplays = new ArrayList<UfoDisplay>();
         robotDisplays = new ArrayList<RobotDisplay>();
         settlerDisplays = new ArrayList<SettlerDisplay>();
         teleportDisplays = new ArrayList<TeleportDisplay>();
         asteroidDisplays = new ArrayList<AsteroidDisplay>();
+        clearpuffer = new ArrayList<Display>();
 
-        rows = 7;
-        columns = 7;
+        rows = 8;
+        columns = 6;
         numberOfAsteroids = 36;
         AllocatedAsteroidSectors = new boolean[][]{
                 //real
-                {true, false, false, true, true, true, true},
-                {true, true, true, true, true, true, true},
-                {true, false, false, false, true, true, true},
-                {true, true, false, false, true, false, true},
-                {true, true, true, false, false, true, true},
-                {true, true, false, true, true, false, true},
-                {true, false, true, true, true, true, true}
+                {true, false, false, true, true, true},
+                {true, true, true, true, true, true},
+                {true, true, false, false, true, true},
+                {true, true, false, false, false, true},
+                {true, true, false, false, true, true},
+                {true, true, false, true, true, false},
+                {true, false, true, true, true, true},
+                {true, true, true, true, true, true}
 
                 //test
                 /*{true, true, true, true, true, true, true},
@@ -80,6 +85,7 @@ public class DisplayManager extends JPanel {
 
     public int GetRows() {return rows;}
     public int GetColumns() {return columns;}
+    public int GetBlinkingTime() {return blinkingtime;}
 
     public void Test() {
 
@@ -106,6 +112,7 @@ public class DisplayManager extends JPanel {
 
     //CREATE
     public void CreateAsteroidfieldDisplay(Asteroid[] af) {
+        System.out.println(getWidth() + " " + getHeight());
         for (int i = 0; i < af.length; i++) {
             boolean found = false;
             for (int k = 0; k < rows; k++) {
@@ -126,7 +133,7 @@ public class DisplayManager extends JPanel {
                     break;
             }
         }
-        sunDisplay = new SunDisplay((3 * getWidth()) / rows, (3 * getHeight()) / columns);
+        sunDisplay = new SunDisplay(getWidth()/2 -75, getHeight()/2 - 75);
     }
 
     public void CreateTeleportDisplay(Teleport t) {
@@ -176,6 +183,7 @@ public class DisplayManager extends JPanel {
             boolean pointInWhereabout = ad.PointInArea(x, y);
             if (pointInWhereabout) {
                 boolean pointInEntity = false;
+                boolean pointInTeleport = false;
                 for (SettlerDisplay sd : settlerDisplays) {
                     pointInEntity = sd.PointInArea(x, y);
                     if (pointInEntity) {
@@ -218,6 +226,21 @@ public class DisplayManager extends JPanel {
                     }
                 }
                 if (!pointInEntity) {
+                    for (TeleportDisplay td : teleportDisplays) {
+                        pointInTeleport = td.PointInArea(x, y);
+                        if (pointInTeleport) {
+                            td.SetSelected(true);
+                            allDisplays.remove(td);
+                            allDisplays.remove(td.GetSubject().GetPair().GetDisplay());
+                            for (Display d : allDisplays) {
+                                d.SetSelected(false);
+                            }
+                            Controller.GetInstanceOf().InfoAboutTeleport(td.GetSubject());
+                            break;
+                        }
+                    }
+                }
+                if (!pointInEntity && !pointInTeleport) {
                     ad.SetSelected(true);
                     allDisplays.remove(ad);
                     for (Display astd : allDisplays) {
@@ -226,15 +249,6 @@ public class DisplayManager extends JPanel {
                     Controller.GetInstanceOf().InfoAboutAsteroid(ad.GetSubject());
                     break;
                 }
-            }
-        }
-
-        for (TeleportDisplay td : teleportDisplays) {
-            boolean pointInWherebout = td.PointInArea(x, y);
-            if (pointInWherebout) {
-                td.SetSelected(true);
-                Controller.GetInstanceOf().InfoAboutTeleport(td.GetSubject());
-                break;
             }
         }
     }
@@ -267,6 +281,20 @@ public class DisplayManager extends JPanel {
     }
 
     public void ClickOnMoveTarget(int x, int y) {
+        for (TeleportDisplay td : teleportDisplays) {
+            boolean pointInWherebout = td.PointInArea(x, y);
+            if (pointInWherebout) {
+                Controller.GetInstanceOf().SettlerMove(td.GetSubject());
+                for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
+                    asteroidDisplayd.SetisNeigbhour(false);
+                }
+                for (TeleportDisplay teleportDisplayd : teleportDisplays) {
+                    teleportDisplayd.SetisNeigbhour(false);
+                }
+                return;
+            }
+        }
+
         for (AsteroidDisplay ad : asteroidDisplays) {
             boolean pointInWherebout = ad.PointInArea(x, y);
             if (pointInWherebout) {
@@ -275,17 +303,10 @@ public class DisplayManager extends JPanel {
                 for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
                     asteroidDisplayd.SetisNeigbhour(false);
                 }
-                break;
-            }
-        }
-        for (TeleportDisplay td : teleportDisplays) {
-            boolean pointInWherebout = td.PointInArea(x, y);
-            if (pointInWherebout) {
-                Controller.GetInstanceOf().SettlerMove(td.GetSubject());
-                for (AsteroidDisplay asteroidDisplayd : asteroidDisplays) {
-                    asteroidDisplayd.SetisNeigbhour(false);
+                for (TeleportDisplay teleportDisplayd : teleportDisplays) {
+                    teleportDisplayd.SetisNeigbhour(false);
                 }
-                break;
+                return;
             }
         }
     }
@@ -310,6 +331,24 @@ public class DisplayManager extends JPanel {
     public void DrawDisplays() {
         repaint();
     }
+
+    public void BlinkWhereabouts() {
+        ArrayList<WhereaboutDisplay> displays = new ArrayList<WhereaboutDisplay>();
+        displays.addAll(asteroidDisplays);
+        displays.addAll(teleportDisplays);
+        for(WhereaboutDisplay wd : displays)
+            wd.Blink();
+    }
+
+    public void AddToClearPuffer(Display d) {
+        clearpuffer.add(d);
+    }
+
+    public void ClearClearPuffer() {
+        for(Display d : clearpuffer)
+            d.Clear();
+    }
+
 
     private Display activedisplay;
 

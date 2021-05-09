@@ -46,7 +46,7 @@ public class AsteroidDisplay extends WhereaboutDisplay{
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
         subject.SetDisplay(this);
-        GetShape().setBounds(x, y , 150, 150);
+        GetShape().setBounds(x, y , 100, 100);
         SetFillColor(new Color(51, 25, 0));
         SetOutlineColor(new Color(51, 25, 0));
         SectorInit();
@@ -77,10 +77,10 @@ public class AsteroidDisplay extends WhereaboutDisplay{
             }
         }
 
-        d.GetShape().x = GetShape().x + (x * (GetShape().width -30) ) / 4;
-        d.GetShape().y = (GetShape().y + (y * (GetShape().height - 30)) / 4) + 30;
-        d.GetShape().height = 20;
-        d.GetShape().width = 20;
+        d.GetShape().x = GetShape().x + (x * (GetShape().width -15) ) / 4;
+        d.GetShape().y = (GetShape().y + (y * (GetShape().height - 15)) / 4) + 15;
+        d.GetShape().height = 15;
+        d.GetShape().width = 15;
     }
 
     void TeleportSectorInit(){
@@ -98,10 +98,10 @@ public class AsteroidDisplay extends WhereaboutDisplay{
                     y = GetShape().y;
                 }
                 else{
-                    x = GetShape().x + GetShape().width - 30;
+                    x = GetShape().x + GetShape().width - 15;
                     y = GetShape().y + (i-4) * GetShape().height / 5;
                 }
-                t.GetShape().setBounds(x,y,30,30);
+                t.GetShape().setBounds(x,y,15,15);
                 t.SetSectorpoint(i);
                 break;
             }
@@ -109,8 +109,15 @@ public class AsteroidDisplay extends WhereaboutDisplay{
     }
     @Override
     public void Paint(Graphics g2d) {
+        if (underSunStorm && blink % 2 == 0) SetFillColor(new Color(232, 65, 24));
+        else if (exploding && blink % 2 == 0) SetFillColor(new Color(255, 0, 0));
+        else if(subject.GetSunnearness())
+            SetFillColor(new Color(153, 72, 25));
+        else
+            SetFillColor(new Color(51, 25, 0));
+
         g2d.setColor(GetFillColor());
-        g2d.fillOval(GetShape().x, GetShape().y + 30, GetShape().width -30, GetShape().height- 30);
+        g2d.fillOval(GetShape().x, GetShape().y + 15, GetShape().width -15, GetShape().height- 15);
         if (IsSelected()) {
             g2d.setColor(new Color(255, 20, 20));
         }else if(IsRoundoutline()){
@@ -118,7 +125,7 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         }else if(IsNeighbour()){
             g2d.setColor(new Color(20,200,0));
         }
-        g2d.drawOval(GetShape().x, GetShape().y + 30, GetShape().width - 30, GetShape().height -30);
+        g2d.drawOval(GetShape().x, GetShape().y + 15, GetShape().width - 15, GetShape().height -15);
     }
     @Override
     public void Clear() {
@@ -128,10 +135,13 @@ public class AsteroidDisplay extends WhereaboutDisplay{
 
     @Override
     public void Notify() {
-        if(subject.GetSunnearness()) {
-            SetFillColor(new Color(110, 73, 13));
-        }else{
-            SetFillColor(new Color(51, 25, 0));
+
+        if ((!underSunStorm || !exploding) && blink == 0) {
+            underSunStorm = subject.GetOnFireness();
+            exploding = subject.GetExplodingness();
+            if (underSunStorm || exploding) {
+                blink = DisplayManager.GetInstance().GetBlinkingTime();
+            }
         }
         DisplayManager.GetInstance().repaint();
     }
