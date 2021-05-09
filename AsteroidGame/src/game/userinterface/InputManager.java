@@ -19,6 +19,10 @@ public class InputManager {
 
     private State state;
 
+    public static void Reset() {
+        instance = null;
+    }
+
     private InputManager()
     {
         manager = DisplayManager.GetInstance();

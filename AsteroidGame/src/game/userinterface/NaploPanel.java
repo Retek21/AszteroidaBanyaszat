@@ -5,13 +5,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class NaploPanel extends JPanel {
-    private ArrayList<JLabel> lines = new ArrayList<JLabel>();
+    private ArrayList<JLabel> lines;
 
     public NaploPanel()
     {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
+        lines = new ArrayList<JLabel>();
     }
 
     public void WriteOut(ArrayList<String> text)
