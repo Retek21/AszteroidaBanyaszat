@@ -30,8 +30,8 @@ public class GameFrame extends JFrame {
 
     private Game game;
 
-    public GameFrame(Game g){
-        game = g;
+    public GameFrame(){
+        game = Game.GetInstanceOf();
         setSize(1280, 800);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");

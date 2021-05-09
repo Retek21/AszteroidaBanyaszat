@@ -13,9 +13,9 @@ public class MenuFrame extends JFrame {
     private JButton exitbutton;
     private Game game;
 
-    public MenuFrame(Game g)
+    public MenuFrame()
     {
-        game = g;
+        game = Game.GetInstanceOf();
         setSize(600, 400);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");

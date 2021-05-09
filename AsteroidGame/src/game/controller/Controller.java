@@ -1556,6 +1556,7 @@ public class Controller {
     {
         end = true;
         victory = v;
+        Game.GetInstanceOf().ExitGame(v);
     }
 
 ///////////////CHECK CONDITIONS//////////////////////////

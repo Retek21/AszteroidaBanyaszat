@@ -15,9 +15,9 @@ public class EndGameFrame extends JFrame {
 
     private JLabel label;
 
-    public EndGameFrame(Game g)
+    public EndGameFrame()
     {
-        game = g;
+        game = Game.GetInstanceOf();
 
         setSize(300, 200);
         setResizable(false);
