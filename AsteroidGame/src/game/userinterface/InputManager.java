@@ -84,6 +84,7 @@ public class InputManager {
         if(state==State.WAITFORMOVE){
             manager.ClickOnMoveTarget(x, y);
             System.out.println("WaitforMoveban kattintva x:" + x + " y:" + y);
+            manager.RefreshSelectedDisplay();
         }
         else{
             manager.ClickOnGamePanel(x , y);
@@ -99,6 +100,7 @@ public class InputManager {
                 System.out.println("DoPhase pressed");
                 //DisplayManager.GetInstance().Test();
                 //DisplayManager.GetInstance().repaint();
+                manager.RefreshSelectedDisplay();
                 break;
             case "Move":
                 System.out.println("Move pressed");
@@ -108,18 +110,22 @@ public class InputManager {
             case "Drill":
                 controller.SettlerDrill();
                 System.out.println("Drill pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Mine":
                 controller.SettlerMine();
                 System.out.println("Mine pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Place":
                 controller.SettlerPlace(place);
                 System.out.println("Place pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Craft":
                 controller.SettlerCraft(craft);
                 System.out.println("Craft pressed");
+                manager.RefreshSelectedDisplay();
                 break;
         }
     }

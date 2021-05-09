@@ -439,6 +439,10 @@ public class Controller {
             t.SetPair(tt);
             tt.SetPair(t);
 
+            s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Uranium());
+           s.GetInventory().AddMaterial(new Coal());
+
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
 
@@ -1329,7 +1333,6 @@ public class Controller {
     {
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
-    //  WriteOut(out);
         Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
@@ -1353,7 +1356,6 @@ public class Controller {
                 if (it.hasNext())
                     out = out + ",";
             }
-    //      WriteOut(out);
         }
         for(int i = 0; i < tempasteroids.length; i++)
         {
@@ -1438,7 +1440,7 @@ public class Controller {
             out = "\tPair: null";
         WriteOut(out);
 
-        if(t.GetPair() != null && t.GetPair().GetPairReadiness())
+        if(t.GetPair() != null && t.GetPairReadiness())
             out = "\tState: active";
         else
             out = "\tState: inactive";

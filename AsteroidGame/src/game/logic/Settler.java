@@ -165,6 +165,7 @@ public class Settler extends Entity{
         Robot robot = Factory.CreateRobot(inventory);
         if (robot != null) {
             asteroid.AddEntity(robot);
+            Controller.GetInstanceOf().AddRobot(robot);
             return true;
         }
         return false;

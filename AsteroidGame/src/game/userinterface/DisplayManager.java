@@ -262,6 +262,40 @@ public class DisplayManager extends JPanel {
             display.SetRoundoutline(false);
         }
     }
+
+    public void RefreshSelectedDisplay(){
+        for(TeleportDisplay d : teleportDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutTeleport(d.GetSubject());
+                return;
+            }
+        }
+        for(SettlerDisplay d : settlerDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutSettler((Settler) d.GetSubject());
+                return;
+            }
+        }
+        for(RobotDisplay d : robotDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutRobot((Robot) d.GetSubject());
+                return;
+            }
+        }
+        for(UfoDisplay d : ufoDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutUfo((Ufo) d.GetSubject());
+                return;
+            }
+        }
+        for(AsteroidDisplay d : asteroidDisplays){
+            if(d.IsSelected()) {
+                Controller.GetInstanceOf().InfoAboutAsteroid(d.GetSubject());
+                return;
+            }
+        }
+    }
+
     public void SetNeigbhourHood(){
         for(SettlerDisplay d: settlerDisplays){
             if(d.IsRoundoutline()){
