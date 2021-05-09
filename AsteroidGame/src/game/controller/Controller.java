@@ -1301,6 +1301,11 @@ public class Controller {
      */
     private void SunStorm()
     {
+        int happening = new Random().nextInt(2);
+        if (happening == 0) {
+            WriteOut("The Sun rests.");
+            return;
+        }
         ArrayList<Asteroid> tempasteroids = new ArrayList<Asteroid>();
         Iterator it = asteroids.entrySet().iterator();
         while(it.hasNext())
