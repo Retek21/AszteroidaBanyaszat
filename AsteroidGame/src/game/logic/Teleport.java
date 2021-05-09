@@ -50,6 +50,7 @@ public class Teleport implements Whereabout{
         gonecrazy = false;
     }
 
+    private boolean onfire;
 
     public WhereaboutDisplay GetDisplay() {
         return display;
@@ -128,7 +129,7 @@ public class Teleport implements Whereabout{
         else if(inventory != null)
             inventory.RemoveTeleport(this);
         Controller.GetInstanceOf().TeleportExplode(this);
-        display.Clear();
+        if (display != null) display.MarkedToClear();
     }
 
     /**
@@ -172,6 +173,10 @@ public class Teleport implements Whereabout{
      * Hatasara megkergul, es true-ra allitja a gonecrazy flag-et
      */
     public void OnFire(){
+        onfire = true;
+        display.Notify();
+        onfire = false;
+
         gonecrazy = true;
         Controller.GetInstanceOf().TeleportGoesCrazy(this);
     }
@@ -261,4 +266,6 @@ public class Teleport implements Whereabout{
     public void SetDisplay(WhereaboutDisplay display){
         this.display = display;
     }
+
+    public boolean GetOnFireness() { return onfire; }
 }

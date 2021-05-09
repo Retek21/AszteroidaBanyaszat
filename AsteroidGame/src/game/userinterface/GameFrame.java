@@ -35,7 +35,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(Game g){
         game = g;
-        setSize(1200, 900);
+        setSize(1280, 800);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -47,7 +47,7 @@ public class GameFrame extends JFrame {
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
-        JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
+    /*    JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
         scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -68,7 +68,7 @@ public class GameFrame extends JFrame {
                     }
                 });
             }
-        });
+        });*/
 
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
@@ -123,7 +123,8 @@ public class GameFrame extends JFrame {
         c.gridy=1;
         c.gridheight = 3;
         c.ipady = 600;
-        leftside.add(scrollablegamepanel, c);
+        leftside.add(gamepanel, c);
+     //   leftside.add(scrollablegamepanel, c);
 
         c.gridy=4;
         c.gridheight = 1;
