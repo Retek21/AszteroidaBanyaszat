@@ -440,8 +440,12 @@ public class Controller {
             tt.SetPair(t);
 
             s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+            s.GetInventory().AddMaterial(new Uranium());
            s.GetInventory().AddMaterial(new Uranium());
-           s.GetInventory().AddMaterial(new Coal());
+            s.GetInventory().AddMaterial(new Coal());
+           s.GetInventory().AddMaterial(new Ice());
 
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
@@ -1643,7 +1647,7 @@ public class Controller {
                 unique = true;
         }
         String id1 = "t" + Integer.toString(n);
-        String id2 = "t" + Integer.toString(n);
+        String id2 = "t" + Integer.toString(n+1);
         teleports.put(id1, t1);
         teleports.put(id2, t2);
         output.add("Teleport: " + id1 + " and Teleport: " + id2 + ".");
