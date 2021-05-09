@@ -7,12 +7,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TeleportDisplay extends WhereaboutDisplay {
+    private Teleport subject;
+    private int sectorpoint;
 
     public Teleport GetSubject() {
         return subject;
     }
-
-    private Teleport subject;
 
     public int GetSectorpoint() {
         return sectorpoint;
@@ -21,8 +21,6 @@ public class TeleportDisplay extends WhereaboutDisplay {
     public void SetSectorpoint(int sectorpoint) {
         this.sectorpoint = sectorpoint;
     }
-
-    private int sectorpoint;
 
     public TeleportDisplay(Teleport subject) {
         this.subject = subject;

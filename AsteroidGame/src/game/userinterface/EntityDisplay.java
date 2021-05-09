@@ -6,8 +6,8 @@ import game.logic.Entity;
 import java.awt.*;
 
 public class EntityDisplay extends Display{
-
-    private boolean moved;
+    private Entity subject;
+    private Point sectorpoints;
 
     public Entity GetSubject() {
         return subject;
@@ -17,8 +17,6 @@ public class EntityDisplay extends Display{
         this.subject = subject;
     }
 
-    private Entity subject;
-
     public Point GetSectorpoints() {
         return sectorpoints;
     }
@@ -26,15 +24,6 @@ public class EntityDisplay extends Display{
     public void SetSectorpoints(Point sectorpoints) {
         this.sectorpoints = sectorpoints;
     }
-
-    private Point sectorpoints;
-
-    /**
-     * egy korre moved true lesz
-     */
-    public void SetMoved(boolean move){moved=move;}
-
-    public boolean GetMoved(){return moved;}
 
     @Override
     public void Notify() {

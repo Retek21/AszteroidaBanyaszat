@@ -10,9 +10,10 @@ import java.util.Random;
 public class AsteroidDisplay extends WhereaboutDisplay{
 
     private Asteroid subject;
-
     private Color fillColor;
     private Color outlineColor;
+    private boolean[] AllocatedTeleportSectors= new boolean[9];
+    private boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
 
     public Color GetFillColor() {
         return fillColor;
@@ -30,12 +31,17 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         this.outlineColor = outlineColor;
     }
 
+    public Asteroid GetSubject() {
+        return subject;
+    }
+
     public boolean[] GetAllocatedTeleportSectors() {
         return AllocatedTeleportSectors;
     }
 
-    boolean[] AllocatedTeleportSectors= new boolean[9];
-    boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
+    public boolean[][] GetAllocatedAsteroidSectors() {
+        return AllocatedAsteroidSectors;
+    }
 
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
@@ -47,20 +53,12 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         TeleportSectorInit();
     }
 
-    public boolean[][] GetAllocatedAsteroidSectors() {
-        return AllocatedAsteroidSectors;
-    }
-
     private void SectorInit(){
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
                 AllocatedAsteroidSectors[i][j]=false;
             }
         }
-    }
-
-    public Asteroid GetSubject() {
-        return subject;
     }
 
     public void EnititySectorAllocation(EntityDisplay d){

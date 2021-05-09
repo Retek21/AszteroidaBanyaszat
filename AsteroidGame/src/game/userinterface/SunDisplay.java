@@ -10,7 +10,6 @@ public class SunDisplay extends Display{
 
     @Override
     public void Paint(Graphics g) {
-        //g.setColor(new Color(232, 65, 24));
         g.setColor(new Color(232, 65, 24));
         g.fillOval(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
     }

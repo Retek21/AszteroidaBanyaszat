@@ -15,7 +15,6 @@ public class RobotDisplay extends EntityDisplay{
         Asteroid a = subject.GetAsteroid();
         AsteroidDisplay ad = (AsteroidDisplay) a.GetDisplay();
         ad.EnititySectorAllocation(this);
-        SetMoved(false);
     }
 
     public void Paint(Graphics g2d){
