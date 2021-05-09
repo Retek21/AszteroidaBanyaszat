@@ -69,32 +69,6 @@ public class Controller {
     private Sun sun;
 
     /**
-     * A jatek veget jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean end = false;
-
-    /**
-     * A gyozelmet jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean victory = false;
-
-    /**
-     * Az inicializalo fazist jelolo bool valtozo.
-     */
-    private boolean initializing;
-
-    /**
-     * A leallasi felteteleke figyelo bool valtozo. Ha igaz,
-     * figyeli az egyes objektumok allapotat, es a jatek veget/gyozelmet allithatja be.
-     */
-    private boolean checkconditions;
-
-    /**
-     * Manualis tesztelest beallito valtozo.
-     */
-    private boolean manual;
-
-    /**
      * A kimeneti stringeket tarolo tomb.
      */
     private ArrayList<String> output = new ArrayList<String>();
@@ -130,6 +104,10 @@ public class Controller {
      * Ures konstruktor.
      */
     private Controller() {}
+
+    public static void Reset() {
+        instance = null;
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -404,6 +382,29 @@ public class Controller {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////INIT PHASE///////////////////////////////////////////////////////
+
+    public void PreInit() {
+        asteroids = new LinkedHashMap<String, Asteroid>();
+
+        settlers = new LinkedHashMap<String, Settler>();
+
+        robots = new LinkedHashMap<String, Robot>();
+
+        ufos = new LinkedHashMap<String, Ufo>();
+
+        teleports = new LinkedHashMap<String, Teleport>();
+
+        iron = new LinkedHashMap<String, Iron>();
+
+        coal = new LinkedHashMap<String, Coal>();
+
+        ice = new LinkedHashMap<String, Ice>();
+
+        uran = new LinkedHashMap<String, Uranium>();
+
+        actors = new ArrayList<Actor>();
+    }
+
     public void Init(int players) {
         dm = DisplayManager.GetInstance();
         tm = TextOutputManager.GetInstanceOf();
@@ -1560,8 +1561,6 @@ public class Controller {
      */
     private void Endgame(boolean v)
     {
-        end = true;
-        victory = v;
         Game.GetInstanceOf().ExitGame(v);
     }
 

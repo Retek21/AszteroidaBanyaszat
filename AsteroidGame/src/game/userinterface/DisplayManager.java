@@ -26,9 +26,14 @@ public class DisplayManager extends JPanel {
 
     private DisplayManager() {
         super();
+        Init();
+
+    }
+
+    public void Init() {
         setBackground(new Color(50, 56, 65));
         setBorder(BorderFactory.createLineBorder(Color.black));
-       // setPreferredSize(new Dimension(1022, 623));
+        // setPreferredSize(new Dimension(1022, 623));
 
         //initialize variables
         blinkingtime = 8;
@@ -52,24 +57,6 @@ public class DisplayManager extends JPanel {
                 {true, true, false, true, true, false},
                 {true, false, true, true, true, true},
                 {true, true, true, true, true, true}
-
-                //test
-                /*{true, true, true, true, true, true, true},
-                {true, true, true, true, true, true, true},
-                {false, true, false, false, false, true, false},
-                {true, true, false, false, false, true, true},
-                {false, true, false, false, false, true, false},
-                {true, true, true, true, true, true, true},
-                {true, true, true, true, true, true, true}*/
-
-                //fun
-                /*{true, true, true, true, false, false, true},
-                {false, false, false, true, false, false, true},
-                {false, false, false, true, false, false, true},
-                {true, true, true, false, true, true, true},
-                {true, false, false, true, false, false, false},
-                {true, false, false, true, false, false, false},
-                {true, false, false, true, true, true, true}*/
         };
     }
 

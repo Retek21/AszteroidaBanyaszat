@@ -49,28 +49,6 @@ public class GameFrame extends JFrame {
         });
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
-    /*    JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
-        scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        scrollablegamepanel.getVerticalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
-            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        scrollablegamepanel.repaint();
-                    }
-                });
-            }
-        });
-        scrollablegamepanel.getHorizontalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
-            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        scrollablegamepanel.repaint();
-                    }
-                });
-            }
-        });*/
 
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
@@ -230,13 +208,15 @@ public class GameFrame extends JFrame {
             public void mouseEntered(MouseEvent e){}
         }
 
+        MouseListener[] listeners = gamepanel.getMouseListeners();
+        if (listeners.length != 0) gamepanel.removeMouseListener(listeners[0]);
         MouseClickListener mouselistener = new MouseClickListener();
         gamepanel.addMouseListener(mouselistener);
 
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                game.StartProgram();
+                game.ExitGame(false);
             }
         });
     }
