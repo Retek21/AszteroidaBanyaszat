@@ -19,6 +19,7 @@ public class MenuFrame extends JFrame {
         setSize(600, 400);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JLabel namelabel1 = new JLabel("ASTEROID GAME");
         namelabel1.setFont(new Font ("Verdana", Font.BOLD, 26));
@@ -95,7 +96,7 @@ public class MenuFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Incorrect Input.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        }
+    }
 
 
 }

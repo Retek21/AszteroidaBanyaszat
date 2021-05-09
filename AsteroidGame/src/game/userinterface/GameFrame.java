@@ -35,7 +35,7 @@ public class GameFrame extends JFrame {
         setSize(1280, 800);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         //komponensek felinicializalasa
 
@@ -233,5 +233,11 @@ public class GameFrame extends JFrame {
         MouseClickListener mouselistener = new MouseClickListener();
         gamepanel.addMouseListener(mouselistener);
 
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                game.StartProgram();
+            }
+        });
     }
 }

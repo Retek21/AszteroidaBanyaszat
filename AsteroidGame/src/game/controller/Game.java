@@ -1,11 +1,13 @@
 package game.controller;
 
+import game.userinterface.EndGameFrame;
 import game.userinterface.GameFrame;
 import game.userinterface.MenuFrame;
 
 public class Game {
     GameFrame gameframe = new GameFrame(this);
     MenuFrame menuframe = new MenuFrame(this);
+    EndGameFrame endgameframe = new EndGameFrame(this);
 
     /**
      * A kontroller osztalyra mutato referencia, ennek segitsegevel inicializal, futtatja a jatekot
@@ -35,7 +37,9 @@ public class Game {
                 break;
         }
     }*/
-    public void StartProgram(){
+    public void StartProgram()
+    {
+        endgameframe.setVisible(false);
         menuframe.setVisible(true);
     }
 
@@ -78,14 +82,25 @@ public class Game {
     }*/
 
 
-    public void StartGame(int numberofplayers){
+    public void StartGame(int numberofplayers)
+    {
         menuframe.setVisible(false);
         System.out.println(numberofplayers + " darab jatekossal inditanank");
         gameframe.setVisible(true);
         controller.Init(numberofplayers);
     }
 
-    public void ExitProgram(){
+    public void ExitGame(boolean victory)
+    {
+        gameframe.setVisible(false);
+        endgameframe.SetVictory(victory);
+        endgameframe.setVisible(true);
+    }
 
+    public void ExitProgram()
+    {
+        endgameframe.dispose();
+        gameframe.dispose();
+        menuframe.dispose();
     }
 }
