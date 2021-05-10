@@ -116,9 +116,10 @@ public class Settler extends Entity{
      */
     @Override
     public void Die(){
-        super.Die();
+
         inventory.Clear();
         Controller.GetInstanceOf().SettlerDie(this);
+        super.Die();
     }
 
     /**

@@ -46,11 +46,11 @@ public class MenuFrame extends JFrame {
         JLabel namelabel2 = new JLabel("abgkp EDITION");
         namelabel2.setFont(new Font ("Verdana", Font.BOLD, 26));
         namelabel2.setForeground(new Color(249, 202,36));
-        playbutton = new JButton("play");
+        playbutton = new JButton("Play");
         playbutton.setFocusable(false);
         playbutton.setBackground(new Color(72, 52, 212));
         playbutton.setForeground(new Color(106, 176, 76));
-        exitbutton = new JButton("exit");
+        exitbutton = new JButton("Exit");
         exitbutton.setFocusable(false);
         exitbutton.setBackground(new Color(72, 52, 212));
         exitbutton.setForeground(new Color(106, 176, 76));
@@ -87,7 +87,7 @@ public class MenuFrame extends JFrame {
             public FrameActionListener(){}
             @Override
             public void actionPerformed(ActionEvent e){
-                if(e.getActionCommand().equals("play")) {
+                if(e.getActionCommand().equals("Play")) {
                     PlayPressed();
                 }
                 else
