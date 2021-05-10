@@ -4,6 +4,9 @@ import game.logic.Ufo;
 
 import java.awt.*;
 
+/*
+ * @author Kristof Torok
+ * ufo displaye*/
 public class UfoDisplay extends EntityDisplay{
 
     public UfoDisplay(Ufo subject){

@@ -6,46 +6,59 @@ import game.logic.Whereabout;
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+ * @author Kristof Torok
+ * teleport displaye*/
 public class TeleportDisplay extends WhereaboutDisplay {
-
+    /*
+     * teleport tipusu subject
+     * */
+    private Teleport subject;
+    /*
+    * teleport szine
+    * */
+    private Color color;
+    /*
+     * display sectoranak koordinatai
+     * */
+    private int sectorpoint;
+    /*
+     * entitydisplay subjectjenek visszadasa
+     * */
     public Teleport GetSubject() {
         return subject;
     }
-
-    private Teleport subject;
-
-    private Color color;
-
+    /*
+     * sectorpontok visszadasa
+     * */
     public int GetSectorpoint() {
         return sectorpoint;
     }
-
+    /*
+     * sectorpontok beallitasa
+     * */
     public void SetSectorpoint(int sectorpoint) {
         this.sectorpoint = sectorpoint;
     }
-
-    private int sectorpoint;
-
+    /*
+     * konstruktor, beallitja a subjectet es a subject asteroidajan allokal maganak helyet
+     * beallitja a subject display-et is
+     * */
     public TeleportDisplay(Teleport subject) {
         this.subject = subject;
         subject.SetDisplay(this);
-   /*     if (!subject.GetPairReadiness())
-            color = new Color(4, 46, 135);
-        else
-            color = new Color(153,50,204);
-
-        Display pair = subject.GetPair().GetDisplay();
-        if (pair != null) pair.Notify();*/
-
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.TeleportSectorAllocation(this);
-
     }
-
+    /*
+    * beallitja a selected booljat
+    * */
     public void SetSelectedAsPair(boolean selected) {
         super.selected = selected;
     }
-
+    /*
+    * a selected bool beallitsa a parnak
+    * */
     @Override
     public void SetSelected(boolean selected) {
         super.selected = selected;
@@ -56,7 +69,11 @@ public class TeleportDisplay extends WhereaboutDisplay {
             }
         DisplayManager.GetInstance().repaint();
     }
-
+    /*
+    *allitja a blinkeles alapjan a szinet
+    * kirajzolja a koordinatak alapjan
+    * beallitja a szint a selected es a roundoutline bool alapjan
+    * */
     @Override
     public void Paint(Graphics g2d){
         Color color;
@@ -78,7 +95,9 @@ public class TeleportDisplay extends WhereaboutDisplay {
         }
         g2d.drawOval(GetShape().x, GetShape().y,GetShape().width,GetShape().height);
     }
-
+    /*
+     * display torlese, lefoglalt sectorok visszaallitasa
+     * */
     @Override
     public void Clear(){
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
@@ -86,7 +105,9 @@ public class TeleportDisplay extends WhereaboutDisplay {
         ad.GetAllocatedTeleportSectors()[sectorpoint] = false;
         DisplayManager.GetInstance().RemoveTeleportDisplay(this);
     }
-
+    /*
+    *
+    * */
     public void Notify() {
 
         if (!underSunStorm && blink == 0) {
