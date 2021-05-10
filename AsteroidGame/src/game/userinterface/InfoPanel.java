@@ -4,7 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Az az egyes kiválaszott objektumok információit jeleníti meg.
+ * A JPanel leszármazotja.
+ * @author Szeredi Péter
+ */
 public class InfoPanel extends JPanel {
+
+    /**
+     * A konstruktor beállítja a koordinátákat, az elhelyezkedést, stb.
+     */
     public InfoPanel()
     {
         this.setLayout(new GridLayout(26,1));
@@ -12,6 +21,11 @@ public class InfoPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
 
     }
+
+    /**
+     * Kiírja a paraméterül kapott infót formázva.
+     * @param info: a kiírandó String lista
+     */
     public void WriteInfo(ArrayList<String> info)
     {
         this.removeAll();

@@ -518,6 +518,10 @@ public class DisplayManager extends JPanel {
      * @param y: a kattintás y koordinátája
      */
     public void ClickOnMoveTarget(int x, int y) {
+        /**
+         * az egyes teleportokra ellenőriz, ha talál katttintott teleportot, akkor a
+         * párjának aszteroidáájára mozgatja  ajátékost (ha aktívak)
+         */
         for (TeleportDisplay td : teleportDisplays) {
             boolean pointInWherebout = td.PointInArea(x, y);
             if (pointInWherebout) {
@@ -532,6 +536,9 @@ public class DisplayManager extends JPanel {
             }
         }
 
+        /**
+         * megcsinálja ugyan ezt az aszteroidákkal
+         */
         for (AsteroidDisplay ad : asteroidDisplays) {
             boolean pointInWherebout = ad.PointInArea(x, y);
             if (pointInWherebout) {
@@ -548,6 +555,10 @@ public class DisplayManager extends JPanel {
         }
     }
 
+    /**
+     * Az összes Displayre meghívja annak Paint() metódusát.
+     * @param g: a metódushoz szűkséges Graphics objktum (ősből implemetált metódus)
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (sunDisplay != null) {
@@ -565,10 +576,16 @@ public class DisplayManager extends JPanel {
         }
     }
 
+    /**
+     * Más osztályok által hívható rajzolás metódus.
+     */
     public void DrawDisplays() {
         repaint();
     }
 
+    /**
+     * Villogtatja a BlinkerThread által kiválasztott whereaboutdisplayeket.
+     */
     public void BlinkWhereabouts() {
         ArrayList<WhereaboutDisplay> displays = new ArrayList<WhereaboutDisplay>();
         displays.addAll(asteroidDisplays);
@@ -577,22 +594,35 @@ public class DisplayManager extends JPanel {
             wd.Blink();
     }
 
+    /**
+     * A törlendő displayekhez adja a paraméterül kapott displayt.
+     * @param d: a paraméterül kapott display
+     */
     public void AddToClearPuffer(Display d) {
         clearpuffer.add(d);
     }
 
+    /**
+     * Törli a törlendő Displayek pufferét.
+     */
     public void ClearClearPuffer() {
         for(Display d : clearpuffer)
             d.Clear();
     }
 
 
+    /**
+     * Nem tudom ez mi.
+     */
     private Display activedisplay;
 
+    /**
+     * Kijelöli a soron lévő Displayt, akinek éppen a köre van.
+     * @param display: a soron lévő display
+     */
     public void RoundStart(Display display) {
         activedisplay.SetRoundoutline(false);
         activedisplay = display;
         display.SetRoundoutline(true);
     }
-
 }
