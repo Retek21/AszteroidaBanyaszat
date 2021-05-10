@@ -27,7 +27,7 @@ public class EntityDisplay extends Display{
         this.subject = subject;
     }
     /*
-    * sectorpontok visszadasa
+    * sectorpontok visszaadasa
     * */
     public Point GetSectorpoints() {
         return sectorpoints;
