@@ -95,12 +95,13 @@ public class GameFrame extends JFrame {
 
         //komponensek felinicializalasa
 
-        naplopanel = new NaploPanel();
+        Dimension rightside_size = new Dimension(240, 2* 381);
+        naplopanel = new NaploPanel(new Dimension(rightside_size.width, rightside_size.height / 2));
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
         naplopanel.SetParentPane(scrollnaplo);
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        infopanel = new InfoPanel();
+        infopanel = new InfoPanel(new Dimension(rightside_size.width, rightside_size.height / 2));
         gamepanel = DisplayManager.GetInstance();
 
         ContainerPanel headpanel = new ContainerPanel();
@@ -138,7 +139,7 @@ public class GameFrame extends JFrame {
         this.setLayout(new GridBagLayout());
         JPanel leftside = new JPanel();
         JPanel rightside = new JPanel();
-        rightside.setPreferredSize(new Dimension(280, 2 * 381));
+        rightside.setPreferredSize(rightside_size);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;

@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class NaploPanel extends JPanel {
     private ArrayList<JLabel> lines;
     private JScrollPane parentPane;
+    private Dimension size;
 
-    public NaploPanel()
+    public NaploPanel(Dimension _size)
     {
+        size = _size;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
