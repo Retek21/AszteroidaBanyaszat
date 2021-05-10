@@ -9,14 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class EndGameFrame extends JFrame {
+public class EndGameFrame extends JDialog {
 
     private Game game;
 
     private JLabel label;
 
-    public EndGameFrame()
+    public EndGameFrame(JFrame j, String title, boolean vic)
     {
+        super(j, title, Dialog.ModalityType.DOCUMENT_MODAL);
         game = Game.GetInstanceOf();
 
         setSize(300, 200);
@@ -63,7 +64,7 @@ public class EndGameFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 if(e.getActionCommand().equals("ok")) {
-                    game.StartProgram();
+                    game.BackToMenu();
                 }
             }
         }
@@ -74,9 +75,16 @@ public class EndGameFrame extends JFrame {
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                game.StartProgram();
+                game.BackToMenu();
             }
         });
+
+        if(vic)
+            label.setText("VICTORY!  :)");
+        else
+            label.setText("YOU LOST! :(");
+
+        this.setVisible(true);
     }
 
     public void SetVictory(boolean vic)

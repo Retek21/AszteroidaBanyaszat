@@ -6,6 +6,8 @@ public class InputManager {
 
     private static InputManager instance;
 
+    private boolean buttonactivity;
+
     private DisplayManager manager;
 
     private Controller controller;
@@ -19,14 +21,12 @@ public class InputManager {
 
     private State state;
 
-    public static void Reset() {
-        instance = null;
-    }
 
     private InputManager()
     {
         manager = DisplayManager.GetInstance();
         controller = Controller.GetInstanceOf();
+        buttonactivity = true;
     }
 
     public static InputManager GetInstanceOf(){
@@ -44,43 +44,57 @@ public class InputManager {
         craftbutton = craft;
     }
 
+    public void TurnOnOffButtons(boolean value) {
+        buttonactivity = value;
+        if (buttonactivity)
+            SetState(state);
+        else {
+            dophasebutton.setEnabled(false);
+            movebutton.setEnabled(false);
+            drillbutton.setEnabled(false);
+            minebutton.setEnabled(false);
+            placebutton.setEnabled(false);
+            craftbutton.setEnabled(false);
+        }
+    }
+
     public void SetState(State s)
     {
         switch(s){
             case WAITFORMOVE:
-                dophasebutton.setEnabled(false);
-                movebutton.setEnabled(false);
-                drillbutton.setEnabled(false);
-                minebutton.setEnabled(false);
-                placebutton.setEnabled(false);
-                craftbutton.setEnabled(false);
-                state = s;
+                if (buttonactivity) {
+                    dophasebutton.setEnabled(false);
+                    movebutton.setEnabled(false);
+                    drillbutton.setEnabled(false);
+                    minebutton.setEnabled(false);
+                    placebutton.setEnabled(false);
+                    craftbutton.setEnabled(false);
+                }
                 break;
             case SETTLERROUND:
-                if(state != State.SETTLERROUND){
-                    dophasebutton.setEnabled(false);
-                    movebutton.setEnabled(true);
-                    drillbutton.setEnabled(true);
-                    minebutton.setEnabled(true);
-                    placebutton.setEnabled(true);
-                    craftbutton.setEnabled(true);
-                }
-                state = s;
+                    if (buttonactivity) {
+                        dophasebutton.setEnabled(false);
+                        movebutton.setEnabled(true);
+                        drillbutton.setEnabled(true);
+                        minebutton.setEnabled(true);
+                        placebutton.setEnabled(true);
+                        craftbutton.setEnabled(true);
+                    }
                 break;
             case AIROUND:
-                if(state != State.AIROUND){
+                if (buttonactivity) {
                     dophasebutton.setEnabled(true);
                     movebutton.setEnabled(false);
                     drillbutton.setEnabled(false);
                     minebutton.setEnabled(false);
                     placebutton.setEnabled(false);
                     craftbutton.setEnabled(false);
-                    state = s;
                 }
                 break;
             default:
                 break;
         }
+        state = s;
     }
 
     public void GameFieldClicked(int x, int y)
