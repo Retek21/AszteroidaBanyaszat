@@ -4,24 +4,28 @@ import game.logic.Ufo;
 
 import java.awt.*;
 
-/*
+/**
  * @author Kristof Torok
- * ufo displaye*/
+ * ufo displaye
+ */
 public class UfoDisplay extends EntityDisplay{
-    /*
-     * konstruktor, beallitja a subjectet es a subject asteroidajan allokal maganak helyet
-     * beallitja a subject display-et is
-     * */
+
+    /**
+     * konstruktor, beallitja a megfelelo ufot subjectkent
+     * @param subject: a beallitando ufo
+     */
     public UfoDisplay(Ufo subject){
         SetSubject(subject);
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();
         ad.EnititySectorAllocation(this);
         subject.SetDisplay(this);
     }
-    /*
-     * kirajzolas a koordinatak alapjan
-     * beallitja a szint a selected es a roundoutline bool alapjan
-     * */
+
+    /**
+     * az ufo kirajzolasa egy kek teglalapkent
+     * kijelolesre megvaltozik a korvonala
+     * @param g2d: a graphics osztaly
+     */
     @Override
     public void Paint(Graphics g2d) {
         g2d.setColor(new Color(1, 150, 250));
@@ -33,9 +37,10 @@ public class UfoDisplay extends EntityDisplay{
         }
         g2d.drawRect(GetShape().x, GetShape().y, 15, 15);
     }
-    /*
-     * torli az ufo display-et. ujrarajzolja a palyat
-     * */
+
+    /**
+     * kitorli a displayt
+     */
     @Override
     public void Clear(){
         super.Clear();

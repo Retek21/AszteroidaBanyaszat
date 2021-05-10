@@ -7,86 +7,86 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Osztály, mely az egyes Displayeket kezeli, a kirajzolásukat meghívja, létrehozza,
- * illetve eltávolítja azokat.
- * Az egyes kattintások koordinátaáit is házzárendeli az adott objektumra, amjd ennek
- * egeflelően információt ad az adott objektumról.
- * Singleton osztály.
- * @author Dengyel Bendegúz
- * @author Szabó Gergő
- * @author Török Kristóf
+ * Osztaly, mely az egyes Displayeket kezeli, a kirajzolasukat meghivja, letrehozza,
+ * illetve eltavolitja azokat.
+ * Az egyes kattintasok koordinataait is hazzarendeli az adott objektumra, amjd ennek
+ * egefleloen informaciot ad az adott objektumrol.
+ * Singleton osztaly.
+ * @author Dengyel Bendeguz
+ * @author Szabo Gergo
+ * @author Torok Kristof
  */
 public class DisplayManager extends JPanel {
     /**
-     * A Singelton megvalósítást szolgálja, egy DisplayManager tagváltozó,
-     * mindenki által elérhető.
+     * A Singelton megvalositast szolgalja, egy DisplayManager tagvaltozo,
+     * mindenki altal elerheto.
      */
     private static DisplayManager instance = null;
 
     /**
-     * Az UfoDisplayeket tároló lista.
+     * Az UfoDisplayeket tarolo lista.
      */
     private ArrayList<UfoDisplay> ufoDisplays;
 
     /**
-     * A RobotDisplayeket tároló lista.
+     * A RobotDisplayeket tarolo lista.
      */
     private ArrayList<RobotDisplay> robotDisplays;
 
     /**
-     * A SettlerDisplayeket tároló lista.
+     * A SettlerDisplayeket tarolo lista.
      */
     private ArrayList<SettlerDisplay> settlerDisplays;
 
     /**
-     * A TeleportDisplayeket tároló lista.
+     * A TeleportDisplayeket tarolo lista.
      */
     private ArrayList<TeleportDisplay> teleportDisplays;
 
     /**
-     * Az AsteroidDisplayeket tároló lista.
+     * Az AsteroidDisplayeket tarolo lista.
      */
     private ArrayList<AsteroidDisplay> asteroidDisplays;
 
     /**
-     * A törlendő entitások listája.
+     * A torlendo entitasok listaja.
      */
     private ArrayList<Display> clearpuffer;
 
     /**
-     * A SunDisplay referenciája
+     * A SunDisplay referenciaja
      */
     private SunDisplay sunDisplay;
 
     /**
-     * A villogás időtartama
+     * A villogas idotartama
      */
     private int blinkingtime;
 
     /**
-     * Az aszteroida mezőt felépítő háló sorai.
+     * Az aszteroida mezot felepito halo sorai.
      */
     private int rows;
 
     /**
-     * Az aszteroida mezőt felépítő háló oszlopai.
+     * Az aszteroida mezot felepito halo oszlopai.
      */
     private int columns;
 
     /**
-     * Az aszteroida mezőt felépítő aszteroidák száma.
+     * Az aszteroida mezot felepito aszteroidak szama.
      */
     private int numberOfAsteroids;
 
     /**
-     * Az aszteroida mezőt felépítő háló szektorai (2D tömb), értéke igaz,
-     * ha található a szektorban aszteroida, hamis ha nem.
+     * Az aszteroida mezot felepito halo szektorai (2D tomb), erteke igaz,
+     * ha talalhato a szektorban aszteroida, hamis ha nem.
      */
     private boolean[][] AllocatedAsteroidSectors;
 
     /**
-     * Privát konstruktor, a singleton osztályhoz szűkséges láthatósággal.
-     * A az ős JPanel konstruktorát hívja, valamint az inicializáló metódust.
+     * Privat konstruktor, a singleton osztalyhoz szukseges lathatosaggal.
+     * A az os JPanel konstruktorat hivja, valamint az inicializalo metodust.
      */
     private DisplayManager() {
         super();
@@ -95,17 +95,17 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Inicializálja a változákat, és a játéktér dimenzióit beállítja.
+     * Inicializalja a valtozakat, es a jatekter dimenzioit beallitja.
      */
     public void Init() {
         /**
-         * A játéktár dimenziói.
+         * A jatektar dimenzioi.
          */
         setBackground(new Color(50, 56, 65));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         /**
-         * Tagváltozók inicializálása.
+         * Tagvaltozok inicializalasa.
          */
         blinkingtime = 8;
         ufoDisplays = new ArrayList<UfoDisplay>();
@@ -120,7 +120,7 @@ public class DisplayManager extends JPanel {
         numberOfAsteroids = 36;
 
         /**
-         * Előre megépített játéktér.
+         * Elore megepitett jatekter.
          */
         AllocatedAsteroidSectors = new boolean[][]{
                 {true, false, false, true, true, true},
@@ -135,8 +135,8 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Az osztály egyetlen objektuma ezen keresztül érhető el bárki számára.
-     * @return instanc: az osztály egyetlen példánya
+     * Az osztaly egyetlen objektuma ezen keresztul erheto el barki szamara.
+     * @return instanc: az osztaly egyetlen peldanya
      */
     public static DisplayManager GetInstance(){
         if(instance==null)
@@ -145,28 +145,28 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Visszatér a szektortömbbel.
-     * @return AllocatedAsteroidSectors: a szektor tömb
+     * Visszater a szektortombbel.
+     * @return AllocatedAsteroidSectors: a szektor tomb
      */
    public boolean[][] GetAllocatedAsteroidSectors() {
         return AllocatedAsteroidSectors;
     }
 
     /**
-     * Viszatér a sorok számával.
-     * @return rows: sorok száma
+     * Viszater a sorok szamaval.
+     * @return rows: sorok szama
      */
     public int GetRows() {return rows;}
 
     /**
-     * Viszatér az oszlopok számával.
-     * @return columns: oszlopok száma
+     * Viszater az oszlopok szamaval.
+     * @return columns: oszlopok szama
      */
     public int GetColumns() {return columns;}
 
     /**
-     * Visszatér a villogá idejével.
-     * @return blinkingtime: a villogás ideje
+     * Visszater a villoga idejevel.
+     * @return blinkingtime: a villogas ideje
      */
     public int GetBlinkingTime() {return blinkingtime;}
 
@@ -175,17 +175,17 @@ public class DisplayManager extends JPanel {
     //CREATE
 
     /**
-     * Létrehozza az AszteroidDiplayeket, valamint a SunDisplayt
-     * a aparaméterül kapott Asteroid tömb alapján.
-     * @param af: az aszterooida tömb
+     * Letrehozza az AszteroidDiplayeket, valamint a SunDisplayt
+     * a aparameterul kapott Asteroid tomb alapjan.
+     * @param af: az aszterooida tomb
      */
     public void CreateAsteroidfieldDisplay(Asteroid[] af) {
         /**
-         * végigiterál az af[] hosszán, majd a sorokon és oszlopokon
-         * és ha igaz értékű szektorok[sor][oszlop] meőt talál, akkor azt hamisra
-         * állítja (=foglalt), majd kiszmítja a szektor koordinátáit,
-         * majd létrehoz egy AsteroidDisplayt az adott koordinátákkal, és az
-         * aszteroida tömb adott elemével
+         * vegigiteral az af[] hosszan, majd a sorokon es oszlopokon
+         * es ha igaz erteku szektorok[sor][oszlop] meot talal, akkor azt hamisra
+         * allitja (=foglalt), majd kiszmitja a szektor koordinatait,
+         * majd letrehoz egy AsteroidDisplayt az adott koordinatakkal, es az
+         * aszteroida tomb adott elemevel
          */
         for (int i = 0; i < af.length; i++) {
             boolean found = false;
@@ -209,15 +209,15 @@ public class DisplayManager extends JPanel {
         }
 
         /**
-         * végül fix helyre létrehozza a SunDiplay-t
+         * vegul fix helyre letrehozza a SunDiplay-t
          */
         sunDisplay = new SunDisplay(getWidth()/2 -75, getHeight()/2 - 75);
     }
 
     /**
-     * TeleportDiplayt készít a paraméterül kapott objektumhoz,
-     * majd az azt tároló listába rakja az új Displayt.
-     * @param t: az analízismodell beli objektum
+     * TeleportDiplayt keszit a parameterul kapott objektumhoz,
+     * majd az azt tarolo listaba rakja az uj Displayt.
+     * @param t: az analizismodell beli objektum
      */
     public void CreateTeleportDisplay(Teleport t) {
         TeleportDisplay td = new TeleportDisplay(t);
@@ -225,9 +225,9 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * SettlerDiplayt készít a paraméterül kapott objektumhoz,
-     * majd az azt tároló listába rakja az új Displayt.
-     * @param s: az analízismodell beli objektum
+     * SettlerDiplayt keszit a parameterul kapott objektumhoz,
+     * majd az azt tarolo listaba rakja az uj Displayt.
+     * @param s: az analizismodell beli objektum
      */
     public void CreateSettlerDisplay(Settler s) {
         SettlerDisplay sd = new SettlerDisplay(s);
@@ -235,9 +235,9 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * RobotDiplayt készít a paraméterül kapott objektumhoz,
-     * majd az azt tároló listába rakja az új Displayt.
-     * @param r: az analízismodell beli objektum
+     * RobotDiplayt keszit a parameterul kapott objektumhoz,
+     * majd az azt tarolo listaba rakja az uj Displayt.
+     * @param r: az analizismodell beli objektum
      */
     public void CreateRobotDisplay(Robot r) {
         RobotDisplay rd = new RobotDisplay(r);
@@ -245,9 +245,9 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * UfoDiplayt készít a paraméterül kapott objektumhoz,
-     * majd az azt tároló listába rakja az új Displayt.
-     * @param u: az analízismodell beli objektum
+     * UfoDiplayt keszit a parameterul kapott objektumhoz,
+     * majd az azt tarolo listaba rakja az uj Displayt.
+     * @param u: az analizismodell beli objektum
      */
     public void CreateUfoDisplay(Ufo u) {
         UfoDisplay ud = new UfoDisplay(u);
@@ -259,64 +259,64 @@ public class DisplayManager extends JPanel {
     //REMOVE
 
     /**
-     * Eltávolítja a paraméterül kapott Displayt annak
-     * listájáből.
-     * @param sd: a paraméterül kapott display
+     * Eltavolitja a parameterul kapott Displayt annak
+     * listajabol.
+     * @param sd: a parameterul kapott display
      */
     public void RemoveSettlerDisplay(SettlerDisplay sd) {
         settlerDisplays.remove(sd);
     }
 
     /**
-     * Eltávolítja a paraméterül kapott Displayt annak
-     * listájáből.
-     * @param rd: a paraméterül kapott display
+     * Eltavolitja a parameterul kapott Displayt annak
+     * listajabol.
+     * @param rd: a parameterul kapott display
      */
     public void RemoveRobotDisplay(RobotDisplay rd) {
         robotDisplays.remove(rd);
     }
 
     /**
-     * Eltávolítja a paraméterül kapott Displayt annak
-     * listájáből.
-     * @param ud: a paraméterül kapott display
+     * Eltavolitja a parameterul kapott Displayt annak
+     * listajabol.
+     * @param ud: a parameterul kapott display
      */
     public void RemoveUfoDisplay(UfoDisplay ud) {
         ufoDisplays.remove(ud);
     }
 
     /**
-     * Eltávolítja a paraméterül kapott Displayt annak
-     * listájáből.
-     * @param td: a paraméterül kapott display
+     * Eltavolitja a parameterul kapott Displayt annak
+     * listajabol.
+     * @param td: a parameterul kapott display
      */
     public void RemoveTeleportDisplay(TeleportDisplay td) {
         teleportDisplays.remove(td);
     }
 
     /**
-     * Eltávolítja a paraméterül kapott Displayt annak
-     * listájáből.
-     * @param ad: a paraméterül kapott display
+     * Eltavolitja a parameterul kapott Displayt annak
+     * listajabol.
+     * @param ad: a parameterul kapott display
      */
     public void RemoveAsteroidDisplay(AsteroidDisplay ad) {
         asteroidDisplays.remove(ad);
     }
 
     /**
-     * A GamePanelen való kattintás hatására kiírja a katintott objektum paramétereit.
-     * Paraméerül a kattintás koordinátáit kapja meg.
-     * @param x: a kattintás x koordinátája
-     * @param y: a kattintás y koordinátája
+     * A GamePanelen valo kattintas hatasara kiirja a katintott objektum parametereit.
+     * Parameerul a kattintas koordinatait kapja meg.
+     * @param x: a kattintas x koordinataja
+     * @param y: a kattintas y koordinataja
      */
     public void ClickOnGamePanel(int x, int y) {
         ArrayList<Display> allDisplays = getDisplayArrayList();
         /**
-         * először az összes AsteroidDisplayen végigiterál
+         * eloszor az osszes AsteroidDisplayen vegigiteral
          */
         for (AsteroidDisplay ad : asteroidDisplays) {
             /**
-             * meviszgálja, hogy az adott pont benn van-e az adott aszteroidán
+             * meviszgalja, hogy az adott pont benn van-e az adott aszteroidan
              */
             boolean pointInWhereabout = ad.PointInArea(x, y);
             /**
@@ -326,17 +326,17 @@ public class DisplayManager extends JPanel {
                 boolean pointInEntity = false;
                 boolean pointInTeleport = false;
                 /**
-                 * megvizsgál minden SettlreDisplayt
+                 * megvizsgal minden SettlreDisplayt
                  */
                 for (SettlerDisplay sd : settlerDisplays) {
                     pointInEntity = sd.PointInArea(x, y);
                     if (pointInEntity) {
                         /**
-                         * ha a kattintás rá esik, kijelöli azt, majd kiírja annak információit
+                         * ha a kattintas ra esik, kijeloli azt, majd kiirja annak informacioit
                          */
                         sd.SetSelected(true);
                         /**
-                         * A többi display selected boolját hamisra állítja, hogy csak az legyen kiemelve
+                         * A tobbi display selected booljat hamisra allitja, hogy csak az legyen kiemelve
                          * akire kattintottak
                          */
                         allDisplays.remove(sd);
@@ -345,7 +345,7 @@ public class DisplayManager extends JPanel {
                         }
                         Settler s = (Settler) sd.GetSubject();
                         /**
-                         * végül kiírja az kattintott objektum adatait
+                         * vegul kiirja az kattintott objektum adatait
                          */
                         Controller.GetInstanceOf().InfoAboutSettler(s);
                         break;
@@ -398,7 +398,7 @@ public class DisplayManager extends JPanel {
                             td.SetSelected(true);
                             allDisplays.remove(td);
                             /**
-                             * még a párját is kijelöli
+                             * meg a parjat is kijeloli
                              */
                             allDisplays.remove(td.GetSubject().GetPair().GetDisplay());
                             for (Display d : allDisplays) {
@@ -411,8 +411,8 @@ public class DisplayManager extends JPanel {
                 }
 
                 /**
-                 * ha sem entitydisplay, sem teleportdisplay nem volt érintve, akkor az
-                 * aszteroida infóit írja ki
+                 * ha sem entitydisplay, sem teleportdisplay nem volt erintve, akkor az
+                 * aszteroida infoit irja ki
                  */
                 if (!pointInEntity && !pointInTeleport) {
                     ad.SetSelected(true);
@@ -428,8 +428,8 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * A paraméterül kapott Displayt kiemeli körvonallal
-     * @param d: a kiemelendő Display
+     * A parameterul kapott Displayt kiemeli korvonallal
+     * @param d: a kiemelendo Display
      */
     public void ManageRoundOutlines(Display d){
         ArrayList<Display> allDisplays = getDisplayArrayList();
@@ -443,13 +443,13 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Valós időben ad információt a kattintott Displayről
-     * (tehát pl. egy aszteroida adatai fúrás után rögtön változnak az InfoPanelen).
+     * Valos idoben ad informaciot a kattintott Displayrol
+     * (tehat pl. egy aszteroida adatai furas utan rogton valtoznak az InfoPanelen).
      */
     public void RefreshSelectedDisplay(){
         /**
-         * Végigiterál az egyes Display tömbökön, és ha valamelyik ki van választva
-         * (legutóbb erre kattintottak), arról mutat információt
+         * Vegigiteral az egyes Display tombokon, es ha valamelyik ki van valasztva
+         * (legutobb erre kattintottak), arrol mutat informaciot
          */
         for(TeleportDisplay d : teleportDisplays){
             if(d.IsSelected()) {
@@ -484,8 +484,8 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Beállítja, hogy mely aszteroidák Displaye-i szomszédosak.
-     * Ezután pl utazáskor a szomszédok ki lesznek emelve.
+     * Beallitja, hogy mely aszteroidak Displaye-i szomszedosak.
+     * Ezutan pl utazaskor a szomszedok ki lesznek emelve.
      */
     public void SetNeigbhourHood(){
         for(SettlerDisplay d: settlerDisplays){
@@ -497,7 +497,7 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * Visszatér az összes tárolt display összefésült listájával.
+     * Visszater az osszes tarolt display osszefesult listajaval.
      * @return allDisplay
      */
     private ArrayList<Display> getDisplayArrayList() {
@@ -511,13 +511,17 @@ public class DisplayManager extends JPanel {
     }
 
     /**
-     * A GamePanelen való kattintás hatására az adott AsteroidDisplay szomszédjára
-     * mozgatja a játékost.
-     * Paraméerül a kattintás koordinátáit kapja meg.
-     * @param x: a kattintás x koordinátája
-     * @param y: a kattintás y koordinátája
+     * A GamePanelen valo kattintas hatasara az adott AsteroidDisplay szomszedjara
+     * mozgatja a jatekost.
+     * Parameerul a kattintas koordinatait kapja meg.
+     * @param x: a kattintas x koordinataja
+     * @param y: a kattintas y koordinataja
      */
     public void ClickOnMoveTarget(int x, int y) {
+        /**
+         * az egyes teleportokra ellenoriz, ha talal katttintott teleportot, akkor a
+         * parjanak aszteroidaajara mozgatja  ajatekost (ha aktivak)
+         */
         for (TeleportDisplay td : teleportDisplays) {
             boolean pointInWherebout = td.PointInArea(x, y);
             if (pointInWherebout) {
@@ -532,6 +536,9 @@ public class DisplayManager extends JPanel {
             }
         }
 
+        /**
+         * megcsinalja ugyan ezt az aszteroidakkal
+         */
         for (AsteroidDisplay ad : asteroidDisplays) {
             boolean pointInWherebout = ad.PointInArea(x, y);
             if (pointInWherebout) {
@@ -548,6 +555,10 @@ public class DisplayManager extends JPanel {
         }
     }
 
+    /**
+     * Az osszes Displayre meghivja annak Paint() metodusat.
+     * @param g: a metodushoz szukseges Graphics objktum (osbol implemetalt metodus)
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (sunDisplay != null) {
@@ -565,10 +576,16 @@ public class DisplayManager extends JPanel {
         }
     }
 
+    /**
+     * Mas osztalyok altal hivhato rajzolas metodus.
+     */
     public void DrawDisplays() {
         repaint();
     }
 
+    /**
+     * Villogtatja a BlinkerThread altal kivalasztott whereaboutdisplayeket.
+     */
     public void BlinkWhereabouts() {
         ArrayList<WhereaboutDisplay> displays = new ArrayList<WhereaboutDisplay>();
         displays.addAll(asteroidDisplays);
@@ -577,22 +594,35 @@ public class DisplayManager extends JPanel {
             wd.Blink();
     }
 
+    /**
+     * A torlendo displayekhez adja a parameterul kapott displayt.
+     * @param d: a parameterul kapott display
+     */
     public void AddToClearPuffer(Display d) {
         clearpuffer.add(d);
     }
 
+    /**
+     * Torli a torlendo Displayek pufferet.
+     */
     public void ClearClearPuffer() {
         for(Display d : clearpuffer)
             d.Clear();
     }
 
 
+    /**
+     * Nem tudom ez mi.
+     */
     private Display activedisplay;
 
+    /**
+     * Kijeloli a soron levo Displayt, akinek eppen a kore van.
+     * @param display: a soron levo display
+     */
     public void RoundStart(Display display) {
         activedisplay.SetRoundoutline(false);
         activedisplay = display;
         display.SetRoundoutline(true);
     }
-
 }
