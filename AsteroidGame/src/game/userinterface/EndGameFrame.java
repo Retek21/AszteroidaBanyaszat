@@ -8,10 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-/*
-* @author Szabo Gergo
-*
-* */
+ /**
+ * @author Szabo Gergo
+ * a jatek vegen felugro ablak
+ */
 public class EndGameFrame extends JDialog {
 
     private Game game;
@@ -19,6 +19,12 @@ public class EndGameFrame extends JDialog {
     private JLabel label;
     private JLabel sublabel;
 
+     /**
+      * konstruktor, ami a megfelelo parameterekkel letrehoz egy uj dialogusablakot
+      * @param j: a letrehozando JFrame
+      * @param vic: a nyeres, vagy vesztes logikai erteke
+      * @param reason: az oka a jatek vegenek
+      */
     public EndGameFrame(JFrame j, boolean vic, String reason)
     {
         super(j, Dialog.ModalityType.DOCUMENT_MODAL);
@@ -111,6 +117,10 @@ public class EndGameFrame extends JDialog {
         this.setVisible(true);
     }
 
+     /**
+      * a jatek vegen megjeleno szoveg beallitasa
+      * @param vic: a nyeres logikai erteke
+      */
     public void SetVictory(boolean vic)
     {
         if(vic)

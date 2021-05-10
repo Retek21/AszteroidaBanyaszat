@@ -2,24 +2,26 @@ package game.userinterface;
 
 import javax.swing.*;
 import java.awt.*;
-/*
+/**
 * @author Szeredi Peter
 * GameButtont megvalosito osztaly
-* */
+*/
 public class GameButton extends JButton {
-    /*
+    /**
     * gamebutton konstruktora
     * kijeloles eltavolitasa
-    * */
+    */
     public GameButton(){
         super();
         setFocusable(false);
     }
-    /*
-    * custom konsruktor string paramaterkent atadva a nevet
-    * kijelolest eltavolitja
-    * beallitja a szineit
-    * */
+
+    /**
+     * custom konsruktor string paramaterkent atadva a nevet
+     * kijelolest eltavolitja
+     *  beallitja a szineit
+     * @param s: a kapott nev
+     */
     public GameButton(String s){
         super(s);
         setFocusable(false);
