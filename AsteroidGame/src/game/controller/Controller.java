@@ -97,6 +97,12 @@ public class Controller {
      */
     private ArrayList<Actor> actors;
 
+    /**
+     * A bool ertek, ami azt mutatja, hogy
+     * az adott actor torlendo-e actors listabol.
+     */
+    private ArrayList<Actor> previousactors;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////CONSTRUCTORS//////////////////////////////////////////////////////////////
@@ -116,13 +122,6 @@ public class Controller {
      * Ures konstruktor.
      */
     private Controller() {}
-
-    /**
-     * A játék tobbszori lejatszasa utan a teljes ujraidnitasert felelos metodus
-     */
-    public static void Reset() {
-        instance = null;
-    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -429,6 +428,7 @@ public class Controller {
         ice = new LinkedHashMap<String, Ice>();
         uran = new LinkedHashMap<String, Uranium>();
         actors = new ArrayList<Actor>();
+        previousactors = new ArrayList<Actor>();
     }
 
     /**
@@ -468,7 +468,7 @@ public class Controller {
 //Ha kivesszuk innen a kommentet, akkor minden telepesnek az inventory-jaban kezdeskor
 //lesz egy teleportpar, illetve egy teleportpar es egy robot craftolasahoz
 //szukseges nyersanyag.
-      /*    Teleport t = CreateTeleport("t" + i);
+        /*  Teleport t = CreateTeleport("t" + i);
             s.GetInventory().AddTeleport(t);
             Teleport tt = CreateTeleport("t" + i+60);
             s.GetInventory().AddTeleport(tt);
@@ -521,7 +521,6 @@ public class Controller {
         for(int i = 0; i < 7; i++) {
             String id = "ur" + i;
             Uranium u = CreateUranium(id);
-            u.SetInteractCount(2);
             String aid = (String)ids[r.nextInt(ids.length)];
             while (!SetCore(id, aid))
                 aid = (String)ids[r.nextInt(ids.length)];
@@ -872,6 +871,7 @@ public class Controller {
      */
     public void FirstRound(){
         actors.sort(new ActorComparator());
+        previousactors.addAll(actors);
         Actor ac = actors.get(0);
         actor = ac.GetID();
         settlers.get(actor).GetDisplay().SetRoundoutline(true);
@@ -892,17 +892,32 @@ public class Controller {
 
         Actor ac = null;
         actors.sort(new ActorComparator());
-        for(int i = 0; i < actors.size(); i++) {
+
+        boolean found = false;
+        for (int i = 0; i < actors.size(); i++) {
             if (actors.get(i).GetID().equals(actor)) {
                 if (i != actors.size() - 1) {
                     ac = actors.get(i + 1);
-                }
-                else {
+                } else {
                     ac = actors.get(0);
                 }
+                found = true;
                 break;
             }
         }
+        if (!found) {
+            for (int i = 0; i < previousactors.size(); i++) {
+                if (previousactors.get(i).GetID().equals(actor)) {
+                    for(int j = i; j < previousactors.size(); j++)
+                        if (actors.contains(previousactors.get(j))) {
+                            ac = previousactors.get(j);
+                            break;
+                        }
+                    break;
+                }
+            }
+        }
+
         if (ac != null) {
             actor = ac.GetID();
 
@@ -920,6 +935,9 @@ public class Controller {
             String title = ac.GetTitle();
             WriteTitle(title);
             InputManager.GetInstanceOf().SetState(ac.GetState());
+
+            previousactors.clear();
+            previousactors.addAll(actors);
         }
     }
 
