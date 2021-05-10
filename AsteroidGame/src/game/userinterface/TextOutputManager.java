@@ -31,6 +31,7 @@ public class TextOutputManager {
 
     public void WriteToNaplo(ArrayList<String> text)
     {
+        naplopanel.ScrollDownMode();
         naplopanel.WriteOut(text);
     }
 

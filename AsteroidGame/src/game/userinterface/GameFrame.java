@@ -41,12 +41,9 @@ public class GameFrame extends JFrame {
 
         naplopanel = new NaploPanel();
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
+        naplopanel.SetParentPane(scrollnaplo);
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollnaplo.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            }
-        });
+
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
 
@@ -216,7 +213,7 @@ public class GameFrame extends JFrame {
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                game.ExitGame(false);
+                game.BackToMenu();
             }
         });
     }

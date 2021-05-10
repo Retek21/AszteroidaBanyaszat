@@ -5,7 +5,6 @@ import game.userinterface.*;
 public class Game {
     GameFrame gameframe ;
     MenuFrame menuframe;
-    EndGameFrame endgameframe;
 
     private static Game instance;
 
@@ -22,7 +21,6 @@ public class Game {
     public void InitGame()
     {
         menuframe = new MenuFrame();
-        endgameframe = new EndGameFrame();
         StartProgram();
     }
 
@@ -34,7 +32,6 @@ public class Game {
 
     public void StartProgram()
     {
-        endgameframe.setVisible(false);
         menuframe.setVisible(true);
     }
 
@@ -52,10 +49,12 @@ public class Game {
 
     public void ExitGame(boolean victory)
     {
-        gameframe.setVisible(false);
+        EndGameFrame endframe = new EndGameFrame(gameframe, "Asteroid Game [agbkp Edition]", victory);
+    }
+
+    public void BackToMenu() {
         gameframe.dispose();
-        endgameframe.SetVictory(victory);
-        endgameframe.setVisible(true);
+        StartProgram();
     }
 
     public void ExitProgram()
