@@ -29,6 +29,7 @@ public class EntityDisplay extends Display{
     public void SetSubject(Entity subject) {
         this.subject = subject;
     }
+
     /**
     * sectorpontok visszadasa
     */

@@ -139,7 +139,7 @@ public class TeleportDisplay extends WhereaboutDisplay {
         if (!underSunStorm && blink == 0) {
             underSunStorm = subject.GetOnFireness();
             if (underSunStorm) {
-                blink = DisplayManager.GetInstance().GetBlinkingTime();;
+                blink = DisplayManager.GetInstance().GetBlinkingTime();
             }
         }
 

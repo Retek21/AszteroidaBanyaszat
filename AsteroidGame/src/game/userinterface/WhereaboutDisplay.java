@@ -1,5 +1,8 @@
 package game.userinterface;
 
+/*
+ * @author Kristof Torok
+*/
 /**
  * Display, ami megjelenit egy whereabout-ot
  */
@@ -39,8 +42,11 @@ public class WhereaboutDisplay extends Display{
     }
 
     /**
-     * napvihar vagy robbanas eseten villogtatja a displayt
-     */
+    * blinkelest beallito fuggveny
+    * ha sunstorm van vagy felrobban akkor blinkeles szamlaloja csokken
+    * egyebkent ha 0 atvaltozik a boolok erteke
+    * blinkeles kozben mindig repaintet ir
+    */
     public void Blink() {
         if (underSunStorm || exploding) {
             blink--;
