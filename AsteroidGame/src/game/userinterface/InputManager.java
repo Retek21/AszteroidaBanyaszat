@@ -6,6 +6,8 @@ public class InputManager {
 
     private static InputManager instance;
 
+    private boolean buttonactivity;
+
     private DisplayManager manager;
 
     private Controller controller;
@@ -19,10 +21,12 @@ public class InputManager {
 
     private State state;
 
+
     private InputManager()
     {
         manager = DisplayManager.GetInstance();
         controller = Controller.GetInstanceOf();
+        buttonactivity = true;
     }
 
     public static InputManager GetInstanceOf(){
@@ -40,43 +44,57 @@ public class InputManager {
         craftbutton = craft;
     }
 
+    public void TurnOnOffButtons(boolean value) {
+        buttonactivity = value;
+        if (buttonactivity)
+            SetState(state);
+        else {
+            dophasebutton.setEnabled(false);
+            movebutton.setEnabled(false);
+            drillbutton.setEnabled(false);
+            minebutton.setEnabled(false);
+            placebutton.setEnabled(false);
+            craftbutton.setEnabled(false);
+        }
+    }
+
     public void SetState(State s)
     {
         switch(s){
             case WAITFORMOVE:
-                dophasebutton.setEnabled(false);
-                movebutton.setEnabled(false);
-                drillbutton.setEnabled(false);
-                minebutton.setEnabled(false);
-                placebutton.setEnabled(false);
-                craftbutton.setEnabled(false);
-                state = s;
+                if (buttonactivity) {
+                    dophasebutton.setEnabled(false);
+                    movebutton.setEnabled(false);
+                    drillbutton.setEnabled(false);
+                    minebutton.setEnabled(false);
+                    placebutton.setEnabled(false);
+                    craftbutton.setEnabled(false);
+                }
                 break;
             case SETTLERROUND:
-                if(state != State.SETTLERROUND){
-                    dophasebutton.setEnabled(false);
-                    movebutton.setEnabled(true);
-                    drillbutton.setEnabled(true);
-                    minebutton.setEnabled(true);
-                    placebutton.setEnabled(true);
-                    craftbutton.setEnabled(true);
-                }
-                state = s;
+                    if (buttonactivity) {
+                        dophasebutton.setEnabled(false);
+                        movebutton.setEnabled(true);
+                        drillbutton.setEnabled(true);
+                        minebutton.setEnabled(true);
+                        placebutton.setEnabled(true);
+                        craftbutton.setEnabled(true);
+                    }
                 break;
             case AIROUND:
-                if(state != State.AIROUND){
+                if (buttonactivity) {
                     dophasebutton.setEnabled(true);
                     movebutton.setEnabled(false);
                     drillbutton.setEnabled(false);
                     minebutton.setEnabled(false);
                     placebutton.setEnabled(false);
                     craftbutton.setEnabled(false);
-                    state = s;
                 }
                 break;
             default:
                 break;
         }
+        state = s;
     }
 
     public void GameFieldClicked(int x, int y)
@@ -84,6 +102,7 @@ public class InputManager {
         if(state==State.WAITFORMOVE){
             manager.ClickOnMoveTarget(x, y);
             System.out.println("WaitforMoveban kattintva x:" + x + " y:" + y);
+            manager.RefreshSelectedDisplay();
         }
         else{
             manager.ClickOnGamePanel(x , y);
@@ -99,6 +118,7 @@ public class InputManager {
                 System.out.println("DoPhase pressed");
                 //DisplayManager.GetInstance().Test();
                 //DisplayManager.GetInstance().repaint();
+                manager.RefreshSelectedDisplay();
                 break;
             case "Move":
                 System.out.println("Move pressed");
@@ -108,18 +128,22 @@ public class InputManager {
             case "Drill":
                 controller.SettlerDrill();
                 System.out.println("Drill pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Mine":
                 controller.SettlerMine();
                 System.out.println("Mine pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Place":
                 controller.SettlerPlace(place);
                 System.out.println("Place pressed");
+                manager.RefreshSelectedDisplay();
                 break;
             case "Craft":
                 controller.SettlerCraft(craft);
                 System.out.println("Craft pressed");
+                manager.RefreshSelectedDisplay();
                 break;
         }
     }

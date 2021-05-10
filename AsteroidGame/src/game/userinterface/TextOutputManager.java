@@ -15,6 +15,7 @@ public class TextOutputManager {
 
     private TextOutputManager() {}
 
+
     public static TextOutputManager GetInstanceOf(){
         if(instance == null)
             instance = new TextOutputManager();
@@ -30,6 +31,7 @@ public class TextOutputManager {
 
     public void WriteToNaplo(ArrayList<String> text)
     {
+        naplopanel.ScrollDownMode();
         naplopanel.WriteOut(text);
     }
 

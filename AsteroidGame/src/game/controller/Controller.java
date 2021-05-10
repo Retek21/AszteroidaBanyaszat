@@ -69,32 +69,6 @@ public class Controller {
     private Sun sun;
 
     /**
-     * A jatek veget jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean end = false;
-
-    /**
-     * A gyozelmet jelolo bool valtozo. Alaperteke hamis.
-     */
-    private boolean victory = false;
-
-    /**
-     * Az inicializalo fazist jelolo bool valtozo.
-     */
-    private boolean initializing;
-
-    /**
-     * A leallasi felteteleke figyelo bool valtozo. Ha igaz,
-     * figyeli az egyes objektumok allapotat, es a jatek veget/gyozelmet allithatja be.
-     */
-    private boolean checkconditions;
-
-    /**
-     * Manualis tesztelest beallito valtozo.
-     */
-    private boolean manual;
-
-    /**
      * A kimeneti stringeket tarolo tomb.
      */
     private ArrayList<String> output = new ArrayList<String>();
@@ -104,11 +78,23 @@ public class Controller {
      */
     private static Controller instance;
 
+
+    /**
+     * A DisplayManager peldanya
+     */
     private DisplayManager dm;
+    /**
+     * A TextOutputManager peldanya
+     */
     private TextOutputManager tm;
 
+    /**
+     * Az aktualis aktor
+     */
     private String actor;
-
+    /**
+     * Az aktorok listaja
+     */
     private ArrayList<Actor> actors = new ArrayList<Actor>();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +117,13 @@ public class Controller {
      */
     private Controller() {}
 
+    /**
+     * A játék tobbszori lejatszasa utan a teljes ujraidnitasert felelos metodus
+     */
+    public static void Reset() {
+        instance = null;
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////SEGED METHODS//////////////////////////////////////////////////////////////
@@ -144,20 +137,36 @@ public class Controller {
             output.add(out);
     }
 
+    /**
+     * A kimeneti stringet kiirja a naploba, majd nullazza a stringet
+     */
     private void WriteNaplo() {
         tm.WriteToNaplo(output);
         output.clear();
     }
 
+    /**
+     * A kimeneti stringet kiirja az infopanelra, majd nullazza a stringet
+     */
     private void WriteInfo() {
         tm.WriteToInfo(output);
         output.clear();
     }
 
+    /**
+     * Kiirja a panel tetejere a megfelelo cimet
+     * @param title
+     */
     private void WriteTitle(String title) {
         tm.WriteToHead(title);
     }
 
+    /**
+     * Az aktorokat megkereso algoritmus
+     * azonosito alapjan keres, majd visszaadja a megfelelo aktort
+     * @param id: azonosito
+     * @return: keresett aktor
+     */
     private Actor FindActor(String id) {
         for(Actor ac : actors)
             if (ac.GetID().equals(id))
@@ -404,6 +413,38 @@ public class Controller {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////INIT PHASE///////////////////////////////////////////////////////
+
+    /**
+     * letrehoz minden objektumhoz egy uj, ures hashmapet,
+     * benne az azonositokkal es az objektummal
+     */
+    public void PreInit() {
+        asteroids = new LinkedHashMap<String, Asteroid>();
+
+        settlers = new LinkedHashMap<String, Settler>();
+
+        robots = new LinkedHashMap<String, Robot>();
+
+        ufos = new LinkedHashMap<String, Ufo>();
+
+        teleports = new LinkedHashMap<String, Teleport>();
+
+        iron = new LinkedHashMap<String, Iron>();
+
+        coal = new LinkedHashMap<String, Coal>();
+
+        ice = new LinkedHashMap<String, Ice>();
+
+        uran = new LinkedHashMap<String, Uranium>();
+
+        actors = new ArrayList<Actor>();
+    }
+
+    /**
+     * A jatek inicializalasa, entitasok, aszteroidak adatainak beallitasa a tetszoleges
+     * kezdo pozicioba, kezdo ertekekkel
+     * @param players
+     */
     public void Init(int players) {
         dm = DisplayManager.GetInstance();
         tm = TextOutputManager.GetInstanceOf();
@@ -438,6 +479,14 @@ public class Controller {
             s.GetInventory().AddTeleport(tt);
             t.SetPair(tt);
             tt.SetPair(t);
+
+            s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+           s.GetInventory().AddMaterial(new Iron());
+            s.GetInventory().AddMaterial(new Uranium());
+           s.GetInventory().AddMaterial(new Uranium());
+            s.GetInventory().AddMaterial(new Coal());
+           s.GetInventory().AddMaterial(new Ice());
 
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
@@ -512,52 +561,107 @@ public class Controller {
         FirstRound();
     }
 
+    /**
+     * Egy aszteroida letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Asteroid CreateAsteroid(String id) {
         Asteroid a = new Asteroid();
         asteroidfield.AddAsteroid(a);
         asteroids.put(id, a);
         return a;
     }
-
+    /**
+     * Egy teleport letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Teleport CreateTeleport(String id) {
         Teleport t = new Teleport();
         teleports.put(id, t);
         return t;
     }
 
+    /**
+     * Egy telepes letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Settler CreateSettler(String id) {
         Settler s = new Settler();
         settlers.put(id, s);
         return s;
     }
-
+    /**
+     * Egy robot letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Robot CreateRobot(String id) {
         Robot r = new Robot();
         robots.put(id, r);
         return r;
     }
 
+    /**
+     * Egy ufo letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Ufo CreateUfo(String id) {
         Ufo u = new Ufo();
         ufos.put(id, u);
         return u;
     }
 
+    /**
+     * Egy vas letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Iron CreateIron(String id) {
         Iron i = new Iron();
         iron.put(id, i);
         return i;
     }
+
+    /**
+     * Egy jeg letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Ice CreateIce(String id) {
         Ice i = new Ice();
         ice.put(id, i);
         return i;
     }
+
+    /**
+     * Egy szen letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Coal CreateCoal(String id) {
         Coal c = new Coal();
         coal.put(id, c);
         return c;
     }
+
+    /**
+     * Egy uranium letrehozasa a megfelelo azonositoval,
+     * majd felvetele a nyilvantartasba
+     * @param id
+     * @return
+     */
     private Uranium CreateUranium(String id) {
         Uranium u = new Uranium();
         uran.put(id, u);
@@ -565,13 +669,25 @@ public class Controller {
     }
 
 
-
+    /**
+     * Beallitja a kapott azonositoju aszteroidanak a napkozelseget
+     * a kapott logikai ertekre
+     * @param id: az aszteroida azonositoja
+     * @param value: a kapott logikai ertek
+     */
     private void SetSunnearness(String id, boolean value)
     {
         Asteroid a = asteroids.get(id);
         a.SetSunnearnessInit(value);
     }
 
+    /**
+     *  Bellaitja a kapott azonositoju aszteroidanak a magjat
+     *  a kapott azonositoju nyersanyagra, es visszater a sikeresseggel
+     * @param materialid: a nyersanyag azonositoja
+     * @param asteroidid: az aszteroida azonositoja
+     * @return: a sikeresseg
+     */
     private boolean SetCore(String materialid, String asteroidid)
     {
         Asteroid a = asteroids.get(asteroidid);
@@ -596,6 +712,11 @@ public class Controller {
         return false;
     }
 
+    /**
+     * Beallitja a kapott azonositoju aszteroidanak a retegszamat a kapott ertkere
+     * @param asteroidid: az aszteroida azonositoja
+     * @param value: a kapott ertek
+     */
     private void SetLayers(String asteroidid, int value)
     {
         if(asteroids.containsKey(asteroidid)) {
@@ -604,6 +725,11 @@ public class Controller {
 
     }
 
+    /**
+     * Beallitja a kapott ket azonositoju aszteroidat szomszedosnak
+     * @param id1: az elso aszteroida azonositoja
+     * @param id2: a masodik aszteroida azonositoja
+     */
     private void SetNeighbourhood(String id1, String id2)
     {
         if(asteroids.containsKey(id1))
@@ -614,31 +740,15 @@ public class Controller {
                 Asteroid a2 = asteroids.get(id2);
 
                 a1.AddNeighbour(asteroids.get(id2));
-    //          a2.AddNeighbour(asteroids.get(id1));
-
-
             }
-    /*        else if(teleports.containsKey(id2))
-            {
-                Asteroid a = asteroids.get(id1);
-                Teleport t = teleports.get(id2);
-
-                t.Deploy(a);
-
-
-            }
-        }
-        else if(teleports.containsKey(id1) && asteroids.containsKey(id2))
-        {
-            Asteroid a = asteroids.get(id2);
-            Teleport t = teleports.get(id1);
-
-            t.Deploy(a);*/
-
 
         }
     }
 
+    /**
+     * Beallitja a szomszedossagi viszonyokat
+     * @param ids: a kapott objektumok azonositoi
+     */
     private void CreateNeighbourhoods(Object[] ids) {
         int index = 0;
         boolean[][] sectors = dm.GetAllocatedAsteroidSectors();
@@ -731,6 +841,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Hozzaadja a kapott azonositoju entitast a
+     * kapott azonositoju aszteroidahoz
+     * @param entityid: az entitas azonositoi
+     * @param asteroidid: az aszteroida azonositoi
+     */
     private void AddEntity(String entityid, String asteroidid)
     {
         if(asteroids.containsKey(asteroidid))
@@ -755,6 +871,10 @@ public class Controller {
 
 ////////////////////////////////////////////////////////GAME PHASE//////////////////////////////////////////////////////
 
+    /**
+     * Az elso kort elkezdo metodus, beallitja a cimet, a kezdo aktort,
+     * es az asktualis statuszt
+     */
     public void FirstRound(){
         actors.sort(new ActorComparator());
         Actor ac = actors.get(0);
@@ -765,10 +885,15 @@ public class Controller {
         InputManager.GetInstanceOf().SetState(ac.GetState());
     }
 
+    /**
+     * A kovetkezo kort menedzseli, ide tartozik a naplo- es infopanelre valo iras,
+     * a jatek elvesztesenek ellenorzese, a kovetkezo aktor beallitasa, es a statusz
+     * frissitese
+     */
     public void NextRound() {
         WriteNaplo();
         CheckVictory(actor);
-        CheckMaterials();
+        CheckDefeat();
 
         Actor ac = null;
         actors.sort(new ActorComparator());
@@ -805,6 +930,11 @@ public class Controller {
 
 ////////////////DOPHASE///////////////
 
+    /**
+     * Az aktualis aktorhoz tartozo objektum leptetese
+     * Megkerese, hogy az aktor milyen objektum, majd tovabbhivja
+     * annak a DoPhase() metodusat
+     */
     public void DoPhase() {
         if (robots.containsKey(actor))
             RobotDoPhase(actor);
@@ -894,6 +1024,11 @@ public class Controller {
 
 ////////////////DRILL//////////////////////
 
+    /**
+     * Akkor hivodik, amikor egy telepes megfur egy aszteroidat.
+     * Ha ez sikeres volt, kiirja a naplopanelre a cselekvest, majd
+     * tovabblepteti a jatekot
+     */
     public void SettlerDrill()
     {
         String out = null;
@@ -939,6 +1074,11 @@ public class Controller {
 
 ////////////////MINE///////////////////////////////
 
+    /**
+     * Akkor hivodik, amikor egy telepes kibanyaszik egy nyersanyagot.
+     * Ha ez sikeresen megtortent, kiirja a naplopanelre a cselekvest, majd
+     * tovabblepteti a jatekot
+     */
     public void SettlerMine()
     {
         String out = null;
@@ -986,6 +1126,13 @@ public class Controller {
 
 ////////////////////CRAFT////////////////////////////
 
+    /**
+     * Akkor hivodik, amikor egy telepes craftolni szeretne egy objektumot.
+     * A kapott string alapjan eldonti, hogy ez robot, vagy teleportkapu, majd
+     * meghivja az ennek megfelelo craft metodust
+     * Ezek utan tovabblepteti a jatekot.
+     * @param thing: a craftolando objektum
+     */
     public void SettlerCraft(String thing)
     {
         String out = null;
@@ -1021,6 +1168,12 @@ public class Controller {
 
 //////////////////////PLACE///////////////////////////////
 
+    /**
+     * Akkor hivodik, amikor a telepes le szeretne helyezni egy objektumot.
+     * A kapott string alapjan eldonti, hogy mi ez az objektum, es tovabbhivja
+     * az ennek megfelelo metodust
+     * @param thing: a lehelyezendo objektum
+     */
     public void SettlerPlace(String thing)
     {
         String out = null;
@@ -1096,6 +1249,13 @@ public class Controller {
 
 ///////////////////MOVE//////////////////////////
 
+    /**
+     * Akkor hivodik, amikor egy telepes mozog.
+     * Megkeresi a kapott parameter alapjan, hogy hova szeretne lepni, majd
+     * ha ez sikerul, odaleptetni, es kiirja a naplopanelre
+     * Ezutan tovabblepteti a jatekot.
+     * @param wa: Az a whereabout, ahova a telepes lepni szeretne
+     */
     public void SettlerMove(Whereabout wa)
     {
         String where = SearchForWhereabout(wa);
@@ -1329,7 +1489,6 @@ public class Controller {
     {
         String out = "Sunnearness:";
         Iterator it = asteroids.entrySet().iterator();
-    //  WriteOut(out);
         Asteroid[] tempasteroids = new Asteroid[asteroids.size()];
         boolean[] nearness = new boolean[asteroids.size()];
         int cnt = 0;
@@ -1353,7 +1512,6 @@ public class Controller {
                 if (it.hasNext())
                     out = out + ",";
             }
-    //      WriteOut(out);
         }
         for(int i = 0; i < tempasteroids.length; i++)
         {
@@ -1364,6 +1522,10 @@ public class Controller {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////INFO COMMANDS/////////////////////////////////////////////////////////////////
 
+    /**
+     * Egy aszteroida adatainak kirratasa az infopanelre
+     * @param a: az aszteroida, amirol kellenek az adatok
+     */
     public void InfoAboutAsteroid(Asteroid a) {
         String out;
         String id = SearchForAsteroid(a);
@@ -1427,6 +1589,10 @@ public class Controller {
         WriteInfo();
     }
 
+    /**
+     * Egy teleprot adatainak kirratasa az infopanelre
+     * @param t: a teleprot, amirol kellenek az adatok
+     */
     public void InfoAboutTeleport(Teleport t) {
         String out;
         String id = SearchForTeleport(t);
@@ -1438,7 +1604,7 @@ public class Controller {
             out = "\tPair: null";
         WriteOut(out);
 
-        if(t.GetPair() != null && t.GetPair().GetPairReadiness())
+        if(t.GetPair() != null && t.GetPairReadiness())
             out = "\tState: active";
         else
             out = "\tState: inactive";
@@ -1465,6 +1631,10 @@ public class Controller {
         WriteInfo();
     }
 
+    /**
+     * Egy telepes adatainak kirratasa az infopanelre
+     * @param s: a telepes, amirol kellenek az adatok
+     */
     public void InfoAboutSettler(Settler s) {
         String out;
         String id = SearchForSettler(s);
@@ -1516,6 +1686,10 @@ public class Controller {
         WriteInfo();
     }
 
+    /**
+     * Egy robot adatainak kirratasa az infopanelre
+     * @param r: a robot, amirol kellenek az adatok
+     */
     public void InfoAboutRobot(Robot r) {
         String out;
         String id = SearchForRobot(r);
@@ -1529,6 +1703,10 @@ public class Controller {
         WriteInfo();
     }
 
+    /**
+     * Egy ufo adatainak kirratasa az infopanelre
+     * @param u: az ufo, amirol kellenek az adatok
+     */
     public void InfoAboutUfo(Ufo u) {
         String out;
         String id = SearchForUfo(u);
@@ -1554,12 +1732,16 @@ public class Controller {
      */
     private void Endgame(boolean v)
     {
-        end = true;
-        victory = v;
+        Game.GetInstanceOf().ExitGame(v);
     }
 
 ///////////////CHECK CONDITIONS//////////////////////////
 
+    /**
+     * Azt ellenorzi, hogy a telepesek megnyertek- e a jatekot.
+     * Ha teljesulnek a feltetelek, meghivja az engame() metodust, true parameterrel
+     * @param settlerid: a telepes azonositoja, aki segithet megnyerni a jatekot
+     */
      private void CheckVictory(String settlerid){
          if (!settlers.containsKey(settlerid))
              return;
@@ -1584,16 +1766,20 @@ public class Controller {
      * Megnezi, hogy szerepel-e meg eleg nyersanyag a jatekban, ahhoz, hogy a jatekosok nyerhessenek.
      * Ha igen, nem csinal semmit, ha nem, akkor lezarja a jatekot.
      */
-    private void CheckMaterials(){
+    private void CheckDefeat(){
         int countCoal = coal.size();
         int countIce = ice.size();
         int countIron = iron.size();
         int countUranium = uran.size();
 
-        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3)
-            return;
-        else
+        if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3) {}
+        else {
             Endgame(false);
+            return;
+        }
+        if(settlers.isEmpty()) {
+            Endgame(false);
+        }
     }
 
 ///////////////////////////EVENTS THAT CAN OCCUR DURING THE GAME///////////////////////////
@@ -1641,12 +1827,17 @@ public class Controller {
                 unique = true;
         }
         String id1 = "t" + Integer.toString(n);
-        String id2 = "t" + Integer.toString(n);
+        String id2 = "t" + Integer.toString(n+1);
         teleports.put(id1, t1);
         teleports.put(id2, t2);
         output.add("Teleport: " + id1 + " and Teleport: " + id2 + ".");
     }
 
+    /**
+     * Akkor hivodik, amikor a teleport megkergul.
+     * Kiirja a naplopanelre az allapotat, es hozzaadja az aktorokhoz
+     * @param t: a megkergult teleport
+     */
     public void TeleportGoesCrazy(Teleport t) {
         String id = SearchForTeleport(t);
         if (id != null) {

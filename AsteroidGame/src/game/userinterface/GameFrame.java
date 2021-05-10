@@ -23,54 +23,29 @@ public class GameFrame extends JFrame {
     private GameButton placebutton;
     private GameButton craftbutton;
 
-    private OptionsComboBox craftable;
-    private OptionsComboBox placeable;
+    private JComboBox<String> craftable;
+    private JComboBox<String> placeable;
 
     private JLabel phaselabel;
 
     private Game game;
 
-    public GameFrame(Game g){
-        game = g;
+    public GameFrame(){
+        game = Game.GetInstanceOf();
         setSize(1280, 800);
         setResizable(false);
         setTitle("Asteroid Game [agbkp Edition]");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         //komponensek felinicializalasa
 
         naplopanel = new NaploPanel();
         JScrollPane scrollnaplo = new JScrollPane(naplopanel);
+        naplopanel.SetParentPane(scrollnaplo);
         scrollnaplo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollnaplo.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            }
-        });
+
         infopanel = new InfoPanel();
         gamepanel = DisplayManager.GetInstance();
-    /*    JScrollPane scrollablegamepanel = new JScrollPane(gamepanel);
-        scrollablegamepanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollablegamepanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        scrollablegamepanel.getVerticalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
-            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        scrollablegamepanel.repaint();
-                    }
-                });
-            }
-        });
-        scrollablegamepanel.getHorizontalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener(){
-            public void adjustmentValueChanged(java.awt.event.AdjustmentEvent ae){
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        scrollablegamepanel.repaint();
-                    }
-                });
-            }
-        });*/
 
         ContainerPanel headpanel = new ContainerPanel();
         phaselabel = new JLabel("Default Value");
@@ -83,8 +58,14 @@ public class GameFrame extends JFrame {
         placebutton = new GameButton("Place");
         craftbutton = new GameButton("Craft");
         ContainerPanel buttonpanel = new ContainerPanel();
-        craftable = new OptionsComboBox(new String[]{"Robot", "Teleport"});
-        placeable = new OptionsComboBox(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
+        craftable = new JComboBox<String>(new String[]{"Robot", "Teleport"});
+        craftable.setFocusable(false);
+        craftable.setBackground(new Color(64,115,158));
+        craftable.setForeground(new Color(76,209,55));
+        placeable = new JComboBox<String>(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
+        placeable.setFocusable(false);
+        placeable.setBackground(new Color(64,115,158));
+        placeable.setForeground(new Color(76,209,55));
 
         //managerek elkeszitese, bekotese
 
@@ -230,8 +211,16 @@ public class GameFrame extends JFrame {
             public void mouseEntered(MouseEvent e){}
         }
 
+        MouseListener[] listeners = gamepanel.getMouseListeners();
+        if (listeners.length != 0) gamepanel.removeMouseListener(listeners[0]);
         MouseClickListener mouselistener = new MouseClickListener();
         gamepanel.addMouseListener(mouselistener);
 
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                game.BackToMenu();
+            }
+        });
     }
 }

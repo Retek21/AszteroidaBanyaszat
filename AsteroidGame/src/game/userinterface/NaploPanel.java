@@ -2,16 +2,20 @@ package game.userinterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 
 public class NaploPanel extends JPanel {
-    private ArrayList<JLabel> lines = new ArrayList<JLabel>();
+    private ArrayList<JLabel> lines;
+    private JScrollPane parentPane;
 
     public NaploPanel()
     {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
+        lines = new ArrayList<JLabel>();
     }
 
     public void WriteOut(ArrayList<String> text)
@@ -28,5 +32,25 @@ public class NaploPanel extends JPanel {
         revalidate();
         repaint();
 
+
+    }
+
+    public void SetParentPane(JScrollPane jp) {
+        parentPane = jp;
+    }
+
+    public void ScrollDownMode() {
+        if(parentPane != null) {
+            JScrollBar naploVerticalBar = parentPane.getVerticalScrollBar();
+            AdjustmentListener downScroller = new AdjustmentListener() {
+                @Override
+                public void adjustmentValueChanged(AdjustmentEvent e) {
+                    Adjustable adjustable = e.getAdjustable();
+                    adjustable.setValue(adjustable.getMaximum());
+                    naploVerticalBar.removeAdjustmentListener(this);
+                }
+            };
+            naploVerticalBar.addAdjustmentListener(downScroller);
+        }
     }
 }
