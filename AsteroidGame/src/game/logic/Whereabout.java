@@ -42,7 +42,12 @@ public interface Whereabout {
      */
     public Asteroid GetLandingPad();
 
+    /**
+     * adott display visszadasa
+     * */
     public WhereaboutDisplay GetDisplay();
-
+    /**
+     * adott display beallitasa
+     * */
     public void SetDisplay(WhereaboutDisplay display);
 }

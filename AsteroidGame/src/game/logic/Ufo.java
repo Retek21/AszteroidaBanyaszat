@@ -49,8 +49,4 @@ public class Ufo extends Entity {
         super.Die();
         Controller.GetInstanceOf().UfoDie(this);
     }
-
-    public void SetDisplay(EntityDisplay display){
-        this.display = display;
-    }
 }
