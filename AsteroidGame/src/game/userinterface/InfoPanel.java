@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class InfoPanel extends JPanel {
 
     private Dimension size;
-    public InfoPanel(Dimension _size)
 
     /**
-     * A konstruktor beallitja a koordinatakat, az elhelyezkedast, stb.
+     * A konstruktor, inicializalja a panel parametereit.
+     * @param _size: a panel merete
      */
-    public InfoPanel()
+    public InfoPanel(Dimension _size)
     {
         size = _size;
         this.setLayout(new GridLayout(26,1));
