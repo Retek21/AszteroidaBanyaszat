@@ -47,9 +47,9 @@ public class Game {
         controller.Init(numberofplayers);
     }
 
-    public void ExitGame(boolean victory)
+    public void ExitGame(boolean victory, String reason)
     {
-        EndGameFrame endframe = new EndGameFrame(gameframe, "Asteroid Game [agbkp Edition]", victory);
+        EndGameFrame endframe = new EndGameFrame(gameframe, victory, reason);
     }
 
     public void BackToMenu() {

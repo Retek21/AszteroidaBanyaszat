@@ -16,47 +16,47 @@ public class Controller {
     /**
      * Az aszteroidakat tarolo hashmap.
      */
-    private LinkedHashMap<String, Asteroid> asteroids = new LinkedHashMap<String, Asteroid>();
+    private LinkedHashMap<String, Asteroid> asteroids;
 
     /**
      * A telepeseket tarolo hashmap.
      */
-    private LinkedHashMap<String, Settler> settlers = new LinkedHashMap<String, Settler>();
+    private LinkedHashMap<String, Settler> settlers;
 
     /**
      * A robotokat tarolo hashmap.
      */
-    private LinkedHashMap<String, Robot> robots = new LinkedHashMap<String, Robot>();
+    private LinkedHashMap<String, Robot> robots;
 
     /**
      * Az ufokat tarolo hashmap.
      */
-    private LinkedHashMap<String, Ufo> ufos = new LinkedHashMap<String, Ufo>();
+    private LinkedHashMap<String, Ufo> ufos;
 
     /**
      * A teleportokat tarolo hashmap.
      */
-    private LinkedHashMap<String, Teleport> teleports = new LinkedHashMap<String, Teleport>();
+    private LinkedHashMap<String, Teleport> teleports;
 
     /**
      * A vasakat tarolo hashmap.
      */
-    private LinkedHashMap<String, Iron> iron = new LinkedHashMap<String, Iron>();
+    private LinkedHashMap<String, Iron> iron;
 
     /**
      * A szeneket tarolo hashmap.
      */
-    private LinkedHashMap<String, Coal> coal = new LinkedHashMap<String, Coal>();
+    private LinkedHashMap<String, Coal> coal;
 
     /**
      * A jegeket tarolo hashmap.
      */
-    private LinkedHashMap<String, Ice> ice = new LinkedHashMap<String, Ice>();
+    private LinkedHashMap<String, Ice> ice;
 
     /**
      * Az uraniumot tarolo hashmap.
      */
-    private LinkedHashMap<String, Uranium> uran = new LinkedHashMap<String, Uranium>();
+    private LinkedHashMap<String, Uranium> uran;
 
     /**
      * Az aszteroidaov, ami az aszteroidakat tartalmazza.
@@ -95,7 +95,7 @@ public class Controller {
     /**
      * Az aktorok listaja
      */
-    private ArrayList<Actor> actors = new ArrayList<Actor>();
+    private ArrayList<Actor> actors;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -420,23 +420,14 @@ public class Controller {
      */
     public void PreInit() {
         asteroids = new LinkedHashMap<String, Asteroid>();
-
         settlers = new LinkedHashMap<String, Settler>();
-
         robots = new LinkedHashMap<String, Robot>();
-
         ufos = new LinkedHashMap<String, Ufo>();
-
         teleports = new LinkedHashMap<String, Teleport>();
-
         iron = new LinkedHashMap<String, Iron>();
-
         coal = new LinkedHashMap<String, Coal>();
-
         ice = new LinkedHashMap<String, Ice>();
-
         uran = new LinkedHashMap<String, Uranium>();
-
         actors = new ArrayList<Actor>();
     }
 
@@ -473,20 +464,24 @@ public class Controller {
             String id = "s" + i;
             Settler s = CreateSettler(id);
 
-            Teleport t = CreateTeleport("t" + i);
+//Teszteleshez kezdokitek a settlereknek.
+//Ha kivesszuk innen a kommentet, akkor minden telepesnek az inventory-jaban kezdeskor
+//lesz egy teleportpar, illetve egy teleportpar es egy robot craftolasahoz
+//szukseges nyersanyag.
+      /*    Teleport t = CreateTeleport("t" + i);
             s.GetInventory().AddTeleport(t);
             Teleport tt = CreateTeleport("t" + i+60);
             s.GetInventory().AddTeleport(tt);
             t.SetPair(tt);
             tt.SetPair(t);
 
-            s.GetInventory().AddMaterial(new Iron());
-           s.GetInventory().AddMaterial(new Iron());
-           s.GetInventory().AddMaterial(new Iron());
-            s.GetInventory().AddMaterial(new Uranium());
-           s.GetInventory().AddMaterial(new Uranium());
-            s.GetInventory().AddMaterial(new Coal());
-           s.GetInventory().AddMaterial(new Ice());
+            s.GetInventory().AddMaterial(CreateIron("irkit" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateIron("irkit1" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateIron("irkit2" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateUranium("urkit" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateUranium("urkit1" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateIce("ikit" + i + "_" +id));
+            s.GetInventory().AddMaterial(CreateCoal("ckit" + i + "_" +id));*/
 
             String aid = (String)ids[r.nextInt(ids.length)];
             AddEntity(id, aid);
@@ -1662,12 +1657,23 @@ public class Controller {
         }
         for(int i = 0; i < ma.size(); i++)
         {
-            if(SearchForCoal(ma.get(i)) != null) out = "\t\t\tCoal: " + SearchForCoal(ma.get(i));
-            else if(SearchForIce(ma.get(i)) != null) out = "\t\t\tIce: " + SearchForIce(ma.get(i));
-            else if(SearchForIron(ma.get(i)) != null) out = "\t\t\tIron: " + SearchForIron(ma.get(i));
-            else if(SearchForUranium(ma.get(i)) != null) out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
+            if(SearchForCoal(ma.get(i)) != null) {
+                out = "\t\t\tCoal: " + SearchForCoal(ma.get(i));
+                WriteOut(out);
+            }
+            else if(SearchForIce(ma.get(i)) != null) {
+                out = "\t\t\tIce: " + SearchForIce(ma.get(i));
+                WriteOut(out);
+            }
+            else if(SearchForIron(ma.get(i)) != null) {
+                out = "\t\t\tIron: " + SearchForIron(ma.get(i));
+                WriteOut(out);
+            }
+            else if(SearchForUranium(ma.get(i)) != null) {
+                out = "\t\t\tUranium: " + SearchForUranium(ma.get(i));
+                WriteOut(out);
+            }
 
-            WriteOut(out);
         }
 
         out = "\t\tTeleports:";
@@ -1730,9 +1736,9 @@ public class Controller {
      * az adatait kiirja a kimenetre a meghatarozott modon.
      * @param v - Gyozelemnek megfelelp boolean ertek.
      */
-    private void Endgame(boolean v)
+    private void Endgame(boolean v, String reason)
     {
-        Game.GetInstanceOf().ExitGame(v);
+        Game.GetInstanceOf().ExitGame(v, reason);
     }
 
 ///////////////CHECK CONDITIONS//////////////////////////
@@ -1758,8 +1764,10 @@ public class Controller {
 
         ArrayList<Material> mold = Recipe.GetWinRecipe();
         boolean win = Factory.HasEnoughMaterial(materials, mold);
-        if(win)
-            Endgame(true);
+        if(win) {
+            String reason = "The settlers built the base!";
+            Endgame(true, reason);
+        }
     }
 
     /**
@@ -1774,11 +1782,13 @@ public class Controller {
 
         if (countCoal >= 3 && countIce >= 3 && countIron >= 3 && countUranium >= 3) {}
         else {
-            Endgame(false);
+            String reason = "There is not enough material to build the base anymore.";
+            Endgame(false, reason);
             return;
         }
         if(settlers.isEmpty()) {
-            Endgame(false);
+            String reason = "All the settlers has been killed.";
+            Endgame(false, reason);
         }
     }
 

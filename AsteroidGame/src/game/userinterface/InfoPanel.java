@@ -5,8 +5,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class InfoPanel extends JPanel {
-    public InfoPanel()
+
+    private Dimension size;
+
+    public InfoPanel(Dimension _size)
     {
+        size = _size;
         this.setLayout(new GridLayout(26,1));
         setBackground(new Color(25,42,86));
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -23,5 +27,10 @@ public class InfoPanel extends JPanel {
         }
         revalidate();
         repaint();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return size;
     }
 }
