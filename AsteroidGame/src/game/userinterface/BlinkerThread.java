@@ -1,8 +1,15 @@
 package game.userinterface;
 
-
+/*
+* @author Szabo Gergo
+* blinkerthread osztaly
+* */
 public class BlinkerThread extends Thread{
 
+    /*
+    *blinkelteti a whereabout  majd elkuldi a szalat aludni
+    * vegen torli a clearpuffer tartalmat
+    * */
     @Override
     public void run() {
         DisplayManager dm = DisplayManager.GetInstance();
