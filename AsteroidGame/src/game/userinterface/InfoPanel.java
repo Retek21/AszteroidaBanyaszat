@@ -5,14 +5,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Az az egyes kiválaszott objektumok információit jeleníti meg.
- * A JPanel leszármazotja.
- * @author Szeredi Péter
+ * Az az egyes kivalaszott objektumok informacioit jeleniti meg.
+ * A JPanel leszarmazotja.
+ * @author Szeredi Peter
  */
 public class InfoPanel extends JPanel {
 
     /**
-     * A konstruktor beállítja a koordinátákat, az elhelyezkedést, stb.
+     * A konstruktor beallitja a koordinatakat, az elhelyezkedast, stb.
      */
     public InfoPanel()
     {
@@ -23,8 +23,8 @@ public class InfoPanel extends JPanel {
     }
 
     /**
-     * Kiírja a paraméterül kapott infót formázva.
-     * @param info: a kiírandó String lista
+     * Kiirja a paramaterul kapott infot formazva.
+     * @param info: a kiirando String lista
      */
     public void WriteInfo(ArrayList<String> info)
     {
