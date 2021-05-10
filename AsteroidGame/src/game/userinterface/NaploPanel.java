@@ -6,11 +6,21 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 
+/**
+ * a naplo irasaert felelos
+ */
 public class NaploPanel extends JPanel {
+    /**
+     * a szovegsorok listaja
+     */
     private ArrayList<JLabel> lines;
     private JScrollPane parentPane;
     private Dimension size;
 
+    /**
+     * konstruktor, beallitja a meretet es a szint, letrehoz egy uj listat a szovegnek
+     * @param _size
+     */
     public NaploPanel(Dimension _size)
     {
         size = _size;
@@ -20,11 +30,14 @@ public class NaploPanel extends JPanel {
         lines = new ArrayList<JLabel>();
     }
 
+    /**
+     * adatok kiirasa a panelre
+     * @param text: a kiirando szoveg
+     */
     public void WriteOut(ArrayList<String> text)
     {
         for(int i = 0; i < text.size(); i++)
         {
-            //A tabulatort nem ismeri a label ezert at kell alakitani spacera
             JLabel templabel = new JLabel(text.get(i).replaceAll("\t", "        "));
             templabel.setForeground(new Color(140, 122, 230));
             lines.add(templabel);
@@ -41,6 +54,9 @@ public class NaploPanel extends JPanel {
         parentPane = jp;
     }
 
+    /**
+     * a panelen valo gorgetest segito metodus
+     */
     public void ScrollDownMode() {
         if(parentPane != null) {
             JScrollBar naploVerticalBar = parentPane.getVerticalScrollBar();
