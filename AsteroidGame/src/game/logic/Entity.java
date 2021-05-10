@@ -15,12 +15,16 @@ public abstract class Entity {
      * Az aszteroida, melyen a telepes tartozkodik.
      */
     protected Asteroid asteroid;
-
+    /**
+     * entity displaye
+     * */
+    protected EntityDisplay display;
+    /**
+     * beallitja az adott display-et
+    * */
     public Display GetDisplay() {
         return display;
     }
-
-    protected EntityDisplay display;
 
 
     /**
@@ -82,7 +86,9 @@ public abstract class Entity {
     public Inventory GetInventory() {
         return null;
     }
-
+    /**
+     * beallitja az entitas display-et
+     * */
     public void SetDisplay(EntityDisplay display){
         this.display = display;
     }

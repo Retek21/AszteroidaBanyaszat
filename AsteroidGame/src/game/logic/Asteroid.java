@@ -29,10 +29,17 @@ public class Asteroid implements Whereabout{
      * jelzi, hogy az aszteroida ureges-e
      */
     private boolean empty;
-
+    /**
+     * aszteroidan naphivar van
+     * */
     private boolean onfire;
+    /**
+     * felrobbanast jelzo bool
+     * */
     private boolean exploding;
-
+    /**
+     * aszteroida displaye
+     * */
     private WhereaboutDisplay display;
 
     /**
@@ -55,11 +62,16 @@ public class Asteroid implements Whereabout{
      */
     private Asteroidfield asteroidfield;
 
+    /**
+     * display visszaadasa
+     * */
     @Override
     public WhereaboutDisplay GetDisplay() {
         return display;
     }
-
+    /**
+     * display beallitasa
+     */
     public void SetDisplay(WhereaboutDisplay display) {
         this.display = display;
     }
@@ -130,7 +142,10 @@ public class Asteroid implements Whereabout{
         display.Notify();
         if(sunnearness) CheckInteraction();
     }
-
+    /**
+     * beallitja a kezdeti napkozeliseget
+     * @param sunnearness - sunnearness jelzo bool
+     * */
     public void SetSunnearnessInit(boolean sunnearness) {
         this.sunnearness = sunnearness;
     }
@@ -394,7 +409,13 @@ public class Asteroid implements Whereabout{
         return neighbours.size();
     }
 
+    /**
+     * onfire bool visszaadasa
+     * */
     public boolean GetOnFireness() { return onfire; }
+    /**
+     * exploding bool visszaadasa
+     * */
     public boolean GetExplodingness() { return exploding; }
 
 }
