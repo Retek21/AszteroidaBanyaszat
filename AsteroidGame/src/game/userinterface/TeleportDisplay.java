@@ -106,14 +106,15 @@ public class TeleportDisplay extends WhereaboutDisplay {
         DisplayManager.GetInstance().RemoveTeleportDisplay(this);
     }
     /*
-    *
+    *blinkeleslapjan allitja az onfire booljat az aszteroidanak
+    * beallitja ujra a teleport koordinatait
     * */
     public void Notify() {
 
         if (!underSunStorm && blink == 0) {
             underSunStorm = subject.GetOnFireness();
             if (underSunStorm) {
-                blink = DisplayManager.GetInstance().GetBlinkingTime();;
+                blink = DisplayManager.GetInstance().GetBlinkingTime();
             }
         }
 
