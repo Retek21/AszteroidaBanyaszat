@@ -7,12 +7,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Felelos a program inditasakor felugro ablak megjelenitesere
+ */
 public class MenuFrame extends JFrame {
+    /**
+     * a fopanel referenciaja
+     */
     private JPanel mainpanel;
+    /**
+     * a jatek gomb referenciaja
+     */
     private JButton playbutton;
+    /**
+     * az exit gomb referenciaja
+     */
     private JButton exitbutton;
+    /**
+     * a jatek referenciaja
+     */
     private Game game;
 
+    /**
+     * konstruktor, ami letrehozza a a menut, beallitja a szineket, betutipusokat,
+     * hozzaadja a gombokat es a megfelelo attributumokat
+     */
     public MenuFrame()
     {
         game = Game.GetInstanceOf();
@@ -61,6 +80,9 @@ public class MenuFrame extends JFrame {
         mainpanel.add(exitbutton, c);
         this.add(mainpanel);
 
+        /**
+         * ActionListener felinicializalasa
+         */
         class FrameActionListener implements ActionListener{
             public FrameActionListener(){}
             @Override
@@ -77,6 +99,10 @@ public class MenuFrame extends JFrame {
         exitbutton.addActionListener(actionlistener);
     }
 
+    /**
+     * metodus, ami akkor hivodik, amikor a felhasznalo a play gombra kattint
+     * Elojon egy felugroablak, ahol megkerdezi a jatekosok szamat
+     */
     public void PlayPressed() {
         try {
             String tempstring = (String) JOptionPane.showInputDialog(this, "Number of Players:", "Asteroid Game [agbkp Edition]", JOptionPane.PLAIN_MESSAGE);
