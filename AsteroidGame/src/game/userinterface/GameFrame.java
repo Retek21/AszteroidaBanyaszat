@@ -6,30 +6,86 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Felelossege a jatekablak megjelenitese
+ */
 public class GameFrame extends JFrame {
 
+    /**
+     * referencia az InputManagerre
+     */
     InputManager inputmanager;
 
+    /**
+     * referencia a TextOutputManagerre
+     */
     TextOutputManager textoutputmanager;
 
+    /**
+     * A naplopanel referenciaja
+     */
     private NaploPanel naplopanel;
+    /**
+     * Az infopanel referenciaja
+     */
     private InfoPanel infopanel;
+
+    /**
+     * A DisplayManager referenciaja
+     */
     private DisplayManager gamepanel;
 
+    /**
+     * A DoPhaseButton referenciaja
+     */
     private GameButton dophasebutton;
+    /**
+     * A MoveButton referenciaja
+     */
     private GameButton movebutton;
+    /**
+     * A DrillButton referenciaja
+     */
     private GameButton drillbutton;
+
+    /**
+     * A MineButton referenciaja
+     */
     private GameButton minebutton;
+
+    /**
+     * A PlaceButton referenciaja
+     */
     private GameButton placebutton;
+
+    /**
+     * A CraftButton referenciaja
+     */
     private GameButton craftbutton;
 
+    /**
+     * A Craftable combobox referenciaja
+     */
     private JComboBox<String> craftable;
+    /**
+     * A Placeable combobox referenciaja
+     */
     private JComboBox<String> placeable;
 
+    /**
+     * A PhaseLabel referenciaja
+     */
     private JLabel phaselabel;
 
+    /**
+     * A Game referenciaja
+     */
     private Game game;
 
+    /**
+     * konstruktor, ami letrehozza a jatekablakot, es az osszes panelt
+     * a megfelelo adatokkal
+     */
     public GameFrame(){
         game = Game.GetInstanceOf();
         setSize(1280, 800);
@@ -95,7 +151,6 @@ public class GameFrame extends JFrame {
         c.gridx = 1;
         this.add(rightside, c);
 
-        //A baloldali panel szetosztasa
 
         leftside.setLayout(new GridBagLayout());
         c.fill = GridBagConstraints.BOTH;
@@ -109,25 +164,18 @@ public class GameFrame extends JFrame {
         c.gridheight = 3;
         c.ipady = 600;
         leftside.add(gamepanel, c);
-     //   leftside.add(scrollablegamepanel, c);
 
         c.gridy=4;
         c.gridheight = 1;
         c.ipady=0;
         leftside.add(buttonpanel, c);
 
-        //a jobboldali panel szetosztasa
 
         rightside.setLayout(new GridLayout(2,1));
-        //c.fill = GridBagConstraints.BOTH;
-       // c.gridx=0;
-        //c.gridy=0;
         rightside.add(scrollnaplo);
 
-        //c.gridy=1;
         rightside.add(infopanel);
 
-        //a headpanel elrendezése
 
         headpanel.setLayout(new GridBagLayout());
         c.fill = GridBagConstraints.NONE;
@@ -174,8 +222,10 @@ public class GameFrame extends JFrame {
         c.gridx = 4;
         buttonpanel.add(craftable, c);
 
-        //ActionListener felinicializalasa
 
+        /**
+         * Az ActionListener felinicializalasa, a gombokat es a comboboxokat hasznalva
+         */
         class ButtonActionListener implements ActionListener {
             public ButtonActionListener() {
             }
@@ -187,7 +237,7 @@ public class GameFrame extends JFrame {
 
         ButtonActionListener buttonactionlistener = new ButtonActionListener();
 
-        //komponensek hozzaadasa
+
         dophasebutton.addActionListener(buttonactionlistener);
         movebutton.addActionListener(buttonactionlistener);
         drillbutton.addActionListener(buttonactionlistener);
@@ -195,6 +245,10 @@ public class GameFrame extends JFrame {
         placebutton.addActionListener(buttonactionlistener);
         craftbutton.addActionListener(buttonactionlistener);
 
+        /**
+         * A MouseClickListener felinicializalasa
+         * MousePressed esemenyre tovabbadja az InputManagernek a klikkeles koordinatait
+         */
         class MouseClickListener implements MouseListener {
             public MouseClickListener() {}
             @Override
