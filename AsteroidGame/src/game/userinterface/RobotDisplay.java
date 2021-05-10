@@ -7,19 +7,26 @@ import game.logic.Robot;
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+ * @author Kristof Torok
+ * robot displaye*/
 public class RobotDisplay extends EntityDisplay{
 
-
+    /*
+    * konstruktor, beallitja a subjectet es a subject asteroidajan allokal maganak helyet
+    * beallitja a subject display-et is
+    * */
     public RobotDisplay(Robot subject){
         SetSubject(subject);
         Asteroid a = subject.GetAsteroid();
         AsteroidDisplay ad = (AsteroidDisplay) a.GetDisplay();
         ad.EnititySectorAllocation(this);
         subject.SetDisplay(this);
-
-        SetMoved(false);
     }
-
+    /*
+    * kirajzolas a koordinatak alapjan
+    * beallitja a szint a selected es a roundoutline bool alapjan
+    * */
     public void Paint(Graphics g2d){
         g2d.setColor(new Color(1,100,100));
         g2d.fillRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
@@ -30,9 +37,12 @@ public class RobotDisplay extends EntityDisplay{
         }
         g2d.drawRect(GetShape().x, GetShape().y, GetShape().width, GetShape().height);
     }
+    /*
+    * torli a robot display-et. ujrarajzolja a palyat
+    * */
     @Override
     public void Clear(){
+        DisplayManager.GetInstance().RemoveRobotDisplay(this);
         super.Clear();
-        DisplayManager.GetInstance().RemoveRobotDisplay(this);}
-
+    }
 }

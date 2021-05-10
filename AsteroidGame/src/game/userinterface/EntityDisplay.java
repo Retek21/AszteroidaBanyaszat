@@ -6,36 +6,41 @@ import game.logic.Entity;
 import java.awt.*;
 
 public class EntityDisplay extends Display{
-
-    private boolean moved;
-
+    /*
+    * entitas tipusu subject
+    * */
+    private Entity subject;
+    /*
+    * display sectoranak koordinatai
+    * */
+    private Point sectorpoints;
+    /*
+    * entitydisplay subjectjenek visszadasa
+    * */
     public Entity GetSubject() {
         return subject;
     }
-
+    /*
+    * subject beallitasa
+    * */
     public void SetSubject(Entity subject) {
         this.subject = subject;
     }
-
-    private Entity subject;
-
+    /*
+    * sectorpontok visszadasa
+    * */
     public Point GetSectorpoints() {
         return sectorpoints;
     }
-
+    /*
+    * sectorpontok beallitasa
+    * */
     public void SetSectorpoints(Point sectorpoints) {
         this.sectorpoints = sectorpoints;
     }
-
-    private Point sectorpoints;
-
-    /**
-     * egy korre moved true lesz
-     */
-    public void SetMoved(boolean move){moved=move;}
-
-    public boolean GetMoved(){return moved;}
-
+    /*
+    * ha mozgast tortent beallit egy uj koordinatat az entitynek
+    * */
     @Override
     public void Notify() {
         Asteroid asteroid = subject.GetAsteroid();
@@ -44,6 +49,9 @@ public class EntityDisplay extends Display{
         DisplayManager.GetInstance().repaint();
     }
 
+    /*
+    * display torlese, lefoglalt sectorok visszaallitasa
+    * */
     @Override
     public void Clear() {
         AsteroidDisplay ad = (AsteroidDisplay) subject.GetAsteroid().GetDisplay();

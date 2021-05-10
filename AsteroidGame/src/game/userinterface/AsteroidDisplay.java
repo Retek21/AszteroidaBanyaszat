@@ -6,51 +6,77 @@ import game.logic.Whereabout;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-
+/*
+* @author Torok Kristof, Dengyel Bendeguz
+* */
 public class AsteroidDisplay extends WhereaboutDisplay{
 
+    /*
+    * display asteroidaja*/
     private Asteroid subject;
-
+    /*a kitoltoszine az aszteroidanak
+    * */
     private Color fillColor;
-    private Color outlineColor;
+    /*
+    * aszteroidan allokalt szektorok tombje
+    * */
+    private boolean[] AllocatedTeleportSectors= new boolean[9];
+    /*
+    * a teleportoknak allokalt szektorok az aszteroida korul
+    * */
+    private boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
 
+    /*
+    * kitoltoszin visszaadasa
+    * */
     public Color GetFillColor() {
         return fillColor;
     }
-
+    /*
+    * kitoltoszin beallitasa
+    * */
     public void SetFillColor(Color fillColor) {
         this.fillColor = fillColor;
     }
 
-    public Color GetOutlineColor() {
-        return outlineColor;
+    /*
+    * subject visszaadasa
+    * */
+    public Asteroid GetSubject() {
+        return subject;
     }
-
-    public void SetOutlineColor(Color outlineColor) {
-        this.outlineColor = outlineColor;
-    }
-
+    /*
+    * aszteroida korul a teleportnak kiosztott szektorok kifejezo tomb visszaadasa
+    * */
     public boolean[] GetAllocatedTeleportSectors() {
         return AllocatedTeleportSectors;
     }
+    /*
+    *aszteroida szektorainak visszaadasa
+    * */
+    public boolean[][] GetAllocatedAsteroidSectors() {
+        return AllocatedAsteroidSectors;
+    }
 
-    boolean[] AllocatedTeleportSectors= new boolean[9];
-    boolean[][] AllocatedAsteroidSectors = new boolean[5][5];
-
+    /*
+    * asteroidaDisplay konstruktora
+    * beallitja a subjectet es annak displayet
+    * beallitja az elhelyezkedeset a kapott koordinatak alapjan a meretek egy nagyobb rectanglet allitanak be,
+    * hogy a teleportnak is legyen hely
+    * inicializalja a a sectoroknak a tombjeit
+    * */
     public AsteroidDisplay(Asteroid subject, int x, int y) {
         this.subject = subject;
         subject.SetDisplay(this);
         GetShape().setBounds(x, y , 100, 100);
         SetFillColor(new Color(51, 25, 0));
-        SetOutlineColor(new Color(51, 25, 0));
         SectorInit();
         TeleportSectorInit();
     }
 
-    public boolean[][] GetAllocatedAsteroidSectors() {
-        return AllocatedAsteroidSectors;
-    }
-
+    /*
+    * sectorok tombjet inicializalo fuggveny
+    * */
     private void SectorInit(){
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -59,10 +85,13 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         }
     }
 
-    public Asteroid GetSubject() {
-        return subject;
-    }
-
+   /*
+   * entitasok sectorainak allokalasa
+   * ameddig nem talal szabad sectort addig general random indexeket
+   * ha talalt beallitja a sectort es megkapja az entitas a sector indexeit
+   * majd beallitja a shapeje koordinatait az eltolasi szabalyok alapjan ami eltolja az y korrdinatat tizenottel
+   * es a hozzaigazitja a kirajzolt aszteroida mereteihez
+   * */
     public void EnititySectorAllocation(EntityDisplay d){
         Random random=new Random();
         boolean freeSector=false;
@@ -85,10 +114,19 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         d.GetShape().width = 15;
     }
 
+    /*
+     * sectorok tombjet inicializalo fuggveny
+     * */
     void TeleportSectorInit(){
         for(int i=0;i<9;i++)
             AllocatedTeleportSectors[i]=false;
     }
+    /*
+    * Teleport sectorjat allokallo fuggveny
+    * 9 sectort oszt ki
+    * ha az elso 4 kozott van szabad index, akkor az aszteroida tetejen jelenik meg
+    * ha a tobbi akkor az aszteroida jobb oldalan
+    * */
     void TeleportSectorAllocation(TeleportDisplay t){
         for(int i=0;i<9;i++){
             if(!AllocatedTeleportSectors[i]){
@@ -109,6 +147,13 @@ public class AsteroidDisplay extends WhereaboutDisplay{
             }
         }
     }
+    /*
+    * aszteroida kifesteset beallito fuggveny
+    * threadekkel villogtatja az aszteroida szinet a sunstorm ideje alatt
+    * beallitja a napkozelseg alapjan a szinet
+    * kitolti az aszteroidat, hogy a bal also sarokba keruljon
+    * allitja a korvonalat kivalasztas,kor es szomszedok alapjan
+    * */
     @Override
     public void Paint(Graphics g2d) {
         if (underSunStorm && blink % 2 == 0) SetFillColor(new Color(232, 65, 24));
@@ -129,15 +174,20 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         }
         g2d.drawOval(GetShape().x, GetShape().y + 15, GetShape().width - 15, GetShape().height -15);
     }
+    /*
+    * torli a displayt
+    * */
     @Override
     public void Clear() {
         DisplayManager.GetInstance().RemoveAsteroidDisplay(this);
         super.Clear();
     }
 
+    /*
+    *
+    * */
     @Override
     public void Notify() {
-
         if ((!underSunStorm || !exploding) && blink == 0) {
             underSunStorm = subject.GetOnFireness();
             exploding = subject.GetExplodingness();
@@ -148,6 +198,9 @@ public class AsteroidDisplay extends WhereaboutDisplay{
         DisplayManager.GetInstance().repaint();
     }
 
+    /*
+    * beallitja a szomszedok korvonalat
+    * */
     public void NotifyNeighbourhood() {
         ArrayList<Whereabout> neighbours = subject.GetNeighbours();
         for (Whereabout neighbour: neighbours
