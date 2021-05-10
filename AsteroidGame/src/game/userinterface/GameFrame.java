@@ -23,8 +23,8 @@ public class GameFrame extends JFrame {
     private GameButton placebutton;
     private GameButton craftbutton;
 
-    private OptionsComboBox craftable;
-    private OptionsComboBox placeable;
+    private JComboBox<String> craftable;
+    private JComboBox<String> placeable;
 
     private JLabel phaselabel;
 
@@ -61,8 +61,14 @@ public class GameFrame extends JFrame {
         placebutton = new GameButton("Place");
         craftbutton = new GameButton("Craft");
         ContainerPanel buttonpanel = new ContainerPanel();
-        craftable = new OptionsComboBox(new String[]{"Robot", "Teleport"});
-        placeable = new OptionsComboBox(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
+        craftable = new JComboBox<String>(new String[]{"Robot", "Teleport"});
+        craftable.setFocusable(false);
+        craftable.setBackground(new Color(64,115,158));
+        craftable.setForeground(new Color(76,209,55));
+        placeable = new JComboBox<String>(new String[]{"Coal", "Uranium", "Iron", "Ice", "Teleport"});
+        placeable.setFocusable(false);
+        placeable.setBackground(new Color(64,115,158));
+        placeable.setForeground(new Color(76,209,55));
 
         //managerek elkeszitese, bekotese
 
